@@ -1,7 +1,7 @@
 # Mandatory settings
 
 blog_theme: light # Or use dark
-name: The Catcher In The Sky
+name: Fast And Loose Reasoning
 paginate: 25
 url: https://ulysses4ever.github.io
 
