@@ -1,0 +1,19 @@
+%\renewcommand{\@oddhead}{\hfil }
+\pagestyle{myheadings}
+\renewcommand{\@oddhead}%
+{\raisebox{0pt}[\headheight][0pt]{% начало блока
+\vbox{\hbox to\textwidth{\textbf{Теория автоматов и формальных языков}\hfil \strut
+22.05.2009}\hrule}}% конец блока
+}% конец макроопределения
+\renewcommand{\@oddfoot}{\hfil --- \thepage\ --- \hfil}
+\newtheorem*{theorem}{Теорема}
+\newtheorem*{stm}{Утверждение}
+\theoremstyle{definition}
+\newtheorem*{defenv}{Определение}
+\newtheorem*{note}{Замечание}
+\newcommand{\LPDA}{L(\text{МПА})}
+\newcommand{\LGPDA}{L(\text{РМПА})}
+\newcommand{\LDPDA}{L(\text{ДМПА})}
+\newcommand{\LNFA}{L(\text{НКА})}
+\newcommand{\LDFA}{L(\text{ДКА})}
+\DeclareMathOperator{\LR}{LR}

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+    <head>
+        <title>Ulysses: подписки в Google Reader</title>
+    </head>
+    <body>
+        <outline text="C++Next" title="C++Next" type="rss"
+            xmlUrl="http://cpp-next.com/feed/" htmlUrl="http://cpp-next.com"/>
+        <outline text="CS-клуб при ПОМИ: Новости"
+            title="CS-клуб при ПОМИ: Новости" type="rss"
+            xmlUrl="http://logic.pdmi.ras.ru/csclub/news/rss?city=6" htmlUrl="http://logic.pdmi.ras.ru/csclub/?city=6"/>
+        <outline text="CS-клуб при ПОМИ: школы"
+            title="CS-клуб при ПОМИ: школы" type="rss"
+            xmlUrl="http://logic.pdmi.ras.ru/csclub/schools/rss" htmlUrl="http://logic.pdmi.ras.ru/csclub/schools/rss"/>
+        <outline text="Cайт Шендеровича" title="Cайт Шендеровича"
+            type="rss" xmlUrl="http://www.shender.ru/rss.lhtm" htmlUrl="http://www.shender.ru"/>
+        <outline text="formal-langs-identification project updates"
+            title="formal-langs-identification project updates"
+            type="rss"
+            xmlUrl="https://code.google.com/feeds/p/formal-langs-identification/updates/basic" htmlUrl="http://code.google.com/p/formal-langs-identification/updates/list"/>
+        <outline text="invar" title="invar" type="rss"
+            xmlUrl="http://ctf.sfedu.ru/feed/" htmlUrl="http://ctf.sfedu.ru"/>
+        <outline text="LaTeX Community News"
+            title="LaTeX Community News" type="rss"
+            xmlUrl="http://feeds2.feedburner.com/LatexCommunityNews" htmlUrl="http://www.latex-community.org/index.php?option=com_content&amp;view=section&amp;id=1&amp;layout=blog&amp;Itemid=111"/>
+        <outline text="LJR: stud-ium" title="LJR: stud-ium" type="rss"
+            xmlUrl="http://lj.rossia.org/community/studium/data/rss" htmlUrl="http://lj.rossia.org/community/studium/"/>
+        <outline text="LOR" title="LOR" type="rss"
+            xmlUrl="http://feeds.feedburner.com/org/LOR" htmlUrl="http://www.linux.org.ru/"/>
+        <outline text="LOR: ответы на комментарии Ulysses"
+            title="LOR: ответы на комментарии Ulysses" type="rss"
+            xmlUrl="http://www.linux.org.ru/show-replies.jsp?output=rss&amp;nick=Ulysses" htmlUrl="http://www.linux.org.ru"/>
+        <outline text="Math in LJR" title="Math in LJR" type="rss"
+            xmlUrl="http://lj.rossia.org/community/ljr_math/data/rss" htmlUrl="http://lj.rossia.org/community/ljr_math/"/>
+        <outline text="PHD Comics" title="PHD Comics" type="rss"
+            xmlUrl="http://www.phdcomics.com/gradfeed.php" htmlUrl="http://www.phdcomics.com"/>
+        <outline text="RuCTF 2010 Google Group"
+            title="RuCTF 2010 Google Group" type="rss"
+            xmlUrl="http://groups.google.com/group/ructf/feed/rss_v2_0_msgs.xml" htmlUrl="http://groups.google.com/group/ructf"/>
+        <outline text="TeXblog" title="TeXblog" type="rss"
+            xmlUrl="http://texblog.net/feed/" htmlUrl="http://texblog.net"/>
+        <outline text="The Monad.Reader" title="The Monad.Reader"
+            type="rss"
+            xmlUrl="http://themonadreader.wordpress.com/feed/" htmlUrl="http://themonadreader.wordpress.com"/>
+        <outline text="The n-Category Café" title="The n-Category Café"
+            type="rss"
+            xmlUrl="http://golem.ph.utexas.edu/category/atom10.xml" htmlUrl="http://golem.ph.utexas.edu/category/"/>
+        <outline text="The Unapologetic Mathematician"
+            title="The Unapologetic Mathematician" type="rss"
+            xmlUrl="http://unapologetic.wordpress.com/feed/" htmlUrl="http://unapologetic.wordpress.com"/>
+        <outline text="What's new" title="What's new" type="rss"
+            xmlUrl="http://terrytao.wordpress.com/feed/" htmlUrl="http://terrytao.wordpress.com"/>
+        <outline text="Агора - список конференций"
+            title="Агора - список конференций" type="rss"
+            xmlUrl="http://feed43.com/agora-guru-ru.xml" htmlUrl="http://agora.guru.ru/conferences.php"/>
+        <outline text="В: Список наблюдения"
+            title="В: Список наблюдения" type="rss"
+            xmlUrl="http://ru.wikipedia.org/w/api.php?action=feedwatchlist&amp;allrev=allrev&amp;wlowner=Artem+M.+Pelenitsyn&amp;wltoken=d529c3966a650b795bd348cd7d678343742c535e&amp;feedformat=rss" htmlUrl="http://ru.wikipedia.org/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Watchlist"/>
+        <outline text="Вики PascalABC.NET" title="Вики PascalABC.NET"
+            type="rss"
+            xmlUrl="http://pascalabc.net/wiki/index.php?title=%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:RecentChanges&amp;feed=rss" htmlUrl="http://pascalabc.net/wiki/index.php/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:RecentChanges"/>
+        <outline text="Вики ИТ  — Свежие правки"
+            title="Вики ИТ  — Свежие правки" type="rss"
+            xmlUrl="http://it.mmcs.sfedu.ru/_wiki/index.php?title=%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:RecentChanges&amp;feed=rss" htmlUrl="http://it.mmcs.sfedu.ru/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:RecentChanges"/>
+        <outline text="Календарь конференций"
+            title="Календарь конференций" type="rss"
+            xmlUrl="http://www.mathnet.ru/rss/rssConference.phtml?option_lang=rus" htmlUrl="http://www.mathnet.ru/php/conference.phtml?&amp;option_lang=rus"/>
+        <outline text="Мехмат ЮФУ" title="Мехмат ЮФУ" type="rss"
+            xmlUrl="http://feed43.com/mmcs-sfedu-ru.xml" htmlUrl="http://mmcs.sfedu.ru/"/>
+        <outline text="Новости ЮФУ" title="Новости ЮФУ" type="rss"
+            xmlUrl="http://dbs.sfedu.ru/www/rssnews.rss" htmlUrl="http://dbs.sfedu.ru/www/sfedu$news$.startup?p_es_id=9999999999999999"/>
+        <outline text="Сайт ИТ" title="Сайт ИТ" type="rss"
+            xmlUrl="http://it.mmcs.sfedu.ru/index.php?format=feed&amp;type=rss" htmlUrl="http://it.mmcs.sfedu.ru/component/content/frontpage"/>
+        <outline text="Человек - Предел" title="Человек - Предел"
+            type="rss"
+            xmlUrl="http://a-comics.ru/cmxfeed.php?cmx=limitman" htmlUrl="http://a-comics.ru/comics/limitman"/>
+        <outline title="Блоги" text="Блоги">
+            <outline text="manve-rnd" title="manve-rnd" type="rss"
+                xmlUrl="http://manve-rnd.livejournal.com/data/rss" htmlUrl="http://manve-rnd.livejournal.com/"/>
+            <outline text="tori_windsor" title="tori_windsor" type="rss"
+                xmlUrl="http://tori-windsor.livejournal.com/data/rss" htmlUrl="http://tori-windsor.livejournal.com/"/>
+            <outline text="Блог сурового челябинского программиста"
+                title="Блог сурового челябинского программиста"
+                type="rss"
+                xmlUrl="http://feeds2.feedburner.com/samolisov" htmlUrl="http://samolisov.blogspot.com/"/>
+            <outline text="Блоги: kassalanche"
+                title="Блоги: kassalanche" type="rss"
+                xmlUrl="http://kassalanche.livejournal.com/data/rss" htmlUrl="http://kassalanche.livejournal.com/"/>
+            <outline text="Блоги: mu_m" title="Блоги: mu_m" type="rss"
+                xmlUrl="http://mu-m.livejournal.com/data/rss" htmlUrl="http://mu-m.livejournal.com/"/>
+            <outline text="Блоги: suniflower" title="Блоги: suniflower"
+                type="rss"
+                xmlUrl="http://suniflower.livejournal.com/data/rss" htmlUrl="http://suniflower.livejournal.com/"/>
+            <outline text="Блоги: Алёна C++::cpp"
+                title="Блоги: Алёна C++::cpp" type="rss"
+                xmlUrl="http://alenacpp.blogspot.com/feeds/posts/default/-/cpp" htmlUrl="http://alenacpp.blogspot.com/search/label/cpp"/>
+            <outline text="Блоги: Андрюшкина" title="Блоги: Андрюшкина"
+                type="rss"
+                xmlUrl="http://aelenka.livejournal.com/data/rss" htmlUrl="http://aelenka.livejournal.com/"/>
+            <outline text="Блоги: Белякова" title="Блоги: Белякова"
+                type="rss"
+                xmlUrl="http://julia-belyakova.livejournal.com/data/rss" htmlUrl="http://julia-belyakova.livejournal.com/"/>
+            <outline text="Блоги: Бычкова" title="Блоги: Бычкова"
+                type="rss"
+                xmlUrl="http://www.liveinternet.ru/users/2590982/rss/" htmlUrl="http://www.liveinternet.ru/users/2590982/"/>
+            <outline text="Блоги: Вербицкий" title="Блоги: Вербицкий"
+                type="rss"
+                xmlUrl="http://lj.rossia.org/users/tiphareth/data/rss" htmlUrl="http://lj.rossia.org/users/tiphareth/"/>
+            <outline text="Блоги: Гослинг" title="Блоги: Гослинг"
+                type="rss"
+                xmlUrl="http://nighthacks.com/roller/jag/feed/entries/rss" htmlUrl="http://nighthacks.com/roller/jag/"/>
+            <outline text="Блоги: Дмитрий Павлов"
+                title="Блоги: Дмитрий Павлов" type="rss"
+                xmlUrl="http://lj.rossia.org/users/dmitri_pavlov/data/rss" htmlUrl="http://lj.rossia.org/users/dmitri_pavlov/"/>
+            <outline text="Блоги: Нурутдинов (англ.)"
+                title="Блоги: Нурутдинов (англ.)" type="rss"
+                xmlUrl="http://nurutdinov.blogspot.com/feeds/posts/default" htmlUrl="http://nurutdinov.blogspot.com/"/>
+            <outline text="Блоги: О, боже!" title="Блоги: О, боже!"
+                type="rss" xmlUrl="http://obozhe.com/feed/" htmlUrl="http://obozhe.com"/>
+            <outline text="Блоги: О.Б. Сухорукова"
+                title="Блоги: О.Б. Сухорукова" type="rss"
+                xmlUrl="http://users.livejournal.com/_bs_/data/rss" htmlUrl="http://users.livejournal.com/_bs_/"/>
+        </outline>
+        <outline title="arXiv.org" text="arXiv.org">
+            <outline text="arXiv.org: cs.DM" title="arXiv.org: cs.DM"
+                type="rss" xmlUrl="http://export.arxiv.org/rss/cs.DM" htmlUrl="http://arxiv.org/"/>
+            <outline text="arXiv.org: cs.DS" title="arXiv.org: cs.DS"
+                type="rss" xmlUrl="http://export.arxiv.org/rss/cs.DS" htmlUrl="http://arxiv.org/"/>
+            <outline text="arXiv.org: cs.FL" title="arXiv.org: cs.FL"
+                type="rss" xmlUrl="http://export.arxiv.org/rss/cs.FL" htmlUrl="http://arxiv.org/"/>
+            <outline text="arXiv.org: cs.IT" title="arXiv.org: cs.IT"
+                type="rss" xmlUrl="http://export.arxiv.org/rss/cs.IT" htmlUrl="http://arxiv.org/"/>
+            <outline text="arXiv.org: cs.LO" title="arXiv.org: cs.LO"
+                type="rss" xmlUrl="http://export.arxiv.org/rss/cs.LO" htmlUrl="http://arxiv.org/"/>
+            <outline text="arXiv.org: cs.PL" title="arXiv.org: cs.PL"
+                type="rss" xmlUrl="http://export.arxiv.org/rss/cs.PL" htmlUrl="http://arxiv.org/"/>
+        </outline>
+    </body>
+</opml>

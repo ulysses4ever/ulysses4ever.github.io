@@ -1,0 +1,401 @@
+\documentclass[12pt]{article}%,leqno
+\usepackage{cmap}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{automata,shapes,arrows,positioning,calc}
+\usepackage{clrscode}
+\usepackage{sectsty}
+\usepackage{verbatim}
+\usepackage{ifthen}
+\usepackage{forloop}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{indentfirst}
+
+%\sectionfont{\large}
+
+\usepackage[linkbordercolor=white]{hyperref}%,menucolor=white,runbordercolor=white,urlbordercolor=white,
+%colorlinks,urlcolor=black
+
+% \topmargin=0cm
+% %\headsep=10pt
+% \oddsidemargin=0cm
+% \textheight=21cm
+% \textwidth=17cm
+
+\usepackage[vscale=0.77,hscale=0.8,centering]{geometry}%
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lfoot{\footnotesize ЮФУ, Мехмат}
+%\rfoot{\footnotesize А.~Э.~Маевский}
+\cfoot{--- \thepage{} ---}
+\lhead{\itshape Семинар по алгебре}
+\rhead{}
+
+\parindent=1.25cm
+
+\tolerance=1000
+
+%\renewcommand{\thesubsubsection}{\arabic{\subsection}}
+%\arabic{\subsubsection}
+\renewcommand{\emptyset}{\varnothing}
+\renewcommand{\leq}{\leqslant}
+\newcommand{\es}{\emptyset}
+\newcommand{\h}{\ensuremath{\hbar}}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\Z}{\ensuremath{\mathbb Z}}
+\newcommand{\F}{\ensuremath{\mathbb F}}
+\newcommand{\A}{\ensuremath{\mathbb A}}
+\newcommand{\R}{\ensuremath{\mathbb R}}
+\renewcommand{\P}{\ensuremath{\mathbb P}}
+\renewcommand{\C}{\ensuremath{\mathbb C}}
+\newcommand{\NO}{\ensuremath{\mathbb N_0}}
+\renewcommand{\phi}{\varphi}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\projlim}{\varprojlim}
+\newcommand{\ol}{\overline}
+\newcommand{\iso}{\cong}
+\newcommand{\normsub}{\subset}
+\newcommand{\normsup}{\supset}
+\newcommand{\hto}{\hookrightarrow}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Endo}{End}
+\DeclareMathOperator{\Id}{id}
+\DeclareMathOperator{\chr}{char}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\PGL}{PGL}
+
+\renewcommand{\qed}{\hfill \vrule width1.5ex height1.5ex depth0pt}
+\newcommand{\pseudoqed}{\hfill\Box}
+\newcommand{\HW}{\ensuremath{{\otimes}}}
+\newcommand{\eqdef}{\stackrel{\text{\upshape\tiny def}}{=}}
+\newcommand{\coleq}{\ensuremath{\mathrel{\mathop:}=}}
+\renewcommand{\labelenumi}{(\theenumi)}
+\newcommand{\InsertList}[1]{%
+\input{listok#1}
+}
+\newcommand{\nspace}{\hspace{0pt}}
+\newcommand{\nbdash}{\nobreakdash-\nspace}
+\newcommand{\ul}{\underline}
+\newcommand{\rep}[1]{#1^*}
+
+\newtheorem{Thm}{Теорема}[section]
+\renewcommand{\theThm}{\arabic{Thm}}
+\newtheorem{Lemma}{Лемма}[section]
+\renewcommand{\theLemma}{\arabic{Lemma}}
+
+\theoremstyle{remark}
+\newtheorem*{SketchOfProof}{Набросок доказательства}
+
+\theoremstyle{definition}
+\newtheorem{Ex}{Пример}
+\newtheorem{Exec}{Упражнение}
+\newtheorem*{Sol}{Решение}
+\newtheorem{Prop}{Утверждение}
+\newtheorem*{Remark}{Замечание}
+\newtheorem{NumRemark}{Замечание}
+\newtheorem*{Algo}{Алгоритм}
+\newtheorem{NumAlgo}{Алгоритм}
+\newtheorem{Def}{Определение}[section]
+\renewcommand{\theDef}{\arabic{Def}}
+\newtheorem*{Task}{Задача}
+
+\title{Семинар по алгебре}
+\author{рук. В.~А.~Стукопин}
+\date{}
+
+\begin{document}
+\section{Введение в теорию представлений}
+\begin{thebibliography}{9}
+\bibitem{Serre}Ж.-П. Серр. Линейные представления конечных групп
+\end{thebibliography}
+
+\begin{Def}
+Пусть $X$ — множество, $V$ — векторное пространство над $K$.
+\emph{Представлением множества $X$} называется отображение $f\colon X \to L(V)$,
+где $L(V)$ — множество линейных операторов в $V$.
+\end{Def}
+В такой общности от этого определения мало толку: обычно предполагается
+некоторая структура на $X$ и уважение со стороны $f$ этой структуры.
+
+Если есть два представления $f\colon X \to L(V)$ и $g\colon X \to L(V_1)$, то
+интересно получить обратимое линейное отображение $U\colon V \to V_1$, такое что
+\[
+    f(x) = U g(x) U^{-1}.
+\]
+Если такое отображение существует, то представления $f$ и $g$ называются
+эквивалентными.
+\begin{Ex}
+$X = \{ \star \}$. Тогда (для конечномерных $V$) задача сводится к описанию
+классов сопряжённости матриц.
+\end{Ex}
+
+Уже в случае $X = \{ \star, \star\star \}$ сложно сказать что-то определённое. 
+
+\begin{Def}
+Пусть $V$ — конечномерное векторное пространство над $K$, $G$ — группа, $A$ —
+алгебра над $K$. \emph{Представление группы $G$} это гомоморфизм групп $f \colon
+G \to \GL(V)$, \emph{представление алгебры $A$} это гомоморфизм алгебр $g
+\colon A \to L(V)$.
+\end{Def}
+
+\begin{Def}
+Рассмотрим векторное пространство над $K$ с базисом $\{ e_g \}_{g \in G}$, где
+$G$ — некоторая конечная группа. Групповой алгеброй группы $G$ называется
+алгебра
+\[
+    K[G] = \{ \sum_{i = 1}^n x_i g_i \mid x_i \in K \},
+\]
+с естественным умножением таких конечных сумм. 
+\end{Def}
+В последнем определении можно снять требование конечности $G$, рассматривая в
+$K[G]$ только конечные суммы соответствующего вида. Тогда в случае $G=\Z$, 
+например, получится алгебра полиномов Лорана.
+
+\subsection{Задача классификации представлений}
+\begin{Def}
+Пусть $A$ — линейный оператор в $V$. Подпространство $U \subset V$ называется
+\emph{инвариантным} для оператора $A$, если $AU \subset U$.
+\end{Def}
+Если $\{ e_i \}_{i=1}^n$ — базис в $V$, а $\{ e_i \}_{i=1}^k$ — базис $U$ —
+инвариантного подпространства для оператора $A$, то в матрице оператора в базисе
+$\{e_i\}$ будет нулевой угол.
+\begin{Def}
+Представление $\rho \colon G \to \GL(V)$ называется \emph{неприводимым}, если у
+операторов $\{ \rho(g) \}$ нет нетривиальных общих инвариантных подпространств.
+\end{Def}
+
+Напомним
+\begin{Def}
+Левый модуль $M$ над кольцом с единицей $R$ это абелева группа, для которой
+задано отображение $R\times M \to M$, такое что:
+\begin{enumerate}
+  \item $em = m$;
+  \item $\lambda(\mu m) = (\lambda\mu)m$;
+  \item $\lambda(m_1 + m_2) = \lambda m_1 + \lambda m_2)$;
+  \item $(\lambda_1 + \lambda_2)m = \lambda_1 m + \lambda_2 m$.
+\end{enumerate}
+\end{Def}
+Пространство прибытия представления группы $G$ является левым $K[G]$-модулем.
+Более того, от любого $K[G]$-модуля можно перейти к некоторому представлению.
+
+Иногда представления записывают в терминах \emph{матричных элементов}:
+представление $R\colon G \to \GL(n, K)$ можно мыслить как набор отображений:
+$\{ r_{ij} \colon G \to K \}$.
+
+\begin{Ex}
+Пусть $X$ — конечное множество, а $S(X) = S_n$ — группа биекций $X$ (группа
+перестановок из $n$ элементов, если $|X|=n$). Пусть $G$ — подгруппа $S_n$, а
+$V$ — линейное пространство функций $\{v \colon X \to V\}$. Тогда $\rho \colon
+G \to V$, действующее по формуле
+\[
+    (\rho(g)f)(x) = f(g^{-1}x),
+\]
+является представлением $G$ в $V$.
+\end{Ex}
+
+\begin{Def}
+Представление $\rho \colon G \to \GL(V)$ называется \emph{вполне приводимым},
+если
+\[
+    V = V_1 \oplus V_2,
+\]
+где $V_1, V_2$ — инвариантные подпространства $\{\rho(g)\}$ и $V_i \neq \{0\},
+V$.
+\end{Def}
+
+% Можно ввести операцию суммы представлений.
+
+В общем случае непонятно, является ли приводимое представление вполне
+приводимым. Однако это верно для любой конечной группы и для любой компактной
+группы.
+
+Пусть $(V, (\cdot, \cdot))$ — конечномерное векторное пространство над $K$ с
+некоторым скалярным произведением. Для представления $\rho$ \emph{конечной} группы $G$
+построим \emph{инвариантное скалярное произведение}: 
+\[
+    \langle x, y\rangle = \langle \rho(g)x, \rho(g)y \rangle.
+\]
+Таковым является скалярное произведение, определённое по формуле:
+\[
+    \langle x, y\rangle = \frac {1} {|G|} \sum_{g\in G} (\rho(g)x, \rho(g)y).
+\]
+\begin{Exec}
+Проверить предыдущее утверждение.
+\end{Exec}
+
+\begin{Exec}
+Доказать, что из приводимости конечной группы следует полная приводимость.
+(\emph{Указание}: воспользоваться конструкцией скалярного произведения $\langle
+\cdot, \cdot\rangle$).
+\end{Exec}
+
+\section{Представления симметрической группы}
+\begin{thebibliography}{9}
+\bibitem{VO}\emph{А.~М.~Вершик}, \emph{А.~Ю.~Окуньков},
+Новый подход к теории представлений симметрических групп. II.
+\href{http://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=znsl&paperid=840&option_lang=rus}{[mathnet.ru]}
+\end{thebibliography}
+
+\begin{Def}
+Рассмотрим цепочку групп
+\[
+    \{ 1 \} = G(0) \subset G(1) \subset \ldots \subset G(n) \subset \ldots
+\]
+Обозначим $\rep{G(n)}$ — множество классов эквивалентности неприводимых
+комплексных представлений группы $G(n)$.
+
+\emph{Граф ветвления цепочки групп $\{G(i)\}$} это следующий граф: 
+\begin{itemize}
+  \item вершины графа: $\bigcup_{n \leq 0} \rep{G(n)}$;
+  \item вершина $\lambda \in \rep{G(n)}$ соединяется с вершиной $\mu \in
+  \rep{G(n-1)}$ $k$ рёбрами,  где $k=\dim \Hom_{G(n-1)}(V^\mu, V^\lambda)$.
+\end{itemize}
+\end{Def}
+
+Имеет место разложение
+\[
+    V^\lambda = \bigoplus_{\mu \in \rep{G(n-1)}} V^{\mu}.
+\]
+Каждый $V^{\mu}$ можно разложить аналогичным образом. Продолжая этот процесс,
+дойдём до разложения:
+\[
+    V^\lambda = \bigoplus_{T}V_T,
+\]
+где $V_T$ это одномерное комплексное пространство, $T$ пробегает все возможные
+пути в графе ветвления от $V^\lambda$ к «одномерным листьям». В каждом
+пространстве $V_T$ выделяется базисный вектор $v_T$.
+
+\begin{Def}
+Нормированный относительно $G(n)$-инвариантного скалярного произведения базис
+$\{v_T\}$ в $V^\lambda$ называется \emph{базисом Гельфанда—Цетлина}.
+\end{Def}
+
+Обозначим $Z(n)$ центр групповой алгебры $\C[G(n)]$. Подалгебра, порождённая
+линейными комбинациями элементов $Z(1)$, \ldots , $Z(n)$, называется
+алгеброй Гельфанда—Цетлина.
+
+\begin{Prop}
+Имеет место \emph{фундаментальный изоморфизм}:
+\[
+    \C[G(n)] = \bigoplus_{\lambda} \Endo(V^\lambda).
+\]
+\end{Prop}
+
+\begin{Prop}
+\begin{enumerate} $GZ(n)$ имеет следующие характеризации:  
+  \item $GZ(n)$ — это алгебра всех операторов, диагонализируемых в базисе Г—Ц.
+  
+  \item $GZ(n)$ — это максимальная коммутативная подалгебра $\C[G(n)]$. 
+\end{enumerate}
+\end{Prop}
+
+\begin{Remark}
+Любой вектор из базиса Г—Ц в любом неприводимом представлении группы
+$G(n)$ однозначно определяется набором его собственных значений.
+\end{Remark}
+
+% \begin{Prop}
+% Для любого семейства полупростых алгебр, подалгебра $GZ$ максимальна
+% если в графе ветвления нет кратных дуг. 
+% \end{Prop}
+
+Пусть $M$ — $\C$-алгебра, $N$ — её подалгебра. Обозначим $Z(M,N)$ множество всех
+элементов $M$, коммутирующих со всеми элементами $N$.
+
+\begin{Prop}
+Следующие утверждения эквивалентны.
+\begin{enumerate}
+  \item Ограничение конечномерных неприводимых представлений $M$ на её
+  подалгебру $N$ имеет простую кратность (0 или 1).
+  \item $Z(M,N)$ коммутативна.
+\end{enumerate}
+\end{Prop} 
+
+\subsection{Элементы Юнга—Юциса—Мёрфи}
+Далее полагаем $G(n) = S_n$. 
+
+\begin{Def}
+Элементом Юнга—Юциса—Мёрфи групповой алгебры $\C[S_n]$ называется элемент
+\[
+    X_i = (1i) + (2i) + \ldots (i-1\:i), \qquad 1 \leq i \leq n.
+\]
+\end{Def}
+
+Заметим, что
+\[
+    X_i = \{ \text{сумма всех транспозиций в $S_i$} \} -
+     \{ \text{сумма всех транспозиций в $S_{i-1}$} \},
+\]
+уменьшаемое в этой разности принадлежит $Z(i)$, а вычитаемое — $Z(i-1)$, а
+значит, $X_i \in GZ(n)$ для $1 \leq i \leq n$.
+\begin{Prop}
+\[
+    (A =) \sum_{\tau \in S_i} \tau \in Z(i),
+\]
+где $\tau$ пробегает все транспозиции в $S_i$. 
+\end{Prop}
+\begin{proof}
+Пусть $g \in S_i$.
+\[
+    gAg^{-1} = \sum g\tau g^{-1} = \sum \tau = A,
+\]
+так как (1) сопряжение сохраняет цикловый тип перестановки, в частности,
+переводит транспозиции в транспозиции, (2) сопряжение является автоморфизмом, то
+есть действуя на разные перестановки, получаем разные перестановки. 
+\end{proof}
+\begin{Thm}
+\[
+    Z(n) \subset \langle Z(n-1), X_n \rangle.
+\]
+\begin{proof}
+\[
+    X_i = \sum_{i=1}^{n-1}(i,n) =  \sum_{i\neq j; i,j=1}^{n} (i,j) - 
+    \sum_{i\neq j; i,j=1}^{n-1} (i,j).
+\]
+\[
+    X_n^2 = \sum(i,n)(j,n) = \sum_{i\neq j; i,j=1}^{n}(i,j,n)  + (n-1)\Id,
+\]
+а значит, $A = \sum_{i\neq j; i,j=1}^{n}(i,j,n) \in \langle Z(n-1), X_n
+\rangle$. Кроме того $B = \sum_{i\neq j \neq k; i,j,k=1}^{n}(i,j,k) \in Z(n-1)$,
+и
+\[
+    C = \sum_{i\neq j \neq k; i,j,k=1}^n (i,j,k) = A + B \Longrightarrow C \in
+    \langle Z(n-1), X_n \rangle.
+\]
+Аналогично можно рассмотреть $X_n\sum(i_1, \ldots, i_{k-1},n)$.
+
+\end{proof}
+\end{Thm}
+
+\section{Деформации алгебр}
+
+\begin{Def}
+Пусть $A$ — ассоциативная алгебра. Деформацией алгебры $A$ называется алгебра
+$\Lambda_\h = A[\h] / (\h^2) = \{ a + b\h \}$ с умножением, заданным следующим
+образом:
+\[
+    a * b = ab + f(a,b)\h + O(\h^2),
+\]
+при этом (чтобы полученная алгебра также была ассоциативной) от $f$ требуется:
+\[
+    f(ab, c) + f(a,b)x - f(a, bc) - af(b,c) = 0.
+\]
+\end{Def}
+\begin{Remark}
+Функция $f$ является элементом \emph{когомологии Хохшильда}.
+\end{Remark}
+
+\end{document}

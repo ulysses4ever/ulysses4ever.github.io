@@ -1,0 +1,340 @@
+DISCOURSE DOCTOR Sun 14 Feb 2021 03:38:12 AM MSK
+OS: Linux users 5.4.0-65-generic #73-Ubuntu SMP Mon Jan 18 17:25:17 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+
+
+Found containers/app.yml
+
+==================== YML SETTINGS ====================
+DISCOURSE_HOSTNAME=forum.mmcs.sfedu.ru
+SMTP_ADDRESS=class.mmcs.sfedu.ru # (mandatory)
+DEVELOPER_EMAILS=REDACTED 
+SMTP_PASSWORD=REDACTED  # (optional)
+SMTP_PORT=587 # (optional)
+SMTP_USER_NAME=web@mmcs.sfedu.ru # (optional)
+LETSENCRYPT_ACCOUNT_EMAIL=REDACTED 
+
+==================== DOCKER INFO ====================
+DOCKER VERSION: Docker version 20.10.3, build 48d30b5
+
+DOCKER PROCESSES (docker ps -a)
+
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+==================== SERIOUS PROBLEM!!!! ====================
+app not running!
+Attempting to rebuild
+==================== REBUILD LOG ====================
+Ensuring launcher is up to date
+Fetching origin
+Launcher is up-to-date
+cd /pups && git pull && /pups/bin/pups --stdin
+Already up to date.
+I, [2021-02-14T00:38:25.788714 #1]  INFO -- : Loading --stdin
+I, [2021-02-14T00:38:25.799768 #1]  INFO -- : > locale-gen $LANG && update-locale
+I, [2021-02-14T00:38:25.872463 #1]  INFO -- : Generating locales (this might take a while)...
+Generation complete.
+
+I, [2021-02-14T00:38:25.872889 #1]  INFO -- : > mkdir -p /shared/postgres_run
+I, [2021-02-14T00:38:25.878757 #1]  INFO -- : 
+I, [2021-02-14T00:38:25.879531 #1]  INFO -- : > chown postgres:postgres /shared/postgres_run
+I, [2021-02-14T00:38:25.883406 #1]  INFO -- : 
+I, [2021-02-14T00:38:25.883987 #1]  INFO -- : > chmod 775 /shared/postgres_run
+I, [2021-02-14T00:38:25.886949 #1]  INFO -- : 
+I, [2021-02-14T00:38:25.887340 #1]  INFO -- : > rm -fr /var/run/postgresql
+I, [2021-02-14T00:38:25.892618 #1]  INFO -- : 
+I, [2021-02-14T00:38:25.893293 #1]  INFO -- : > ln -s /shared/postgres_run /var/run/postgresql
+I, [2021-02-14T00:38:25.896700 #1]  INFO -- : 
+I, [2021-02-14T00:38:25.897450 #1]  INFO -- : > socat /dev/null UNIX-CONNECT:/shared/postgres_run/.s.PGSQL.5432 || exit 0 && echo postgres already running stop container ; exit 1
+2021/02/14 00:38:25 socat[28] E connect(6, AF=1 "/shared/postgres_run/.s.PGSQL.5432", 36): No such file or directory
+I, [2021-02-14T00:38:25.909272 #1]  INFO -- : 
+I, [2021-02-14T00:38:25.909575 #1]  INFO -- : > rm -fr /shared/postgres_run/.s*
+I, [2021-02-14T00:38:25.916221 #1]  INFO -- : 
+I, [2021-02-14T00:38:25.916553 #1]  INFO -- : > rm -fr /shared/postgres_run/*.pid
+I, [2021-02-14T00:38:25.922824 #1]  INFO -- : 
+I, [2021-02-14T00:38:25.923131 #1]  INFO -- : > mkdir -p /shared/postgres_run/13-main.pg_stat_tmp
+I, [2021-02-14T00:38:25.928461 #1]  INFO -- : 
+I, [2021-02-14T00:38:25.928982 #1]  INFO -- : > chown postgres:postgres /shared/postgres_run/13-main.pg_stat_tmp
+I, [2021-02-14T00:38:25.934224 #1]  INFO -- : 
+I, [2021-02-14T00:38:25.945686 #1]  INFO -- : File > /etc/service/postgres/run  chmod: +x  chown: 
+I, [2021-02-14T00:38:25.956787 #1]  INFO -- : File > /etc/service/postgres/log/run  chmod: +x  chown: 
+I, [2021-02-14T00:38:25.967456 #1]  INFO -- : File > /etc/runit/3.d/99-postgres  chmod: +x  chown: 
+I, [2021-02-14T00:38:25.978233 #1]  INFO -- : File > /root/upgrade_postgres  chmod: +x  chown: 
+I, [2021-02-14T00:38:25.978785 #1]  INFO -- : > chown -R root /var/lib/postgresql/13/main
+I, [2021-02-14T00:38:26.884228 #1]  INFO -- : 
+I, [2021-02-14T00:38:26.884744 #1]  INFO -- : > [ ! -e /shared/postgres_data ] && install -d -m 0755 -o postgres -g postgres /shared/postgres_data && sudo -E -u postgres /usr/lib/postgresql/13/bin/initdb -D /shared/postgres_data || exit 0
+I, [2021-02-14T00:38:26.890157 #1]  INFO -- : 
+I, [2021-02-14T00:38:26.890353 #1]  INFO -- : > chown -R postgres:postgres /shared/postgres_data
+I, [2021-02-14T00:38:26.912303 #1]  INFO -- : 
+I, [2021-02-14T00:38:26.912663 #1]  INFO -- : > chown -R postgres:postgres /var/run/postgresql
+I, [2021-02-14T00:38:26.916321 #1]  INFO -- : 
+I, [2021-02-14T00:38:26.916863 #1]  INFO -- : > /root/upgrade_postgres
+initdb: warning: enabling "trust" authentication for local connections
+You can change this by editing pg_hba.conf or using the option -A, or
+--auth-local and --auth-host, the next time you run initdb.
+debconf: delaying package configuration, since apt-utils is not installed
+I, [2021-02-14T00:38:52.921098 #1]  INFO -- : Upgrading PostgreSQL from version 12 to 13
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /shared/postgres_data_new ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+
+Success. You can now start the database server using:
+
+    /usr/lib/postgresql/13/bin/pg_ctl -D /shared/postgres_data_new -l logfile start
+
+Get:1 http://security.debian.org/debian-security buster/updates InRelease [65.4 kB]
+Get:2 http://deb.debian.org/debian buster InRelease [122 kB]
+Get:3 http://apt.postgresql.org/pub/repos/apt buster-pgdg InRelease [104 kB]
+Get:4 https://deb.nodesource.com/node_10.x buster InRelease [4,584 B]
+Get:5 http://deb.debian.org/debian buster-updates InRelease [51.9 kB]
+Get:6 http://security.debian.org/debian-security buster/updates/main amd64 Packages [267 kB]
+Get:7 http://deb.debian.org/debian buster/main amd64 Packages [7,907 kB]
+Get:8 https://deb.nodesource.com/node_10.x buster/main amd64 Packages [768 B]
+Get:9 http://apt.postgresql.org/pub/repos/apt buster-pgdg/main amd64 Packages [216 kB]
+Get:10 http://deb.debian.org/debian buster-updates/main amd64 Packages.diff/Index [5,656 B]
+Get:11 http://deb.debian.org/debian buster-updates/main amd64 Packages 2020-12-24-1401.30.pdiff [286 B]
+Get:12 http://deb.debian.org/debian buster-updates/main amd64 Packages 2021-01-29-2000.47.pdiff [408 B]
+Get:13 http://deb.debian.org/debian buster-updates/main amd64 Packages 2021-02-07-1359.56.pdiff [2,302 B]
+Get:13 http://deb.debian.org/debian buster-updates/main amd64 Packages 2021-02-07-1359.56.pdiff [2,302 B]
+Fetched 8,746 kB in 4s (1,999 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  postgresql-client-12
+Suggested packages:
+  postgresql-doc-12
+The following NEW packages will be installed:
+  postgresql-12 postgresql-client-12
+0 upgraded, 2 newly installed, 0 to remove and 28 not upgraded.
+Need to get 16.1 MB of archives.
+After this operation, 54.1 MB of additional disk space will be used.
+Get:1 http://apt.postgresql.org/pub/repos/apt buster-pgdg/main amd64 postgresql-client-12 amd64 12.6-1.pgdg100+1 [1,424 kB]
+Get:2 http://apt.postgresql.org/pub/repos/apt buster-pgdg/main amd64 postgresql-12 amd64 12.6-1.pgdg100+1 [14.7 MB]
+Fetched 16.1 MB in 9s (1,817 kB/s)
+Selecting previously unselected package postgresql-client-12.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 43899 files and directories currently installed.)
+Preparing to unpack .../postgresql-client-12_12.6-1.pgdg100+1_amd64.deb ...
+Unpacking postgresql-client-12 (12.6-1.pgdg100+1) ...
+Selecting previously unselected package postgresql-12.
+Preparing to unpack .../postgresql-12_12.6-1.pgdg100+1_amd64.deb ...
+Unpacking postgresql-12 (12.6-1.pgdg100+1) ...
+Setting up postgresql-client-12 (12.6-1.pgdg100+1) ...
+update-alternatives: warning: forcing reinstallation of alternative /usr/share/postgresql/13/man/man1/psql.1.gz because link group psql.1.gz is broken
+Setting up postgresql-12 (12.6-1.pgdg100+1) ...
+Creating new PostgreSQL cluster 12/main ...
+/usr/lib/postgresql/12/bin/initdb -D /var/lib/postgresql/12/main --auth-local peer --auth-host md5
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "C.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/12/main ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+Success. You can now start the database server using:
+
+    pg_ctlcluster 12 main start
+
+Ver Cluster Port Status Owner    Data directory              Log file
+[31m12  main    5433 down   postgres /var/lib/postgresql/12/main /var/log/postgresql/postgresql-12-main.log[0m
+update-alternatives: warning: forcing reinstallation of alternative /usr/share/postgresql/13/man/man1/postmaster.1.gz because link group postmaster.1.gz is broken
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of start.
+Processing triggers for postgresql-common (223.pgdg100+1) ...
+Building PostgreSQL dictionaries from installed myspell/hunspell packages...
+Removing obsolete dictionary files:
+Stopping PostgreSQL 12 database server: main.
+Stopping PostgreSQL 13 database server: main.
+Performing Consistency Checks
+-----------------------------
+Checking cluster versions                                   ok
+
+The source cluster was not shut down cleanly.
+Failure, exiting
+-------------------------------------------------------------------------------------
+UPGRADE OF POSTGRES FAILED
+
+Please visit https://meta.discourse.org/t/postgresql-13-update/172563 for support.
+
+You can run ./launcher start app to restart your app in the meanwhile
+
+
+
+
+FAILED
+--------------------
+Pups::ExecError: /root/upgrade_postgres failed with return #<Process::Status: pid 47 exit 1>
+Location of failure: /pups/lib/pups/exec_command.rb:112:in `spawn'
+exec failed with the params "/root/upgrade_postgres"
+046301bd8d06b3f37328d57afd54c1791ecebecec19e1984bb2ba5e83de48a69
+** FAILED TO BOOTSTRAP ** please scroll up and look for earlier error messages, there may be more than one.
+./discourse-doctor may help diagnose the problem.
+==================== END REBUILD LOG ====================
+Failed to rebuild app.
+
+Checking your domain name . . .
+
+Connection to forum.mmcs.sfedu.ru succeeded.
+You should probably remove any non-standard plugins and rebuild.
+Attempting to restart existing container. . . 
+
++ /usr/bin/docker run --shm-size=512m -d --restart=always -e LANG=en_US.UTF-8 -e RAILS_ENV=production -e UNICORN_WORKERS=3 -e UNICORN_SIDEKIQS=1 -e RUBY_GLOBAL_METHOD_CACHE_SIZE=131072 -e RUBY_GC_HEAP_GROWTH_MAX_SLOTS=40000 -e RUBY_GC_HEAP_INIT_SLOTS=400000 -e RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=1.5 -e DISCOURSE_DB_SOCKET=/var/run/postgresql -e DISCOURSE_DB_HOST= -e DISCOURSE_DB_PORT= -e DISCOURSE_DEVELOPER_EMAILS=REDACTED  -e DISCOURSE_HOSTNAME=forum.mmcs.sfedu.ru -e DISCOURSE_SMTP_ADDRESS=class.mmcs.sfedu.ru -e DISCOURSE_ENABLE_CORS=true -e 'DISCOURSE_CORS_ORIGIN=*' -h users-app -e DOCKER_HOST_IP=172.17.0.1 --name app -t -p 8088:80 -p 2222:22 -v /var/discourse/shared/standalone:/shared -v /var/discourse/shared/standalone/log/var-log:/var/log --mac-address 02:b1:c6:37:24:01 local_discourse/app /sbin/boot
+Unable to find image 'local_discourse/app:latest' locally
+docker: Error response from daemon: pull access denied for local_discourse/app, repository does not exist or may require 'docker login': denied: requested access to the resource is denied.
+See 'docker run --help'.
+Failed to restart the container.
+
+
+==================== PLUGINS ====================
+          - git clone https://github.com/discourse/docker_manager.git
+          - git clone https://github.com/kasperpeulen/discourse-mathjax
+          - git clone https://github.com/Yachtsman/discourse-vk-login.git
+          - git clone https://github.com/discourse/discourse-spoiler-alert.git
+#          - git clone https://github.com/ligthyear/discourse-plugin-permalink
+
+WARNING:
+You have what appear to be non-official plugins.
+If you are having trouble, you should disable them and try rebuilding again.
+
+See https://github.com/discourse/discourse/blob/master/lib/plugin/metadata.rb for the official list.
+
+========================================
+Discourse version at forum.mmcs.sfedu.ru: NOT FOUND
+Discourse version at localhost: NOT FOUND
+
+
+==================== MEMORY INFORMATION ====================
+OS: Linux
+RAM (MB): 16349
+
+              total        used        free      shared  buff/cache   available
+Mem:          15592        1101         528           6       13961       14185
+Swap:             0           0           0
+
+==================== DISK SPACE CHECK ====================
+---------- OS Disk Space ----------
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/xvda2      689G  151G  503G  24% /
+
+==================== DISK INFORMATION ====================
+Disk /dev/loop0: 55.39 MiB, 58073088 bytes, 113424 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop1: 69.9 MiB, 73277440 bytes, 143120 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop2: 55.48 MiB, 58159104 bytes, 113592 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop3: 69.78 MiB, 73150464 bytes, 142872 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop4: 31.9 MiB, 32595968 bytes, 63664 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop5: 31.9 MiB, 32600064 bytes, 63672 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/xvda: 700 GiB, 751619276800 bytes, 1468006400 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: AE73D491-ACF6-48F6-B265-C41365F13000
+
+Device     Start        End    Sectors  Size Type
+/dev/xvda1  2048       4095       2048    1M BIOS boot
+/dev/xvda2  4096 1468004351 1468000256  700G Linux filesystem
+
+
+Disk /dev/xvdb: 1000 GiB, 1073741824000 bytes, 2097152000 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x00011d82
+
+Device     Boot Start        End    Sectors  Size Id Type
+/dev/xvdb1      16384 2097151999 2097135616 1000G 83 Linux
+
+
+Disk /dev/xvdv: 500 GiB, 536870912000 bytes, 1048576000 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x000d606e
+
+Device     Boot Start        End    Sectors  Size Id Type
+/dev/xvdv1      16384 1048575999 1048559616  500G 83 Linux
+
+==================== END DISK INFORMATION ====================
+
+==================== MAIL TEST ====================
+For a robust test, get an address from http://www.mail-tester.com/
+Sending mail to REDACTED  . . 
+
+
+==================== DONE! ====================
+
+You can examine the output of this script with 
+LESS=-Ri less /tmp/discourse-debug.txt
+
+BUT FIRST, make sure that you know the first three commands below!!!
+
+Commands to know when viewing the file with the above command (called 'less'): 
+q              -- quit
+/error<ENTER>  -- search for the word 'error'
+n              -- search for the next occurrence
+g              -- go to the beginning of the file
+f              -- go forward a page
+b              -- go back a page
+G              -- go to the end of the file

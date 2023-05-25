@@ -1,0 +1,83 @@
+\twocolumn[\begin{center}
+{\bfseries\Large \textsc{\Llabel{} \Lnum}}
+\end{center}]
+\textbf{1. Системы линейных уравнений с регулярными коэффициентами}
+
+Решить системы уравнений:
+\begin{equation}
+    \begin{cases}
+    X_1 = aX_1 + aX_2;\\
+    X_2 = bX_2 + b.
+    \end{cases}
+\end{equation} 
+
+\begin{equation}
+    \begin{cases}
+        X_1 = 1X_1 + 0X_2 + \es X_3; \\
+        X_2 = 1X_1 + \es X_2 + 0X_3; \\
+        X_3 = 0X_1 + \es X_2 + 1X_3. 
+    \end{cases}
+\end{equation} 
+
+\begin{equation}
+    \begin{cases}
+        X_1 = a^{\ast}X_1 + (a+b)^{\ast}X_2;\\
+        X_2 = (a+b^{\ast})X_1 + aX_2 + b^\ast.
+    \end{cases}
+\end{equation}
+
+\begin{equation}
+    \begin{cases}
+        X_1 = (a+b)X_1 + \es X_2 + a^{\ast}X_3; \\
+        X_2 = \es X_1 + aX_2 + a^{\ast}; \\
+        X_3 = b^{\ast}X_1 + \es X_2 + a^{\ast}X_3.
+    \end{cases}
+\end{equation} 
+
+Написать регулярные выражения для языков, заданных грамматиками cо
+следующими продукциями:
+\begin{equation}
+\begin{array}{l}
+S \to 1A \mid 2S; \\
+A \to 0B \mid 0S \mid 1A; \\
+B \to 1C \mid 2C; \\
+C \to \varepsilon \mid 1S \mid 2A.
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l}
+S \to 0A \mid 1S \mid \varepsilon ;\\
+A \to 0B \mid 1A;\\
+B \to 0S \mid 1B.
+\end{array}
+\end{equation}
+
+\newpage
+\textbf{2. Доказательство нерегулярности формальных языков}
+\begin{Thm}[«Лемма о накачке» / «Лемма о разрастании» / «Pumping Lemma»,
+И.~Бар-Хил\-лел~— М.~Пе\-лис~— Э.~Ша\-мир, 1961] Пусть $L$ — регулярный язык.
+Тогда существует такая константа $n\in \mathbb N$, что для любого слова $w \in L$,
+такого что $|w|\geqslant n$, существует такое разбиение $w=xyz$ слова $w$, что:
+\begin{enumerate}
+  \item $y \neq \varepsilon$;
+  \item $|xy| \leqslant n$;
+  \item $\{ xy^kz \mid k \geqslant 0\} \subset L$.
+\end{enumerate} 
+\end{Thm}
+\begin{proof}
+${\otimes}$ — найти в одной из предложенных электронных книг.
+\end{proof}
+
+Доказать, что следующие языки нерегулярны:
+\begin{enumerate}
+  \item $\{0^n1^n \mid n \in \mathbb N\}$;
+  \item язык из всех слов $w \in \{0,1\}^{\ast}$, содержащих одинаковое
+  количество $0$ и $1$;
+  \item $\{w w \mid w \in \{0, 1\}^\ast \}$;
+  \item $\{0^n1^m \mid n \leqslant m \}$;
+  \item $\{1^p \mid \text{$p$ — простое} \}$;
+  \item $\{0^n10^n \mid n \in \mathbb N\}$;
+  \item $\{1^{n^2} | n \in \mathbb N\}$;
+  \item $\{1^{n!} | n \in \mathbb N\}$.
+\end{enumerate}

@@ -1,0 +1,59 @@
+#include <iostream>
+#include <cstdlib>
+
+using namespace std;
+
+//#define dynamic
+#define base
+
+#define write_in_derived
+//#define read_in_derived
+
+class Base {
+public:
+	void f() {cout << "Base::f()\n";};
+	virtual ~Base() {}
+};
+
+class Derived : public Base {
+	int i;
+public:
+	Derived() : i() {}
+	void g() { 
+#ifdef write_in_derived
+		i = 42;
+#endif
+		cout << "Derived::g()\n" 
+#ifdef read_in_derived
+			<< i << "\n"
+#endif
+			; 
+	}
+};
+
+int main() {
+	Base b;
+	Derived d;
+
+	Base *pb = 0;
+	Derived *pd = 0;
+
+#ifdef base
+	pb =  &b;
+#else if
+	pb = &d;
+#endif
+
+	// pb -> pd
+#ifdef dynamic
+    if (pd = dynamic_cast<Derived*>(pb)) {
+		 pd->g();
+     } else {
+		 pb->f();
+     }
+#else // static
+	pd = static_cast<Derived*>(pb);
+	pd->g();
+#endif
+	system("pause");
+}

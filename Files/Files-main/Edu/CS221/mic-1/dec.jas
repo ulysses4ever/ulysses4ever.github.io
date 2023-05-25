@@ -1,0 +1,14 @@
+// dec.jas
+//
+//  Author
+//    MMCS SFEDU
+//
+//  Description
+//    Program to decrement number on a stack
+//
+
+.main				// start of program
+start:	
+	BIPUSH 0x43
+	DEC
+.end-main

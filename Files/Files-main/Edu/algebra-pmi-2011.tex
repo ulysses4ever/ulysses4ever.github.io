@@ -1,0 +1,101 @@
+\documentclass[a4paper,12pt]{scrartcl}%article
+
+\lccode`\-=`\-
+\defaulthyphenchar=127
+
+\usepackage{cmap} % copy text from pdf
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}%,russian
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{amssymb, amsmath}
+\usepackage{amsthm} % for {proof}
+\usepackage{indentfirst}
+%\usepackage{xypic}
+%\usepackage[T2A]{fontenc} 
+\usepackage[margin=2cm]{geometry}
+%\geometry{}%a4paper,
+\parindent=0cm%1.25cm
+
+\emergencystretch=1em
+
+% \usepackage{mdwlist} % list-related facilities
+\newcommand{\CPP}
+{C\nolinebreak[4]\hspace{-.05em}\raisebox{.22ex}{\footnotesize\bf ++}}
+
+\usepackage[usenames]{color}
+\usepackage{colortbl}
+
+
+\usepackage[unicode,colorlinks,urlcolor=cyan]{hyperref}
+\usepackage{url}
+\usepackage{fancyhdr}
+
+\usepackage{tikz}
+\usetikzlibrary{automata,shapes,arrows,positioning,calc}
+
+\usepackage{clrscode}
+
+\usepackage{sectsty}
+\usepackage{verbatim}
+\usepackage{ifthen}
+\usepackage{forloop}
+\usepackage{calc}
+
+%\pagestyle{empty}
+
+\newcommand{\nspace}{\hspace{0pt}}
+\newcommand{\nbdash}{\nobreakdash-\nspace}
+\newcommand{\Rats}{\ensuremath{\mathbb Q}}
+\newcommand{\Ints}{\ensuremath{\mathbb Z}}
+\newcommand{\Z}{\mathbb Z}
+\DeclareMathOperator{\Gal}{Gal}
+% cyrillic enumerate enumerate
+\renewcommand{\theenumii}{\asbuk{enumii}}
+
+\newtheorem{thm}{Theorem}%[section]
+% \renewcommand{\theThm}{\arabic{Thm}}
+% \newtheorem{Lmm}{Лемма}
+% \newtheorem*{Cor}{Следствие}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+% \newtheorem*{Remark}{Замечание}
+% \newtheorem*{Algo}{Алгоритм}
+% \newtheorem{NumAlgo}{Алгоритм}
+% \newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\frenchspacing
+\newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.5ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.5ex}{\tiny\bf +}}
+
+\newcommand{\Text}{
+\begin{center}
+\LARGE \bfseries Экзаменационное задание\\
+\normalsize по курсу «Дополнительные главы алгебры»
+\end{center} 
+
+\begin{enumerate}
+    \item Найти индекс группы $(\Z_{40} , {+})$ по её подгруппе, порождённой
+    элементами $12$ и~$20$.
+    \item Доказать, что аддитивная группа $\Z_2 \times \Z_3$ является
+    циклической.
+    \item Пусть $G$ — конечная абелева $p$-группа. Доказать, что $pG \neq G$.
+    \item Доказать, что множество всех многочленов с чётными свободными членами является
+    идеалом в кольце $\Z[x]$.
+    \item Пусть $F$ — поле, а $f \in F[x]$. Доказать, что если $c \in F$ и $f(x
+    + c)$ неприводим в $F [x]$, то $f (x)$ также неприводим в $F [x]$.
+    \item Пусть $F$ — поле с единицей $1$, $c \in F$ и $K$ — расширение $F$.
+    Доказать, что если элемент $u \in K$~— алгебраический над $F$, то $u + 1$ и $cu$ также
+    алгебраические над $F$.
+    \item Построить поле разложения многочлена $x^3 + x + 1$ над полем $\Z_2$.
+\end{enumerate}
+}
+
+\begin{document}
+\Text
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\Text
+
+\end{document}

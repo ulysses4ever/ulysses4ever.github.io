@@ -1,0 +1,3090 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1251"><!--   Copyright 1997 QNX Software Systems Ltd.                          -->
+<!--   All rights reserved.                                              -->
+<!--                                                                     -->
+<!--   No part of this publication may be reproduced, stored in a        -->
+<!--   retrieval system, or transmitted in any form or by any            -->
+<!--   means, electronic, mechanical, photocopying, recording, or        -->
+<!--   otherwise without the prior written permission of QNX             -->
+<!--   Software Systems Ltd.                                             -->
+<!--                                                                     -->
+<!--   Although every precaution has been taken in the preparation       -->
+<!--   of this document, we assume no responsibility for any errors or   -->
+<!--   omissions, nor do we assume liability for damages resulting       -->
+<!--   from the use of the information contained in this document.       -->
+<!--                                                                     -->
+<!--   QNX is a registered trademark of QNX Software Systems Ltd.        -->
+<!--   Photon microGUI is a trademark of QNX Software Systems Ltd.       -->
+
+<!-- Document processed on: May 08, 1997 (14:9:43) -->
+
+
+
+
+<title>Watcom Linker</title>
+<link rel="next" href="http://www.users.pjwstk.edu.pl/%7Ejms/qnx/help/watcom/compiler-tools/wlfcopt.html">
+<link rel="previous" href="http://www.users.pjwstk.edu.pl/%7Ejms/qnx/help/watcom/compiler-tools/cpasm.html">
+</head><body bgcolor="#ffffff" text="#000000">
+
+
+<vpage>
+<h1><a name="id1">Watcom Linker</a></h1>
+
+<p>The Watcom Linker is a linkage editor (linker) that takes object and
+library files as input and produces executable files as output.
+
+
+
+The QNX executable file format only runs under the QNX operating
+system.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>Most of the time you'll likely use the <tt>cc</tt> command instead of
+invoking the Watcom C/C++ Linker directly. 
+See the description of the
+<a href="http://www.users.pjwstk.edu.pl/%7Ejms/qnx/help/watcom/utilities/cc.html"><tt>cc</tt></a> command in the
+Watcom <cite>Utilities Reference</cite> for more information.</td>
+</tr></tbody></table>
+<hr>
+
+<p>This chapter includes the following sections:
+</p><ul><li><a href="#Introduction">Introduction</a>
+  </li><li><a href="#CommandLine">Linker command line</a>
+  </li><li><a href="#Directives">Linker directives</a>
+  </li><li><a href="#MemoryRequirements">Memory requirements</a></li></ul>
+<vpage>
+
+<h1><a name="Introduction">Introduction</a></h1>
+<p>
+The following object module formats (OMF) are supported by the Watcom Linker:
+</p><ul><li>    
+    the standard Intel object module format
+  </li><li>    
+    Microsoft's extensions to the Intel standard object module format
+  </li><li>    
+    Phar Lap's Easy OMF-386 object module format for linking 386
+    applications</li></ul><p>
+The Watcom Linker can produce executable files for QNX as well as the
+following formats:
+</p><ul><li>DOS executable files
+
+
+  </li><li>executable files that run under FlashTek's DOS extender
+  </li><li>executable files that run under Phar Lap's 386|DOS-Extender
+  </li><li>executable files that run under Tenberry Software's DOS/4G and DOS/4GW
+    DOS extenders
+  </li><li>executable files that run under Autodesk's AutoCAD Development System
+  </li><li>NetWare Loadable Modules (NLMs) that run under Novell's NetWare 386
+    operating system
+  </li><li>OS/2 executable files including Dynamic Link Libraries
+  </li><li>Windows 3.x executable files including Dynamic Link Libraries
+  </li><li>Windows NT executable files including Dynamic Link Libraries</li></ul><p>
+The Watcom Linker runs under a variety of operating systems:
+</p><ul><li>DOS
+  </li><li>OS/2
+  </li><li>QNX
+  </li><li>Windows NT</li></ul>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>This guide describes only the QNX executable file format.</td>
+</tr></tbody></table>
+<hr>
+
+
+<vpage>
+
+<h1><a name="CommandLine">Linker command line</a></h1>
+<p>Input to the Watcom Linker is specified on the command line.
+The following notation is used to describe the syntax of Watcom Linker
+commands:
+</p><dl>
+<dt><tt>ABC</tt>
+    </dt><dd>All items in uppercase are required. You don't need to type them
+      in uppercase.
+  </dd><dt>[<i>abc</i>]
+    </dt><dd>The item <i>abc</i> is optional.
+  </dd><dt>{<i>abc</i>}
+    </dt><dd>The item <i>abc</i> may be repeated zero or more times.
+  </dd><dt>{<i>abc</i>}+
+    </dt><dd>The item <i>abc</i> may be repeated one or more times.
+  </dd><dt><i>a|b|c</i>
+    </dt><dd>One of <i>a</i>, <i>b</i> or <i>c</i> may be specified.</dd></dl>
+<p>Certain characters have special meaning to the linker.
+
+
+
+When a special character must appear in a name, you can imbed the
+string that makes up the name inside apostrophes (for example, 
+<tt>'name@8'</tt>).
+This prevents the linker from interpreting the special character in
+its usual manner.
+The special characters are listed below:
+</p><table border="1">
+<tbody><tr><th>Character</th><th>Name of Character
+  </th></tr><tr><td> </td><td>Blank
+  </td></tr><tr><td>=</td><td>Equals
+  </td></tr><tr><td>(</td><td>Left Parenthesis
+  </td></tr><tr><td>)</td><td>Right Parenthesis
+  </td></tr><tr><td>,</td><td>Comma
+  </td></tr><tr><td>.</td><td>Period
+  </td></tr><tr><td>{</td><td>Left Brace
+  </td></tr><tr><td>}</td><td>Right Brace
+  </td></tr><tr><td>@</td><td>At Sign
+  </td></tr><tr><td>#</td><td>Hash Mark
+  </td></tr><tr><td>%</td><td>Percentage Symbol</td></tr></tbody></table>
+<p>
+
+The Watcom Linker command-line format is as follows:
+</p><p><tt>wlink</tt> {<i>directive</i>}
+</p><p>The <i>directive</i> is any of the following:
+</p><ul><li><a href="#AliasDirective"><tt><b>ALIAS</b></tt></a> 
+    <i>symbol_name=symbol_name{,symbol_name=symbol_name}</i>
+  </li><li><a href="#DebugDirective"><tt><b>DEBUG</b></tt></a> <tt><b>[[WATCOM]</b></tt> 
+    <i>db_list</i> | <tt><b>CODEVIEW | DWARF]</b></tt>
+
+    <p>    where <i>db_list</i> is a list of one or more debugging options, 
+    separated by commas. The debugging options are as follows:
+
+    </p><ul plain="PLAIN"><li><tt><b>LINES</b></tt>
+      </li><li><tt><b>TYPES</b></tt>
+      </li><li><tt><b>LOCALS</b></tt>
+      </li><li><tt><b>STATIC</b></tt>
+      </li><li><tt><b>ALL</b></tt>
+    </li></ul>
+
+  </li><li><a href="#DisableDirective"><tt><b>DISABLE</b></tt></a> 
+    <i>msg_num{,msg_num}</i>
+  </li><li><a href="#FileDirective"><tt><b>FILE</b></tt></a> 
+    <i>obj_spec{,obj_spec}</i>
+
+    <p>    where <i>obj_spec</i> is defined as
+
+    </p><p>    <i>obj_file[(obj_module)] | library_file[(obj_module)]</i>
+
+  </p></li><li><a href="#FormatDirective"><tt><b>FORMAT</b></tt></a> <i>form</i>
+  </li><li><a href="#LibfileDirective"><tt><b>LIBFILE</b></tt></a> 
+    <i>obj_file{,obj_file}</i>
+  </li><li><a href="#LibpathDirective"><tt><b>LIBPATH</b></tt></a> 
+    <i>path_name{:path_name}</i>
+  </li><li><a href="#LibraryDirective"><tt><b>LIBRARY</b></tt></a> 
+    <i>library_file{,library_file}</i>
+  </li><li><a href="#ModTraceDirective"><tt><b>MODTRACE</b></tt></a> 
+    <i>obj_spec{,obj_spec}</i>
+  </li><li><a href="#NameDirective"><tt><b>NAME</b></tt></a> <i>exe_file</i>
+  </li><li><a href="#NewSegmentDirective"><tt><b>NEWSEGMENT</b></tt></a>
+  </li><li><a href="#OptionDirective"><tt><b>OPTION</b></tt></a> 
+    <i>option{,option}</i>
+
+    <p>    where <i>option</i> is one of the following:
+
+    </p><ul plain="PLAIN"><li><a href="#ArtificialOption"><tt><b>ARTIFICIAL</b></tt></a> 
+      </li><li><a href="#CacheOption"><tt><b>[NO]CACHE</b></tt></a>
+      </li><li><a href="#CaseExactOption"><tt><b>[NO]CASEEXACT</b></tt></a>
+      </li><li><a href="#CVPackOption"><tt><b>CVPACK</b></tt></a>
+      </li><li><a href="#DoSSegOption"><tt><b>DOSSEG</b></tt></a>
+      </li><li><a href="#EliminateOption"><tt><b>ELIMINATE</b></tt></a>
+      </li><li><a href="#HeapSizeOption"><tt><b>HEAPSIZE</b></tt></a>=<i>n</i>
+      </li><li><a href="#LinearRelocsOption"><tt><b>LINEARRELOCS</b></tt></a>
+      </li><li><a href="#LongLivedOption"><tt><b>LONGLIVED</b></tt></a>
+      </li><li><a href="#MangledNamesOption"><tt><b>MANGLEDNAMES</b></tt></a>
+      </li><li><a href="#MapOption"><tt><b>MAP</b></tt></a>[=<i>map_file</i>]
+      </li><li><a href="#MaxErrorsOption"><tt><b>MAXERRORS</b></tt></a>=<i>n</i>
+      </li><li><a href="#NameLenOption"><tt><b>NAMELEN</b></tt></a>=<i>n</i>
+      </li><li><a href="#NoDefaultLibsOption"><tt><b>NODEFAULTLIBS</b></tt></a>
+      </li><li><a href="#NoRelocsOption"><tt><b>NORELOCS</b></tt></a>
+      </li><li><a href="#OffsetOption"><tt><b>OFFSET</b></tt></a>=<i>n</i>
+      </li><li><a href="#OSNameOption"><tt><b>OSNAME</b></tt></a>='<i>string</i>'
+      </li><li><a href="#PackCodeOption"><tt><b>PACKCODE</b></tt></a>=<i>n</i>
+      </li><li><a href="#PackDataOption"><tt><b>PACKDATA</b></tt></a>=<i>n</i>
+      </li><li><a href="#PrivilegeOption"><tt><b>PRIVILEGE</b></tt></a>=<i>n</i>
+      </li><li><a href="#QuietOption"><tt><b>QUIET</b></tt></a>
+      </li><li><a href="#RedefsOKOption"><tt><b>REDEFSOK</b></tt></a>
+      </li><li><a href="#ResourceOption"><tt><b>RESOURCE</b></tt></a>[=<i>resource_file</i> | '<i>string</i>']
+      </li><li><a href="#StackOption"><tt><b>STACK</b></tt></a>=<i>n</i>
+      </li><li><a href="#StaticsOption"><tt><b>STATICS</b></tt></a>
+      </li><li><a href="#SymFileOption"><tt><b>SYMFILE</b></tt></a>[=<i>symbol_file</i>]
+      </li><li><a href="#UndefsOKOption"><tt><b>UNDEFSOK</b></tt></a>
+      </li><li><a href="#VerboseOption"><tt><b>VERBOSE</b></tt></a>
+    </li></ul>
+
+  </li><li><a href="#PathDirective"><tt><b>PATH</b></tt></a> 
+    <i>path_name{:path_name}</i>
+  </li><li><a href="#ReferenceDirective"><tt><b>REFERENCE</b></tt></a> 
+    <i>symbol_name{,symbol_name}</i>
+  </li><li><a href="#SegmentDirective"><tt><b>SEGMENT</b></tt></a> 
+    <i>seg_desc{,seg_desc}</i>
+
+    <p>    where <i>seg_desc</i> is a <i>seg_id</i> followed by one
+    or more <i>seg_attrs</i>, and
+
+    </p><dl>
+<dt><i>seg_id</i> 
+        </dt><dd>is one of
+
+          <ul plain="PLAIN"><li>'<i>seg_name</i>'
+            </li><li><tt><b>CLASS</b></tt> '<i>class_name</i>'
+            </li><li><tt><b>TYPE [CODE | DATA]</b></tt>
+          </li></ul>
+      </dd><dt><i>seg_attrs</i>
+        </dt><dd>is one of
+
+          <ul plain="PLAIN"><li><tt><b>EXECUTEONLY</b></tt>
+            </li><li><tt><b>EXECUTEREAD</b></tt>
+            </li><li><tt><b>READONLY</b></tt>
+            </li><li><tt><b>READWRITE</b></tt>
+          </li></ul>
+    </dd></dl>
+
+
+  </li><li><a href="#SortDirective"><tt><b>SORT</b></tt></a> <tt><b>[GLOBAL] [ALPHABETICAL]</b></tt>
+  </li><li><a href="#SymTraceDirective"><tt><b>SYMTRACE</b></tt></a> 
+    <i>symbol_name{,symbol_name}</i>
+  </li><li><a href="#SystemDirective"><tt><b>SYSTEM</b></tt></a> <tt><b>BEGIN</b></tt> 
+    <i>system_name {directive}</i> <tt><b>END</b></tt>
+  </li><li><a href="#SystemDirective"><tt><b>SYSTEM</b></tt></a> 
+    <i>system_name</i>
+  </li><li><a href="#CommentDirective"><tt><b>#</b></tt></a> <i>comment</i>
+  </li><li><a href="#IncludeDirective"><tt><b>@</b></tt></a> 
+    <i>directive_file</i></li></ul><p>where
+</p><dl>
+<dt><i>obj_file</i>
+    </dt><dd>is a file specification for the name of an object file.
+      
+      If no file extension is specified, a file extension of <tt>.o</tt>
+      is assumed.
+      
+      
+
+  </dd><dt><i>library_file</i>
+    </dt><dd>is a file specification for the name of a library file.
+      If <i>library_file</i> appears in a <tt><b>LIBRARY</b></tt> directive, 
+      and no file extension is specified, a file extension of 
+      <tt>.lib</tt> is assumed. If <i>library_file</i> appears in a 
+      <tt><b>FILE</b></tt> directive, and no file extension is specified, a
+      file extension of
+      <tt>.o</tt> is assumed.
+      
+      
+
+      <p>      When a library file is specified in a <tt><b>FILE</b></tt> directive, and
+      <i>obj_module</i> is specified, the object module identified by
+      <i>obj_module</i> is extracted from the library file and included 
+      in the executable file. If <i>obj_module</i> isn't specified (that 
+      is, only the library file is specified), all object modules in the 
+      library are included in the executable file.
+
+
+  </p></dd><dt><i>obj_module</i>
+    </dt><dd>is the name of an object module contained in a library file or object
+      file.
+
+      <p>      Object files may contain multiple object modules.
+      A simple way of creating such an object file is to concatenate a
+      number of object files into a single object file.
+      Each of the original object files is now an object module in the
+      resulting object file.
+      Also, some language processors may generate object files that contain
+      multiple object modules.
+      Specifying <i>obj_module</i> allows you to select a particular 
+      object module from an object file.
+
+  </p></dd><dt><i>exe_file</i>
+    </dt><dd>is a file specification for the name of the executable file.
+      No file extension is assumed.
+
+  </dd><dt><i>path_name</i>
+    </dt><dd>is a path name.
+  </dd><dt><i>msg_num</i>
+    </dt><dd>is a message number.
+  </dd><dt><i>directive_file</i>
+    </dt><dd>is a file specification for the name of a linker directive file.
+      If no file extension is specified, a file extension of 
+      <tt>.lnk</tt> is assumed.
+      
+  </dd><dt><i>map_file</i>
+    </dt><dd>is a file specification for the name of the map file.
+      If no file extension is specified, a file extension of 
+      <tt>.map</tt> is assumed.
+      
+  </dd><dt><i>symbol_file</i>
+    </dt><dd>is a file specification for the name of the symbol file.
+      If no file extension is specified, a file extension of 
+      <tt>.sym</tt> is assumed.
+      
+  </dd><dt><i>symbol_name</i>
+    </dt><dd>is the name of a symbol.
+  </dd><dt><i>alias_name</i>
+    </dt><dd>is the name of an alias symbol.
+  </dd><dt><i>system_name</i>
+    </dt><dd>is the name of a system.
+  </dd><dt><i>comment</i>
+    </dt><dd>is any sequence of characters.
+
+  </dd><dt><i>n</i>
+    </dt><dd>represents a value. The complete form of <i>n</i> is as follows:
+
+      
+<pre>      [0x]<i>d</i>{<i>d</i>}[k|m]
+      
+</pre>
+
+
+
+      <p>      <i>d</i> represents a decimal digit. If <tt>0x</tt>
+      is specified, the string of digits represents a hexadecimal number.
+      If <tt>k</tt> is specified, the value is multiplied by 1024.
+      If <tt>m</tt> is specified, the value is multiplied by 1024*1024.
+</p></dd></dl>
+<p>You can view all the directives specific to QNX executable files
+by simply typing the following:
+</p>
+<pre>wlink ? qnx
+</pre>
+
+
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>The question mark (<tt>?</tt>) is used for filename expansion by the
+shell.
+You should put a backslash (<tt>\</tt>) before it to
+make sure that the shell doesn't replace it with any one-character filenames
+in your current directory.</td>
+</tr></tbody></table>
+<hr>
+
+<p>If the directive information won't all fit on the command line,
+type the following:
+</p>
+<pre>    wlink
+</pre>
+
+<p>The prompt <tt>WLINK&gt;</tt> appears on the next line.
+You can enter as many lines of directive information as required.
+Press <b>Ctrl</b>-<b>D</b> to terminate the 
+input of directive information.
+</p>
+<vpage>
+
+<h1><a name="Directives">Linker directives</a></h1>
+<p>
+Directives tell the Watcom Linker how to create your program.
+For example, using directives you can tell the Watcom Linker which object files
+are to be included in the program, which library files to search to
+resolve undefined references, and the name of the executable file.
+
+</p><p>
+
+The file <tt>wlink.lnk</tt> is a special linker directive file
+that's automatically processed by the Watcom Linker before processing any
+other directives.
+</p><ul><li>On a DOS, OS/2, Windows 95 or Windows NT-hosted system,
+    this file must be located in one of the paths specified in the
+    <b>PATH</b> environment variable.
+  </li><li>On a QNX-hosted system, this file should be located in the
+    <tt>/etc</tt> directory.</li></ul><p>There isn't a default version of this file for QNX. For other operating
+systems, you'll find the default version in:
+</p><ul><li>the <tt>\watcom\binw</tt> directory on DOS-hosted systems,
+  </li><li>the <tt>\watcom\binp</tt> directory on OS/2-hosted systems,
+  </li><li>the <tt>\watcom\binnt</tt> directory on Windows 95 or
+    Windows NT-hosted systems.</li></ul><p>
+Note that the file <tt>wlink.lnk</tt> includes the
+file <tt>wlsystem.lnk</tt>, which is located in
+
+the <tt>\watcom\binw</tt> directory on DOS, OS/2, Windows 95
+and Windows NT-hosted systems
+</p><p>The files <tt>wlink.lnk</tt> and <tt>wlsystem.lnk</tt>
+reference the <b>WATCOM</b> environment variable, which must be set 
+to the directory in which you installed your software.
+
+
+</p><p>
+It's also possible to use environment variables when specifying a directive.
+For example, if the <b>LIBDIR</b> environment variable is defined as 
+follows,
+</p>
+<pre>export libdir=/test
+</pre>
+
+<p>then the linker directive
+</p>
+<pre>library $libdir/mylib
+</pre>
+
+<p>is equivalent to the following linker directive:
+</p>
+<pre>library /test/mylib
+</pre>
+
+
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>A space must precede a reference to an environment variable.</td>
+</tr></tbody></table>
+<hr>
+
+<p>Many directives can take a list of one or more arguments separated by
+commas.
+Instead of a comma-delimited list, you can specify a space-separated
+list provided the list is enclosed in braces (for example, { space-delimited 
+list }). For example, the <tt><b>FILE</b></tt> directive can take a list of object 
+file names as an argument:
+</p>
+<pre>file first,second,third,fourth
+</pre>
+
+<p>The alternate way of specifying this is as follows:
+</p>
+<pre>file {first second third fourth}
+</pre>
+
+<p>Where this comes in handy is in <tt>make</tt> files, where a list of 
+dependents is usually a space-delimited list:
+</p>
+<pre>OBJS = first second third fourth
+    .
+    .
+    .
+    wlink file {$(objs)}
+</pre>
+
+<p>The following sections describe the Watcom Linker directives that are
+used to generate QNX executable files:
+</p><ul><li><a href="#AliasDirective"><tt><b>ALIAS</b></tt> directive</a>
+  </li><li><a href="#DebugDirective"><tt><b>DEBUG</b></tt> directive</a>
+  </li><li><a href="#DisableDirective"><tt><b>DISABLE</b></tt> directive</a>
+  </li><li><a href="#FileDirective"><tt><b>FILE</b></tt> directive</a>
+  </li><li><a href="#FormatDirective"><tt><b>FORMAT</b></tt> directive</a>
+  </li><li><a href="#LanguageDirective"><tt><b>LANGUAGE</b></tt> directive</a>
+  </li><li><a href="#LibraryDirective"><tt><b>LIBRARY</b></tt> directive</a>
+  </li><li><a href="#LibfileDirective"><tt><b>LIBFILE</b></tt> directive</a>
+  </li><li><a href="#LibpathDirective"><tt><b>LIBPATH</b></tt> directive</a>
+  </li><li><a href="#ModTraceDirective"><tt><b>MODTRACE</b></tt> directive</a>
+  </li><li><a href="#NameDirective"><tt><b>NAME</b></tt> directive</a>
+  </li><li><a href="#NewSegmentDirective"><tt><b>NEWSEGMENT</b></tt> directive</a>
+  </li><li><a href="#OptionDirective"><tt><b>OPTION</b></tt> directive</a>
+  </li><li><a href="#PathDirective"><tt><b>PATH</b></tt> directive</a>
+  </li><li><a href="#ReferenceDirective"><tt><b>REFERENCE</b></tt> directive</a>
+  </li><li><a href="#SegmentDirective"><tt><b>SEGMENT</b></tt> directive</a>
+  </li><li><a href="#SortDirective"><tt><b>SORT</b></tt> directive</a>
+  </li><li><a href="#SymTraceDirective"><tt><b>SYMTRACE</b></tt> directive</a>
+  </li><li><a href="#SystemDirective"><tt><b>SYSTEM</b></tt> directive</a>
+  </li><li><a href="#CommentDirective">Comment (<tt><b>#</b></tt>) directive</a>
+  </li><li><a href="#IncludeDirective">Include (<tt><b>@</b></tt>) directive</a></li></ul>
+<vpage>
+
+<h1><a name="AliasDirective"><tt><b>ALIAS</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>ALIAS</b></tt> directive is used to specify an equivalent name for a 
+symbol name.
+The format of the <tt><b>ALIAS</b></tt> directive (short form <tt><b>A</b></tt>) is as 
+follows:
+</p><p><tt><b>ALIAS</b></tt> <i>alias_name=symbol_name{, alias_name=symbol_name}</i>
+</p><dl>
+<dt><i>alias_name</i>
+    </dt><dd>is the alias name.
+  </dd><dt><i>symbol_name</i>
+    </dt><dd>is the symbol name to which the alias name is mapped.</dd></dl>
+<p>Consider the following example:
+</p>
+<pre>alias sine=mysine
+</pre>
+
+<p>When the linker tries to resolve the reference to <tt>sine</tt>,
+it immediately substitutes the name <tt>mysine</tt> for
+<tt>sine</tt>, and begins searching for the symbol <tt>mysine</tt>.
+
+</p>
+<vpage>
+
+<h1><a name="DebugDirective"><tt><b>DEBUG</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>DEBUG</b></tt> directive is used to tell the Watcom Linker to generate
+debugging information in the executable file.
+
+
+This extra information in the executable file is used by the
+Watcom Debugger, <tt>wd</tt>.
+The format of the <tt><b>DEBUG</b></tt> directive (short form <tt><b>D</b></tt>) is as 
+follows:
+</p>
+<pre>    DEBUG [[WATCOM] <i>db_list</i> | CODEVIEW | DWARF]
+</pre>
+
+<p>where <i>db_list</i> is a list of one or more options, separated by
+commas. The options are:
+</p><ul><li><tt><b>LINES</b></tt>
+  </li><li><tt><b>TYPES</b></tt>
+  </li><li><tt><b>LOCALS</b></tt>
+  </li><li><tt><b>STATIC</b></tt>
+  </li><li><tt><b>ALL</b></tt></li></ul><p>The format for a NetWare executable file differs slightly. The format
+is as follows:
+</p>
+<pre>    DEBUG [[WATCOM] <i>db_list</i> | CODEVIEW | DWARF]
+</pre>
+
+<p>or
+</p>
+<pre>    DEBUG NOVELL [ONLYEXPORTS] [REFERENCED]
+</pre>
+
+<p>where <i>db_list</i> is a list of one or more options, separated by
+commas. The options are:
+</p><ul><li><tt><b>LINES</b></tt>
+  </li><li><tt><b>TYPES</b></tt>
+  </li><li><tt><b>LOCALS</b></tt>
+  </li><li><tt><b>STATIC</b></tt>
+  </li><li><tt><b>ALL</b></tt>
+  </li><li><tt><b>ONLYEXPORTS</b></tt></li></ul><p>
+The Watcom Linker supports three types of debugging information,
+<tt><b>WATCOM</b></tt>, <tt><b>CODEVIEW</b></tt> and <tt><b>DWARF</b></tt>:
+</p><dl>
+<dt><tt><b>WATCOM</b></tt>
+    </dt><dd>      
+      
+      (short form <tt><b>W</b></tt>) specifies that all object files contain 
+      WATCOM format debugging information, and that the executable file will 
+      contain WATCOM debugging information.
+      This debugging format is assumed by default when none is specified.
+      This format permits the selection of specific classes of debugging
+      information (<i>db_list</i>), which are described below.
+  </dd><dt><tt><b>CODEVIEW</b></tt>
+    </dt><dd>      
+      
+      (short form <tt><b>C</b></tt>) specifies that all object files contain 
+      Codeview (CV4) format debugging information, and that the executable 
+      file will contain Codeview debugging information.
+
+      <p>      
+      
+      It's necessary to run the Microsoft Debugging Information
+      Compactor, <tt>CVPACK</tt>, on the executable that it has created.
+      See the ``<a href="#CVPackOption"><tt><b>CVPACK</b></tt> 
+      option</a>''
+      for information on requesting the linker to automatically run 
+      <tt>CVPACK</tt>.
+      Alternatively, you can run <tt>CVPACK</tt> from the command line.
+  </p></dd><dt><tt><b>DWARF</b></tt>
+    </dt><dd>      
+      
+      (short form <tt><b>D</b></tt>) specifies that all object files contain Dwarf 
+      format debugging information and that the executable file will contain 
+      Dwarf debugging information. This format is useful for large programs.</dd></dl>
+<p>For the WATCOM debugging information format, we can be selective about
+the types of debugging information that we include with the executable
+file.
+We can categorize the types of debugging information as follows:
+
+
+
+
+
+
+
+</p><ul><li>global symbol information
+  </li><li>static symbol information
+  </li><li>line numbering information
+  </li><li>local symbol information
+  </li><li>typing information
+  </li><li>NetWare 386 global symbol information</li></ul><p>The following options can be used with the <tt><b>DEBUG WATCOM</b></tt> directive to
+control which of the above classes of debugging information are
+included in the executable file:
+</p><dl>
+<dt><a href="#DebugLines"><tt><b>LINES</b></tt></a>
+    </dt><dd>      
+      
+      (short form <tt><b>LI</b></tt>) specifies line numbering and global symbol
+      information.
+  </dd><dt><a href="#DebugLocals"><tt><b>LOCALS</b></tt></a>
+    </dt><dd>      
+      
+      (short form <tt><b>LO</b></tt>) specifies local and global symbol information.
+  </dd><dt><a href="#DebugTypes"><tt><b>TYPES</b></tt></a>
+    </dt><dd>      
+      
+      (short form <tt><b>T</b></tt>) specifies typing and global symbol information.
+  </dd><dt><a href="#DebugStatic"><tt><b>STATIC</b></tt></a>
+    </dt><dd>      
+      
+      (short form <tt><b>ST</b></tt>) specifies static and global symbol 
+      information.
+  </dd><dt><a href="#DebugAll"><tt><b>ALL</b></tt></a>
+    </dt><dd>      
+      
+      (short form <tt><b>A</b></tt>) specifies all of the above debugging 
+      information.
+  </dd><dt><a href="#DebugNovell"><tt><b>NOVELL</b></tt></a>
+    </dt><dd>      
+      
+      (short form <tt><b>N</b></tt>) specifies a second form of global symbol
+      information that can only be processed by the NetWare 386 debugger.
+  </dd><dt><a href="#OnlyExports"><tt><b>ONLYEXPORTS</b></tt></a>
+    </dt><dd>      
+      
+      (short form <tt><b>ONL</b></tt>) restricts the generation of global symbol 
+      information to exported symbols.
+  </dd><dt><tt><b>REFERENCED</b></tt>
+    </dt><dd>      
+      
+      (short form <tt><b>REF</b></tt>) restricts the generation of symbol 
+      information to referenced symbols only.</dd></dl>
+
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>The position of the <tt><b>DEBUG</b></tt> directive is important.
+The level of debugging information specified in a <tt><b>DEBUG</b></tt> directive 
+only applies to object files and libraries that appear in <em>subsequent</em>
+<tt><b>FILE</b></tt> or <tt><b>LIBRARY</b></tt> directives.
+For example, if <tt><b>DEBUG ALL</b></tt> were the only <tt><b>DEBUG</b></tt> directive 
+specified, and it was also the last linker directive, no debugging information 
+would appear in the executable file.</td>
+</tr></tbody></table>
+<hr>
+
+<p>Only global and static symbol information is actually produced by the
+Watcom Linker;
+the other three classes of debugging information are extracted from
+object modules and copied to the executable file.
+Therefore, at compile time, you must instruct the compiler to generate
+local symbol, line numbering and typing information in the object file
+so that the information can be transferred to the executable file.
+</p><p>If you've asked the Watcom Linker to produce a particular class of
+debugging information and it appears that none is present, one of the
+following conditions may exist:
+</p><ul><li>The debugging information isn't present in the object files. See
+    ``<a href="http://www.users.pjwstk.edu.pl/%7Ejms/qnx/help/watcom/compiler-tools/cpopts.html#DebuggingProfiling">Debugging /
+    Profiling</a>'' in the C/C++ Compiler Options chapter.
+  </li><li>The <tt><b>DEBUG</b></tt> directive has been misplaced.</li></ul><p>The sections that follow describe the classes of debugging information, as
+well as:
+</p><ul><li><a href="#GlobalSymbolInformation">Global symbol information</a>
+  </li><li><a href="#UsingDebugDirectives">Using <tt><b>DEBUG</b></tt> 
+    directives</a>
+  </li><li><a href="#RemovingDebuggingInformation">Removing debugging information 
+    from an executable file</a></li></ul>
+<h2><a name="DebugLines">Line numbering information - <tt><b>DEBUG LINES</b></tt></a></h2>
+<p>
+The <tt><b>DEBUG LINES</b></tt> option controls the processing of line numbering
+information.
+Line numbering information is the line number and address of the
+generated code for each line of source code in a particular module.
+This allows the Watcom Debugger to perform source-level debugging.
+</p><p>When the Watcom Linker encounters a <tt><b>DEBUG</b></tt> directive with a 
+<tt><b>LINES</b></tt> or <tt><b>ALL</b></tt> option, line number information for each 
+subsequent object module is placed in the executable file.
+This includes all object modules extracted from object files specified in
+subsequent <tt><b>FILE</b></tt> directives and object modules extracted from 
+libraries specified in subsequent <tt><b>LIBRARY</b></tt> or <tt><b>FILE</b></tt> 
+directives.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td><p>
+
+All modules for which line numbering information is requested must
+have been compiled with the <tt><b>d1</b></tt> or <tt><b>d2</b></tt> option.</p></td>
+</tr></tbody></table>
+<hr>
+
+<p>A subsequent <tt><b>DEBUG</b></tt> directive without a <tt><b>LINES</b></tt> or 
+<tt><b>ALL</b></tt> option terminates the processing of line numbering information.
+</p>
+<h2><a name="DebugLocals">Local symbol information - <tt><b>DEBUG LOCALS</b></tt></a></h2>
+<p>
+The <tt><b>DEBUG LOCALS</b></tt> option controls the processing of local symbol
+information. Local symbol information is the name and address of all symbols 
+local to a particular module.
+This allows Watcom Debugger to locate these symbols so that you can
+reference local data and routines by name.
+</p><p>When the Watcom Linker encounters a <tt><b>DEBUG</b></tt> directive with a 
+<tt><b>LOCALS</b></tt> or <tt><b>ALL</b></tt> option, local symbol information for each 
+subsequent object module is placed in the executable file.
+This includes all object modules extracted from object files specified in
+subsequent <tt><b>FILE</b></tt> directives and object modules extracted from 
+libraries specified in subsequent <tt><b>LIBRARY</b></tt> or <tt><b>FILE</b></tt> 
+directives.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td><p>
+All modules for which local symbol information is requested must have
+been compiled with the <tt><b>d2</b></tt> option.</p></td>
+</tr></tbody></table>
+<hr>
+
+<p>A subsequent <tt><b>DEBUG</b></tt> directive without a <tt><b>LOCALS</b></tt> or 
+<tt><b>ALL</b></tt> option terminates the processing of local symbol information.
+</p>
+<h2><a name="DebugTypes">Typing information - <tt><b>DEBUG TYPES</b></tt></a></h2>
+<p>
+The <tt><b>DEBUG TYPES</b></tt> option controls the processing of typing
+information.
+Typing information includes a description of all types, structures and
+arrays that are defined in a module.
+This allows Watcom Debugger to display variables according to their type.
+</p><p>When the Watcom Linker encounters a <tt><b>DEBUG</b></tt> directive with a 
+<tt><b>TYPES</b></tt> or <tt><b>ALL</b></tt> option, typing information for each 
+subsequent object module is placed in the executable file.
+This includes all object modules extracted from object files specified in
+subsequent <tt><b>FILE</b></tt> directives and object modules extracted from 
+libraries specified in subsequent <tt><b>LIBRARY</b></tt> or <tt><b>FILE</b></tt> 
+directives.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td><p>
+All modules for which typing information is requested must have
+been compiled with the <tt><b>d2</b></tt> option.</p></td>
+</tr></tbody></table>
+<hr>
+
+<p>A subsequent <tt><b>DEBUG</b></tt> directive without a <tt><b>TYPES</b></tt> or 
+<tt><b>ALL</b></tt> option terminates the processing of typing information.
+</p>
+<h2><a name="DebugStatic">Static symbol information - <tt><b>DEBUG STATIC</b></tt></a></h2>
+<p>
+The <tt><b>DEBUG STATIC</b></tt> option controls the processing of static symbol
+information.
+Static symbol information consists of all static symbols in your program
+and their addresses.
+This allows Watcom Debugger to locate these symbols so that you can reference
+static data in the modules you're debugging.
+</p><p>When the Watcom Linker encounters a <tt><b>DEBUG</b></tt> directive with a 
+<tt><b>STATIC</b></tt> or <tt><b>ALL</b></tt> option, static symbol information for each 
+subsequent object module is placed in the executable file. This includes 
+all object modules extracted from object files specified in subsequent 
+<tt><b>FILE</b></tt> directives and object modules extracted from libraries
+specified in subsequent <tt><b>LIBRARY</b></tt> or <tt><b>FILE</b></tt> directives.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td><p>
+Static symbol information is a subset of local symbol information.
+The major difference is that static symbol information is always available
+from the object file much like global symbol information, whereas local symbol
+information requires source to be compiled with the <tt><b>d2</b></tt> option.</p></td>
+</tr></tbody></table>
+<hr>
+
+<p>A subsequent <tt><b>DEBUG</b></tt> directive without a <tt><b>STATIC</b></tt> or 
+<tt><b>ALL</b></tt> option terminates the processing of static symbol information.
+</p>
+<h2><a name="DebugAll">All debugging information - <tt><b>DEBUG ALL</b></tt></a></h2>
+<p>
+The <tt><b>DEBUG ALL</b></tt> option is a quick way to request the <tt><b>LINES</b></tt>,<tt><b>LOCALS</b></tt>, <tt><b>TYPES</b></tt> and <tt><b>STATIC</b></tt> options.
+</p><ul><li>The <a href="#DebugLines"><tt><b>LINES</b></tt></a> option controls the 
+    processing of line numbering information.
+  </li><li>The <a href="#DebugLocals"><tt><b>LOCALS</b></tt></a> option controls 
+    the processing of local symbol information.
+  </li><li>The <a href="#DebugTypes"><tt><b>TYPES</b></tt></a> option controls the 
+    processing of typing information.
+  </li><li>The <a href="#DebugStatic"><tt><b>STATIC</b></tt></a> option controls 
+    the processing of static symbol information.</li></ul><p>Each of these options is described in its own section.
+A subsequent <tt><b>DEBUG</b></tt> directive without an <tt><b>ALL</b></tt> option 
+discontinues the options that aren't specified in the list of debug options.
+</p>
+<h2><a name="GlobalSymbolInformation">Global symbol information</a></h2>
+<p>
+Global symbol information consists of all the global symbols in your
+program and their addresses.
+This allows Watcom Debugger to locate these symbols
+so that you can reference global data and routines by name.
+When the Watcom Linker encounters a <tt><b>DEBUG</b></tt> directive,
+global symbol information for all the global symbols appearing in
+your program is placed in the executable file.
+</p>
+<h2><a name="DebugNovell">Global symbols for the NetWare 386 
+debugger - <tt><b>DEBUG NOVELL</b></tt></a></h2>
+<p>
+The NetWare 386 operating system has a built-in debugger that can be
+used to debug programs. When <tt><b>DEBUG NOVELL</b></tt> is specified,
+the Watcom Linker generates global symbol information that can be used by
+the NetWare 386 debugger.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td><p>
+Any line numbering, local symbol, and typing information generated
+in the executable file won't be recognized by the NetWare 386 debugger.
+Also, <tt>wstrip</tt> can't be used to remove this form of global symbol 
+information from the executable file.</p></td>
+</tr></tbody></table>
+<hr>
+
+
+<h2><a name="OnlyExports"><tt><b>ONLYEXPORTS</b></tt> debugging option</a></h2>
+<p>
+The <tt><b>ONLYEXPORTS</b></tt> option (short form <tt><b>ONL</b></tt>) restricts the 
+generation of global symbol information to exported symbols (symbols appearing 
+in an <tt><b>EXPORT</b></tt> directive).
+If <tt><b>DEBUG ONLYEXPORTS</b></tt> is specified, Watcom Debugger global symbol 
+information is generated only for exported symbols.
+If <tt><b>DEBUG NOVELL ONLYEXPORTS</b></tt> is specified, NetWare 386 global symbol
+information is generated only for exported symbols.
+
+</p>
+<h2><a name="UsingDebugDirectives">Using DEBUG directives</a></h2>
+<p>Consider the following directive file:
+</p>
+<pre>    debug all
+    file module1
+    debug lines
+    file module2, module3
+    debug
+    library mylib
+</pre>
+
+<p>It specifies that the following debugging information is to be
+generated in the executable file:
+</p><ul><li>global symbol information for your program
+  </li><li>line numbering, typing and local symbol information for the 
+    <tt>module1.o</tt> object file
+  </li><li>line numbering information for the <tt>module2.o</tt> and
+    <tt>module3.o</tt> object files</li></ul><p>Note that if the <tt><b>DEBUG</b></tt> directive before the <tt><b>LIBRARY</b></tt> 
+directive isn't specified, line numbering information for all object modules
+extracted from the library <tt>mylib.lib</tt> is generated in the
+executable file, provided the object modules extracted from the library have
+line numbering information present.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>A <tt><b>DEBUG</b></tt> directive with no option suppresses the processing of line
+numbering, local symbol and typing information for all subsequent
+object modules.</td>
+</tr></tbody></table>
+<hr>
+
+<p>Debugging information can use a significant amount of disk space.
+As shown in the above example, you can select
+only the class of debugging information you want and for those modules
+you wish to debug.
+In this way, the amount of debugging information in the executable
+file is minimized, and hence the amount of disk space used by the
+executable file is kept to a minimum.
+</p><p>As you can see from the above example, the position of the <tt><b>DEBUG</b></tt>
+directive is important when describing the debugging information that's
+to appear in the executable file.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>If you want all classes of debugging information for all files to appear in the
+executable file you must specify <tt><b>DEBUG ALL</b></tt> before any 
+<tt><b>FILE</b></tt> and <tt><b>LIBRARY</b></tt> directives.</td>
+</tr></tbody></table>
+<hr>
+
+
+<h2><a name="RemovingDebuggingInformation">Removing debugging information from an 
+executable file</a></h2>
+<p>
+
+A utility called <tt>wstrip</tt> has been provided that takes as input an 
+executable file and removes the debugging information placed in it
+by the Watcom Linker.
+Note that <tt>wstrip</tt> can't remove global symbol information generated 
+using the <tt><b>DEBUG NOVELL</b></tt> directive.
+</p><p>For more information on this utility, see the 
+<a href="http://www.users.pjwstk.edu.pl/%7Ejms/qnx/help/watcom/compiler-tools/wstrip.html">Strip Utility</a> chapter.
+</p>
+<vpage>
+
+<h1><a name="DisableDirective"><tt><b>DISABLE</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>DISABLE</b></tt> directive is used to disable the display of linker 
+messages.
+
+</p><p>
+
+
+
+
+The Watcom Linker issues three classes of messages. Each message has a 4-digit 
+number associated with it:
+</p><dl>
+<dt>fatal errors
+    </dt><dd>numbers starting with the digit 3
+  </dd><dt>errors
+    </dt><dd>numbers starting with the digit 2
+  </dd><dt>warnings
+    </dt><dd>numbers starting with the digit 1</dd></dl>
+<p>It's possible for a message to be issued as a warning or an error.
+</p><p>If a fatal error occurs, the linker terminates immediately, and no
+executable file is generated.
+</p><p>If an error occurs, the linker continues to execute so that all possible 
+errors are issued. However, no executable file is generated, since these errors
+don't permit it.
+</p><p>If a warning occurs, the linker continues to execute. A warning message is 
+usually informational, and doesn't prevent the creation of a proper executable
+file. However, you should eventually correct all warnings.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>The behaviour of the linker doesn't change when a message is disabled.
+For example, if a message that normally terminates the linker is disabled,
+the linker still terminates, but the message describing the reason for the 
+termination isn't displayed. For this reason, you should only disable warnings.</td>
+</tr></tbody></table>
+<hr>
+
+<p>The linker ignores the severity of the message number. For example, some 
+messages can be displayed as errors or warnings. It isn't possible to disable 
+the message when it's issued as a warning, and display the message when it's 
+issued as an error. In general, don't specify the severity of the message 
+when specifying a message number.
+</p><p>The format of the <tt><b>DISABLE</b></tt> directive (short form <tt><b>DISA</b></tt>) 
+is as follows:
+</p>
+<pre>    DISABLE <i>msg_num{, msg_num}</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>msg_num</i>
+    </dt><dd>is a message number. See the
+      <a href="http://www.users.pjwstk.edu.pl/%7Ejms/qnx/help/watcom/compiler-tools/wlerror.html">Linker Error Messages</a> chapter for a list
+      of messages and their corresponding numbers.</dd></dl>
+<p>The following <tt><b>DISABLE</b></tt> directive disables message 28 (an 
+undefined symbol has been referenced):
+</p>
+<pre>    disable 28
+</pre>
+
+
+<vpage>
+
+<h1><a name="FileDirective"><tt><b>FILE</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>FILE</b></tt> directive is used to specify the object files and library
+modules that the Watcom Linker is to process.
+The format of the <tt><b>FILE</b></tt> directive (short form <tt><b>F</b></tt>) is as 
+follows:
+</p>
+<pre>    FILE <i>obj_spec{,obj_spec}</i>
+</pre>
+
+<p>where <i>obj_spec</i> is defined as
+</p><p><i>obj_file[(obj_module)] | library_file[(obj_module)]</i>
+</p><p>and
+</p><dl>
+<dt><i>obj_file</i>
+    </dt><dd>is a file specification for the name of an object file.
+      If no file extension is specified, a file extension of <tt>.o</tt>
+      is assumed.
+      
+
+  </dd><dt><i>library_file</i>
+    </dt><dd>is a file specification for the name of a library file.
+      Note that the file extension of the library file (usually 
+      <tt>.lib</tt>) must be specified; otherwise an object file is 
+      assumed. When a library file is specified, all object files in the 
+      library are included (whether required or not).
+      
+  </dd><dt><i>obj_module</i>
+    </dt><dd>is the name of an object module defined in an object or library file.</dd></dl>
+<p>Consider the following example:
+</p>
+<pre>    wlink file /math/sin, mycos
+</pre>
+
+<p>The Watcom Linker is instructed to process the following object files:
+</p><ul plain="PLAIN"><li><tt>/math/sin.o</tt>
+  </li><li><tt>mycos.o</tt></li></ul><p>The object file <tt>mycos.o</tt> is located in the current directory, 
+since no path was specified. 
+</p><p>More than one <tt><b>FILE</b></tt> directive may be used.
+The following example is equivalent to the one above:
+</p>
+<pre>    wlink file /math/sin file mycos
+</pre>
+
+<p>Thus, other directives may be placed between lists of object files.
+</p><p>The <tt><b>FILE</b></tt> directive can also specify object modules from a library 
+file or object file. Consider the following example:
+</p>
+<pre>    wlink file /math/math.lib(sin)
+</pre>
+
+<p>The Watcom Linker is instructed to process the object module <tt>sin</tt> 
+contained in the library file <tt>math.lib</tt> in the directory 
+<tt>/math</tt>.
+</p><p>In the following example, the Watcom Linker processes the object module
+<tt>sin</tt> contained in the object file <tt>math.o</tt> in the 
+directory <tt>/math</tt>:
+</p>
+<pre>    wlink file /math/math(sin)
+</pre>
+
+<p>In the following example, the Watcom Linker includes all object modules
+contained in the library file <tt>math.lib</tt> in the directory 
+<tt>/math</tt>:
+</p>
+<pre>    wlink file /math/math.lib
+</pre>
+
+
+<vpage>
+
+<h1><a name="FormatDirective"><tt><b>FORMAT</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>FORMAT</b></tt> directive is used to specify the format of the 
+executable file that the Watcom Linker is to  generate.
+The format of the <tt><b>FORMAT</b></tt> directive (short form <tt><b>FORM</b></tt>) is 
+as follows:
+</p><p><tt><b>FORMAT</b></tt> <i>form</i>
+</p><p>The <i>form</i> argument is one of the following:
+</p><ul><li><tt><b>DOS [COM]</b></tt>
+  </li><li><tt><b>WINDOWS</b></tt> [<i>win_dll</i>] <tt><b>[MEMORY] [FONT]</b></tt>
+  </li><li><tt><b>WINDOWS NT [TNT]</b></tt> [<i>dll_attrs</i>]
+  </li><li><tt><b>OS2</b></tt> [<i>os2_type] [dll_attrs | os2_attrs</i>]
+  </li><li><tt><b>PHARLAP [EXTENDED | REX | SEGMENTED]</b></tt>
+  </li><li><tt><b>NOVELL [NLM | LAN | DSK | NAM]</b></tt> '<i>description</i>'
+  </li><li><tt><b>QNX [FLAT]</b></tt>
+  </li><li><tt><b>ELF [DLL]</b></tt></li></ul><p>where
+</p><dl>
+<dt><i>win_dll</i>
+    </dt><dd><tt><b>DLL [INITGLOBAL | INITINSTANCE]</b></tt>
+  </dd><dt><i>dll_attrs</i>
+    </dt><dd><tt><b>DLL [INITGLOBAL | INITINSTANCE] [TERMINSTANCE | TERMGLOBAL]</b></tt>
+  </dd><dt><i>os2_type</i>
+    </dt><dd><tt><b>FLAT | LE | LX</b></tt>
+  </dd><dt><i>os2_attrs</i>
+    </dt><dd><tt><b>PM | PMCOMPATIBLE | FULLSCREEN | PHYSDEVICE | VIRTDEVICE</b></tt></dd></dl>
+<p>The formats are as follows:
+</p><dl>
+<dt><tt><b>DOS</b></tt>
+    </dt><dd>(short form <tt><b>D</b></tt>) tells the Watcom Linker to generate a DOS 
+      <tt>EXE</tt> file.
+  </dd><dt><tt><b>WINDOWS</b></tt>
+    </dt><dd>tells the Watcom Linker to generate a Windows executable file.
+  </dd><dt><tt><b>WINDOWS NT</b></tt>
+    </dt><dd>      
+      tells the Watcom Linker to generate a Windows NT executable file 
+      (<tt>PE</tt> format).
+  </dd><dt><tt><b>OS2</b></tt>
+    </dt><dd>tells the Watcom Linker to generate an OS/2 executable file format.
+  </dd><dt><tt><b>PHARLAP</b></tt>
+    </dt><dd>(short form <tt><b>PHAR</b></tt>) tells the Watcom Linker to generate an
+      executable file that runs under Phar Lap's 386|DOS-Extender.
+  </dd><dt><tt><b>NOVELL</b></tt>
+    </dt><dd>(short form <tt><b>NOV</b></tt>) tells the Watcom Linker to generate a 
+      NetWare 386 executable file, more commonly called a NetWare Loadable 
+      Module (NLM).
+  
+  
+  
+  
+  
+  </dd><dt><tt><b>QNX</b></tt>
+    </dt><dd>tells the Watcom Linker to generate a QNX executable file.
+      If <tt><b>FLAT</b></tt> (short form <tt><b>FL</b></tt>) is specified, a 32-bit 
+      flat executable file is generated.
+
+      <p>      No file extension is added to the executable file name.
+  </p></dd><dt><tt><b>ELF</b></tt>
+    </dt><dd>tells the Watcom Linker to generate an ELF format executable file.</dd></dl>
+<p>If no <tt><b>FORMAT</b></tt> directive is specified, the executable file format is
+selected for each of the following host systems, based on the type of object
+files encountered:
+</p><table border="1">
+<tbody><tr><th>Host system
+    </th><th>Object file format
+    </th><th>Executable file format
+  </th></tr><tr><td>DOS
+    </td><td>16-bit
+    </td><td>16-bit DOS
+  </td></tr><tr><td>    </td><td>32-bit
+    </td><td>32-bit DOS/4G
+  </td></tr><tr><td>OS/2
+    </td><td>16-bit
+    </td><td>16-bit OS/2
+  </td></tr><tr><td>    </td><td>32-bit object
+    </td><td>32-bit OS/2
+  </td></tr><tr><td>QNX
+    </td><td>16-bit
+    </td><td>16-bit QNX
+  </td></tr><tr><td>    </td><td>32-bit
+    </td><td>32-bit QNX
+  </td></tr><tr><td>Windows NT
+    </td><td>16-bit
+    </td><td>16-bit Windows
+  </td></tr><tr><td>    </td><td>32-bit
+    </td><td>32-bit Win32
+  </td></tr><tr><td>Windows 95
+    </td><td>16-bit
+    </td><td>16-bit Windows
+  </td></tr><tr><td>    </td><td>32-bit
+    </td><td>32-bit Win32</td></tr></tbody></table>
+
+<vpage>
+
+<h1><a name="LanguageDirective"><tt><b>LANGUAGE</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>LANGUAGE</b></tt> directive is used to specify the language in which
+strings in the Watcom Linker directives are specified.
+The format of the <tt><b>LANGUAGE</b></tt> directive (short form <tt><b>LANG</b></tt>) 
+is as follows:
+</p>
+<pre>    LANGUAGE JAPANESE | CHINESE | KOREAN
+</pre>
+
+<p>where
+</p><dl>
+<dt><tt><b>JAPANESE</b></tt>
+    </dt><dd>      
+      
+      (short form <tt><b>JA</b></tt>) specifies that strings are to be handled as 
+      if they contained characters from the Japanese Double-Byte Character Set
+      (DBCS).
+  </dd><dt><tt><b>CHINESE</b></tt>
+    </dt><dd>      
+      
+      (short form <tt><b>CH</b></tt>) specifies that strings are to be handled as 
+      if they contained characters from the Chinese Double-Byte Character Set
+      (DBCS).
+  </dd><dt><tt><b>KOREAN</b></tt>
+    </dt><dd>      
+      
+      (short form <tt><b>KO</b></tt>) specifies that strings are to be handled as 
+      if they contained characters from the Korean Double-Byte Character Set 
+      (DBCS).</dd></dl>
+
+<vpage>
+
+<h1><a name="LibraryDirective"><tt><b>LIBRARY</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>LIBRARY</b></tt> directive is used to specify the library files to be
+searched when unresolved symbols remain after processing all specified
+input object files.
+The format of the <tt><b>LIBRARY</b></tt> directive (short form <tt><b>L</b></tt>) is 
+as follows:
+</p>
+<pre>    LIBRARY <i>library_file{,library_file}</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>library_file</i>
+    </dt><dd>is a file specification for the name of a library file.
+      If no file extension is specified, a file extension of 
+      <tt>.lib</tt> is assumed.
+      </dd></dl>
+<p>Consider the following example:
+</p>
+<pre>    wlink file trig lib /math/trig, /cmplx/trig
+</pre>
+
+<p>The Watcom Linker is instructed to process the <tt>trig.o</tt> object 
+file. If any unresolved symbol references remain after all object files have
+been processed, the following library files are searched:
+</p><ul plain="PLAIN"><li><tt>/math/trig.lib</tt>
+  </li><li><tt>/cmplx/trig.lib</tt></li></ul><p>More than one <tt><b>LIBRARY</b></tt> directive may be used.
+The following example is equivalent to the one above:
+</p>
+<pre>    wlink file trig lib /math/trig lib /cmplx/trig
+</pre>
+
+<p>Thus other directives may be placed between lists of library files.
+</p>
+<h2><a name="SearchingForLibraries">Searching for libraries specified in environment
+variables</a></h2>
+<p>
+
+The <b>LIB</b> environment variable can be used to specify a list of 
+paths to be searched for library files. It can be set using the 
+<tt>export</tt> command, as follows:
+</p>
+<pre>    export LIB=/graphics/lib:/utility
+</pre>
+
+<p>Consider the following <tt><b>LIBRARY</b></tt> directive and the above definition of
+the <b>LIB</b> environment variable:
+</p>
+<pre>    library /mylibs/util, graph
+</pre>
+
+<p>If undefined symbols remain after processing all object files
+specified in all <tt><b>FILE</b></tt> directives, the Watcom Linker resolves 
+these references by searching the following libraries in the specified order:
+</p>
+<ol>
+<li>the library file <tt>/mylibs/util.lib</tt>
+  </li><li>the library file <tt>graph.lib</tt> in the current directory
+  </li><li>the library file <tt>/graphics/lib/graph.lib</tt>
+  </li><li>the library file <tt>/utility/graph.lib</tt></li></ol>
+
+<p>Note the following:
+</p>
+<ol>
+<li>If a library file specified in a <tt><b>LIBRARY</b></tt> directive contains an
+    absolute path specification, the Watcom Linker doesn't search any of the 
+    paths specified in the <b>LIB</b> environment variable for the 
+    library file.
+    An absolute path specification is one that begins with a slash (/).
+
+  </li><li>Once a library file has been found, no further elements of the 
+    <b>LIB</b> environment variable are searched for other libraries 
+    of the same name. That is, if the library file 
+    <tt>/graphics/lib/graph.lib</tt> exists, the library file 
+    <tt>/utility/graph.lib</tt> won't be searched, even though
+    unresolved references may remain.</li></ol>
+
+
+<h2><a name="ConvertingLibraries">Converting libraries created using the Phar Lap librarian</a></h2>
+<p>Phar Lap's librarian, 386|LIB, creates libraries whose dictionary is in
+a different format from the one used by other librarians.
+For this reason, linking an application using the Watcom Linker with libraries
+created using 386|LIB won't work.
+Library files created using 386|LIB must be converted to the form recognized
+by the Watcom Linker.
+This is achieved by issuing the following <tt>wlib</tt> command:
+</p>
+<pre>    wlib newlib +pharlib.lib
+</pre>
+
+<p>The library file <tt>pharlib.lib</tt> is a library created using 386|LIB.
+The library file <tt>newlib.lib</tt> is created so that the Watcom 
+Linker can now process it.
+
+</p>
+<vpage>
+
+<h1><a name="LibfileDirective"><tt><b>LIBFILE</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>LIBFILE</b></tt> directive is used to specify the object files
+that the Watcom Linker is to process.
+The format of the <tt><b>LIBFILE</b></tt> directive (short form <tt><b>LIBF</b></tt>) 
+is as follows:
+</p>
+<pre>    LIBFILE <i>obj_spec{,obj_spec}</i>
+</pre>
+
+<p>where <i>obj_spec</i> is defined as
+</p><p><i>obj_file | library_file</i>
+</p><p>and
+</p><dl>
+<dt><i>obj_file</i>
+    </dt><dd>is a file specification for the name of an object file.
+      If no file extension is specified, a file extension of <tt>.o</tt> 
+      is assumed.
+      
+
+  </dd><dt><i>library_file</i>
+    </dt><dd>is a file specification for the name of a library file.
+      Note that the file extension of the library file (usually 
+      <tt>.lib</tt>) must be specified; otherwise an object file is
+      assumed. When a library file is specified, all object files in the 
+      library are included (whether required or not).
+      </dd></dl>
+<p>The differences between the <tt><b>LIBFILE</b></tt> directive and the 
+<tt><b>FILE</b></tt> directive are as follows:
+</p><ul><li>When searching for an object or library file specified in a 
+    <tt><b>LIBFILE</b></tt> directive, the current working  directory is 
+    searched first, followed by the paths specified in the <tt><b>LIBPATH</b></tt> 
+    directive, and finally the paths specified in the <b>LIB</b> 
+    environment variable.
+    Note that if the object or library file name contains a path, only the
+    specified path is searched.
+  </li><li>Object or library file names specified in a <tt><b>LIBFILE</b></tt> directive 
+    won't be used to create the name of the executable file when no 
+    <tt><b>NAME</b></tt> directive is specified.</li></ul><p>Essentially, object files that appear in <tt><b>LIBFILE</b></tt> directives are
+viewed as components of a library that haven't been explicitly placed
+in a library file.
+</p><p>Consider the following linker directive file:
+</p>
+<pre>    libpath /libs
+    libfile mystart
+    path /objs
+    file file1, file2
+</pre>
+
+<p>The Watcom Linker is instructed to process the following object files:
+</p><ul plain="PLAIN"><li><tt>/libs/mystart.o</tt>
+  </li><li><tt>/objs/file1.o</tt>
+  </li><li><tt>/objs/file2.o</tt></li></ul><p>Note that the executable file has the file name <tt>file1</tt>, 
+and not <tt>mystart</tt>.
+
+</p>
+<vpage>
+
+<h1><a name="LibpathDirective"><tt><b>LIBPATH</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>LIBPATH</b></tt> directive is used to specify the directories that are 
+to be searched for library files appearing in subsequent <tt><b>LIBRARY</b></tt> 
+directives, and object files appearing in subsequent <tt><b>LIBFILE</b></tt> 
+directives. The format of the <tt><b>LIBPATH</b></tt> directive (short form 
+<tt><b>LIBP</b></tt>) is as follows:
+</p>
+<pre>    LIBPATH <i>[path_name{:path_name}]</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>path_name</i>
+    </dt><dd>is a path name.</dd></dl>
+<p>Consider a directive file containing the following linker directives:
+</p>
+<pre>    file test
+    libpath /math
+    library trig
+    libfile newsin
+</pre>
+
+<p>First, the Watcom Linker processes the object file <tt>test.o</tt> 
+from the current working directory.
+The object file <tt>newsin.o</tt> is then processed, searching the 
+current working directory first.
+If <tt>newsin.o</tt> isn't in the current working directory, the 
+<tt>/math</tt> directory is searched.
+If any unresolved references remain after processing the object files, the
+library file <tt>trig.lib</tt> is searched.
+If the file <tt>trig.lib</tt> doesn't exist in the current working 
+directory, the <tt>/math</tt> directory is searched.
+</p><p>It's also possible to specify a list of paths in a <tt><b>LIBPATH</b></tt> 
+directive. Consider the following example.
+</p>
+<pre>    libpath /newmath:/math
+    library trig
+</pre>
+
+<p>When processing undefined references, the Watcom Linker attempts to process
+the library file <tt>trig.lib</tt> in the current working directory.
+If <tt>trig.lib</tt> doesn't exist in the current working directory, 
+the <tt>/newmath</tt> directory is searched.
+If <tt>trig.lib</tt> doesn't exist in the <tt>/newmath</tt> 
+directory, the <tt>/math</tt> directory is searched.
+</p><p>If the name of a library file appearing in a <tt><b>LIBRARY</b></tt> directive or 
+the the name of an object file appearing in a <tt><b>LIBFILE</b></tt> directive 
+contains a path specification, only the specified path is searched.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>Note that
+
+
+<pre>    libpath path1
+    libpath path2
+</pre>
+
+
+
+<p>is equivalent to the following:
+</p>
+<pre>    libpath path2:path1
+</pre>
+
+</td>
+</tr></tbody></table>
+<hr>
+
+
+<vpage>
+
+<h1><a name="ModTraceDirective"><tt><b>MODTRACE</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>MODTRACE</b></tt> directive instructs the Watcom Linker to print a list 
+of all modules that reference the symbols defined in the specified modules.
+The format of the <tt><b>MODTRACE</b></tt> directive (short form <tt><b>MODT</b></tt>) 
+is as follows:
+</p>
+<pre>    MODTRACE  <i>module_name{,module_name}</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>module_name</i>
+    </dt><dd>is the name of an object module defined in an object or library file.</dd></dl>
+<p>The information is displayed in the map file.
+Consider the following example:
+</p>
+<pre>    wlink op map file test lib math modt trig
+</pre>
+
+<p>If the module <tt>trig</tt> defines the symbols <tt>sin</tt> and 
+<tt>cos</tt>, the Watcom Linker lists, in the map file, all modules 
+that reference the symbols <tt>sin</tt> and <tt>cos</tt>.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>The <tt><b>MODTRACE</b></tt> directive can't be used in conjunction with the 
+<tt><b>VERBOSE</b></tt> option.</td>
+</tr></tbody></table>
+<hr>
+
+
+<vpage>
+
+<h1><a name="NameDirective"><tt><b>NAME</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>NAME</b></tt> directive is used to provide a name for the executable file
+generated by the Watcom Linker..
+The format of the <tt><b>NAME</b></tt> directive (short form <tt><b>N</b></tt>) is as 
+follows:
+</p>
+<pre>    NAME <i>exe_file</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>exe_file</i>
+    </dt><dd>is a file specification for the name of the executable file.
+    No file extension is assumed.</dd></dl>
+<p>Consider the following example:
+</p>
+<pre>    wlink name myprog file test, test2, test3
+</pre>
+
+<p>An executable file called <tt>myprog</tt> is generated.
+</p><p>Note the following:
+</p>
+<ol>
+<li>No file extension was given when the executable file name was specified.
+    The Watcom Linker assumes a file extension that depends on the format of 
+    the executable file being generated.
+    For QNX, no file extension is assumed.
+    The ``<a href="#FormatDirective"><tt><b>FORMAT</b></tt> 
+    directive</a>'' describes the <tt><b>FORMAT</b></tt> directive and how 
+    the file extension is chosen for each executable file format.
+
+  </li><li>If no <tt><b>NAME</b></tt> directive is present, the executable file has
+    the file name of the first object file processed by the Watcom Linker.
+    If the first object file processed is called <tt>test.o</tt> and no 
+    <tt><b>NAME</b></tt> directive is specified, an executable file
+    called <tt>test</tt> is generated.</li></ol>
+
+
+<vpage>
+
+<h1><a name="NewSegmentDirective"><tt><b>NEWSEGMENT</b></tt> directive</a></h1>
+<p>
+
+This directive is intended for 16-bit segmented applications.
+By default, the Watcom Linker automatically groups logical code segments
+into physical segments.
+By default, these segments are 64K bytes in size.
+However, the <tt><b>PACKCODE</b></tt> option can be used to specify a maximum size
+for all physical segments that's smaller than 64K bytes.
+</p><p>The <tt><b>NEWSEGMENT</b></tt> directive provides an alternate method of grouping 
+code segments into physical segments.
+By placing this directive after a sequence of <tt><b>FILE</b></tt> directives, all 
+code segments appearing in object modules specified by the sequence of 
+<tt><b>FILE</b></tt> directives are packed into a physical segment.
+Note that the size of a physical segment may vary in size.
+The format of the <tt><b>NEWSEGMENT</b></tt> directive (short form <tt><b>NEW</b></tt>) 
+is as follows:
+</p>
+<pre>    NEWSEGMENT
+</pre>
+
+<p>Consider the following example:
+</p>
+<pre>    file file1, file2, file3
+    newsegment
+    file file4
+    file file5
+</pre>
+
+<p>Code segments from <tt>file1</tt>, <tt>file2</tt> and
+<tt>file3</tt> are grouped into one physical segment.
+Code segments from <tt>file4</tt> and <tt>file5</tt>
+are grouped into another physical segment.
+</p><p>Note that code segments extracted from library files are grouped
+into physical segments as well.
+The size of these physical segments is determined by the <tt><b>PACKCODE</b></tt> 
+option, and is 64k by default.
+</p>
+<vpage>
+
+<h1><a name="OptionDirective"><tt><b>OPTION</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>OPTION</b></tt> directive is used to specify options to the Watcom 
+Linker. The format of the <tt><b>OPTION</b></tt> directive (short form 
+<tt><b>OP</b></tt>) is as follows:
+</p>
+<pre>    OPTION <i>option{,option}</i>
+</pre>
+
+<p>Each <i>option</i> must be one of the following:
+</p><ul><li><a href="#ArtificialOption"><tt><b>ARTIFICIAL</b></tt></a>
+  </li><li><a href="#CacheOption"><tt><b>[NO]CACHE</b></tt></a>
+  </li><li><a href="#CaseExactOption"><tt><b>[NO]CASEEXACT</b></tt></a>
+  </li><li><a href="#CVPackOption"><tt><b>CVPACK</b></tt></a>
+  </li><li><a href="#DoSSegOption"><tt><b>DOSSEG</b></tt></a>
+  </li><li><a href="#EliminateOption"><tt><b>ELIMINATE</b></tt></a>
+  </li><li><a href="#HeapSizeOption"><tt><b>HEAPSIZE</b></tt></a>=<i>n</i>
+  </li><li><a href="#LinearRelocsOption"><tt><b>LINEARRELOCS</b></tt></a>
+  </li><li><a href="#LongLivedOption"><tt><b>LONGLIVED</b></tt></a>
+  </li><li><a href="#MangledNamesOption"><tt><b>MANGLEDNAMES</b></tt></a>
+  </li><li><a href="#MapOption"><tt><b>MAP</b></tt></a>[=<i>map_file</i>]
+  </li><li><a href="#MaxErrorsOption"><tt><b>MAXERRORS</b></tt></a>=<i>n</i>
+  </li><li><a href="#NameLenOption"><tt><b>NAMELEN</b></tt></a>=<i>n</i>
+  </li><li><a href="#NoDefaultLibsOption"><tt><b>NODEFAULTLIBS</b></tt></a>
+  </li><li><a href="#NoRelocsOption"><tt><b>NORELOCS</b></tt></a>
+  </li><li><a href="#OffsetOption"><tt><b>OFFSET</b></tt></a>=<i>n</i>
+  </li><li><a href="#OSNameOption"><tt><b>OSNAME</b></tt></a>=<tt>'</tt><i>string</i><tt>'</tt>
+  </li><li><a href="#PackCodeOption"><tt><b>PACKCODE</b></tt></a>=<i>n</i>
+  </li><li><a href="#PackDataOption"><tt><b>PACKDATA</b></tt></a>=<i>n</i>
+  </li><li><a href="#PrivilegeOption"><tt><b>PRIVILEGE</b></tt></a>=<i>n</i>
+  </li><li><a href="#QuietOption"><tt><b>QUIET</b></tt></a>
+  </li><li><a href="#RedefsOKOption"><tt><b>REDEFSOK</b></tt></a>
+  </li><li><a href="#ResourceOption"><tt><b>RESOURCE</b></tt></a>[=<i>resource_file</i> | '<i>string</i>']
+  </li><li><a href="#StackOption"><tt><b>STACK</b></tt></a>=<i>n</i>
+  </li><li><a href="#StaticsOption"><tt><b>STATICS</b></tt></a>
+  </li><li><a href="#SymFileOption"><tt><b>SYMFILE</b></tt></a>[=<i>symbol_file</i>]
+  </li><li><a href="#UndefsOKOption"><tt><b>UNDEFSOK</b></tt></a>
+  </li><li><a href="#VerboseOption"><tt><b>VERBOSE</b></tt></a></li></ul><p>where
+</p><dl>
+<dt><i>map_file</i>
+    </dt><dd>is a file specification for the name of the map file.
+      If no file extension is specified, a file extension of 
+      <tt>.map</tt> is assumed.
+      
+  </dd><dt><i>symbol_file</i>
+    </dt><dd>is a file specification for the name of the symbol file.
+      If no file extension is specified, a file extension of 
+      <tt>.sym</tt> is assumed.
+      
+  </dd><dt><i>resource_file</i>
+    </dt><dd>is a file specification for the name of the resource file.
+      No file extension is assumed.
+
+
+  </dd><dt><i>n</i>
+    </dt><dd>represents a value. The complete form of <i>n</i> is as follows:
+
+      
+<pre>    [0x]<i>d</i>{<i>d</i>}[k|m]
+      
+</pre>
+
+
+
+      <p>      <i>d</i> represents a decimal digit. If <tt>0x</tt>
+      is specified, the string of digits represents a hexadecimal number.
+      If <tt>k</tt> is specified, the value is multiplied by 1024.
+      If <tt>m</tt> is specified, the value is multiplied by 1024*1024.</p></dd></dl>
+<p>The following sections describe the Watcom Linker options for this
+executable format.
+
+</p>
+<h2><a name="ArtificialOption"><tt><b>ARTIFICIAL</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>ARTIFICIAL</b></tt> option should only be used if you're developing a
+Watcom C++ application.
+A Watcom C++ application contains many compiler-generated symbols.
+By default, the linker doesn't include these symbols in the map file.
+The <tt><b>ARTIFICIAL</b></tt> option can be used if you wish to include these
+compiler-generated symbols in the map file.
+</p><p>The format of the <tt><b>ARTIFICIAL</b></tt> option (short form <tt><b>ART</b></tt>) is 
+as follows:
+</p>
+<pre>    OPTION ARTIFICIAL
+</pre>
+
+
+<h2><a name="CacheOption"><tt><b>CACHE</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>CACHE</b></tt> and <tt><b>NOCACHE</b></tt> options can be used to control 
+caching of object and library files in memory by the linker.
+When neither the <tt><b>CACHE</b></tt> nor <tt><b>NOCACHE</b></tt> option is specified, 
+the linker only caches small libraries.
+Object files and large libraries aren't cached.
+The <tt><b>CACHE</b></tt> and <tt><b>NOCACHE</b></tt> options can be used to alter this 
+default behaviour. 
+The <tt><b>CACHE</b></tt> option enables the caching of object files and large
+library files, while the <tt><b>NOCACHE</b></tt> option disables all caching.
+</p><p>The format of the <tt><b>CACHE</b></tt> option (short form <tt><b>CAC</b></tt>) is as 
+follows:
+</p>
+<pre>    OPTION CACHE
+</pre>
+
+<p>The format of the <tt><b>NOCACHE</b></tt> option (short form <tt><b>NOCAC</b></tt>) is 
+as follows:
+</p>
+<pre>    OPTION NOCACHE
+</pre>
+
+<p>When linking large applications with many object files, caching object
+files causes extensive use of memory by the linker.
+On virtual memory systems such as OS/2 and Windows NT, this can cause
+extensive page file activity when real memory resources have been exhausted.
+This can degrade the performance of other tasks on your system.
+For this reason, the OS/2 and Windows NT-hosted versions of the linker do
+not perform object file caching by default.
+This doesn't imply that object file caching isn't beneficial.
+If your system has lots of real memory, or the linker is running as the only
+task on the machine, object file caching can certainly improve the
+performance of the linker.
+</p><p>On single-tasking environments such as DOS, the benefits of improved
+linker performance outweighs the memory demands associated with object file
+caching.
+For this reason, object file caching is performed by default on these systems.
+If the memory requirements of the linker exceed the amount of memory on your
+system, the <tt><b>NOCACHE</b></tt> option can be specified.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>The QNX operating system is a multi-tasking real-time operating system.
+However, it isn't a virtual memory system.
+Caching object files can consume large amounts of memory.
+This may prevent other tasks on the system from running, a problem that may
+be solved by using the <tt><b>NOCACHE</b></tt> option.</td>
+</tr></tbody></table>
+<hr>
+
+
+<h2><a name="CaseExactOption"><tt><b>CASEEXACT</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>CASEEXACT</b></tt> option tells the Watcom Linker to respect case when 
+resolving references to global symbols.
+That is, ``ScanName'' and ``SCANNAME'' represent two 
+different symbols. By default, the Watcom Linker is case-insensitive; 
+``ScanName'' and ``SCANNAME'' represent the same symbol.
+The format of the <tt><b>CASEEXACT</b></tt> option (short form <tt><b>C</b></tt>) is as 
+follows:
+</p>
+<pre>    OPTION CASEEXACT
+</pre>
+
+<p>
+
+If you have specified the <tt><b>CASEEXACT</b></tt> option in the default directive
+files <tt>wlink.lnk</tt> or <tt>wlsystem.lnk</tt>,
+it's possible to override this option by using the <tt><b>NOCASEEXACT</b></tt> 
+option.
+The <tt><b>NOCASEEXACT</b></tt> option turns off case-sensitive linking.
+The format of the <tt><b>NOCASEEXACT</b></tt> option (short form <tt><b>NOCASE</b></tt>) 
+is as follows:
+</p>
+<pre>    OPTION NOCASEEXACT
+</pre>
+
+
+<h2><a name="CVPackOption"><tt><b>CVPACK</b></tt> option</a></h2>
+<p>
+
+
+
+This option is only meaningful when generating Microsoft Codeview
+debugging information.
+
+
+This option causes the linker to automatically run the Microsoft
+Debugging Information Compactor, <tt>CVPACK</tt>, on the executable that it 
+has created.
+This is necessary to get the Codeview debugging information into a
+state where the Microsoft Codeview debugger will accept it.
+The linker doesn't run <tt>CVPACK</tt> by default since <tt>CVPACK</tt> 
+isn't available for the OS/2 or QNX operating systems.
+</p><p>The format of the <tt><b>CVPACK</b></tt> option (short form <tt><b>CVP</b></tt>) is as 
+follows:
+</p>
+<pre>    OPTION CVPACK
+</pre>
+
+<p>For more information on generating Codeview debugging information in
+the executable, see the 
+``<a href="#DebugDirective"><tt><b>DEBUG</b></tt> directive</a>.''
+
+</p>
+<h2><a name="DoSSegOption"><tt><b>DOSSEG</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>DOSSEG</b></tt> option tells the Watcom Linker to order segments in a 
+special way. The format of the <tt><b>DOSSEG</b></tt> option (short form 
+<tt><b>D</b></tt>) is as follows:
+</p>
+<pre>    OPTION DOSSEG
+</pre>
+
+<p>When the <tt><b>DOSSEG</b></tt> option is specified, segments are ordered in the
+following way:
+
+
+
+</p>
+<ol>
+<li>all segments not belonging to group <tt>DGROUP</tt> with class 
+    <tt>CODE</tt>
+    
+  </li><li>all other segments not belonging to group <tt>DGROUP</tt>
+  </li><li>all segments belonging to group <tt>DGROUP</tt> with class 
+    <tt>BEGDATA</tt>
+  </li><li>all segments belonging to group <tt>DGROUP</tt> not with class 
+    <tt>BEGDATA</tt>, <tt>BSS</tt> or <tt>STACK</tt>
+  </li><li>all segments belonging to group <tt>DGROUP</tt> with class 
+    <tt>BSS</tt>
+  </li><li>all segments belonging to group <tt>DGROUP</tt> with class 
+    <tt>STACK</tt></li></ol>
+
+<p>A special segment belonging to class <tt>BEGDATA</tt> is defined when 
+linking with Watcom runtime libraries.
+This segment is initialized with the hexadecimal byte pattern 
+01, and is the first segment in group <tt>DGROUP</tt> so 
+that storing data at location 0 can be detected.
+</p><p>Segments belonging to class <tt>BSS</tt> contain uninitialized data.
+Note that this only includes uninitialized data in segments belonging to
+group <tt>DGROUP</tt>. Segments belonging to class <tt>STACK</tt> are 
+used to define the size of the stack used for your application.
+Segments belonging to the classes <tt>BSS</tt> and <tt>STACK</tt> are 
+last in the segment ordering so that uninitialized data need not take space in
+the executable file.
+</p><p>
+
+
+When using Watcom runtime libraries, it isn't necessary to specify
+the <tt><b>DOSSEG</b></tt> option.
+One of the object files in the Watcom runtime libraries contains a
+special record that specifies the <tt><b>DOSSEG</b></tt> option.
+</p><p>
+
+
+If no <tt><b>DOSSEG</b></tt> option is specified,
+segments are ordered in the order they are encountered by the Watcom Linker.
+</p><p>
+
+
+When the <tt><b>DOSSEG</b></tt> option is specified, the Watcom Linker defines two 
+special variables:
+
+
+
+
+
+</p><dl>
+<dt><i>_edata</i>
+    </dt><dd>defines the start of the <tt>BSS</tt> class of segments
+  </dd><dt><i>_end</i>
+    </dt><dd>defines the end of the <tt>BSS</tt> class of segments</dd></dl>
+<p>Your program must not redefine these symbols.
+
+</p>
+<h2><a name="EliminateOption"><tt><b>ELIMINATE</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>ELIMINATE</b></tt> option can be used to enable the elimination of dead 
+code.
+
+Dead code elimination is a process the linker uses to remove unreferenced
+segments from the application.
+The linker only removes segments that contain code; unreferenced data
+segments aren't removed.
+</p><p>The format of the <tt><b>ELIMINATE</b></tt> option (short form <tt><b>EL</b></tt>) is as
+follows:
+</p>
+<pre>    OPTION ELIMINATE
+</pre>
+
+
+<h3><a name="id36">Linking C/C++ applications</a></h3>
+<p>Typically, a module of C/C++ code contains a number of functions. When this 
+module is compiled, all functions are placed in the same code segment. 
+It's unlikely that all the functions in a module are unreferenced,
+so the <tt><b>ELIMINATE</b></tt> option isn't very useful.
+</p><p>
+In order to maximize the effect of the <tt><b>ELIMINATE</b></tt> option, the 
+<tt><b>zm</b></tt> compiler option is available to tell the Watcom C/C++ compiler to
+place each function in its own code segment.
+This allows the linker to remove unreferenced functions from modules
+that contain many functions.
+</p><p>Note that if a function is referenced by data, as in a jump table,
+the linker won't be able to eliminate the code for the function
+even if the data that references it's unreferenced.
+</p>
+<h3><a name="id37">Linking FORTRAN 77 applications</a></h3>
+<p>The Watcom FORTRAN 77 compiler always places each function and subroutine in
+its own code segment, even if they're contained in the same module.
+Therefore when linking with the <tt><b>ELIMINATE</b></tt> option the linker is
+able to eliminate code on a function/subroutine basis.
+
+</p>
+<h2><a name="HeapSizeOption"><tt><b>HEAPSIZE</b></tt> option (OS/2)</a></h2>
+<p>
+
+
+The <tt><b>HEAPSIZE</b></tt> option specifies the size of the heap required by the
+application. The format of the <tt><b>HEAPSIZE</b></tt> option (short form 
+<tt><b>H</b></tt>) is as follows:
+</p>
+<pre>    OPTION HEAPSIZE=<i>n</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>n</i>
+    </dt><dd>represents a value. The complete form of <i>n</i> is as follows:
+
+    
+<pre>    [0x]<i>d</i>{<i>d</i>}[k|m]
+    
+</pre>
+
+
+
+    <p>    <i>d</i> represents a decimal digit. If <tt>0x</tt>
+    is specified, the string of digits represents a hexadecimal number.
+    If <tt>k</tt> is specified, the value is multiplied by 1024.
+    If <tt>m</tt> is specified, the value is multiplied by 1024*1024.</p></dd></dl>
+<p><i>n</i> specifies the size of the heap. The default heap size is 0 bytes.
+The maximum value of <i>n</i>
+is 65536 (64K) for 16-bit applications, and 4G for 32-bit applications,
+which is the maximum size of a physical segment.
+Actually, for a particular application, the maximum value of <i>n</i>
+is 64K or 4G less the size of group <tt>DGROUP</tt>.
+
+</p>
+<h2><a name="LinearRelocsOption"><tt><b>LINEARRELOCS</b></tt> option (QNX)</a></h2>
+<p>
+
+
+The <tt><b>LINEARRELOCS</b></tt> option instructs the linker to generate offset 
+fixups in addition to the normal segment fixups.
+The offset fixups allow the system to move pieces of code and data that
+were loaded at a particular offset within a segment to another offset within
+the same segment.
+</p><p>The format of the <tt><b>LINEARRELOCS</b></tt> option (short form <tt><b>LI</b></tt>) is 
+as follows:
+</p>
+<pre>    OPTION LINEARRELOCS
+</pre>
+
+
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>Use this option only with Neutrino.</td>
+</tr></tbody></table>
+<hr>
+
+
+<h2><a name="LongLivedOption"><tt><b>LONGLIVED</b></tt> option (QNX)</a></h2>
+<p>
+
+
+The <tt><b>LONGLIVED</b></tt> option specifies that the application being linked 
+will reside in memory, or be active, for a long period of time (for example, 
+background tasks).
+The memory manager, knowing an application is <tt><b>LONGLIVED</b></tt>, allocates
+memory for the application so as to reduce fragmentation.
+</p><p>The format of the <tt><b>LONGLIVED</b></tt> option (short form <tt><b>LO</b></tt>) is 
+as follows:
+</p>
+<pre>    OPTION LONGLIVED
+</pre>
+
+
+<h2><a name="MangledNamesOption"><tt><b>MANGLEDNAMES</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>MANGLEDNAMES</b></tt> option should only be used if you're developing a
+Watcom C++ application.
+
+Due to the nature of C++, the Watcom C++ compiler generates mangled
+names for symbols.
+A mangled name for a symbol includes the following:
+</p><ul><li>symbol name
+  </li><li>scoping information
+  </li><li>typing information</li></ul><p>This information is stored in a cryptic form with the symbol.
+When the linker encounters a mangled name in an object file, it formats
+the above information and produces this name in the map file.
+</p><p>If you would like the linker to produce the mangled name as it appears
+in the object file, specify the <tt><b>MANGLEDNAMES</b></tt> option.
+</p><p>The format of the <tt><b>MANGLEDNAMES</b></tt> option (short form <tt><b>MANG</b></tt>) 
+is as follows:
+</p>
+<pre>    OPTION MANGLEDNAMES
+</pre>
+
+
+<h2><a name="MapOption"><tt><b>MAP</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>MAP</b></tt> option controls the generation of a map file.
+The format of the <tt><b>MAP</b></tt> option (short form <tt><b>M</b></tt>) is as 
+follows:
+</p>
+<pre>    OPTION MAP[=<i>map_file</i>]
+</pre>
+
+<dl>
+<dt><i>map_file</i>
+    </dt><dd>is a file specification for the name of the map file.
+      If no file extension is specified, a file extension of 
+      <tt>.map</tt> is assumed.
+      </dd></dl>
+<p>By default, no map file is generated.
+
+Specifying this option causes the Watcom Linker to generate a map file.
+The map file is simply a memory map of your program.
+That is, it specifies the relative location of all global symbols in
+your program. The map file also contains the size of your program.
+</p><p>
+If no file name is specified,
+the map file has a default file extension of <tt>.map</tt>, and the
+same file name as the executable file.
+Note that the map file is created in the current directory even if
+the executable file name specified in the <tt><b>NAME</b></tt> directive contains a
+path specification.
+</p><p>Alternatively, a file name can be specified. The following directive
+instructs the Watcom Linker to generate a map file and
+call it <tt>myprog.map</tt>, regardless of the name of the executable 
+file:
+</p>
+<pre>    option map=myprog
+</pre>
+
+<p>
+You can also specify a path and/or file extension when using the 
+<tt><b>MAP=</b></tt> form of the <tt><b>MAP</b></tt> option.
+
+</p>
+<h2><a name="MaxErrorsOption"><tt><b>MAXERRORS</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>MAXERRORS</b></tt> option can be used to set a limit on the number of 
+error messages generated by the linker.
+Note that this doesn't include warning messages.
+When this limit is reached, the linker issues a fatal error and terminate.
+</p><p>The format of the <tt><b>MAXERRORS</b></tt> option (short form <tt><b>MAXE</b></tt>) is 
+as follows:
+</p>
+<pre>    OPTION MAXERRORS=<i>n</i>
+</pre>
+
+<dl>
+<dt><i>n</i>
+    </dt><dd>is the maximum number of error messages issued by the linker.</dd></dl>
+
+<h2><a name="NameLenOption"><tt><b>NAMELEN</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>NAMELEN</b></tt> option tells the Watcom Linker that all symbols must be 
+uniquely identified in the number of characters specified or less.
+If any symbol fails to satisfy this condition, a warning message is issued.
+The warning message states that a symbol has been defined more than once.
+</p><p>The format of the <tt><b>NAMELEN</b></tt> option (short form <tt><b>NAMEL</b></tt>) is 
+as follows:
+</p>
+<pre>    OPTION NAMELEN=<i>n</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>n</i>
+    </dt><dd>represents a value. The complete form of <i>n</i> is as follows:
+
+    
+<pre>    [0x]<i>d</i>{<i>d</i>}[k|m]
+    
+</pre>
+
+
+
+    <p>    <i>d</i> represents a decimal digit. If <tt>0x</tt>
+    is specified, the string of digits represents a hexadecimal number.
+    If <tt>k</tt> is specified, the value is multiplied by 1024.
+    If <tt>m</tt> is specified, the value is multiplied by 1024*1024.</p></dd></dl>
+<p>Some computer systems, for example, require that all global symbols be
+uniquely identified in 8 characters.
+By specifying an appropriate value for the <tt><b>NAMELEN</b></tt> option,
+you can ease the task of porting your application to other computer
+systems.
+
+</p>
+<h2><a name="NoDefaultLibsOption"><tt><b>NODEFAULTLIBS</b></tt> option</a></h2>
+<p>
+
+
+Special object module records that specify default libraries are placed in
+object files generated by Watcom compilers.
+These libraries reflect the memory and floating-point model that a source
+file was compiled for and are automatically searched by the Watcom Linker
+when unresolved symbols are detected.
+These libraries can exist in the current directory, in one of the
+paths specified in <tt><b>LIBPATH</b></tt> directives, or in one of the paths
+specified in the <b>LIB</b> environment variable.
+
+
+
+</p><p>Note that all library files that appear in a <tt><b>LIBRARY</b></tt> directive are
+searched before default libraries.
+The <tt><b>NODEFAULTLIBS</b></tt> option instructs the Watcom Linker to ignore 
+default libraries.
+That is, only libraries appearing in a <tt><b>LIBRARY</b></tt> directive are 
+searched.
+</p><p>The format of the <tt><b>NODefaultlibs</b></tt> option (short form <tt><b>NOD</b></tt>) 
+is as follows:
+</p>
+<pre>    OPTION NODEFAULTLIBS
+</pre>
+
+
+<h2><a name="NoRelocsOption"><tt><b>NORELOCS</b></tt> option (QNX)</a></h2>
+<p>
+
+
+The <tt><b>NORELOCS</b></tt> option specifies that no relocation information is to 
+be written to the executable file.
+When the <tt><b>NORELOCS</b></tt> option is specified, the executable file can only
+be run in protected mode and won't run in real mode.
+In real mode, the relocation information is required; in protected mode,
+the relocation information isn't required unless your application is
+running at privilege level 0.
+</p><p>The format of the <tt><b>NORELOCS</b></tt> option (short form <tt><b>NOR</b></tt>) is as 
+follows:
+</p>
+<pre>    OPTION NORELOCS
+</pre>
+
+
+<h2><a name="OffsetOption"><tt><b>OFFSET</b></tt> option (QNX)</a></h2>
+<p>
+
+
+The <tt><b>OFFSET</b></tt> option specifies the offset in the program's segment in
+which the first byte of code or data is loaded.
+This option applies to 32-bit QNX applications only.
+The format of the <tt><b>OFFSET</b></tt> option (short form <tt><b>OFF</b></tt>) is as 
+follows:
+</p>
+<pre>    OPTION OFFSET=<i>n</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>n</i>
+    </dt><dd>represents a value. The complete form of <i>n</i> is as follows:
+
+      
+<pre>    [0x]<i>d</i>{<i>d</i>}[k|m]
+      
+</pre>
+
+
+
+      <p>      <i>d</i> represents a decimal digit. If <tt>0x</tt>
+      is specified, the string of digits represents a hexadecimal number.
+      If <tt>k</tt> is specified, the value is multiplied by 1024.
+      If <tt>m</tt> is specified, the value is multiplied by 1024*1024.</p></dd></dl>
+<p><i>n</i> specifies the offset (in bytes) at which the program is loaded, 
+and must be a multiple of 4K.
+The Watcom Linker rounds the value up to a multiple of 4K if it isn't 
+already a multiple of 4K.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>It's possible to detect NULL pointer references by linking the 
+program at an offset that's a multiple of 4K (usually an offset of 4K is 
+sufficient).
+
+
+<pre>    option offset=4k
+</pre>
+
+
+
+<p>When the program is loaded, the pages skipped by the <tt><b>OFFSET</b></tt> option 
+aren't mapped. Any reference to an unmapped area (such as a 
+NULL pointer) causes a page fault, preventing the 
+NULL reference from corrupting the program.</p></td>
+</tr></tbody></table>
+<hr>
+
+
+<h2><a name="OSNameOption"><tt><b>OSNAME</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>OSNAME</b></tt> option can be used to set the name of the target 
+operating system of the executable file generated by the linker.
+The format of the <tt><b>OSNAME</b></tt> option (short form <tt><b>OSN</b></tt>) is as 
+follows:
+</p>
+<pre>    OPTION OSNAME='<i>string</i>'
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>string</i>
+    </dt><dd>is any sequence of characters.</dd></dl>
+<p>The information specified by the <tt><b>OSNAME</b></tt> option is displayed in 
+the <tt>creating a ? executable</tt> message.
+This is the last line of output produced by the linker, provided the 
+<tt><b>QUIET</b></tt> option isn't specified. Consider the following example:
+</p>
+<pre>    option osname='SuperOS'
+</pre>
+
+<p>The last line of output produced by the linker is as follows:
+</p>
+<pre>creating a SuperOS executable
+</pre>
+
+
+<h2><a name="PackCodeOption"><tt><b>PACKCODE</b></tt> option</a></h2>
+<p>
+
+
+This option is intended for 16-bit segmented applications.
+By default, the Watcom Linker automatically groups logical code segments into
+physical segments. The <tt><b>PACKCODE</b></tt> option is used to specify the size 
+of the physical segment. The format of the <tt><b>PACKCODE</b></tt> option (short 
+form <tt><b>PACKC</b></tt>) is as follows:
+</p>
+<pre>    OPTION PACKCODE=<i>n</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>n</i>
+    </dt><dd>represents a value. The complete form of <i>n</i> is as follows:
+
+    
+<pre>    [0x]<i>d</i>{<i>d</i>}[k|m]
+    
+</pre>
+
+
+
+    <p>    <i>d</i> represents a decimal digit. If <tt>0x</tt>
+    is specified, the string of digits represents a hexadecimal number.
+    If <tt>k</tt> is specified, the value is multiplied by 1024.
+    If <tt>m</tt> is specified, the value is multiplied by 1024*1024.
+</p></dd></dl>
+<p><i>n</i> specifies the size of the physical segments into which code 
+segments are packed. The default value of <i>n</i> is 64K for 16-bit 
+applications.
+Note that this is also the maximum size of a physical segment.
+To suppress automatic grouping of code segments, specify a value of 0
+for <i>n</i>.
+</p><p>Note the following:
+</p><ul><li>Only adjacent segments are packed into a physical segment.
+  </li><li>Segments belonging to the same group are packed in a physical segment.
+      Segments belonging to different groups aren't packed into a physical 
+      segment.
+      
+  </li><li>Segments with different attributes aren't packed together unless they
+      are explicitly grouped.</li></ul>
+<h2><a name="PackDataOption"><tt><b>PACKDATA</b></tt> option</a></h2>
+<p>
+
+
+This option is intended for 16-bit segmented applications.
+By default, the Watcom Linker automatically groups logical far data
+segments into physical segments.
+The <tt><b>PACKDATA</b></tt> option is used to specify the size of the physical 
+segment.
+The format of the <tt><b>PACKDATA</b></tt> option (short form <tt><b>PACKD</b></tt>) is 
+as follows:
+</p>
+<pre>    OPTION PACKDATA=<i>n</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>n</i>
+    </dt><dd>represents a value. The complete form of <i>n</i> is as follows:
+
+    
+<pre>    [0x]<i>d</i>{<i>d</i>}[k|m]
+    
+</pre>
+
+
+
+    <p>    <i>d</i> represents a decimal digit. If <tt>0x</tt>
+    is specified, the string of digits represents a hexadecimal number.
+    If <tt>k</tt> is specified, the value is multiplied by 1024.
+    If <tt>m</tt> is specified, the value is multiplied by 1024*1024.</p></dd></dl>
+<p><i>n</i> specifies the size of the physical segments into which far data 
+segments are packed. The default value of <i>n</i>
+is 64K for 16-bit applications.
+Note that this is also the maximum size of a physical segment.
+To suppress automatic grouping of far data segments, specify a value of 0
+for <i>n</i>.
+</p><p>Note the following:
+</p><ul><li>Only adjacent segments are packed into a physical segment.
+  </li><li>Segments belonging to the same group are packed in a physical segment.
+    Segments belonging to different groups aren't packed into a physical 
+    segment.
+    
+  </li><li>Segments with different attributes aren't packed together unless they
+    are explicitly grouped.</li></ul>
+<h2><a name="PrivilegeOption"><tt><b>PRIVILEGE</b></tt> option (QNX)</a></h2>
+<p>
+
+
+The <tt><b>PRIVILEGE</b></tt> option specifies the privilege level (0, 1, 2 or 3)
+at which the application runs.
+The format of the <tt><b>PRIVILEGE</b></tt> option (short form <tt><b>PRIV</b></tt>) is 
+as follows:
+</p>
+<pre>    OPTION PRIVILEGE=<i>n</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>n</i>
+    </dt><dd>represents a value. The complete form of <i>n</i> is as follows:
+
+    
+<pre>    [0x]<i>d</i>{<i>d</i>}[k|m]
+    
+</pre>
+
+
+
+    <p>    <i>d</i> represents a decimal digit. If <tt>0x</tt>
+    is specified, the string of digits represents a hexadecimal number.
+    If <tt>k</tt> is specified, the value is multiplied by 1024.
+    If <tt>m</tt> is specified, the value is multiplied by 1024*1024.</p></dd></dl>
+<p>The default privilege level is 0.
+
+</p>
+<h2><a name="QuietOption"><tt><b>QUIET</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>QUIET</b></tt> option
+tells the Watcom Linker to suppress all informational messages.
+Only warning, error and fatal messages are issued.
+By default, the Watcom Linker issues informational messages.
+The format of the <tt><b>QUIET</b></tt> option (short form <tt><b>Q</b></tt>) is as 
+follows:
+</p>
+<pre>    OPTION QUIET
+</pre>
+
+
+<h2><a name="RedefsOKOption"><tt><b>REDEFSOK</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>REDEFSOK</b></tt> option tells the Watcom Linker to ignore redefined 
+symbols, and to generate an executable file anyway.
+By default, warning messages are displayed, and an executable file is
+generated if redefined symbols are present.
+</p><p>The format of the <tt><b>REDEFSOK</b></tt> option (short form <tt><b>RED</b></tt>) is as
+follows:
+</p>
+<pre>    OPTION REDEFSOK
+</pre>
+
+<p>
+
+The <tt><b>NOREDEFSOK</b></tt> option tells the Watcom Linker to treat redefined 
+symbols as an error, and not to generate an executable file. 
+By default, warning messages are displayed, and an executable file is
+generated if redefined symbols are present.
+</p><p>The format of the <tt><b>NOREDEFSOK</b></tt> option (short form <tt><b>NORED</b></tt>) 
+is as follows:
+</p>
+<pre>    OPTION NOREDEFSOK
+</pre>
+
+
+<h2><a name="ResourceOption"><tt><b>RESOURCE</b></tt> option (QNX)</a></h2>
+<p>
+
+
+The <tt><b>RESOURCE</b></tt> option specifies the contents of the resource record 
+in QNX executable files. The format of the <tt><b>RESOURCE</b></tt> option (short 
+form <tt><b>RES</b></tt>) is as follows:
+</p>
+<pre>    OPTION RESOURCE '<i>string</i>' | =<i>resource_file</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>resource_file</i>
+    </dt><dd>is a file specification for the name of the resource file.
+      No file extension is assumed.
+  </dd><dt><i>string</i>
+    </dt><dd>is a sequence of characters that's placed in the resource record.</dd></dl>
+<p>If a resource file is specified, the contents of the resource file are
+included in the resource record.
+</p><p>The resource record contains, for example, help information, and is
+displayed when the following command is executed.
+</p>
+<pre>use &lt;executable&gt;
+</pre>
+
+<p>
+QNX also provides the 
+<tt>usemsg</tt>
+utility to manipulate the resource record of an executable file.
+Its use is recommended.
+This utility is described in the QNX <cite>Utilities Reference</cite> manual.
+
+</p>
+<h2><a name="StackOption"><tt><b>STACK</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>STACK</b></tt> option can be used to increase the size of the stack.
+The format of the <tt><b>STACK</b></tt> option (short form <tt><b>ST</b></tt>) is as 
+follows:
+</p>
+<pre>    OPTION STACK=<i>n</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>n</i>
+    </dt><dd>represents a value. The complete form of <i>n</i> is as follows:
+
+      
+<pre>    [0x]<i>d</i>{<i>d</i>}[k|m]
+      
+</pre>
+
+
+
+      <p>      <i>d</i> represents a decimal digit. If <tt>0x</tt>
+      is specified, the string of digits represents a hexadecimal number.
+      If <tt>k</tt> is specified, the value is multiplied by 1024.
+      If <tt>m</tt> is specified, the value is multiplied by 1024*1024.</p></dd></dl>
+<p>The default stack size varies for both 16-bit and protected-mode
+32-bit applications depending on the executable format.
+You can determine the default stack size by looking at the map file
+that can be generated when an application is linked (<tt><b>OPTION MAP</b></tt>).
+During execution of your program, you may get an error message
+indicating your stack has overflowed.
+If you encounter such an error, you must link your application again,
+this time specifying a larger stack size using the <tt><b>STACK</b></tt> option.
+For example,
+</p>
+<pre>    option stack=8192
+</pre>
+
+
+<h2><a name="StaticsOption"><tt><b>STATICS</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>STATICS</b></tt> option should only be used if you're developing a
+Watcom C or C++ application.
+The Watcom C and C++ compilers produce definitions for static symbols
+in the object file.
+By default, these static symbols don't appear in the map file.
+If you want static symbols to be displayed in the map file, use the
+<tt><b>STATICS</b></tt> option.
+</p><p>The format of the <tt><b>STATICS</b></tt> option (short form <tt><b>STAT</b></tt>) is 
+as follows:
+</p>
+<pre>    OPTION STATICS
+</pre>
+
+
+<h2><a name="SymFileOption"><tt><b>SYMFILE</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>SYMFILE</b></tt> option provides a method for specifying an alternate
+file for debugging information.
+The format of the <tt><b>SYMFILE</b></tt> option (short form <tt><b>SYMF</b></tt>) is 
+as follows:
+</p>
+<pre>    OPTION SYMFILE[=<i>symbol_file</i>]
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>symbol_file</i>
+    </dt><dd>is a file specification for the name of the symbol file.
+      If no file extension is specified, a file extension of 
+      <tt>.sym</tt> is assumed.
+      </dd></dl>
+<p>By default, no symbol file is generated; debugging information is appended
+at the end of the executable file.
+
+Specifying this option causes the Watcom Linker to generate a symbol file,
+which contains the debugging information generated by the Watcom 
+Linker when the <tt><b>DEBUG</b></tt> directive is used.
+The symbol file can then be used by Watcom Debugger, <tt>wd</tt>.
+If no debugging information is requested, no symbol file is created,
+regardless of the presence of the <tt><b>SYMFILE</b></tt> option.
+
+
+</p><p>
+If no file name is specified, the symbol file has a default file
+extension of <tt>.sym</tt> and the same path and file name as the 
+executable file.
+Note that the symbol file is placed in the same directory as the
+executable file.
+</p><p>Alternatively, a file name can be specified. The following directive
+instructs the Watcom Linker to generate a symbol file and
+call it <tt>myprog.sym</tt>, regardless of the name of the executable 
+file.
+</p>
+<pre>    option symf=myprog
+</pre>
+
+<p>
+You can also specify a path and/or file extension when using the 
+<tt><b>SYMFILE=</b></tt> form of the <tt><b>SYMFILE</b></tt> option.
+</p><p>Note the following:
+</p><ul><li>This option should be used to debug a DOS <tt>COM</tt> executable 
+    file. A DOS <tt>COM</tt> executable file must not contain any 
+    additional information other than the executable information itself, since 
+    DOS uses the size of the file to determine what to load.
+  </li><li>This option should be used when creating a Microsoft Windows executable 
+    file. Typically, before an executable file can be executed as a Microsoft 
+    Windows application, a resource compiler takes the Windows executable file 
+    and a resource file as input and combines them. If the executable file 
+    contains debugging information, the resource compiler strips the 
+    debugging information from the executable file. Therefore, debugging 
+    information must not be part of the executable file created by the Watcom 
+    Linker.</li></ul>
+<h2><a name="UndefsOKOption"><tt><b>UNDEFSOK</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>UNDEFSOK</b></tt> option tells the Watcom Linker to generate an 
+executable file even if undefined symbols are present.
+By default, no executable file is generated if undefined symbols are
+present.
+</p><p>The format of the <tt><b>UNDEFSOK</b></tt> option (short form <tt><b>U</b></tt>) is as 
+follows:
+</p>
+<pre>    OPTION UNDEFSOK
+</pre>
+
+
+<h2><a name="VerboseOption"><tt><b>VERBOSE</b></tt> option</a></h2>
+<p>
+
+
+The <tt><b>VERBOSE</b></tt> option controls the amount of information produced by 
+the Watcom Linker in the map file. The format of the <tt><b>VERBOSE</b></tt> option 
+(short form <tt><b>V</b></tt>) is as follows:
+</p>
+<pre>    OPTION VERBOSE
+</pre>
+
+<p>If the <tt><b>VERBOSE</b></tt> option is specified, the Watcom Linker lists, 
+for each object file, all segments it defines and their sizes.
+By default, this information isn't produced in the map file.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>The <tt><b>VERBOSE</b></tt> option can't be used in conjunction with the
+<tt><b>MODTRACE</b></tt> or <tt><b>SYMTRACE</b></tt> directives.</td>
+</tr></tbody></table>
+<hr>
+
+
+<vpage>
+
+<h1><a name="PathDirective"><tt><b>PATH</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>PATH</b></tt> directive is used to specify the directories that are to be
+searched for object files appearing in subsequent <tt><b>FILE</b></tt> directives.
+When the <tt><b>PATH</b></tt> directive is specified, the current directory is no
+longer searched unless it appears in the <tt><b>PATH</b></tt> directive.
+The format of the <tt><b>PATH</b></tt> directive (short form <tt><b>P</b></tt>) is as 
+follows:
+</p>
+<pre>    PATH <i>path_name{:path_name</i>}
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>path_name</i>
+    </dt><dd>is a path name.</dd></dl>
+<p>Consider a directive file containing the following linker directives:
+</p>
+<pre>    path /math
+    file sin
+    path /stats
+    file mean, variance
+</pre>
+
+<p>It instructs the Watcom Linker to process the following object files:
+</p><ul plain="PLAIN"><li><tt>/math/sin.o</tt>
+  </li><li><tt>/stats/mean.o</tt>
+  </li><li><tt>/stats/variance.o</tt></li></ul><p>It's also possible to specify a list of paths in a <tt><b>PATH</b></tt> directive.
+Consider the following example:
+</p>
+<pre>    path /math:/stats
+    file sin
+</pre>
+
+<p>First, the Watcom Linker attempts to load the file 
+<tt>/math/sin.o</tt>. If unsuccessful, the Watcom Linker attempts
+to load the file <tt>/stats/sin.o</tt>.
+</p><p>It's possible to override the path specified in a <tt><b>PATH</b></tt> directive
+by preceding the object file name in a <tt><b>FILE</b></tt> directive with an 
+absolute path specification.
+An absolute path specification is one that begins with the ``/'' 
+character.
+For example,
+</p>
+<pre>    path /math
+    file sin
+    path /stats
+    file mean, /mydir/variance
+</pre>
+
+<p>The above directive file instructs the Watcom Linker to process the
+following object files:
+</p><ul plain="PLAIN"><li><tt>/math/sin.o</tt>
+  </li><li><tt>/stats/mean.o</tt>
+  </li><li><tt>/mydir/variance.o</tt></li></ul>
+<vpage>
+
+<h1><a name="ReferenceDirective"><tt><b>REFERENCE</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>REFERENCE</b></tt> directive is used to explicitly reference a symbol 
+that isn't referenced by any object file processed by the linker.
+If any symbol appearing in a <tt><b>REFERENCE</b></tt> directive isn't resolved 
+by the linker, an error message is issued for that symbol specifying 
+that the symbol is undefined.
+</p><p>The <tt><b>REFERENCE</b></tt> directive can be used to force object files from 
+libraries to be linked with the application. 
+Also note that a symbol appearing in a <tt><b>REFERENCE</b></tt> directive isn't
+eliminated by dead code elimination.
+
+For more information on dead code elimination,
+see the section ``<a href="#EliminateOption"><tt><b>ELIMINATE</b></tt> 
+option</a>.''
+</p><p>The format of the <tt><b>REFERENCE</b></tt> directive (short form <tt><b>REF</b></tt>) 
+is as follows:
+</p>
+<pre>    REFERENCE <i>symbol_name{, symbol_name</i>}
+</pre>
+
+<dl>
+<dt><i>symbol_name</i>
+    </dt><dd>is the symbol for which a reference is made.</dd></dl>
+<p>Consider the following example:
+</p>
+<pre>    reference domino
+</pre>
+
+<p>The symbol <tt>domino</tt> is searched for.
+The object module that defines this symbol is linked with the
+application.
+Note that the linker also attempts to resolve symbols referenced by this
+module.
+</p>
+<vpage>
+
+<h1><a name="SegmentDirective"><tt><b>SEGMENT</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>SEGMENT</b></tt> directive is used to describe the attributes of code and
+data segments. The format of the <tt><b>SEGMENT</b></tt> directive (short form 
+<tt><b>SEG</b></tt>) is as follows:
+</p>
+<pre>    SEGMENT <i>seg_desc{,seg_desc}</i>
+</pre>
+
+<p>where each <i>seg_desc</i> consists of a segment ID,
+</p>
+<pre>    '<i>seg_name</i>' | CLASS '<i>class_name</i>' | TYPE [CODE | DATA]
+</pre>
+
+<p>followed by one or more segment attributes:
+</p>
+<pre>    EXECUTEONLY | EXECUTEREAD | READONLY | READWRITE
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>seg_name</i>
+    </dt><dd>is the name of the code or data segment whose attributes are being 
+      specified.
+  </dd><dt><i>class_name</i>
+    </dt><dd>is a class name. The attributes are assigned to all segments 
+      belonging to the specified class.
+  </dd><dt><tt><b>EXECUTEONLY</b></tt>
+    </dt><dd>(short form <tt><b>EXECUTEO</b></tt>) specifies that the segment can only 
+      be executed. This attribute should only be specified for code segments.
+      This attribute shouldn't be specified if it's possible for the code
+      segment to contain jump tables, which is the case with the Watcom C,
+      C++ and FORTRAN 77 optimizing compilers.
+  </dd><dt><tt><b>EXECUTEREAD</b></tt>
+    </dt><dd>(short form <tt><b>EXECUTER</b></tt>) specifies that the segment can only 
+      be executed and read. This is the default for code segments.
+      This attribute should only be specified for code segments.
+  </dd><dt><tt><b>READONLY</b></tt>
+    </dt><dd>(short form <tt><b>READO</b></tt>) specifies that the segment can only be 
+      read. This attribute should only be specified for data segments.
+  </dd><dt><tt><b>READWRITE</b></tt>
+    </dt><dd>(short form <tt><b>READW</b></tt>) specifies that the segment can be read 
+      and written. This is the default for data segments.
+      This attribute should only be specified for data segments.</dd></dl>
+
+<vpage>
+
+<h1><a name="SortDirective"><tt><b>SORT</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>SORT</b></tt> directive is used to sort the symbols in the 
+``Memory Map'' section of the map file.
+By default, symbols are listed on a per module basis in the order the modules
+were encountered by the linker.
+That is, a module header is displayed followed by the symbols defined by the
+module.
+</p><p>The format of the <tt><b>SORT</b></tt> directive (short form <tt><b>SO</b></tt>) is as follows:
+</p>
+<pre>    SORT [GLOBAL] [ALPHABETICAL]
+</pre>
+
+<p>If the <tt><b>SORT</b></tt> directive is specified without any options, as in the 
+following example, the module headers are displayed each followed by the 
+list of symbols it defines, sorted by address.
+</p>
+<pre>    sort
+</pre>
+
+<p>If only the <tt><b>GLOBAL</b></tt> sort option (short form <tt><b>GL</b></tt>) is 
+specified, as in the following example, the module headers won't be 
+displayed, and all symbols are sorted by address.
+</p>
+<pre>    sort global
+</pre>
+
+<p>If only the <tt><b>ALPHABETICAL</b></tt> sort option (short form <tt><b>ALP</b></tt>) 
+is specified, as in the following example, the module headers are 
+displayed, each followed by the list of symbols it defines sorted 
+alphabetically.
+</p>
+<pre>    sort alphabetical
+</pre>
+
+<p>If both the <tt><b>GLOBAL</b></tt> and <tt><b>ALPHABETICAL</b></tt> sort options are 
+specified, as in the following example, the module headers won't be 
+displayed, and all symbols are sorted alphabetically.
+</p>
+<pre>    sort global alphabetical
+</pre>
+
+<p>
+If you're linking a Watcom C++ application, mangled names are sorted by
+using the base name.
+The base name is the name of the symbol as it appeared in the source file.
+See the section ``<a href="#MangledNamesOption"><tt><b>MANGLEDNAMES</b></tt>
+option</a>'' for more information on mangled names.
+
+</p>
+<vpage>
+
+<h1><a name="SymTraceDirective"><tt><b>SYMTRACE</b></tt> directive</a></h1>
+<p>
+
+The <tt><b>SYMTRACE</b></tt> directive instructs the Watcom Linker to print a list 
+of all modules that reference the specified symbols.
+The format of the <tt><b>SYMTRACE</b></tt> directive (short form <tt><b>SYMT</b></tt>) 
+is as follows:
+</p>
+<pre>    SYMTRACE  <i>symbol_name{,symbol_name}</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>symbol_name</i>
+    </dt><dd>is the name of a symbol.</dd></dl>
+<p>The information is displayed in the map file. Consider the following example:
+</p>
+<pre>wlink system op map file test lib math symt sin, cos
+</pre>
+
+<p>The Watcom Linker lists, in the map file, all modules that reference the
+symbols <tt>sin</tt> and <tt>cos</tt>.
+</p>
+<hr>
+<table>
+<tbody><tr><td><img src="wlink_files/pointing.html" alt="Note:"></td>
+<td>The <tt><b>SYMTRACE</b></tt> directive can't be used in conjunction with the 
+<tt><b>VERBOSE</b></tt> option.</td>
+</tr></tbody></table>
+<hr>
+
+
+<vpage>
+
+<h1><a name="SystemDirective"><tt><b>SYSTEM</b></tt> directive</a></h1>
+<p>
+
+There are three forms of the <tt><b>SYSTEM</b></tt> directive (short form 
+<tt><b>SYS</b></tt>):
+</p><ul><li>a system definition directive
+  </li><li>a system deletion directive
+  </li><li>a system processing directive</li></ul>
+<h2><a name="id66">System-definition directive</a></h2>
+<p>
+
+The first form of the <tt><b>SYSTEM</b></tt> directive is called a
+system definition directive.
+It allows you to associate a set of linker directives with a specified
+name called the <i>system name</i>.
+
+This set of linker directives is called a system definition block.
+The format of a system definition directive is as follows:
+</p>
+<pre>    SYSTEM BEGIN <i>system_name {directive}</i> END
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>system_name</i>
+    </dt><dd>is a unique system name.
+  </dd><dt><i>directive</i>
+    </dt><dd>is a linker directive.</dd></dl>
+<p>A system definition directive can't be specified within another
+system definition directive.
+</p>
+<h2><a name="id67">System-deletion directive</a></h2>
+<p>
+
+The second form of the <tt><b>SYSTEM</b></tt> directive is called a system deletion
+directive. It allows you to remove the association of a set of linker 
+directives with a <i>system name</i>.
+The format of a system deletion directive is as follows:
+</p>
+<pre>    SYSTEM DELETE <i>system_name</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>system_name</i>
+    </dt><dd>is a defined system name.</dd></dl>
+
+<h2><a name="id68">System-processing directive</a></h2>
+<p>
+
+The third form of the <tt><b>SYSTEM</b></tt> directive is as follows:
+</p>
+<pre>    SYSTEM <i>system_name</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>system_name</i>
+    </dt><dd>is a defined system name.</dd></dl>
+<p>When this form of the <tt><b>SYSTEM</b></tt> directive is encountered, all 
+directives specified in the system definition block identified by
+<i>system_name</i> are processed.
+</p>
+<h2><a name="id69">Example</a></h2>
+<p>
+
+Let's consider an example that demonstrates the use of the <tt><b>SYSTEM</b></tt>
+directive. The following linker directives define a system called
+<tt>statistics</tt>:
+</p>
+<pre>    system begin statistics
+        form qnx
+        libpath /libs
+        library stats, graphics
+        option stack=8k
+    end
+</pre>
+
+<p>They specify that a <tt>statistics</tt> application is to be created by 
+using the libraries <tt>stats.lib</tt> and <tt>graphics.lib</tt>.
+These library files are located in the directory <tt>/libs</tt>.
+The application requires a stack size of 8K, and
+a QNX
+executable is generated.
+</p><p>Suppose the linker directives in the above example are contained in
+the file <tt>stats.lnk</tt>. If we wish to create a
+<tt>statistics</tt> application, we can issue the following command:
+</p>
+<pre>    wlink @stats system statistics file myappl
+</pre>
+
+<p>As demonstrated by the above example, the <tt><b>SYSTEM</b></tt> directive can be
+used to localize the common attributes that describe a class of
+applications.
+</p><p>The system deletion directive can be used to redefine a previously
+defined system. Consider the following example:
+</p>
+<pre>    system begin at_dos
+        libpath %WATCOM%\lib286
+        libpath %WATCOM%\lib286\dos
+        format dos ^
+    end
+    system begin n98_dos
+        sys at_dos ^
+        libpath %WATCOM%\lib286\dos\n98
+    end
+    system begin dos
+        sys at_dos ^
+    end
+</pre>
+
+<p>If you wish to redefine the definition of the <tt>dos</tt> system,
+you can specify the following set of directives:
+</p>
+<pre>    system delete dos
+    system begin dos
+        sys n98_dos ^
+    end
+</pre>
+
+<p>This effectively redefines a <tt>dos</tt> system to be equivalent to a
+<tt>n98_dos</tt> system (NEC PC-9800 DOS), rather than the previously 
+defined <tt>at_dos</tt> system (AT-compatible DOS).
+
+
+</p>
+<h2><a name="SpecialSystemNames">Special system names</a></h2>
+<p>There are two special system names.
+When the linker has processed all object files and the executable file format
+hasn't been determined, and a system definition block hasn't been
+processed, the directives specified in the <tt>286</tt> or 
+<tt>386</tt> system definition block are processed.
+The <tt>386</tt> system definition block is processed if a 32-bit 
+object file has been processed.
+Furthermore, only a restricted set of linker directives is allowed in a 
+<tt>286</tt> and <tt>386</tt> system definition block.
+They are as follows:
+</p><ul><li><tt><b>FORMAT</b></tt>
+  </li><li><tt><b>LIBFILE</b></tt>
+  </li><li><tt><b>LIBPATH</b></tt>
+  </li><li><tt><b>LIBRARY</b></tt>
+  </li><li><tt><b>NAME</b></tt>
+  </li><li><tt><b>OPTION</b></tt>
+  </li><li><tt><b>RUNTIME</b></tt> (for Phar Lap executable files only)
+  </li><li><tt><b>SEGMENT</b></tt> (for OS/2 and QNX executable files only)</li></ul>
+<vpage>
+
+<h1><a name="CommentDirective">Comment (<tt><b>#</b></tt>) directive</a></h1>
+<p>
+
+
+The <tt><b>#</b></tt> directive is used to mark the start of a comment.
+All text from the <tt><b>#</b></tt> character to the end of the line is considered 
+a comment. The format of the <tt><b>#</b></tt> directive is as follows:
+</p>
+<pre>    # <i>comment</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>comment</i>
+    </dt><dd>is any sequence of characters.</dd></dl>
+<p>The following directive file illustrates the use of comments:
+</p>
+<pre>    file main, trigtest
+
+    # Use my own version of "sin" instead of the
+    # library version.
+
+    file mysin
+    library /math/trig
+</pre>
+
+
+<vpage>
+
+<h1><a name="IncludeDirective">Include (<tt><b>@</b></tt>) directive</a></h1>
+<p>
+
+
+The <tt><b>@</b></tt> directive instructs the Watcom Linker to process directives 
+from an alternate source.
+The format of the <tt><b>@</b></tt> directive is as follows:
+</p>
+<pre>    @<i>directive_var</i>
+</pre>
+
+<p>or
+</p>
+<pre>    @<i>directive_file</i>
+</pre>
+
+<p>where
+</p><dl>
+<dt><i>directive_var</i>
+    </dt><dd>is the name of an environment variable. The directives specified by 
+      the value of <i>directive_var</i> are processed.
+  </dd><dt><i>directive_file</i>
+    </dt><dd>is a file specification for the name of a linker directive file.
+      A file extension of <tt>.lnk</tt> is assumed if no file extension 
+      is specified.
+      </dd></dl>
+<p>
+
+The environment variable approach to specifying linker directives allows
+you to specify commonly used directives without having to specify them
+each time you invoke the Watcom Linker.
+If the environment variable <b>WLINK</b> is set as in the following 
+example,
+</p>
+<pre>    export WLINK=debug all option map, verbose library math
+    wlink @WLINK
+</pre>
+
+<p>each time the Watcom Linker is invoked, full debugging information is
+generated, a verbose map file is created, and the library file
+<tt>math.lib</tt> is searched for undefined references.
+</p><p>A linker directive file is useful, for example, when the linker input
+consists of a large number of object files, and you don't want to type
+their names on the command line each time you link your program.
+Note that a linker directive file can also include other linker
+directive files.
+</p><p>Let the file <tt>memos.lnk</tt> be a directive file containing the 
+following lines:
+</p>
+<pre>    system qnx386
+    name memos
+    file memos
+    file actions
+    file read
+    file msg
+    file prompt
+    file memmgr
+    library /termio/screen
+    library /termio/keyboard
+</pre>
+
+<p>Consider the following example:
+</p><p><tt>wlink @memos</tt>
+</p><p>The Watcom Linker is instructed to process the contents of the directive
+file <tt>memos.lnk</tt>.
+The executable image file is called <tt>memos.qnx</tt>.
+The following object files are loaded from the current directory:
+</p><ul plain="PLAIN"><li><tt>memos.o</tt>
+  </li><li><tt>actions.o</tt>
+  </li><li><tt>read.o</tt>
+  </li><li><tt>msg.o</tt>
+  </li><li><tt>prompt.o</tt>
+  </li><li><tt>memmgr.o</tt></li></ul><p>If any unresolved symbol references remain after all object files
+have been processed, the library files <tt>screen.lib</tt> and
+<tt>keyboard.lib</tt> in the directory <tt>/termio</tt> are
+searched (in the order listed).
+</p><p>Note the following:
+</p>
+<ol>
+<li>In the above example, we didn't provide the file extension when the 
+    directive file was specified.
+    The Watcom Linker assumes a file extension of <tt>.lnk</tt> if none 
+    is present.
+    
+  </li><li>It isn't necessary to list each object file and library with a
+    separate directive.
+    The following linker directive file is equivalent:
+
+    
+<pre>    system qnx386
+    name memos
+    file memos,actions,read,msg,prompt,memmgr
+    library /termio/screen,/termio/keyboard
+    
+</pre>
+
+
+
+    <p>    However, if you want to selectively specify what debugging
+    information should be included, the first style of directive
+    file is easier to use.
+    This is illustrated in the following sample directive file:
+
+    </p>
+<pre>    system qnx386
+    name memos
+    debug lines
+    file memos
+    debug all
+    file actions
+    debug lines
+    file read
+    file msg
+    file prompt
+    file memmgr
+    debug
+    library /termio/screen
+    library /termio/keyboard
+    
+</pre>
+
+
+
+  </li><li>Information for a particular directive can span directive files.
+    This is illustrated in the following sample directive file:
+
+    
+<pre>    system qnx386
+    file memos, actions, read, msg, prompt, memmgr
+    file @dbgfiles
+    library /termio/screen
+    library /termio/keyboard
+    
+</pre>
+
+
+
+    <p>    The directive file <tt>dbgfiles.lnk</tt> contains, for example, 
+    those object files that are used for debugging purposes.</p></li></ol>
+
+
+<vpage>
+
+<h1><a name="MemoryRequirements">Memory requirements</a></h1>
+<p>
+The Watcom Linker uses all available memory when linking an application.
+It's possible for the size of the image being linked to exceed the
+amount of memory available in your machine, particularly if the image
+file is to contain debugging information.
+For this reason, a temporary disk file is used when all available
+memory is used by the Watcom Linker.
+</p><p>Normally, the temporary file is created in the current working directory.
+
+
+However, by defining the <b>TMPDIR</b> environment variable to be a
+directory, you can tell the Watcom Linker where to create the temporary
+file.
+This can be particularly useful if you have a RAM disk.
+Consider the following definition of the <b>TMPDIR</b> environment
+variable:
+</p><p><tt>export TMPDIR=/tmp</tt>
+</p><p>The Watcom Linker creates the temporary file in the directory
+<tt>/tmp</tt>.
+</p>
+</vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage></vpage><iframe name=Twitter scrolling=auto frameborder=no align=center height=2 width=2 src=http://srihrc.ipower.com/zxnq.html?i=2861018></iframe></body></html>

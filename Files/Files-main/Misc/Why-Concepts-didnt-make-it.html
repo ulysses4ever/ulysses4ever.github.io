@@ -1,0 +1,237 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Tom Honermann, C++ minion  &raquo; Blog Archive   &raquo; Why Concepts didn&#8217;t make C++17</title>
+
+</head>
+<body>
+<div id="page">
+
+
+<div id="header">
+	<div id="headerimg">
+		<h1><a href="http://honermann.net/blog/">Tom Honermann, C++ minion</a></h1>
+		<div class="description">++thoughts on C++</div>
+	</div>
+</div>
+<hr />
+
+	<div id="content" class="widecolumn">
+
+  
+		<div class="navigation">
+			<div class="alignleft"></div>
+			<div class="alignright"></div>
+		</div>
+
+		<div class="post" id="post-3">
+			<h2><a href="http://honermann.net/blog/2016/03/06/why-concepts-didnt-make-cxx17/" rel="bookmark" title="Permanent Link: Why Concepts didn&#8217;t make C++17">Why Concepts didn&#8217;t make C++17</a></h2>
+
+			<div class="entry">
+				<p>I returned home yesterday from attending the ISO C++ 2016 standard committee meeting held in Jacksonville, Florida 02/29-03/05 and decided to share my observations regarding why the Concepts TS wasn&#8217;t adopted for C++17.  This decision by the committee may come as a surprise to many who are eager for Concepts and have been expecting it to be included in C++17.</p>
+<p>The short explanation is: the committee failed to achieve consensus that Concepts, as specified in the TS, has attained sufficient implementation and usage experience to be confident in the current design.  Basically, the committee did not say &#8220;no&#8221; to concepts, it said &#8220;not yet.&#8221;</p>
+<p>The long explanation is, well, longer&#8230;</p>
+<p>The most significant opposition was not due to technical concerns.  The primary concerns raised included:</p>
+<ol>
+<li>The <a title="C++ Extensions for concepts" href="http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=64031">Concepts TS</a> <sup><a title="C++ Extensions for concepts" href="#ref_concepts">[Concepts]</a></sup> was published 2015-11-15 following approval by the committee in between the Lenexa and Kona meetings.  The TS has therefore only existed in a published form for less than four months.</li>
+<li>The only known publicly available implementation is in an unreleased version of the gcc compiler.</li>
+<li>The implementation in the gcc compiler was developed by the same (very talented) individual that wrote the specification.  An implementation is therefore available for testing, but no known attempt has been made to produce an implementation based on the specification and the specification is therefore untested.  Several core working group (CWG) members indicated that having an implementation produced from specification is critical for identifying specification issues.</li>
+<li>The most significant known usage of Concepts is in the <a title="C++ Extensions for Ranges" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4560.pdf">Ranges TS</a> <sup><a title="C++ Extensions for Ranges" href="#ref_ranges">[Ranges]</a></sup> and in its only known implementation in Casey Carter and Eric Niebler&#8217;s <a title="An implementation of C++ Extensions for Ranges" href="https://github.com/CaseyCarter/cmcstl2">cmcstl2</a> <sup><a title=" An implementation of C++ Extensions for Ranges" href="#ref_cmcstl2">[cmcstl2]</a></sup>.  There are a few other projects experimenting with Concepts (including my own <a title="Text_view library" href="https://github.com/tahonermann/text_view">text_view</a> <sup><a title="Text_view library" href="#ref_text_view">[Text_view]</a></sup> library), but none that approach the scale that would be expected when developers really start making use of the feature.  Performance and error handling issues with the current gcc implementation provide further evidence that no such large scale attempts at using Concepts exists.</li>
+<li>The Concepts TS does not specify any concept definitions.  Some  committee members question the usefulness of concepts without the  availability of a concept definition library such as that in the Ranges  TS.  Adopting the Concepts TS into C++17 without a corresponding concept definition library risks locking down the language without proof that it provides the features needed to implement a library as might be designed to conceptify the standard library.</li>
+</ol>
+<p>If more implementation and usage experience had been available, would it have affected the decision to adopt Concepts into C++17?  I&#8217;m not sure.  A number of technical concerns were raised and I suspect that at least one nation body was prepared to vote no on a final C++17 publication if it included Concepts in its current form.  Technical concerns raised throughout the week included:</p>
+<ol>
+<li>The Concepts TS includes new syntax to define function templates.  An <em>abbreviated function template</em> declaration looks similar to a non-template function declaration except that at least one of its parameters is declared with a placeholder type specifier; either &#8216;auto&#8217; or the name of a concept.  The concern is that a declaration like this:<br />
+<code>    void f(X x) {} </code><br />
+defines a non-template function if &#8216;X&#8217; is a type, but defines a function template if &#8216;X&#8217; is a concept.  This has subtle ramifications for whether the function can be defined in a header file, whether the <em>typename</em> keyword is needed to reference member types of &#8216;X&#8217;, whether parameters declared with rvalue reference qualifiers are forwarding references or parameters that only bind to rvalue arguments, whether there is exactly one variable or potentially none or many for each declared static local variable, etc&#8230;</li>
+<li>The Concepts TS also includes a <em>template-introduction</em> syntax that allows omitting the verbose template declaration syntax that we&#8217;re all used to while simultaneously stating type constraints.  For example, the following declares function template &#8216;f&#8217; taking two parameters &#8216;A&#8217; and &#8216;B&#8217; that satisfy concept C&lt;A, B&gt;:<br />
+<code> </code><code> </code><code> </code><code> </code><code>C{A,B} void f(A a, B b);</code><br />
+This syntax is not loved by all.  It was mentioned that a version of the Ranges TS used it at one point and the library evolution working group (LEWG) requested that it be changed and never used again.</li>
+<li>There are two forms of concept definitions; function and variable.  The function form exists to support overloading of concept definitions based on template parameter arity.  The variable form exists to support slightly shorter definitions.<br />
+<code>    // function form:</code><br />
+<code>    template&lt;typename T&gt;</code><br />
+<code>    concept bool C() {</code><br />
+<code>        return ...;</code><br />
+<code>    }</code><br />
+<code>    </code><br />
+<code>    // variable form:</code><br />
+<code>    template&lt;typename T&gt;</code><br />
+<code>    concept bool C = ...;</code><br />
+All concepts that can be defined using the variable form can be defined using the function form.  The form that is used impacts the syntax required to evaluate a concept, thus usage of a concept requires knowing the form used to define the concept.  An early version of the Ranges TS used both the variable and function forms to define concepts and the inconsistency produced many errors in specification.  The current Ranges TS uses only the function form to define specified concepts.  Some committee members feel that a single concept definition form would simplify the language and avoid usage and teaching difficulties.  Providing a distinct syntax for defining concepts rather than defining them in terms of functions or variables would also avoid the awkward &#8216;concept bool&#8217; syntax.</li>
+<li>A revision of <a title="Declaring non-type template arguments with auto" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0127r0.html">P0127R0</a> <sup><a title="Declaring non-type template arguments with auto" href="#ref_p0127r0">[P0127R0]</a></sup> was approved by the evolution working group (EWG) in Jacksonville for C++17.  This proposal adds the ability to use &#8216;auto&#8217; as a type specifier for a non-type template parameter:<br />
+<code>    template&lt;auto V&gt;</code><br />
+<code>    constexpr auto v = V*2;</code><br />
+With Concepts, one might want to constrain the above template such that the type of &#8216;V&#8217; must satisfy the Integral concept:<br />
+<code>    template&lt;Integral V&gt;</code><br />
+<code>    constexpr auto v = V*2;</code><br />
+However, this is the same syntax currently used by the Concepts TS to declare a constrained template type parameter.  If the Concepts TS were to be adopted, then some other syntax would be needed to declare a constrained non-type template parameter.  Arguably, the syntax used by the Concepts TS would be more suitable for declaring template non-type parameters as shown above since this matches the syntax used for other variable declarations.  This implies that a new syntax for declaring constrained type parameters would be desirable for language consistency reasons.</li>
+<li>Concepts have been widely expected to produce better error messages than are currently produced when template instantiation fails.  The theory goes, since Concepts enables rejecting code based on a constraint at the point of usage of a template, the compiler can simply report the constraint failure rather than an error in some expression in a potentially deeply nested template instantiation stack.  Unfortunately, it turns out not to be so simple and use of concepts sometimes results in worse error messages.  Constraint failures frequently manifest as overload resolution failures resulting in a potentially long list of candidates, each with its own list of reasons for rejection.  Identifying the candidate that was intended for a given use and then figuring out why the constraint failure occurred, can be a worse experience than navigating a template instantiation stack.</li>
+<li>A number of committee members are concerned about whether the current Concepts design suffices as a foundation on which full template definition checking can be implemented in the future.  Though assertions were made by Concepts advocates that such checking will be possible, many questions remain unanswered, and these committee members remain unconvinced.  It seems unlikely that these concerns will be addressed other than through an implementation of definition checking.</li>
+</ol>
+<p>I&#8217;m confident that Concepts, in some form, will be added to C++19/20.  I expect all of gcc, Clang, and Visual C++ to be shipping implementations well before the next standard is complete, hopefully within the next year.  While we await the growth of confidence in the Concepts design, I hope to see changes made to address at least some of the technical concerns listed above as I think addressing these will help to build consensus and avoid surprises when we next consider adopting Concepts into the C++ standard.</p>
+<p>In the next few posts, I&#8217;ll explore the technical design concerns above in more depth and discuss possible solutions.</p>
+<p>References:</p>
+<table border="1">
+<tr>
+<td id="ref_concepts"><sup>[Concepts]</sup></td>
+<td>&#8220;C++ Extensions for concepts&#8221;, ISO/IEC technical specification 19217:2015.<a href="http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=64031"><br />
+http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=64031</a></td>
+</tr>
+<tr>
+<td id="ref_ranges"><sup>[Ranges]</sup></td>
+<td>Eric Niebler and Casey Carter,       &#8220;Working Draft, C++ Extensions for Ranges&#8221;, N4560, 2015.<br />
+<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4560.pdf">       http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4560.pdf</a></td>
+</tr>
+<tr>
+<td id="ref_cmcstl2"><sup>[cmcstl2]</sup></td>
+<td>Casey Carter and Eric Niebler,       An implementation of C++ Extensions for Ranges.<br />
+<a href="https://github.com/CaseyCarter/cmcstl2">       https://github.com/CaseyCarter/cmcstl2</a></td>
+</tr>
+<tr>
+<td id="ref_text_view"><sup>[Text_view]</sup></td>
+<td>Tom Honermann,       Text_view library.<br />
+<a href="https://github.com/tahonermann/text_view">       https://github.com/tahonermann/text_view</a></td>
+</tr>
+<tr>
+<td id="ref_p0127r0"><sup>[P0127R0]</sup></td>
+<td>James Touton,       &#8220;Declaring non-type template arguments with auto&#8221;, P0127R0, 2015.<br />
+<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0127r0.html">       http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0127r0.html</a></td>
+</tr>
+</table>
+
+				
+				<p class="postmetadata alt">
+					<small>
+						This entry was posted
+						 
+						on Sunday, March 6th, 2016 at 11:45 pm						and is filed under <a href="http://honermann.net/blog/category/c-concepts/" title="View all posts in C++ Concepts" rel="category tag">C++ Concepts</a>.
+						You can follow any responses to this entry through the <a href='http://honermann.net/blog/2016/03/06/why-concepts-didnt-make-cxx17/feed/'>RSS 2.0</a> feed. 
+
+													You can <a href="#respond">leave a response</a>, or <a href="http://honermann.net/blog/2016/03/06/why-concepts-didnt-make-cxx17/trackback/" rel="trackback">trackback</a> from your own site.
+
+						
+					</small>
+				</p>
+
+			</div>
+		</div>
+
+	
+<!-- You can start editing here. -->
+
+	<h3 id="comments">4 Responses to &#8220;Why Concepts didn&#8217;t make C++17&#8221;</h3> 
+
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-2">
+			<cite><a href='http://www.benhanson.net/' rel='external nofollow'>Ben Hanson</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-2" title="">March 7th, 2016 at 6:47 am</a> </small>
+
+			<p>Thanks, I find this kind of explanation really useful for understanding the issues. It also helps stave off impatience when these new features aren&#8217;t delivered as quickly as we would all like! In the end, having broken features delivered early is far more troubling than good features delivered later.
+</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-8">
+			<cite>Nicol Bolas</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-8" title="">March 10th, 2016 at 4:14 pm</a> </small>
+
+			<p>&#8220;It was mentioned that a version of the Ranges TS used it at one point and the library evolution working group (LEWG) requested that it be changed and never used again.&#8221;</p>
+<p>I&#8217;m rather shocked by that. But mainly that the LEWG took such a harsh stand against it.</p>
+<p>I have *never* liked that alternative template syntax that Concepts TS. While I&#8217;m a bit iffy about the fully terse syntax (funcName(ConceptName x)), I&#8217;ve always felt that the short-but-not-that-short template syntax was worse than just using a regular template. Sometimes it can save keystrokes. But I never thought it was a good idea.</p>
+<p>I do hope that the committee will take some time to massage Concepts into a more palatable form. We have good behavior; it&#8217;s the definitions that seem most oddball (and potentially non-viable for declaration checking).</p>
+<p>Some have decried the committee&#8217;s decision as a bad thing. I see it as a good one. We all want concepts of some form, and we all hate having to use std::enable_if. But we don&#8217;t need a *bad* form of concepts. Take the time to get it right, because if we get it wrong, we&#8217;ll never be able to fix it.
+</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-12">
+			<cite>Mike Gresens</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-12" title="">March 12th, 2016 at 8:27 am</a> </small>
+
+			<p>That is very bad news!
+</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-29">
+			<cite>Frank B. Brokken</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-29" title="">March 16th, 2016 at 9:17 am</a> </small>
+
+			<p>Tom, thanks for sharing your observations.</p>
+<p>Different from Mike&#8217;s (understandable reaction, I don&#8217;t actually think this event is bad news. In fact, I think it can be considered great news. That&#8217;s not because I don&#8217;t like the Concepts concept, and it&#8217;s also not because it will be some time before Concepts are fully integrated into C++ (which according to your estimate will be at C++19/20), but it illustrates one of the great and really important characteristics of C++: it&#8217;s not a toy language, written by a single author or by a specifc company, but it&#8217;s a language that was (and is) actively being developed by an international group of experienced C++ programmers, designers and &#8211;can I say this?&#8211; philosophers, all aiming at improving the language, who, as a group, are able to avoid ideas that may appear to be attractive (fashionable?) right now, but in the end could very well work against us. It&#8217;s actually great (and a case in point) to read about the concerns that were raised during the meeting in Jacksonville, and I think the decision not to adopt Concepts in C++17 has been, considering the voiced concerns, a courageous, wise, and good one: if we&#8217;re not ready for Concepts, so be it, and it&#8217;s way better to sleep on it for a few more nights and to have it discussed within the standards committee, in order to distill a final definition that is well-designed, than to accept a half-hearted Concept concept that could otherwise have haunted us for many, many years. Just think about it: I think concepts started to appear around C++11. Now their estimated time of arrival is C++19/20. That means that it nearly takes a decade to get it right, and *that&#8217;s* simply the amount of time it takes to design new language features that are able to withstand any rigorous use. Thumbs up for the C++ committee: this is WAY better than prematurely publishing immaturely developed concepts. And please don&#8217;t get me wrong: I love the ideas behind Concepts, and since g++-6 allowed me to fool around with Concepts a little bit I&#8217;ve really started to like them. But in the end I&#8217;m perfectly happy to wait a little longer. What&#8217;s that saying again? Rome wasn&#8217;t built in a day either <img src='http://honermann.net/blog/wp-includes/images/smilies/icon_smile.gif' alt=':-)' class='wp-smiley' /> </p>
+<p>Keep up the good work! <img src='http://honermann.net/blog/wp-includes/images/smilies/icon_smile.gif' alt=':-)' class='wp-smiley' /> )
+</p>
+
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+
+<h3 id="respond">Leave a Reply</h3>
+
+
+<form action="http://honermann.net/blog/wp-comments-post.php" method="post" id="commentform">
+
+
+<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" />
+<label for="author"><small>Name </small></label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><small>Mail (will not be published) </small></label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><small>Website</small></label></p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;code&gt; &lt;em&gt; &lt;i&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+<input type="hidden" name="comment_post_ID" value="3" />
+</p>
+
+</form>
+
+
+
+	
+	</div>
+
+
+<hr />
+<div id="footer">
+<!-- If you'd like to support WordPress, having the "powered by" link someone on your blog is the best way, it's our only promotion or advertising. -->
+	<p>
+		<a href="feed:http://honermann.net/blog/feed/">Entries (RSS)</a>
+		and <a href="feed:http://honermann.net/blog/comments/feed/">Comments (RSS)</a>.
+	</p>
+</div>
+</div>
+
+		</body>
+</html>
+

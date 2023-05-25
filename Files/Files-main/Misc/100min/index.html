@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Язык программирования vs язык общения</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Fira+Sans);
+      @import url(https://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      @page {
+        size: 908px 681px;
+        margin: 0;
+      }
+
+      @media print {
+        .remark-slide-scaler {
+          width: 100% !important;
+          height: 100% !important;
+          transform: scale(1) !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
+      }
+      
+      body { font-family: 'PT Serif'; }
+      h1, h2, h3 {
+        font-family: 'Fira Sans';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+           .remark-slide-content h1 { font-size: 2.5em; }
+      .remark-slide-content h2 { font-size: 2em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 1em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 1em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Языки программирования  
+# vs 
+# языки общения
+[Артём Пеленицын](http://staff.mmcs.sfedu.ru/~ulysses/), [Мехмат ЮФУ](http://mmcs.sfedu.ru)
+---
+
+# Программное обеспечение
+
+![](sw.jpg)
+
+---
+
+# На самом деле…
+
+![](bin.jpg)
+
+.footnote[— бинарный код]
+
+---
+
+# Как получают бинарный код
+
+```haskell
+
+reportForADir :: FilePath -> IO WorkingDirReport
+reportForADir workingDir    = do
+    workingDirContents     <- getAbsDirectoryContents workingDir
+    studentDirs            <- filterM isDir $ sort workingDirContents
+    studentReports         <- mapM studentDirReport studentDirs
+    return                  $ WorkingDirReport studentReports
+
+studentDirReport :: FilePath -> IO StudentReport
+studentDirReport studentDir = do
+    studentDirContents        <- getAbsDirectoryContents studentDir
+    let taskFiles             =  filter isLikeTaskFile $ sort studentDirContents
+    fileReports               <- mapM fileReport taskFiles
+    return                    $  StudentReport (filename studentDir) fileReports
+
+fileReport :: FilePath -> IO FileReport
+fileReport file = do
+    let taskId    =  taskNumFrom file
+    sInFromTag    <- (,) <$> readFile file
+    sOut          <- runFile file
+    getVarFrom file >>= maybe
+        (return $ NoVar taskId)
+        (\varId -> let tag = (varId, taskId) in 
+                        FileReport tag <$>
+                            checkSubmission (sInFromTag tag) sOut)
+```
+
+— исходный код на языке программирования
+
+---
+
+# Языки программирования это сложно? 
+
+# :(
+
+---
+
+# «Только без паники» (Н. Хомский)
+
+![](chom.jpg)
+
+---
+
+# Н. Хомский: «ЯПы проще»
+
+![](gram.jpg)
+
+* языки программирования → контекстно-свободные,
+
+* языки общения → контекстно-зависимые.
+
+---
+
+# Считаем до 10
+
+```python
+i = 1
+while i <= 10:
+    print "Досчитали до %d" % (i)
+    i += 1
+```
+
+---
+
+# Считаем до 10
+
+```python
+i = 1
+while i <= 10:
+    print "Досчитали до %d" % (i)
+    i += 1
+```
+
+# Сортируем
+
+```haskell
+qsort []       =  []
+
+qsort (x : xs) =  qsort (filter (< x) xs)
+               ++ [x]
+               ++ qsort (filter (>= x) xs)
+```
+
+---
+
+# Сколько?
+
+## Естественные языки: 
+
+* Энциклопедия Британика 1911 г.: ~ 1000.
+* Каталог «Этнолог», 2009 г.: 6909.
+
+## Языки программирования: 
+
+* Википедия: ~ 500.
+* Другие источники: ~ 4000.
+
+---
+
+## Взаимосвязи
+
+![](tree-nat.png)
+
+---
+
+## Взаимосвязи (ЯП)
+
+<img src="tree-pl-orig.jpg" width="700">
+
+---
+
+# [#ВКШ](http://sunschool.mmcs.sfedu.ru/), Computing at School и Саймон Пейтон Джонс
+
+<img src="spj.jpg" height="430">
+
+---
+
+# Lifelong learning и революция MOOC
+
+> _ **Lifelong learning** is the ongoing, voluntary, and self-motivated pursuit of knowledge…_
+
+— Wikipedia
+
+### Ресурсы MOOC (Massive Open Online Courses)
+
+* coursera.org
+
+* edx.org
+
+* universarium.org
+
+* lektorium.tv
+
+---
+
+#    [Курс](https://www.coursera.org/learn/python) на Coursera
+
+<img src="mooc.png" height="430">
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

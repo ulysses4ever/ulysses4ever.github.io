@@ -1,0 +1,12 @@
+<pre style='color:#000000;background:#ffffff;font-size:13px;'><span style='color:#000084; font-weight:bold; '>procedure</span> Factorization(number, divisor: <span style='color:#000084; font-weight:bold; '>integer</span>);
+<span style='color:#000084; font-weight:bold; '>begin</span>
+ <span style='color:#000084; font-weight:bold; '>if</span> number = 1 <span style='color:#000084; font-weight:bold; '>then</span>
+   <span style='color:#000084; font-weight:bold; '>Exit</span>
+ <span style='color:#000084; font-weight:bold; '>else</span> <span style='color:#000084; font-weight:bold; '>if</span> number <span style='color:#000084; font-weight:bold; '>mod</span> divisor = 0 <span style='color:#000084; font-weight:bold; '>then</span>
+ <span style='color:#000084; font-weight:bold; '>begin</span>
+   Write(divisor, <span style='color:#0000ff; '>' '</span>);
+   Factorization(number <span style='color:#000084; font-weight:bold; '>div</span> divisor, divisor);
+ <span style='color:#000084; font-weight:bold; '>end</span>
+ <span style='color:#000084; font-weight:bold; '>else</span>
+   Factorization(number, divisor+1);
+<span style='color:#000084; font-weight:bold; '>end</span>;</pre>

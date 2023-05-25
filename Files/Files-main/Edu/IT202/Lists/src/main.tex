@@ -1,0 +1,84 @@
+\documentclass[12pt]{article}%,leqno
+\usepackage{cmap}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{automata,shapes,arrows,positioning,calc}
+\usepackage{clrscode}
+\usepackage{sectsty}
+\usepackage{verbatim}
+\usepackage{ifthen}
+\usepackage{forloop}
+\usepackage{calc}
+
+\sectionfont{\large}
+
+\newcommand{\Llabel}{Листок}
+\newcommand{\Lnum}{3}
+
+%\usepackage[urlbordercolor={1 1 1}]{hyperref}
+%colorlinks,urlcolor=black
+
+\topmargin=0cm
+%\headsep=10pt
+\oddsidemargin=0cm
+\textheight=21cm
+\textwidth=17cm
+
+\usepackage{fancyheadings}
+\pagestyle{fancy}
+\lfoot{\footnotesize ЮФУ, Мехмат, ИТ}
+\cfoot{--- \thepage{} ---}
+\rfoot{\footnotesize Листок \Lnum}
+\lhead{Теория автоматов и формальных языков}
+\rhead{\emph{весна 2009/2010}}
+
+\parindent=0cm
+
+\tolerance=1000
+
+%\renewcommand{\thesubsubsection}{\arabic{\subsection}}
+%\arabic{\subsubsection}
+\renewcommand{\emptyset}{\varnothing}
+\newcommand{\es}{\emptyset}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\NO}{\ensuremath{\mathbb N_0}}
+\DeclareMathOperator{\RE}{RE}
+\DeclareMathOperator{\Gen}{Gen}
+\DeclareMathOperator{\Reach}{Reach}
+\renewcommand{\qed}{\hfill \vrule width1.5ex height1.5ex depth0pt}
+\newcommand{\pseudoqed}{\hfill\Box}
+\newcommand{\HW}{\ensuremath{{\otimes}}}
+\newcommand{\coleq}{\ensuremath{\mathrel{\mathop:}=}}
+\renewcommand{\labelenumi}{(\theenumi)}
+\newcommand{\InsertList}[1]{%
+\input{listok#1}
+}
+\newcommand{\nspace}{\hspace{0pt}}
+\newcommand{\nbdash}{\nobreakdash-\nspace}
+
+\newtheorem{Thm}{Теорема}[section]
+\renewcommand{\theThm}{\arabic{Thm}}
+
+\theoremstyle{remark}
+\newtheorem*{SketchOfProof}{Набросок доказательства}
+
+\theoremstyle{definition}
+\newtheorem*{Proposition}{Утверждение}
+\newtheorem*{Remark}{Замечание}
+\newtheorem{NumRemark}{Замечание}
+\newtheorem*{Algo}{Алгоритм}
+\newtheorem{NumAlgo}{Алгоритм}
+\newtheorem*{Def}{Определение}
+\newtheorem*{Task}{Задача}
+
+\begin{document}
+\InsertList{\Lnum}
+%\input{SeminarsSelectedThemes}
+%\input{CFLAlgo}
+\end{document}

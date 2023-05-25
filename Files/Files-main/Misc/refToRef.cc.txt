@@ -1,0 +1,49 @@
+#include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <vector>
+
+#include <cstdlib>
+#include <cstdio>
+
+using namespace std;
+
+class Simple 
+{ 
+public:
+    int x;
+    Simple() : x() {}
+}; 
+
+class Holder 
+{ 
+public:
+     vector<Simple> vec; 
+     
+     Holder() {}
+     
+     Holder(Holder const & other) : vec(other.vec) {
+        cout << " Holder's copyctor" << endl;
+     }
+
+     void Do(const Simple & s) const 
+     { 
+         cout << s.x << endl;
+     } 
+
+     void DoAll() 
+     { 
+         for_each(vec.begin(), vec.end(), bind1st(mem_fun(&Holder::Do), this)); // possibly ref to ref
+     } 
+
+};
+
+int main(int , char** ) {
+    vector<Simple> vec(10);
+    Holder h;
+    h.vec = vec;
+    h.DoAll();
+    
+    return (EXIT_SUCCESS);
+}
+

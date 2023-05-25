@@ -1,0 +1,2076 @@
+/*!
+ * jQuery UI 1.8.10
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI
+ */
+(function(c,j){function k(a){return!c(a).parents().andSelf().filter(function(){return c.curCSS(this,"visibility")==="hidden"||c.expr.filters.hidden(this)}).length}c.ui=c.ui||{};if(!c.ui.version){c.extend(c.ui,{version:"1.8.10",keyCode:{ALT:18,BACKSPACE:8,CAPS_LOCK:20,COMMA:188,COMMAND:91,COMMAND_LEFT:91,COMMAND_RIGHT:93,CONTROL:17,DELETE:46,DOWN:40,END:35,ENTER:13,ESCAPE:27,HOME:36,INSERT:45,LEFT:37,MENU:93,NUMPAD_ADD:107,NUMPAD_DECIMAL:110,NUMPAD_DIVIDE:111,NUMPAD_ENTER:108,NUMPAD_MULTIPLY:106,
+NUMPAD_SUBTRACT:109,PAGE_DOWN:34,PAGE_UP:33,PERIOD:190,RIGHT:39,SHIFT:16,SPACE:32,TAB:9,UP:38,WINDOWS:91}});c.fn.extend({_focus:c.fn.focus,focus:function(a,b){return typeof a==="number"?this.each(function(){var d=this;setTimeout(function(){c(d).focus();b&&b.call(d)},a)}):this._focus.apply(this,arguments)},scrollParent:function(){var a;a=c.browser.msie&&/(static|relative)/.test(this.css("position"))||/absolute/.test(this.css("position"))?this.parents().filter(function(){return/(relative|absolute|fixed)/.test(c.curCSS(this,
+"position",1))&&/(auto|scroll)/.test(c.curCSS(this,"overflow",1)+c.curCSS(this,"overflow-y",1)+c.curCSS(this,"overflow-x",1))}).eq(0):this.parents().filter(function(){return/(auto|scroll)/.test(c.curCSS(this,"overflow",1)+c.curCSS(this,"overflow-y",1)+c.curCSS(this,"overflow-x",1))}).eq(0);return/fixed/.test(this.css("position"))||!a.length?c(document):a},zIndex:function(a){if(a!==j)return this.css("zIndex",a);if(this.length){a=c(this[0]);for(var b;a.length&&a[0]!==document;){b=a.css("position");
+if(b==="absolute"||b==="relative"||b==="fixed"){b=parseInt(a.css("zIndex"),10);if(!isNaN(b)&&b!==0)return b}a=a.parent()}}return 0},disableSelection:function(){return this.bind((c.support.selectstart?"selectstart":"mousedown")+".ui-disableSelection",function(a){a.preventDefault()})},enableSelection:function(){return this.unbind(".ui-disableSelection")}});c.each(["Width","Height"],function(a,b){function d(f,g,l,m){c.each(e,function(){g-=parseFloat(c.curCSS(f,"padding"+this,true))||0;if(l)g-=parseFloat(c.curCSS(f,
+"border"+this+"Width",true))||0;if(m)g-=parseFloat(c.curCSS(f,"margin"+this,true))||0});return g}var e=b==="Width"?["Left","Right"]:["Top","Bottom"],h=b.toLowerCase(),i={innerWidth:c.fn.innerWidth,innerHeight:c.fn.innerHeight,outerWidth:c.fn.outerWidth,outerHeight:c.fn.outerHeight};c.fn["inner"+b]=function(f){if(f===j)return i["inner"+b].call(this);return this.each(function(){c(this).css(h,d(this,f)+"px")})};c.fn["outer"+b]=function(f,g){if(typeof f!=="number")return i["outer"+b].call(this,f);return this.each(function(){c(this).css(h,
+d(this,f,true,g)+"px")})}});c.extend(c.expr[":"],{data:function(a,b,d){return!!c.data(a,d[3])},focusable:function(a){var b=a.nodeName.toLowerCase(),d=c.attr(a,"tabindex");if("area"===b){b=a.parentNode;d=b.name;if(!a.href||!d||b.nodeName.toLowerCase()!=="map")return false;a=c("img[usemap=#"+d+"]")[0];return!!a&&k(a)}return(/input|select|textarea|button|object/.test(b)?!a.disabled:"a"==b?a.href||!isNaN(d):!isNaN(d))&&k(a)},tabbable:function(a){var b=c.attr(a,"tabindex");return(isNaN(b)||b>=0)&&c(a).is(":focusable")}});
+c(function(){var a=document.body,b=a.appendChild(b=document.createElement("div"));c.extend(b.style,{minHeight:"100px",height:"auto",padding:0,borderWidth:0});c.support.minHeight=b.offsetHeight===100;c.support.selectstart="onselectstart"in b;a.removeChild(b).style.display="none"});c.extend(c.ui,{plugin:{add:function(a,b,d){a=c.ui[a].prototype;for(var e in d){a.plugins[e]=a.plugins[e]||[];a.plugins[e].push([b,d[e]])}},call:function(a,b,d){if((b=a.plugins[b])&&a.element[0].parentNode)for(var e=0;e<b.length;e++)a.options[b[e][0]]&&
+b[e][1].apply(a.element,d)}},contains:function(a,b){return document.compareDocumentPosition?a.compareDocumentPosition(b)&16:a!==b&&a.contains(b)},hasScroll:function(a,b){if(c(a).css("overflow")==="hidden")return false;b=b&&b==="left"?"scrollLeft":"scrollTop";var d=false;if(a[b]>0)return true;a[b]=1;d=a[b]>0;a[b]=0;return d},isOverAxis:function(a,b,d){return a>b&&a<b+d},isOver:function(a,b,d,e,h,i){return c.ui.isOverAxis(a,d,h)&&c.ui.isOverAxis(b,e,i)}})}})(jQuery);
+
+/*!
+ * jQuery UI Widget 1.8.10
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Widget
+ */
+(function(b,j){if(b.cleanData){var k=b.cleanData;b.cleanData=function(a){for(var c=0,d;(d=a[c])!=null;c++)b(d).triggerHandler("remove");k(a)}}else{var l=b.fn.remove;b.fn.remove=function(a,c){return this.each(function(){if(!c)if(!a||b.filter(a,[this]).length)b("*",this).add([this]).each(function(){b(this).triggerHandler("remove")});return l.call(b(this),a,c)})}}b.widget=function(a,c,d){var e=a.split(".")[0],f;a=a.split(".")[1];f=e+"-"+a;if(!d){d=c;c=b.Widget}b.expr[":"][f]=function(h){return!!b.data(h,
+a)};b[e]=b[e]||{};b[e][a]=function(h,g){arguments.length&&this._createWidget(h,g)};c=new c;c.options=b.extend(true,{},c.options);b[e][a].prototype=b.extend(true,c,{namespace:e,widgetName:a,widgetEventPrefix:b[e][a].prototype.widgetEventPrefix||a,widgetBaseClass:f},d);b.widget.bridge(a,b[e][a])};b.widget.bridge=function(a,c){b.fn[a]=function(d){var e=typeof d==="string",f=Array.prototype.slice.call(arguments,1),h=this;d=!e&&f.length?b.extend.apply(null,[true,d].concat(f)):d;if(e&&d.charAt(0)==="_")return h;
+e?this.each(function(){var g=b.data(this,a),i=g&&b.isFunction(g[d])?g[d].apply(g,f):g;if(i!==g&&i!==j){h=i;return false}}):this.each(function(){var g=b.data(this,a);g?g.option(d||{})._init():b.data(this,a,new c(d,this))});return h}};b.Widget=function(a,c){arguments.length&&this._createWidget(a,c)};b.Widget.prototype={widgetName:"widget",widgetEventPrefix:"",options:{disabled:false},_createWidget:function(a,c){b.data(c,this.widgetName,this);this.element=b(c);this.options=b.extend(true,{},this.options,
+this._getCreateOptions(),a);var d=this;this.element.bind("remove."+this.widgetName,function(){d.destroy()});this._create();this._trigger("create");this._init()},_getCreateOptions:function(){return b.metadata&&b.metadata.get(this.element[0])[this.widgetName]},_create:function(){},_init:function(){},destroy:function(){this.element.unbind("."+this.widgetName).removeData(this.widgetName);this.widget().unbind("."+this.widgetName).removeAttr("aria-disabled").removeClass(this.widgetBaseClass+"-disabled ui-state-disabled")},
+widget:function(){return this.element},option:function(a,c){var d=a;if(arguments.length===0)return b.extend({},this.options);if(typeof a==="string"){if(c===j)return this.options[a];d={};d[a]=c}this._setOptions(d);return this},_setOptions:function(a){var c=this;b.each(a,function(d,e){c._setOption(d,e)});return this},_setOption:function(a,c){this.options[a]=c;if(a==="disabled")this.widget()[c?"addClass":"removeClass"](this.widgetBaseClass+"-disabled ui-state-disabled").attr("aria-disabled",c);return this},
+enable:function(){return this._setOption("disabled",false)},disable:function(){return this._setOption("disabled",true)},_trigger:function(a,c,d){var e=this.options[a];c=b.Event(c);c.type=(a===this.widgetEventPrefix?a:this.widgetEventPrefix+a).toLowerCase();d=d||{};if(c.originalEvent){a=b.event.props.length;for(var f;a;){f=b.event.props[--a];c[f]=c.originalEvent[f]}}this.element.trigger(c,d);return!(b.isFunction(e)&&e.call(this.element[0],c,d)===false||c.isDefaultPrevented())}}})(jQuery);
+
+/*!
+ * LiveJournal Bubble
+ * use it to wrap some content with pop-up "bubble" -
+ * it'll be positioned relative to "target" param (also can be passed with public method "show" invocation)
+ *
+ * Copyright 2011, sergey.zhirkov@sup.com
+ *
+ * http://docs.jquery.com/UI
+ * 
+ * Depends:
+ *	jquery.ui.core.js
+ *	jquery.ui.widget.js
+ *
+ * Usage:
+ *	<script>
+ *		$('div.with-bubble-content')
+ *			.bubble()
+ *			.bubble('publicMethod')
+ *			.bubble({ many: options })
+ *			.bubble('option', 'getOptionName')
+ *			.bubble('option', 'setOptionName', 'setOptionValue');
+ *	</script>
+ */
+
+(function ($, window) {
+
+	var LJBubble = {
+		
+		options: {
+			target: null,
+			currentTarget: null,
+			
+			hoverTimer: null,
+			hoverDelay: 600,
+			
+			position: {
+				x: 0,
+				y: 0
+			},
+			
+			// horizontal align relative to target elem
+			// TODO "right" align
+			align: 'center', // left || center
+			
+			// always show under target elem (even if bubble node does not fit screen height)
+			alwaysShowUnderTarget: false,
+			
+			closeControl: true,
+			closeOnContentClick: false,
+			closeOnDocumentClick: true,
+			closeOnEscape: true,
+			
+			// show on special event triggered by target (no action by default - "false")
+			showOn: false, // 'click' || ('hover' || 'mouseover') || 'focus' || false
+			
+			preventDefaultTargetClick: true,
+			
+			outerHtml: '' +
+				'<div class="b-popup bubble-node" style="display: none;">' +
+					'<div class="b-popup-outer">' +
+						'<div class="b-popup-inner">' +
+						    '<i class="i-popup-arr i-popup-arrtl">' +
+						    	'<i class="i-popup-arr-brdr-outer">' +
+						    		'<i class="i-popup-arr-brdr-inner">' +
+						    			'<i class="i-popup-arr-bg"></i>' +
+									'</i>' +
+								'</i>' +
+							'</i>' +							
+							'<i class="i-popup-close"></i>' +
+						'</div>' +
+					'</div>' +
+				'</div>',
+			
+			classNames: {
+				positionPrefix: 'i-popup-arr',
+				arrowDefault: 'i-popup-arr',
+				withCloseControl: 'b-popup-withclosecontrol',
+				noCloseControl: 'b-popup-noclosecontrol'
+			},
+			
+			selectors: {
+				bubbleNode: 'div.bubble-node',
+				bubbleArrow: 'i.i-popup-arr',
+				bubbleInner: 'div.b-popup-inner',
+				closeControl: 'i.i-popup-close'
+			}
+		},
+		
+		
+		// private methods
+		
+		_create: function () {
+			var ljBubble = this,
+				options = ljBubble.options,
+				selectors = options.selectors;
+
+			// wrap bubble content with bubble outer html
+			ljBubble._makeNode();
+			
+			// set default options
+			ljBubble._setOptions(options);			
+		},
+		
+		_setOption: function (option, value) {
+			var ljBubble = this,
+				options = ljBubble.options,
+				classNames = options.classNames,
+				eventNamespace = '.' + ljBubble.widgetName + '-' + option;
+
+			options[option] = value;
+
+			switch (option) {
+				case 'target':
+					options.target = $(value);
+				break;
+				case 'closeControl':
+					if (value) {
+						ljBubble.bubbleNode
+							.delegate(options.selectors.closeControl, 'click' + eventNamespace, function (event) {
+								ljBubble.hide();
+							})
+							.removeClass(classNames.noCloseControl)
+							.addClass(classNames.withCloseControl);
+					} else {
+						ljBubble.bubbleNode
+							.undelegate(options.selectors.closeControl, 'click' + eventNamespace)
+							.removeClass(classNames.withCloseControl)
+							.addClass(classNames.noCloseControl);
+					}
+				break;
+				case 'position':				
+					ljBubble.bubbleNode.css({
+						left: value.x,
+						top: value.y
+					});
+				break;
+				case 'showOn':
+					value = (value == 'mouseover') ? 'hover' : value;
+				
+					if (value == 'click' || value == 'hover') {
+						options.target.bind('click' + eventNamespace, function (event) {
+							var target = $(this);
+							
+							event.preventDefault();
+							event.stopPropagation();
+							
+							if (ljBubble.bubbleNode.is(':visible')) {
+								ljBubble.hide();
+							} else {
+								ljBubble.show(target);
+							}
+						});
+					} else {
+						options.target.unbind('click' + eventNamespace);
+					}
+					
+					if (value == 'hover') {
+						options.target
+							.add(ljBubble.bubbleNode)
+								.bind('mouseenter' + eventNamespace, function () {
+									clearTimeout(options.hoverTimer);
+									ljBubble.show();
+								})
+								.bind('mouseleave' + eventNamespace, function () {
+									options.hoverTimer = setTimeout(function () {
+										ljBubble.hide();
+									}, options.hoverDelay);
+								});
+					} else {
+						options.target
+							.add(ljBubble.bubbleNode)
+								.unbind('mouseenter' + eventNamespace)
+								.unbind('mouseleave' + eventNamespace);
+					}
+					
+					if (value == 'focus') {
+						options.target
+							.bind('focus' + eventNamespace, function (event) {
+								var target = $(this);
+								
+								event.preventDefault();
+								event.stopPropagation();
+								
+								ljBubble.show(target);
+							})
+							.bind('blur' + eventNamespace, function (event) {
+								ljBubble.hide();
+							});
+					} else {
+						options.target
+							.unbind('focus' + eventNamespace)
+							.unbind('blur' + eventNamespace);
+					}			
+				break;
+				case 'preventDefaultTargetClick':
+					if (value) {
+						options.target.bind('click' + eventNamespace, function (event) {
+							event.preventDefault();
+						});
+					} else {
+						options.target.unbind('click' + eventNamespace);
+					}
+				break;
+				case 'closeOnDocumentClick':
+					if (value) {
+						$(document).bind('click' + eventNamespace, function (event) {
+							if (options.currentTarget && event.target !== options.currentTarget[0]) {
+								ljBubble.hide();
+							}
+						});
+					} else {
+						$(document).unbind('click' + eventNamespace);
+					}
+				break;
+				case 'closeOnEscape':
+					if (value) {
+						$(document).bind('keydown' + eventNamespace, function (event) {
+							// escape
+							if (event.keyCode == 27) {
+								ljBubble.hide();
+							}
+						});
+					} else {
+						$(document).unbind('keydown' + eventNamespace);
+					}
+				break;
+				case 'closeOnContentClick':
+					if (!value) {
+						ljBubble.bubbleNode.bind('mousedown click' + eventNamespace, function (event) {
+							event.stopPropagation();
+						});
+					} else {
+						ljBubble.bubbleNode.unbind('mousedown click' + eventNamespace);
+					}
+				break;
+			}
+		},
+		
+		_makeNode: function () {
+			var bubbleNode = $(this.options.outerHtml),
+				bubbleArrow = bubbleNode.find(this.options.selectors.bubbleArrow),
+				bubbleInner = bubbleNode.find(this.options.selectors.bubbleInner);
+			
+			// this.element - with bubble content	
+			this.element
+				.css('display', 'block')
+				.prependTo(bubbleInner);
+			
+			this.bubbleNode = bubbleNode.prependTo('body');
+			this.bubbleArrow = bubbleArrow;
+			
+			// store arrow elem position	
+			bubbleNode.css({
+				visibility: 'hidden',
+				display: 'block'
+			});
+			bubbleArrow.data({
+				'left': bubbleArrow.position().left,
+				'top': bubbleArrow.position().top
+			});
+			bubbleNode.css({
+				visibility: 'visible',
+				display: 'none'
+			});
+		},
+		
+		_getPosition: function (targetControl) {
+			targetControl = targetControl || this.options.currentTarget;
+			
+			// if there is image in target (like this: <a><img src="..."></a>) - bubble will be positioned relative to image
+			if (targetControl.find('img').length) {
+				targetControl = targetControl.find('img');
+			}
+			
+			var	ljBubble = this,
+				options = ljBubble.options,
+				align = options.align,
+				alwaysShowUnderTarget = options.alwaysShowUnderTarget,
+			
+				viewport = $(window),
+				viewportWidth = viewport.width(),
+				viewportHeight = viewport.height(),
+				
+				elem = ljBubble.bubbleNode,
+				elemWidth = elem.width(),
+				elemHeight = elem.height(),
+				
+				popupArrow = ljBubble.bubbleArrow,
+				popupArrowLeft = popupArrow.data('left'),
+				popupArrowTop = popupArrow.data('top'),
+				popupArrowWidth = 13, // popup arrow drawn with borders (6px at left and right side)
+				
+				targetOffset = targetControl.offset(),
+				targetLeft = Math.round(targetOffset.left),
+				targetTop = Math.round(targetOffset.top),
+				targetWidth = targetControl.width(),
+				targetHeight = targetControl.height(),
+				
+				scrollOffset = viewport.scrollTop(),
+				
+				leftPositionX = (align == 'center') ?
+					// center align (arrow relative to target elem) 
+					targetLeft + (targetWidth / 2) - popupArrowLeft - (popupArrowWidth / 2) :
+					// left align 
+					targetLeft,
+				rightPositionX = targetLeft + (targetWidth / 2) - (elemWidth - popupArrowLeft - popupArrowWidth / 2),
+				topPositionY = targetTop - popupArrowTop + targetHeight,
+				bottomPositionY = targetTop + popupArrowTop - elemHeight,
+				
+				arrowPositionType = {
+					x: 'l', // left
+					y: 't' // top
+				},
+				arrowPositionTypes = {
+					'tl': { x: leftPositionX, y: topPositionY },
+					'tr': { x: rightPositionX, y: topPositionY },
+					'bl': { x: leftPositionX, y: bottomPositionY },
+					'br': { x: rightPositionX, y: bottomPositionY }
+				},
+				
+				position,
+				
+				checkAngle = {
+					x: leftPositionX + elemWidth,
+					y: topPositionY + elemHeight
+				};
+				
+			if (checkAngle.x > viewportWidth) {
+				arrowPositionType.x = 'r'; // right
+			}
+			
+			if (!alwaysShowUnderTarget && checkAngle.y > viewportHeight + viewport.scrollTop() && bottomPositionY > 0) {
+				arrowPositionType.y = 'b'; // bottom
+			}
+			
+			arrowPositionType = arrowPositionType.y + arrowPositionType.x;
+			
+			popupArrow
+				.removeClass()
+				.addClass(options.classNames.arrowDefault)
+				.addClass(options.classNames.positionPrefix + arrowPositionType);
+			
+			position = arrowPositionTypes[arrowPositionType];
+			
+			return position;
+		},
+		
+		_updatePosition: function () {
+			var newPosition = this._getPosition();
+			this.option('position', newPosition);
+		},
+		
+
+		// public methods
+		
+		show: function (target) {
+			var ljBubble = this,
+				options = ljBubble.options;
+				
+			target = (target) ? $(target) : options.target;
+			
+			$(options.selectors.bubbleNode).hide();
+			
+			if (!ljBubble.bubbleNode.is(':visible')) {
+				ljBubble.option('currentTarget', target);
+				ljBubble._updatePosition();
+
+				ljBubble.bubbleNode.show();
+			}
+			
+			ljBubble._trigger('show');
+			
+			return this;
+		},
+		
+		hide: function () {
+			this.bubbleNode.hide();
+			
+			this._trigger('hide');
+			
+			return this;
+		}
+
+	};
+	
+	$.widget('lj.bubble', LJBubble);
+	
+})(jQuery, this);
+
+LJWidgetIPPU_AddAlias = new Class(LJWidgetIPPU, {
+  init: function (opts, params) {
+    opts.widgetClass = "IPPU::AddAlias";
+    this.width = opts.width; // Use for resizing later
+    this.height = opts.height; // Use for resizing later
+    this.alias = opts.alias;  
+    LJWidgetIPPU_AddAlias.superClass.init.apply(this, arguments);
+  },
+
+  addvgifttocart: function (evt, form) {
+    var alias = form["Widget[IPPU_AddAlias]_alias"].value + "";
+    var foruser = form["Widget[IPPU_AddAlias]_foruser"].value + "";
+
+    this.doPost({
+        alias:          alias,
+        foruser:            foruser
+    });
+
+    Event.stop(evt);
+  },
+
+  onData: function (data) {
+	if (!data.res || !data.res.success) {
+		return;
+	}
+	this.ippu.hide();
+	var userLJ = data.res.journalname,
+		userClassName = 'ljuser-name_' + data.res.journalname,
+		searchProfile = DOM.getElementsByClassName(document, userClassName),
+		i = -1, supSign;
+	while (searchProfile[++i]) {
+		var ljuser_node = searchProfile[i];
+		if (DOM.hasClassName(ljuser_node, 'with-alias-value')) {
+			var alias_value = ljuser_node.nextSibling;
+			if (!alias_value || alias_value.tagName != 'SPAN' || alias_value.className != 'alias-value') {
+				alias_value = null;
+			}
+			if (data.res.alias) {
+				if (!alias_value) {
+					alias_value = document.createElement('span');
+					alias_value.className = 'alias-value';
+					alias_value[/*@cc_on'innerText'||@*/'textContent'] = ' — ' + data.res.alias;
+					ljuser_node.parentNode.insertBefore(alias_value, ljuser_node.nextSibling);
+				}
+				alias_value[/*@cc_on'innerText'||@*/'textContent'] = ' — ' + data.res.alias;
+			} else if (alias_value) { // delete
+				ljuser_node.parentNode.removeChild(alias_value);
+			}
+		} else if (!DOM.hasClassName(ljuser_node, 'with-alias')) {
+			DOM.addClassName(searchProfile[i],'with-alias')
+			supSign=document.createElement('span');
+			DOM.addClassName(supSign,'useralias-value');
+			supSign.innerHTML='*';
+			searchProfile[i].getElementsByTagName('a')[1].appendChild(supSign);
+		}else{
+			if(!data.res.alias){
+				DOM.removeClassName(searchProfile[i],'with-alias')
+				supSign=DOM.getElementsByClassName(searchProfile[i],'useralias-value')[0];
+				searchProfile[i].getElementsByTagName('a')[1].removeChild(supSign);
+			}
+		}
+		searchProfile[i].getElementsByTagName('a')[1].setAttribute('title',data.res.alias);
+	}
+	//Changing button. Only on profile page
+	var edit_node = DOM.getElementsByClassName(document, 'profile_addalias');
+	if (edit_node.length) {
+		if (data.res.alias) {
+			edit_node[0].style.display = 'none';
+			edit_node[1].style.display = 'block';
+			edit_node[1].firstChild.alias = data.res.alias;
+		} else {
+			edit_node[0].style.display = 'block';
+			edit_node[1].style.display = 'none';
+		}
+	}
+	
+	if(ContextualPopup.cachedResults[data.res.username]) {
+		ContextualPopup.cachedResults[data.res.username].alias_title = data.res.alias ? 'Edit Note' : 'Add Note';
+		ContextualPopup.cachedResults[data.res.username].alias = data.res.alias;
+	}
+  },
+
+  onError: function (msg) {
+    LJ_IPPU.showErrorNote("Error: " + msg);
+  },
+
+  onRefresh: function () {
+	var form = $("addalias_form"),
+		input = form['Widget[IPPU_AddAlias]_alias'],
+		delete_btn = form['Widget[IPPU_AddAlias]_aliasdelete'],
+		t = this;
+	input.focus();
+	
+	if (delete_btn) {
+		delete_btn.onclick=function(){
+			input.value = '';
+		}
+		input.onkeyup =
+		input.onpaste =
+		input.oninput = function() {
+			// save button disabled
+			form['Widget[IPPU_AddAlias]_aliaschange'].disabled = !this.value;
+		}
+	}
+	
+	DOM.addEventListener(form, 'submit', function(e) { t.addvgifttocart(e, form) });
+//    $('Widget[IPPU_AddAlias]_whom').value = this.whom;
+//    AutoCompleteFriends($('Widget[IPPU_AddAlias]_whom'));
+  },
+
+  cancel: function (e) {
+    this.close();
+  }
+});
+
+
+Aliases = {}
+function addAlias(target, ptitle, ljusername, oldalias, callback) {
+    if (! ptitle) return true;
+	
+	new LJWidgetIPPU_AddAlias({
+        title: ptitle,
+        width: 440,
+        height: 180,
+		authToken: Aliases.authToken,
+		callback: callback
+        }, {
+	    alias: target.alias||oldalias,
+            foruser: ljusername
+        });
+
+    return false;
+}
+
+
+var ContextualPopup =
+{
+	popupDelay  : 500,
+	hideDelay   : 250,
+	
+	cachedResults  : {},
+	currentRequests: {},
+	mouseInTimer   : null,
+	mouseOutTimer  : null,
+	currentId      : null,
+	hourglass      : null,
+	
+	setup: function()
+	{
+		// don't do anything if no remote
+		if (!Site.ctx_popup) return;
+		
+		jQuery(document.body)
+			.mouseover(ContextualPopup.mouseOver)
+			.ljAddContextualPopup();
+	},
+	
+	searchAndAdd: function(node)
+	{
+		if (!Site.ctx_popup) return;
+		
+		// attach to all ljuser head icons
+		var rex_userid = /\?userid=(\d+)/,
+			rex_userpic = /(userpic\..+\/\d+\/\d+)|(\/userpic\/\d+\/\d+)/,
+			ljusers = jQuery('span.ljuser>a>img', node),
+			i = -1, userid, ljuser, parent;
+		
+		// use while for speed
+		while (ljusers[++i])
+		{
+			var ljuser = ljusers[i], parent = ljuser.parentNode;
+			if (parent.href && (userid = parent.href.match(rex_userid))) {
+				ljuser.userid = userid[1];
+			} else if (parent.parentNode.getAttribute('lj:user')) {
+				ljuser.username = parent.parentNode.getAttribute('lj:user');
+			} else {
+				continue;
+			}
+
+			if (parent.parentNode.getAttribute('data-journal')) {
+				ljuser.posted_in = parent.parentNode.getAttribute('data-journal');
+			}
+			DOM.addClassName(ljuser, 'ContextualPopup');
+		}
+		
+		ljusers = node.getElementsByTagName('img');
+		i = -1;
+		while (ljusers[++i])
+		{
+			ljuser = ljusers[i];
+			if (ljuser.src.match(rex_userpic)) {
+				ljuser.up_url = ljuser.src;
+				if (ljuser.parentNode.getAttribute('data-journal')) {
+					ljuser.posted_in = ljuser.parentNode.getAttribute('data-journal');
+				}
+				DOM.addClassName(ljuser, 'ContextualPopup');
+			}
+		}
+	},
+	
+	mouseOver: function(e)
+	{
+		var target = e.target,
+			ctxPopupId = target.username || target.userid || target.up_url,
+			t = ContextualPopup;
+		
+		clearTimeout(t.mouseInTimer);
+		
+		if (target.tagName == 'IMG' && ctxPopupId) {
+			// if we don't have cached data background request it
+			if (!t.cachedResults[ctxPopupId]) {
+				t.getInfo(target, ctxPopupId);
+			}
+			
+			// doesn't display alt as tooltip
+			if (jQuery.browser.msie && target.title !== undefined) {
+				target.title = '';
+			}
+			
+			if (t.ippu) {
+				clearTimeout(t.mouseOutTimer);
+				t.mouseOutTimer = null;
+				// show other popup
+				if (t.current_target != target) {
+					t.showPopup(ctxPopupId, target);
+				}
+			}
+			// start timer if it's not running
+			else {
+				t.mouseInTimer = setTimeout(function()
+				{
+					t.showPopup(ctxPopupId, target);
+				}, t.popupDelay);
+			}
+		} else if (t.ippu) {
+			// we're inside a ctxPopElement, cancel the mouseout timer
+			if (jQuery(target).closest('.ContextualPopup').length) {
+				clearTimeout(t.mouseOutTimer);
+				t.mouseOutTimer = null;
+			}
+			// did the mouse move out?
+			else if (t.mouseOutTimer === null) {
+				t.mouseOutTimer = setTimeout(function()
+				{
+					t.mouseOut();
+				}, t.hideDelay);
+			}
+		}
+	},
+	
+	mouseOut: function()
+	{
+		clearTimeout(ContextualPopup.mouseOutTimer);
+		
+		ContextualPopup.mouseOutTimer =
+		ContextualPopup.currentId =
+		ContextualPopup.current_target = null;
+		
+		ContextualPopup.hidePopup();
+	},
+	
+	constructIPPU: function (ctxPopupId)
+	{
+		if (ContextualPopup.ippu) {
+			ContextualPopup.ippu.hide();
+			ContextualPopup.ippu = null;
+		}
+		ContextualPopup.ippu =
+		{
+			element: jQuery('<div class="ContextualPopup"></div>'),
+			show: function()
+			{
+				document.body.appendChild(this.element[0]);
+			},
+			hide: function()
+			{
+				this.element.remove();
+			}
+		}
+		
+		ContextualPopup.renderPopup(ctxPopupId);
+	},
+	
+	showPopup: function(ctxPopupId, ele)
+	{
+		ContextualPopup.current_target = ele;
+		ContextualPopup.currentId = ctxPopupId;
+		var data = ContextualPopup.cachedResults[ctxPopupId];
+		
+		if (data && data.noshow) return;
+		
+		ContextualPopup.constructIPPU(ctxPopupId);
+		var ippu = ContextualPopup.ippu;
+		
+		// pop up the box right under the element
+		ele = jQuery(ele);
+		var ele_offset = ele.offset(),
+			left = ele_offset.left,
+			top = ele_offset.top + ele.height();
+		
+		// hide the ippu content element, put it on the page,
+		// get its bounds and make sure it's not going beyond the client
+		// viewport. if the element is beyond the right bounds scoot it to the left.
+		var pop_ele = ippu.element;
+		pop_ele.css('visibility', 'hidden');
+		
+		// put the content element on the page so its dimensions can be found
+		ippu.show();
+		
+		ContextualPopup.calcPosition(pop_ele, left, top);
+		
+		// finally make the content visible
+		pop_ele.css('visibility', 'visible');
+	},
+	
+	//calc with viewport
+	calcPosition: function(pop_ele, left, top)
+	{
+		var $window = jQuery(window);
+		
+		left = Math.min(left,  $window.width() + $window.scrollLeft() - pop_ele.outerWidth(true));
+		top = Math.min(top, $window.height() + $window.scrollTop() - pop_ele.outerHeight(true));
+		
+		pop_ele.css({
+			left: left,
+			top: top
+		});
+	}
+}
+
+// if the popup was not closed by us catch it and handle it
+ContextualPopup.popupClosed = function () {
+    ContextualPopup.mouseOut();
+}
+
+ContextualPopup.renderPopup = function(ctxPopupId)
+{
+	var ippu = ContextualPopup.ippu;
+	
+	if (!ippu || !ctxPopupId) {
+		return;
+	}
+	
+	var data = ContextualPopup.cachedResults[ctxPopupId];
+	
+	if (!data) {
+		ippu.element.append('<div class="Inner">Loading...</div>');
+		return;
+	} else if (!data.username || !data.success || data.noshow) {
+		ContextualPopup.hidePopup();
+		return;
+	}
+	
+	var inner = jQuery('<div class="Inner"/>');
+	// if "Loading..." text
+	var last_inner_height;
+	if (ippu.element[0].firstChild) {
+		last_inner_height = ippu.element[0].firstChild.offsetHeight;
+		ippu.element.height(ippu.element.height());
+		ippu.element.css('overflow', 'hidden');
+	}
+	
+	var bar = document.createElement('span');
+	bar.innerHTML = '&nbsp;| ';
+	
+	// userpic
+	if (data.url_userpic && data.url_userpic != ctxPopupId) {
+		jQuery(
+			'<div class="Userpic">'+
+				'<a href="'+data.url_allpics+'">'+
+					'<img src="'+data.url_userpic+'" width="'+data.userpic_w+'" height="'+data.userpic_h+'"/>'+
+				'</a>'+
+			'</div>'
+		)
+		.appendTo(inner);
+	}
+	
+	var content = document.createElement('div');
+	content.className = 'Content';
+	
+	inner.append(content);
+	
+	// relation
+	var label, username = data.display_username;
+	if (data.is_comm) {
+		if (data.is_member)
+			label = data.ml_you_member.replace('[[username]]', username);
+		else if (data.is_friend)
+			labelL = data.ml_you_watching.replace('[[username]]', username);
+		else
+			label = username;
+	} else if (data.is_syndicated) {
+		if (data.is_friend)
+				label = data.ml_you_subscribed.replace('[[username]]', username);
+		else
+			label = username;
+	} else {
+		if (data.is_requester) {
+			label = data.ml_this_is_you;
+		} else {
+			label = username + ' ';
+			
+			if (data.is_friend_of) {
+				if (data.is_friend)
+					label += data.ml_mutual_friend;
+				else
+					label += data.ml_lists_as_friend;
+			} else if (data.is_friend) {
+				label += data.ml_your_friend;
+			}
+		}
+	}
+	jQuery('<div/>', {
+		'class': 'Relation',
+		text: label
+	})
+	.appendTo(content);
+	
+	// add site-specific content here
+	var extraContent = LiveJournal.run_hook('ctxpopup_extrainfo', data);
+	extraContent && content.appendChild(extraContent);
+	
+	// aliases
+	if (!data.is_requester && data.is_logged_in) {
+		if (data.alias_enable) {
+			if (data.alias) {
+				content.insertBefore(
+					document.createTextNode(data.alias),
+					content.firstChild.nextSibling
+				);
+			}
+			
+			jQuery('<a/>', {
+				href: Site.siteroot + '/manage/notes.bml',
+				text: data.alias_title,
+				click: function(e)
+				{
+					e.preventDefault();
+					addAlias(this, data.alias_title, data.username, data.alias || '');
+				}
+			})
+			.appendTo(content);
+		} else {
+			jQuery(
+				'<span class="alias-unavailable">'+
+					'<a href="'+Site.siteroot+'/manage/account">'+
+						'<img src="'+Site.statprefix+'/horizon/upgrade-paid-icon.gif" width="13" height="16" alt=""/>'+
+					'</a> '+
+					'<a href="'+Site.siteroot+'/support/faqbrowse.bml?faqid=295">'+data.alias_title+'</a>'+
+				'</span>'
+			)
+			.appendTo(content)
+		}
+		
+		content.appendChild(document.createElement('br'));
+	}
+	
+	// member of community
+	if (data.is_logged_in && data.is_comm) {
+		jQuery('<a/>', {
+			href: data.is_member ? data.ml_leave : data.url_joincomm,
+			text: data.is_member ? data.ml_leave : data.ml_join_community,
+			click: function(e)
+			{
+				e.preventDefault();
+				ContextualPopup.changeRelation(data, ctxPopupId, data.is_member ? 'leave' : 'join', e);
+			}
+		})
+		.appendTo(content);
+		content.appendChild(document.createElement('br'));
+	}
+	
+	// buy the same userhead
+	if (data.is_logged_in && data.is_person && ! data.is_requester && data.is_custom_userhead) {
+		jQuery('<a/>', {
+			href: data.url_buy_userhead,
+			text: data.ml_buy_same_userhead
+		})
+		.appendTo(content);
+		content.appendChild(document.createElement('br'));
+	}
+	
+	// send message
+	if (data.is_logged_in && data.is_person && ! data.is_requester && data.url_message) {
+		jQuery('<a/>', {
+			href: data.url_message,
+			text: data.ml_send_message
+		})
+		.appendTo(content);
+		content.appendChild(document.createElement('br'));
+	}
+	
+	// add/remove friend link
+	if (data.is_logged_in && !data.is_requester) {
+		jQuery('<a/>', {
+			href: data.url_addfriend,
+			click: function(e)
+			{
+				e.preventDefault();
+				ContextualPopup.changeRelation(data, ctxPopupId, data.is_friend ? 'removeFriend' : 'addFriend', e);
+			},
+			text: function()
+			{
+				if (data.is_comm)
+					return data.is_friend ? data.ml_stop_community : data.ml_watch_community;
+				else if (data.is_syndicated)
+					return data.is_friend ? data.ml_unsubscribe_feed : data.ml_subscribe_feed;
+				else
+					return data.is_friend ? data.ml_remove_friend : data.ml_add_friend;
+			}
+		})
+		.appendTo(content);
+		if( data.is_friend && !data.is_identity ) {
+			content.appendChild(bar.cloneNode(true));
+			jQuery('<a/>', {
+				href: data.url_addfriend,
+				text: data.ml_edit_friend_tags
+			})
+			.appendTo(content);
+		}
+		content.appendChild(document.createElement('br'));
+	}
+	
+	// vgift
+	if ((data.is_person || data.is_comm) && !data.is_requester && data.can_receive_vgifts) {
+		jQuery('<a/>', {
+			href: Site.siteroot + '/shop/vgift.bml?to=' + data.username,
+			text: data.ml_send_gift
+		})
+		.appendTo(content);
+		content.appendChild(document.createElement('br'));
+	}
+
+	if( ( !data.is_comm && Site.current_journal && ( "is_comm" in Site.current_journal ) 
+				&& Site.current_journal.is_comm === "1" ) || data.posted_in ) {
+		jQuery( '<a/>', {
+			href: ( ( data.posted_in ) ? data.posted_in : Site.current_journal.url_journal ) + '/?poster=' + data.username,
+			text: ( Site.remoteUser === data.username && !data.posted_in ) 
+					? ( data.ml_filter_by_poster_me || 'Filter community by me' ) 
+					: ( data.ml_filter_by_poster || 'Filter community by poster' )
+		} )
+		.appendTo(content);
+		content.appendChild(document.createElement('br'));
+	}
+	
+	// wishlist
+	if ((data.is_person || data.is_comm) && !data.is_requester && data.wishlist_url) {
+		jQuery('<a/>', {
+			href:data.wishlist_url,
+			text: data.ml_view_wishlist
+		})
+		.appendTo(content);
+		content.appendChild(document.createElement('br'));
+	}
+	
+	if (data.is_logged_in && !data.is_requester && !data.is_comm && !data.is_syndicated) {
+		// ban/unban
+		jQuery('<a/>', {
+			href: Site.siteroot + '/manage/banusers.bml',
+			text: data.is_banned ? data.ml_unban : data.ml_ban,
+			click: function(e)
+			{
+				e.preventDefault();
+				ContextualPopup.changeRelation(data, ctxPopupId, data.is_banned ? 'setUnban' : 'setBan', e);
+			}
+		})
+		.appendTo(content);
+		
+		// report a bot
+		if (!Site.remote_is_suspended) {
+			content.appendChild(bar.cloneNode(true));
+			
+			jQuery('<a/>', {
+				href: Site.siteroot + '/abuse/bots.bml?user=' + data.username,
+				text: data.ml_report
+			})
+			.appendTo(content);
+		}
+		
+		content.appendChild(document.createElement('br'));
+	}
+	
+	// ban user from all maintained communities
+	if (!data.is_requester && !data.is_comm && !data.is_syndicated && data.have_communities) {
+		jQuery('<a/>', {
+			href: Site.siteroot + '/manage/banusers.bml',
+			text: data.is_banned_everywhere ? data.unban_everywhere_title : data.ban_everywhere_title,
+			click: function(e)
+			{
+				e.preventDefault();
+				var action = data.is_banned_everywhere ? 'unbanEverywhere' : 'banEverywhere';
+				ContextualPopup.changeRelation(data, ctxPopupId, action, e);
+			}
+		})
+		.appendTo(content);
+		content.appendChild(document.createElement('br'));
+	}
+	
+	// identity
+	if (data.is_identity) {
+		jQuery('<a/>', {
+			href: Site.siteroot + '/identity/convert.bml',
+			text: data.ml_upgrade_account
+		})
+		.appendTo(content);
+		
+		content.appendChild(document.createElement('br'));
+	}
+	
+	// view label
+	content.appendChild(document.createTextNode(data.ml_view));
+	
+	// journal
+	if (data.is_person || data.is_comm || data.is_syndicated) {
+		jQuery('<a/>', {
+			href: data.url_journal,
+			text: function()
+			{
+				if (data.is_person)
+					return data.ml_journal;
+				else if (data.is_comm)
+					return data.ml_community;
+				else if (data.is_syndicated)
+					return data.ml_feed;
+			}
+		})
+		.appendTo(content)
+		
+		content.appendChild(bar.cloneNode(true));
+	}
+	
+	// profile
+	jQuery('<a/>', {
+		href: data.url_profile,
+		text: data.ml_profile
+	})
+	.appendTo(content);
+	
+	// clearing div
+	jQuery('<div class="ljclear">&nbsp;</div>')
+	.appendTo(content);
+	
+	ippu.element.html(inner);
+	
+	//calc position with viewport
+	if (last_inner_height) {
+		var $window = jQuery(window),
+			top = parseInt(ippu.element[0].style.top),
+			diff = ippu.element[0].firstChild.offsetHeight - last_inner_height,
+			new_top = Math.min(top, $window.height() + $window.scrollTop() - ippu.element.outerHeight(true) - diff);
+		top != new_top && ippu.element.css('top', new_top);
+		ippu.element.css('overflow', 'visible');
+	}
+	
+	if (!data.is_logged_in) { //  anonymouse
+		new Image().src = 'http://ad.adriver.ru/cgi-bin/rle.cgi?sid=1&ad=186396&bt=21&pid=482107&bid=893162&bn=893162&rnd='+Math.random();
+	} else if (data.is_requester) { // self
+		new Image().src = 'http://ad.adriver.ru/cgi-bin/rle.cgi?sid=1&ad=186396&bt=21&pid=482107&bid=893165&bn=893165&rnd='+Math.random();
+	} else { // not self
+		new Image().src = 'http://ad.adriver.ru/cgi-bin/rle.cgi?sid=1&ad=186396&bt=21&pid=482107&bid=893167&bn=893167&rnd='+Math.random();
+	}
+}
+
+// ajax request to change relation
+ContextualPopup.changeRelation = function (info, ctxPopupId, action, e) {
+	var changedRelation = function(data)
+	{
+		if (data.error) {
+			return ContextualPopup.showNote(data.error);
+		}
+		
+		if (ContextualPopup.cachedResults[ctxPopupId]) {
+			jQuery.extend(ContextualPopup.cachedResults[ctxPopupId], data);
+		}
+		
+		// if the popup is up, reload it
+		ContextualPopup.renderPopup(ctxPopupId);
+	}
+	
+	var xhr = jQuery.post(LiveJournal.getAjaxUrl('changerelation'),
+				{
+					target: info.username,
+					action: action,
+					auth_token: info[action + '_authtoken']
+				},
+				function(data)
+				{
+					ContextualPopup.hourglass = null;
+					changedRelation(data);
+				},
+				'json'
+			);
+	
+	ContextualPopup.hideHourglass();
+	ContextualPopup.hourglass = jQuery(e).hourglass(xhr)[0];
+	// so mousing over hourglass doesn't make ctxpopup think mouse is outside
+	ContextualPopup.hourglass.add_class_name('lj_hourglass ContextualPopup');
+	
+	return false;
+}
+
+// create a little popup to notify the user of something
+ContextualPopup.showNote = function (note, ele) {
+    if (ContextualPopup.ippu) {
+        // pop up the box right under the element
+        ele = ContextualPopup.ippu.element[0];
+    }
+
+    LJ_IPPU.showNote(note, ele);
+}
+
+ContextualPopup.hidePopup = function (ctxPopupId) {
+	ContextualPopup.hideHourglass();
+	
+    // destroy popup for now
+    if (ContextualPopup.ippu) {
+        ContextualPopup.ippu.hide();
+        ContextualPopup.ippu = null;
+    }
+}
+
+// do ajax request of user info
+ContextualPopup.getInfo = function(target, popup_id)
+{
+	var t = this;
+	if (t.currentRequests[popup_id]) {
+		return;
+	}
+	t.currentRequests[popup_id] = 1;
+	
+	jQuery.ajax({
+		url: LiveJournal.getAjaxUrl('ctxpopup'),
+		data: {
+			user: target.username || '',
+			userid: target.userid || 0,
+			userpic_url: target.up_url || '',
+			mode: 'getinfo'
+		},
+		dataType: 'json',
+		success: function(data)
+		{
+			if (data.error) {
+				ContextualPopup.hidePopup();
+				t.showNote(data.error, target);
+				return;
+			}
+
+			if( target.posted_in ) {
+				data.posted_in = target.posted_in;
+			}
+			
+			t.cachedResults[String(data.userid)] =
+			t.cachedResults[data.username] =
+			t.cachedResults[data.url_userpic] = data;
+			
+			// non default userpic
+			if (target.up_url) {
+				t.cachedResults[target.up_url] = data;
+			}
+			
+			t.currentRequests[popup_id] = null;
+			
+			if (t.currentId == popup_id) {
+				t.renderPopup(popup_id);
+			}
+		},
+		error: function()
+		{
+			t.currentRequests[popup_id] = null;
+		}
+	});
+}
+
+ContextualPopup.hideHourglass = function () {
+    if (ContextualPopup.hourglass) {
+        ContextualPopup.hourglass.hide();
+        ContextualPopup.hourglass = null;
+    }
+}
+
+// when page loads, set up contextual popups
+jQuery(ContextualPopup.setup);
+
+// called by S2:
+function setStyle (did, attr, val) {
+    if (! document.getElementById) return;
+    var de = document.getElementById(did);
+    if (! de) return;
+    if (de.style)
+        de.style[attr] = val
+}
+
+// called by S2:
+function setInner (did, val) {
+    if (! document.getElementById) return;
+    var de = document.getElementById(did);
+    if (! de) return;
+    de.innerHTML = val;
+}
+
+// called by S2:
+function hideElement (did) {
+    if (! document.getElementById) return;
+    var de = document.getElementById(did);
+    if (! de) return;
+    de.style.display = 'none';
+}
+
+// called by S2:
+function setAttr (did, attr, classname) {
+    if (! document.getElementById) return;
+    var de = document.getElementById(did);
+    if (! de) return;
+    de.setAttribute(attr, classname);
+}
+
+// called from Page:
+function multiformSubmit (form, txt) {
+    var sel_val = form.mode.value;
+    if (!sel_val) {
+        alert(txt.no_action);
+        return false;
+    }
+
+    if (sel_val.substring(0, 4) == 'all:') { // mass action
+        return;
+    }
+
+    var i = -1, has_selected = false; // at least one checkbox
+    while (form[++i]) {
+        if (form[i].name.substring(0, 9) == 'selected_' && form[i].checked) {
+            has_selected = true;
+            break;
+        }
+    }
+    if (!has_selected) {
+        alert(txt.no_comments);
+        return false;
+    }
+
+    if (sel_val == 'delete' || sel_val == 'deletespam') {
+        return confirm(txt.conf_delete);
+    }
+}
+
+function getLocalizedStr( key, username ) {
+    var str = "";
+    if( key in Site.ml_text ) {
+        str = Site.ml_text[ key ];
+        str = str.replace( '%username%', username );
+    }
+
+    return str;
+}
+
+// hsv to rgb
+// h, s, v = [0, 1), [0, 1], [0, 1]
+// r, g, b = [0, 255], [0, 255], [0, 255]
+function hsv_to_rgb (h, s, v)
+{
+    if (s == 0) {
+	v *= 255;
+	return [v,v,v];
+    }
+
+    h *= 6;
+    var i = Math.floor(h);
+    var f = h - i;
+    var p = v * (1 - s);
+    var q = v * (1 - s * f);
+    var t = v * (1 - s * (1 - f));
+
+    v = Math.floor(v * 255 + 0.5);
+    t = Math.floor(t * 255 + 0.5);
+    p = Math.floor(p * 255 + 0.5);
+    q = Math.floor(q * 255 + 0.5);
+
+    if (i == 0) return [v,t,p];
+    if (i == 1) return [q,v,p];
+    if (i == 2) return [p,v,t];
+    if (i == 3) return [p,q,v];
+    if (i == 4) return [t,p,v];
+    return [v,p,q];
+}
+
+function deleteComment (ditemid, action) {
+	action = action || 'delete';
+	
+	var curJournal = (Site.currentJournal !== "") ? (Site.currentJournal) : (LJ_cmtinfo.journal);
+
+    var form = $('ljdelopts' + ditemid),
+        todel = $('ljcmt' + ditemid),
+        opt_delthread, opt_delauthor, is_deleted, is_error,
+        pulse = 0,
+		url = LiveJournal.getAjaxUrl('delcomment')+'?mode=js&journal=' + curJournal + '&id=' + ditemid;
+    
+	var postdata = 'confirm=1';
+    if (form && action == 'delete') { 
+    	if (form.ban && form.ban.checked) {
+			postdata += '&ban=1';
+		}
+    	if (form.spam && form.spam.checked) {
+			postdata += '&spam=1';
+		}
+    	if (form.delthread && form.delthread.checked) {
+			postdata += '&delthread=1';
+			opt_delthread = true;
+		}
+    	if (form.delauthor && form.delauthor.checked) {
+        	postdata += '&delauthor=1';
+        	opt_delauthor = true;
+    	}
+    } else if (action == 'markAsSpam') {
+		opt_delauthor = opt_delthread = true;
+		postdata += '&ban=1&spam=1&delauthor=1';
+	}
+	
+    postdata += '&lj_form_auth=' + LJ_cmtinfo.form_auth;
+
+    var opts = {
+        url: url,
+        data: postdata,
+        method: 'POST',
+        onData: function(data) {
+            is_deleted = !!data;
+            is_error = !is_deleted;
+        },
+        onError: function() {
+          alert('Error deleting ' + ditemid);
+          is_error = true;
+        }
+    };
+
+    HTTPReq.getJSON(opts);
+
+    var flash = function () {
+        var rgb = hsv_to_rgb(0, Math.cos((pulse + 1) / 2), 1);
+        pulse += 3.14159 / 5;
+        var color = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
+
+        todel.style.border = "2px solid " + color;
+        if (is_error) {
+            todel.style.border = "";
+            // and let timer expire
+        } else if (is_deleted) {
+            removeComment(ditemid, opt_delthread);
+            if (opt_delauthor) {
+                for (var item in LJ_cmtinfo) {
+					if ( LJ_cmtinfo[item].u == LJ_cmtinfo[ditemid].u
+						&& !LJ_cmtinfo[ item ].is_deleted ) {
+                        removeComment(item, false);
+                    }
+                }
+            }
+        } else {
+            window.setTimeout(flash, 50);
+        }
+    };
+
+    window.setTimeout(flash, 5);
+}
+
+function removeComment (ditemid, killChildren) {
+	if( LiveJournal.CommentManager.getState() !== 'iframe'){
+		var threadId = ditemid;
+
+		LiveJournal.CommentManager.getThreadJSON(threadId, function(result) {
+			LiveJournal.CommentManager.processThreadJSON( result, function( dtid, html, comment) {
+				if (LJ_cmtinfo[ threadId ].u !== LJ_cmtinfo[ dtid ].u) {
+					return;
+				}
+
+				html = ExpanderEx.prepareCommentBlock( html, dtid ); //, isChildCollapsed( i ) );
+				LiveJournal.CommentManager.updateCell( dtid, html );
+				if( comment.is_deleted && ( dtid in ExpanderEx.Collection ) ) {
+					delete ExpanderEx.Collection[ dtid ];
+				}
+			} );
+		}, true );
+	}
+	else {
+		var todel = document.getElementById("ljcmt" + ditemid);
+		if (todel) {
+			todel.style.display = 'none';
+
+			var userhook = window["userhook_delete_comment_ARG"];
+			if (userhook)
+				userhook(ditemid);
+		}
+	}
+	if (killChildren) {
+		var com = LJ_cmtinfo[ditemid];
+		for (var i = 0; i < com.rc.length; i++) {
+			removeComment(com.rc[i], true);
+		}
+	}
+}
+
+function createDeleteFunction(ae, dItemid, action) {
+	action = action || 'delete';
+	
+    return function (e) {
+		e = jQuery.event.fix(e || window.event);
+		
+		e.stopPropagation();
+		e.preventDefault();
+
+        var doIT = 0;
+        // immediately delete on shift key
+        if (e.shiftKey) {
+			doIT = 1;
+			deleteComment(dItemid, action);
+			return true;
+		}
+		
+		if (!LJ_cmtinfo) {
+			return true;
+		}
+
+        var com = LJ_cmtinfo[dItemid],
+			comUser = LJ_cmtinfo[dItemid].u,
+			remoteUser = LJ_cmtinfo.remote;
+        if (!com || !remoteUser) {
+			return true;
+		}
+        var canAdmin = LJ_cmtinfo.canAdmin;
+		
+		var markSpamMLPrefix = (Site.remote_is_maintainer == 1 && com.u !== '') ? 'comment.mark.spam.' : 'comment.mark.spam2.';		
+		
+		if (action == 'markAsSpam') {
+			if (!window.ctrlPopup) {
+				window.ctrlPopup = jQuery('<div class="b-popup-ctrlcomm" />')
+					.delegate('input.spam-comment-button', 'click', function () {
+						window.ctrlPopup.bubble('hide');
+					});
+			}			
+
+			window.ctrlPopup
+				.html('<div class="b-popup-group"><div class="b-popup-row b-popup-row-head"><strong>' + getLocalizedStr(markSpamMLPrefix + 'title', comUser) + '</strong></div><div class="b-popup-row">' + getLocalizedStr(markSpamMLPrefix + 'subject', comUser) + '</div><div class="b-popup-row"><input type="button" class="spam-comment-button" onclick="deleteComment(' + dItemid + ', \'' + action + '\');" value="' + getLocalizedStr(markSpamMLPrefix + 'button', comUser) + '"></div><div>', ae, e, 'spamComment' + dItemid)
+				.bubble()
+				.bubble('show', ae);
+
+			return true;
+		} else if (action == 'delete') {
+	        var inHTML = [ "<form id='ljdelopts" + dItemid + "'><div class='b-popup-group'><div class='b-popup-row b-popup-row-head'><strong>" + getLocalizedStr( 'comment.delete.q', comUser ) + "</strong></div>" ];
+	        var lbl;
+	        if (com.username !== "" && com.username != remoteUser && canAdmin) {
+	            lbl = "ljpopdel" + dItemid + "ban";
+	            inHTML.push("<div class='b-popup-row'><input type='checkbox' name='ban' id='" + lbl + "'> <label for='" + lbl + "'>" + getLocalizedStr( 'comment.ban.user', comUser ) + "</label></div>");
+	        }
+	
+	        if (com.rc && com.rc.length && canAdmin) {
+	            lbl = "ljpopdel" + dItemid + "thread";
+	            inHTML.push("<div class='b-popup-row'><input type='checkbox' name='delthread' id='" + lbl + "'> <label for='" + lbl + "'>" + getLocalizedStr( 'comment.delete.all.sub', comUser ) + "</label></div>");
+	        }
+	        if (canAdmin&&com.username) {
+	            lbl = "ljpopdel" + dItemid + "author";
+	            inHTML.push("<div class='b-popup-row'><input type='checkbox' name='delauthor' id='" + lbl + "'> <label for='" + lbl + "'>" + getLocalizedStr( 'comment.delete.all', "<b>" + ( (com.username == remoteUser ? 'my' : comUser) ) + "</b>" ) + "</label></div>");
+	        }
+	
+	        inHTML.push("<div class='b-popup-row'><input class='delete-comment-button' type='button' value='" + getLocalizedStr( 'comment.delete', comUser ) + "' onclick='deleteComment(" + dItemid + ");' /></div></div><div class='b-bubble b-bubble-alert b-bubble-noarrow'><i class='i-bubble-arrow-border'></i><i class='i-bubble-arrow'></i>" + getLocalizedStr( 'comment.delete.no.options', comUser ) + "</div></form>");
+			
+			if (!window.delPopup) {
+				window.delPopup = jQuery('<div class="b-popup-delcomm" />')
+					.delegate('input.delete-comment-button', 'click', function () {
+						window.delPopup.bubble('hide');
+					});
+			}
+			
+			window.delPopup
+				.html(inHTML.join(' '))
+				.bubble()
+				.bubble('show', ae);
+				
+		} else if (action == 'unspam') {
+			deleteComment(dItemid, action);
+		}
+	};
+}
+
+function poofAt (pos) {
+    var de = document.createElement("div");
+    de.style.position = "absolute";
+    de.style.background = "#FFF";
+    de.style.overflow = "hidden";
+    var opp = 1.0;
+
+    var top = pos.y;
+    var left = pos.x;
+    var width = 5;
+    var height = 5;
+    document.body.appendChild(de);
+
+    var fade = function () {
+        opp -= 0.15;
+        width += 10;
+        height += 10;
+        top -= 5;
+        left -= 5;
+
+        if (opp <= 0.1) {
+            de.parentNode.removeChild(de);
+        } else {
+            de.style.left = left + "px";
+            de.style.top = top + "px";
+            de.style.height = height + "px";
+            de.style.width = width + "px";
+            de.style.filter = "alpha(opacity=" + Math.floor(opp * 100) + ")";
+            de.style.opacity = opp;
+            window.setTimeout(fade, 20);
+        }
+    };
+    fade();
+}
+
+function updateLink (ae, resObj, clickTarget) {
+    ae.href = resObj.newurl;
+    var userhook = window["userhook_" + resObj.mode + "_comment_ARG"];
+    var did_something = 0;
+
+    if (clickTarget && clickTarget.src && clickTarget.src == resObj.oldimage) {
+        clickTarget.src = resObj.newimage;
+        did_something = 1;
+    }
+
+    if (userhook) {
+        userhook(resObj.id);
+        did_something = 1;
+    }
+
+    // if all else fails, at least remove the link so they're not as confused
+    if (! did_something) {
+        if (ae && ae.style)
+            ae.style.display = 'none';
+        if (clickTarget && clickTarget.style)
+            clickTarget.style.dispay = 'none';
+    }
+
+}
+
+var tsInProg = {}  // dict of { ditemid => 1 }
+function createModerationFunction(control, dItemid, action) {
+	var action = action || 'screen',
+		comUser = LJ_cmtinfo[dItemid].u;	
+	
+	return function (e) {
+		var	e = jQuery.event.fix(e || window.event),
+			pos = { x: e.pageX, y: e.pageY },
+			modeParam = LiveJournal.parseGetArgs(location.href).mode,
+			hourglass;
+			
+		e.stopPropagation();
+		e.preventDefault();
+			
+		sendModerateRequest();
+
+		function sendModerateRequest() {
+			var	bmlName = (action == 'unspam') ? 'spamcomment' : 'talkscreen',
+				postUrl = control.href.replace(new RegExp('.+' + bmlName + '\.bml'), LiveJournal.getAjaxUrl(bmlName)),
+				postParams = { 'confirm': 'Y', lj_form_auth: LJ_cmtinfo.form_auth };
+				
+			if (action == 'unspam') {
+				postUrl += '&jsmode=1';
+			}
+				
+			hourglass = jQuery(e).hourglass()[0];
+			
+			jQuery.post(postUrl, postParams, function (json) {
+				tsInProg[dItemid] = 0;
+				
+				if (action == 'unspam') {
+					json = jQuery.parseJSON(json); 
+					
+					if (json.result) {
+						removeEmptyMarkup(dItemid);
+						hourglass.hide();
+						return true;
+					} else {
+						alert(json.errormsg);
+					}
+				}
+				
+				if( LiveJournal.CommentManager.getState() !== 'iframe' ) {
+					handleNew();
+				} else {
+					var ids = checkRcForNoCommentsPage();
+					handleIframe(ids);
+				}
+			});
+		}
+
+		function handleNew() {
+			var newNode, showExpand, j, children,
+				threadId = dItemid,
+				threadExpanded = !!(LJ_cmtinfo[ threadId ].oldvars && LJ_cmtinfo[ threadId ].full);
+				populateComments = function (result) {
+					LiveJournal.CommentManager.processThreadJSON( result, function( dtid, html ) {
+						if( LJ_cmtinfo[ dtid ].full ){
+							showExpand = !( 'oldvars' in LJ_cmtinfo[ dtid ]);
+	
+							//still show expand button if children comments are folded
+							if( !showExpand ) {
+								children  = LJ_cmtinfo[ dtid ].rc;
+	
+								for( j = 0; j < children.length;  ++j ) {
+									if( !LJ_cmtinfo[ children[j] ].full && !LJ_cmtinfo[ children[j] ].is_deleted ) {
+									// if( !( 'oldvars' in LJ_cmtinfo[ children[j] ] ) ) {
+										showExpand = true;
+									}
+								}
+							}
+							
+							if (!html) {
+								removeEmptyMarkup(result[i].thread);
+							}
+
+							var newNode = ExpanderEx.prepareCommentBlock( html, dtid, showExpand );
+	
+							LiveJournal.CommentManager.updateCell( dtid, newNode );
+						}
+					} );
+					hourglass.hide();
+					poofAt(pos);
+				};
+	
+			LiveJournal.CommentManager.getThreadJSON(threadId, function (result) {
+				//if comment is expanded we need to fetch it's collapsed state additionally
+				if( threadExpanded && LJ_cmtinfo[ threadId ].oldvars.full )
+				{
+					LiveJournal.CommentManager.getThreadJSON( threadId, function (result2) {
+						ExpanderEx.Collection[ threadId ] = ExpanderEx.prepareCommentBlock( jQuery( "<div>" + result2[0].html + "</div>" ), threadId, true ).html()
+						//ExpanderEx.Collection[ threadId ] = result2[0].html;
+						populateComments( result );
+					}, true, true );
+				}
+				else {
+					populateComments( result );
+				}
+			}, false, !threadExpanded);
+		}
+
+		function handleIframe(ids) {
+			// modified jQuery.fn.load
+			jQuery.ajax({
+				url: location.href,
+				type: 'GET',
+				dataType: 'html',
+				complete: function (res, status) {
+					// If successful, inject the HTML into all the matched elements
+					if (status == 'success' || status == 'notmodified') {
+						// Create a dummy div to hold the results
+						var nodes = jQuery('<div/>')
+							// inject the contents of the document in, removing the scripts
+							// to avoid any 'Permission Denied' errors in IE
+							.append(res.responseText.replace(/<script(.|\s)*?\/script>/gi, ''))
+							// Locate the specified elements
+							.find(ids)
+							.each(function () {
+								var id = this.id.replace(/[^0-9]/g, '');
+								if (LJ_cmtinfo[id].expanded) {
+									var expand = this.innerHTML.match(/Expander\.make\(.+?\)/)[0];
+									(function(){
+										eval(expand);
+									}).apply(document.createElement('a'));
+								} else {
+									jQuery('#' + this.id).replaceWith(this);
+								}
+							});
+						hourglass.hide();
+						poofAt(pos);
+					}
+				}
+			});
+		}
+
+		function checkRcForNoCommentsPage() {
+			var commsArray = [ dItemid ], ids;
+
+			// check rc for no comments page
+			if (LJ_cmtinfo[dItemid].rc) {
+				if (/mode=(un)?freeze/.test(control.href)) {
+					mapComms(dItemid);
+				}
+				ids = '#ljcmt' + commsArray.join(',#ljcmt');
+			} else {
+				var rpcRes;
+				eval(json);
+				updateLink(control, rpcRes, control.getElementsByTagName('img')[0]);
+				// /tools/recent_comments.bml
+				if (document.getElementById('ljcmtbar'+dItemid)) {
+					ids = '#ljcmtbar' + dItemid;
+				}
+				// ex.: portal/
+				else {
+					hourglass.hide();
+					poofAt(pos);
+					return;
+				}
+			}
+			
+			
+			function mapComms(id) {
+				var i = -1, newId;
+				
+				while (newId = LJ_cmtinfo[id].rc[++i]) {
+					if (LJ_cmtinfo[newId].full) {
+						commsArray.push(newId);
+						mapComms(String(newId));
+					}
+				}
+			}
+			
+			return ids;
+		}
+		
+		return false;
+	}
+}
+
+function removeEmptyMarkup(threadId) {
+	jQuery('#ljcmt' + threadId).remove();
+}
+
+(function( $, window ) {
+
+	window.LiveJournal.CommentManager = function() {
+		this.bindLinks();
+	}
+
+	LiveJournal.CommentManager.prototype.bindLinks = function() {
+		$( 'body' ).delegate( 'a', 'click', function( ev ) {
+			var rex_id = /id=(\d+)/, ae = this;
+
+		if (ae.href.indexOf('talkscreen.bml') != -1) {
+			var reMatch = rex_id.exec(ae.href);
+			if (!reMatch) return;
+
+			var id = reMatch[1];
+			if (!document.getElementById('ljcmt' + id)) return;
+
+			createModerationFunction(ae, id)( ev );
+		} else if (ae.href.indexOf('delcomment.bml') != -1) {
+			if (LJ_cmtinfo && LJ_cmtinfo.disableInlineDelete) return;
+
+			var reMatch = rex_id.exec(ae.href);
+			if (!reMatch) return;
+
+			var id = reMatch[1];
+			if (!document.getElementById('ljcmt' + id)) return;
+
+			var action = (ae.href.indexOf('spam=1') != -1) ? 'markAsSpam' : 'delete';
+
+			createDeleteFunction(ae, id, action)( ev );
+		// unspam
+		} else if (ae.href.indexOf('spamcomment.bml') != -1) {
+			var reMatch = rex_id.exec(ae.href);
+			if (!reMatch) return;
+
+			var id = reMatch[1];
+			if (!document.getElementById('ljcmt' + id)) return;
+			createModerationFunction(ae, id, 'unspam')( ev );
+		} else {
+			return;
+		}
+
+			ev.preventDefault();
+			ev.stopPropagation();
+		} );
+	}
+
+	var manager = window.LiveJournal.CommentManager;
+
+	window.LiveJournal.CommentManager.getState = function() {
+		if( LJ_cmtinfo.use_old_thread_expander ) {
+			return "iframe";
+		} else {
+			return "old";
+		}
+	}
+
+	/**
+	 * @param {Number} threadId Id of thread to update
+	 * @param {Node} node Collection of nodes with new content
+	 *
+	 * @return {String} Returns a string containing old content of the cell;
+	 */
+	LiveJournal.CommentManager.updateCell = function( threadId, node ) {
+		var cell = $( "#ljcmt" + threadId ),
+			old_html = $( '<div></div>' ). append( cell.clone() );
+
+		cell.replaceWith( $( node ).filter( "#ljcmt" + threadId ) );
+
+		return old_html.html();
+	}
+
+	LiveJournal.CommentManager.getCell = function( threadId ) {
+		return $( "#ljcmt" + threadId );
+	}
+
+	LiveJournal.CommentManager.getThreadJSON = function(threadId, success, getSingle)
+	{
+		var postid = location.href.match(/\/(\d+).html/)[1],
+			modeParam = LiveJournal.parseGetArgs(location.href).mode,
+			params = {
+				journal: Site.currentJournal,
+				itemid: postid,
+				thread: threadId,
+				depth: LJ_cmtinfo[ threadId ].depth
+			};
+
+		if( getSingle) {
+			params.single = '1';
+		}
+
+		if (modeParam) {
+			params.mode = modeParam;
+		}
+
+		var getArgs = LiveJournal.parseGetArgs( location.href );
+		if( getArgs && !!getArgs.style && getArgs.style === "mine" ) {
+			params.style = "mine";
+		}
+
+		var endpoint = LiveJournal.getAjaxUrl( 'get_thread' );
+		jQuery.get( LiveJournal.constructUrl( endpoint, params ), success, 'json' );
+	}
+
+	LiveJournal.CommentManager.processThreadJSON = function( result, callback ) {
+		var comment, dom;
+		for( var i = 0; i < result.length; ++i ){
+			if( !( result[ i ].thread in LJ_cmtinfo ) ) {
+				continue;
+			}
+	
+			comment = {};
+			comment.is_deleted = ( result[i].state === "deleted" );
+			if( comment.is_deleted ) {
+				LJ_cmtinfo[ result[i].thread ].is_deleted = true;
+			}
+			dom = $( result[i].html ).filter( "#ljcmt" + result[i].thread );
+			callback( result[i].thread, dom, comment );
+		}
+	}
+
+	$( function() { new LiveJournal.CommentManager(); } );
+
+}( jQuery, window ))
+
+function LJ_Mul( a, b ) { return parseInt(a, 10) * parseInt(b, 10) }
+
+function LJ_JoinURL( url /* parts */ ) {
+	var add = [].slice.call( arguments, 1 ).join( '&' );
+
+	url += ( url.indexOf( '?' ) > -1 ) ? '&' : '?';
+	return url + add;
+}
+
+function LJ_Concat( /* parts */ ) {
+	return [].slice.call( arguments, 0 ).join( '' );
+}
+
+/*!
+ * LiveJournal loader for vkontakte like buttons.
+ *
+ * Copyright 2011, dmitry.petrov@sup.com
+ *
+ * VK script is often loaded with notable delay, so
+ * plugin just loads it after the page rendering and
+ * allows to display page faster.
+ *
+ */
+( function( $ ) {
+
+	if( $.VK ) { return; }
+
+	$.VK = {};
+
+	var onloads = [];
+		buttons = [],
+		onloadPassed = false,
+		scriptLoaded = false,
+		scriptLoading = false;
+
+	/**
+	 * Public API
+	 *
+	 * @namespase $.VK
+	 */
+	$.VK = {
+
+		/**
+		 * Init VK object after the script load.
+		 *     Function passes all option to the VK.init
+		 *  @param {Object} options
+		 */
+		init: function( options ) {
+			onloads.push( function() {
+				VK.init( options );
+			} )
+		},
+
+		/**
+		 * Add button to init after script load.
+		 *    If this method was called after the page load, and script wasn't downloaded yet,
+		 *    it will trigger downloading.
+		 */
+		addButton: function( elementId, options ) {
+			buttons.push( {
+				id: elementId,
+				options: options
+			} );
+
+			if( onloadPassed && !scriptLoading ) {
+				if( scriptLoaded ) {
+					initButtons();
+				} else {
+					loadScript( initButtons );
+				}
+			}
+		}
+	}
+
+	function initButtons() {
+		for( var i = 0; i < buttons.length; ++i ) {
+			VK.Widgets.Like( buttons[ i ].id, buttons[ i ].options );
+		}
+
+		buttons = [];
+	}
+
+	function loadScript( onload ) {
+		onload = onload || $.noop;
+		scriptLoading = true;
+
+		$.getScript( 'http://userapi.com/js/api/openapi.js?31', function() {
+			scriptLoading = false;
+			scriptLoaded = true;
+			for( var i = 0; i < onloads.length; ++i ) {
+
+				onloads[ i ]();
+			}
+			onloads = [];
+			onload();
+		} );
+	}
+
+	jQuery( function() {
+		//Do not download the script if the widgets were not added yet.
+		if( buttons.length ) {
+			//Do not load the script directly after the page load.
+			//We don't want to delay other onload functions somehow.
+			setTimeout( function() {
+				loadScript( initButtons );
+			}, 500 );
+		}
+		onloadPassed = true;
+	} );
+
+} ) ( jQuery );
+
+(function( top ) {
+
+	var icoBase = 'http://wh.lj.ru/iepinned';
+
+	function updateJumpList( dict, inboxNumber ) {
+		inboxNumber = inboxNumber || 0;
+		window.external.msSiteModeCreateJumplist( 'LiveJournal');
+		window.external.msSiteModeAddJumpListItem( dict.journal, Site.remoteJournalBase, icoBase + '/recent.ico' );
+		window.external.msSiteModeAddJumpListItem( dict.friends, Site.remoteJournalBase + '/friends', icoBase + '/friends.ico' );
+		window.external.msSiteModeAddJumpListItem( dict.ljtimes, Site.siteroot + '/ljtimes/', icoBase + '/ljtimes.ico' );
+		window.external.msSiteModeAddJumpListItem( dict.ratings_posts, Site.siteroot + '/ratings/posts/', icoBase + '/top.ico' );
+		window.external.msSiteModeAddJumpListItem( dict.random_journal, Site.siteroot + '/random.bml', icoBase + '/surprise.ico' );
+
+		if( inboxNumber > 0 ) {
+			window.external.msSiteModeAddJumpListItem( dict.inbox + '(' + inboxNumber + ')', Site.siteroot + '/inbox/', icoBase + '/inbox.ico' );
+			window.external.msSiteModeSetIconOverlay( icoBase + '/inbox.ico', dict.inbox + '(' + inboxNumber + ')' );
+		} else {
+			window.external.msSiteModeAddJumpListItem( dict.inbox, Site.siteroot + '/inbox/', icoBase + '/inbox_empty.ico' );
+			window.external.msSiteModeClearIconOverlay();
+		}
+		window.external.msSiteModeShowJumplist();
+	}
+
+	function fetchInbox() {
+		var url = Site.siteroot + LiveJournal.getAjaxUrl( 'inbox_count' );
+		$.getJSON( url, function( data ) {
+			updateJumpList( data.number );
+		} );
+	}
+
+	function setMeta( name, content ) {
+		var meta = document.createElement( 'meta' )
+		meta.name = name;
+		meta.content = content;
+
+		document.getElementsByTagName( 'head' )[0].appendChild( meta );
+	}
+
+	function injectPinnedMeta( dict ) {
+		if( Site.has_remote ) {
+			setMeta( "msapplication-task", "name=" + dict.update_journal + ";action-uri=" + Site.siteroot + "/update.bml;icon-uri=" + icoBase + "/post.ico" );
+		}
+
+		setMeta( "application-name", dict.app_name );
+		setMeta( "msapplication-tooltip", dict.app_tooltip );
+		setMeta( "msapplication-starturl", Site.siteroot );
+	}
+
+	var defaultDict = {
+		app_name: 'LiveJournal',
+		app_tooltip: 'Livejournal.com',
+		inbox: 'Inbox',
+		update_journal: 'Post an entry',
+		journal: 'Journal',
+		friends: 'Friends',
+		ljtimes: 'LJTimes',
+		ratings_posts: 'Ratings',
+		random_journal: 'Surprise me!' 
+    }
+
+	top.ie9InitPinnedMode = function( dict ) {
+        dict = jQuery.extend( {}, defaultDict, dict );
+		try {
+			injectPinnedMeta( dict );
+
+			if(window.external.msIsSiteMode()) {
+				if( Site.has_remote > 0 ) {
+					//here we should pass the number of current unread notifications
+                    var unread_count = parseInt( Site.inbox_unread_count, 10) || 0;
+					updateJumpList( dict, unread_count );
+
+					/*
+					setInterval( function() {
+						//fetchInbox();
+						//ajax requests emulation
+						//updateJumpList( dict, Math.floor( Math.random() * 10 ) );
+					}, 3000 );
+					*/
+				} else {
+					window.external.msSiteModeClearJumplist();
+					window.external.msSiteModeClearIconOverlay();
+				}
+			}
+			else {}
+		}
+		catch(e) { }
+	}
+
+    ie9InitPinnedMode();
+
+}( window ));
+
+

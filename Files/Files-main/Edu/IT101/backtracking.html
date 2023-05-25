@@ -1,0 +1,38 @@
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<pre style='color:#000020;background:#f6f8ff;'><span style='color:#595979; '>// обобщённая процедура перебора с возвратом</span>
+<span style='color:#200080; font-weight:bold; '>procedure</span> backtrack<span style='color:#406080; '>;</span>
+
+  <span style='color:#595979; '>// рекурсивная реализация выполнения очередного шага</span>
+  <span style='color:#595979; '>// в заданную позицию position</span>
+  <span style='color:#200080; font-weight:bold; '>procedure</span> run<span style='color:#308080; '>(</span>position <span style='color:#308080; '>:</span> <span style='color:#7779bb; '>integer</span><span style='color:#308080; '>)</span><span style='color:#406080; '>;</span>
+  <span style='color:#200080; font-weight:bold; '>begin</span>
+    <span style='color:#595979; '>// получено решение</span>
+    <span style='color:#200080; font-weight:bold; '>if</span> finalPos<span style='color:#308080; '>(</span>position<span style='color:#308080; '>)</span> <span style='color:#200080; font-weight:bold; '>then</span>
+    <span style='color:#200080; font-weight:bold; '>begin</span> <span style='color:#595979; '>// регистрируем его и завершаем процедуру</span>
+      register<span style='color:#406080; '>;</span> 
+      <span style='color:#200080; font-weight:bold; '>exit</span><span style='color:#406080; '>;</span>
+    <span style='color:#200080; font-weight:bold; '>end</span><span style='color:#406080; '>;</span>
+
+    <span style='color:#595979; '>// перебор возможных вариантов шагов, которые можно сделать</span>
+    <span style='color:#595979; '>// в текущей позиции</span>
+    <span style='color:#200080; font-weight:bold; '>var</span> step <span style='color:#308080; '>:</span><span style='color:#308080; '>=</span> initStep<span style='color:#406080; '>;</span>
+    <span style='color:#200080; font-weight:bold; '>while</span> hasNextStep<span style='color:#308080; '>(</span>step<span style='color:#308080; '>)</span> <span style='color:#200080; font-weight:bold; '>do</span>
+    <span style='color:#200080; font-weight:bold; '>begin</span>                     <span style='color:#595979; '>// пока остаются варианты шагов</span>
+      step <span style='color:#308080; '>:</span><span style='color:#308080; '>=</span> nextStep<span style='color:#308080; '>(</span>step<span style='color:#308080; '>)</span><span style='color:#406080; '>;</span> <span style='color:#595979; '>// получаем вариант</span>
+      <span style='color:#200080; font-weight:bold; '>if</span> admissable<span style='color:#308080; '>(</span>position<span style='color:#308080; '>,</span> step<span style='color:#308080; '>)</span> <span style='color:#200080; font-weight:bold; '>then</span>  
+      <span style='color:#200080; font-weight:bold; '>begin</span>                   <span style='color:#595979; '>// если вариант допустимый (удовлетворяет ограничениям)</span>
+        makeStep<span style='color:#308080; '>(</span>position<span style='color:#308080; '>,</span> step<span style='color:#308080; '>)</span><span style='color:#406080; '>;</span>     <span style='color:#595979; '>// выполняем шаг</span>
+        run<span style='color:#308080; '>(</span>nextPos<span style='color:#308080; '>(</span>position<span style='color:#308080; '>,</span> step<span style='color:#308080; '>)</span><span style='color:#308080; '>)</span><span style='color:#406080; '>;</span> <span style='color:#595979; '>// перемещаемся в следующую позицию</span>
+      <span style='color:#200080; font-weight:bold; '>end</span><span style='color:#406080; '>;</span>
+    <span style='color:#200080; font-weight:bold; '>end</span><span style='color:#406080; '>;</span>
+  <span style='color:#200080; font-weight:bold; '>end</span><span style='color:#406080; '>;</span>
+
+<span style='color:#200080; font-weight:bold; '>begin</span>
+  run<span style='color:#308080; '>(</span>initPos<span style='color:#308080; '>)</span><span style='color:#406080; '>;</span>
+<span style='color:#200080; font-weight:bold; '>end</span><span style='color:#406080; '>;</span>
+</pre>
+

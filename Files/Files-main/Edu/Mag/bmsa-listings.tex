@@ -1,0 +1,1410 @@
+\subsection*{BMSAlgorithm.h}
+\begin{lstlisting}
+#ifndef _BMSALGORITHM_H
+#define	_BMSALGORITHM_H
+
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <map>
+#include <set>
+#include <utility>
+#include <vector>
+
+#include "PolySet.h"
+#include "Polynomial.h"
+#include "Sequence.h"
+#include "DeltaSet.h"
+
+namespace bmsa {
+
+using std::vector;
+using std::pair;
+using namespace boost::lambda;
+using namespace boost::tuples;
+
+template<typename T, typename S = T> // T = Poly Coef Type
+                                     // S = Seq Elem Type
+class Algorithm {
+    typedef std::list<Point> PointCollection;
+    typedef std::list<PolySubsetEntry<T,S> > PolySubset;
+
+    Sequence<S> const & u;
+
+    Point n; // current step of the algorithm
+
+    PolySet<T,S> F; // current minimal set
+    PolyWithAuxInfoSet<T,S> G;
+
+    PolySubset FN;
+    PolySubset FV;
+
+    vector<typename Polynomial<T,S>::Coef> discr; // current
+                                              // discrepancies
+    vector<size_t> degreeInvariantSuppliers;
+    DeltaSet newDeltaSet;
+
+public:
+    Algorithm(Sequence<S> const & u_) : u(u_),
+            F(ElemTypeTraits<typename Polynomial<T,S>::Coef>::id()) {}
+
+    PolySet<T,S> computeMinimalSet();
+
+private:
+    void clearParams();
+
+    void buildFNandFV();
+
+    bool isAtTheDegreeInvariantPoint(
+            vector<size_t> & degreeInvariantSuppliers);
+
+    void renewF(vector<size_t> const & degreeInvariantSuppliers);
+
+    // Berlekamp procedure
+    Polynomial<T,S> BP(size_t i, size_t j);
+
+    // Subsidiary procedure -- the confluent version of BP
+    template <size_t K>
+    Polynomial<T,S> SP(size_t);
+
+    void buildNewDeltaSet();
+    PolySet<T,S> buildNewF();
+    void buildNewG(PolySet<T,S> const &);
+    bool fnBetweenFs(Polynomial<T,S> const & f, 
+                Polynomial<T,S> const & fNext,
+                Polynomial<T,S> const & fn) const;
+
+    // constitutes building new delta-set
+    void addPointsOfTypeI();
+    void addPointsOfTypeII();
+    void addPointsOfTypeIII();
+    void addPointsOfTypeIV();
+
+    DeltaSetPoint
+    pointOfTypeIFromPolySubsetEntry(PolySubsetEntry<T,S> const &);
+
+    Polynomial<T,S>
+    buildPolyFromDeltaSetPoint(DeltaSetPoint const &);
+};
+
+} // namespace bmsa
+#endif	/* _BMSALGORITHM_H */
+\end{lstlisting}
+
+\subsection*{BMSAlgorithm.cc}
+\begin{lstlisting}
+#include <algorithm>
+#include <stdexcept>
+#include <iterator>
+#include <iostream>
+
+#include <cstddef> // size_t
+
+#include <boost/lambda/lambda.hpp>
+#include <boost/lambda/bind.hpp>
+#include <boost/function.hpp>
+
+#include "Polynomial.h"
+#include "PolySet.h"
+#include "BMSAlgorithm.h"
+
+using std::cout;
+using std::endl;
+
+namespace bmsa {
+
+template<typename T, typename S>
+PolySet<T,S> Algorithm<T,S>::computeMinimalSet() {
+    for (n = Point::nil; totalLess(n, u.size()); ++n ) {
+        clearParams();
+        buildFNandFV(); // find polynomials non-valid
+                        // at the current step
+        if (FN.empty()) {
+            cout << "F_N is empty - F would not change" << endl;
+            continue;
+        }
+        if (// n is in the degree-invariant set for each f in FN
+                isAtTheDegreeInvariantPoint(degreeInvariantSuppliers)) {
+            cout << "Delta-set would not change" << endl;
+            // delta-set and size of F unchanged
+            renewF(degreeInvariantSuppliers);
+            std::cout << "F renewed:\n\t" << F << std::endl;
+        } else {
+            buildNewDeltaSet();
+            cout << "New delta-set: "<< endl << "\t" << newDeltaSet;
+            PolySet<T,S> F_new = buildNewF();
+            buildNewG(F_new);
+            F = F_new;
+        }
+    }
+    return F;
+}
+
+template<typename T, typename S>
+void Algorithm<T,S>::clearParams() {
+    FN.clear();
+    FV.clear();
+    degreeInvariantSuppliers.clear();
+    degreeInvariantSuppliers.resize(F.size());
+    discr.clear();
+    newDeltaSet.clear();
+}
+
+template<typename T, typename S>
+void Algorithm<T,S>::buildFNandFV() {
+    size_t i = 0;
+    for(
+            typename PolySet<T,S>::const_iterator fIt = F.begin();
+            fIt != F.end();
+            ++fIt, ++i) {
+        typename Polynomial<T,S>::Coef d; // current discrepancy;
+        // for f in F: if f[u](n) could be evaluated...
+        // .. and discrepancy not null then 
+        // f is non-valid (goes to FN)
+        if ( fIt->getDegree() <= n
+                && (d = (*fIt)[u](n)) != typename Polynomial<T,S>::Coef() ) {
+            discr.push_back(d);
+            FN.push_back(PolySubsetEntry<T,S>(i, fIt));
+        }
+        else {
+            discr.push_back(typename Polynomial<T,S>::Coef());
+            FV.push_back(PolySubsetEntry<T,S>(i, fIt));
+        }
+    }
+}
+
+// test wether n is degree-invariant point for all f in FN;
+// if yes, degreeInvariantSuppliers holds indices of aux poly's
+// which help to preserve the degree in the Berlekamp-procedure;
+// this info should be used in such a way (pseudocode):
+//      for f in FN:
+//          f = BP<f, degreeInvariantSuppliers[indexOf(f)]>
+template<typename T, typename S>
+bool Algorithm<T,S>::isAtTheDegreeInvariantPoint(
+        vector<size_t> & degreeInvariantSuppliers) {
+    bool result = true;
+    for(typename PolySubset::const_iterator it = FN.begin();
+            it != FN.end(); ++it) {
+        size_t degInv
+                = F.isInShiftedDeltaSet(n, it->polyIt->getDegree());
+        result = !(degInv == PolySet<T,S>::NOT_IN_SHIFTED_DELTA_SET);
+        degreeInvariantSuppliers[it->polyIndex] = degInv;
+    }
+    return result;
+}
+
+template<typename T, typename S>
+void Algorithm<T,S>::renewF(vector<size_t> const & degreeInvariantSuppliers) {
+    for(typename PolySubset::const_iterator it = FN.begin();
+            it != FN.end(); ++it) {
+        size_t nonvalidPolyIdx = it->polyIndex;
+        F.replace(it->polyIt, BP(nonvalidPolyIdx,
+                degreeInvariantSuppliers[nonvalidPolyIdx]));
+    }
+}
+
+template<typename T, typename S>
+void Algorithm<T,S>::buildNewDeltaSet() {
+    addPointsOfTypeI();
+    addPointsOfTypeII();
+    addPointsOfTypeIII();
+    addPointsOfTypeIV();
+}
+
+// though polys from FV give points of type I,
+// they are not added to delta-set
+// (due to some technical reasons arise in building F_new
+// from this delts-set and possible improoved efficiency);
+// buildNewF() (builds F_new) take this into account;
+template<typename T, typename S>
+void Algorithm<T,S>::addPointsOfTypeI() {
+    for (typename PolySubset::const_iterator it = FN.begin(); it != FN.end(); ++it)
+        if (degreeInvariantSuppliers[it->polyIndex]
+                != PolySet<T,S>::NOT_IN_SHIFTED_DELTA_SET)
+            newDeltaSet.push_back(
+                    DeltaSetPoint(DeltaSetPoint::I, it->polyIndex,
+                            degreeInvariantSuppliers[it->polyIndex]));
+}
+
+template<typename T, typename S>
+DeltaSetPoint
+Algorithm<T,S>::pointOfTypeIFromPolySubsetEntry(PolySubsetEntry<T,S> const & psentry) {
+    return DeltaSetPoint(DeltaSetPoint::I, psentry.polyIndex,
+            degreeInvariantSuppliers[psentry.polyIndex]);
+}
+
+template<typename T, typename S>
+void Algorithm<T,S>::addPointsOfTypeII() {
+    typename PolySubset::iterator it = std::adjacent_find(FN.begin(), FN.end(),
+            adjacentPolyIndiciesForPolySubset<T,S>);
+    while (it != FN.end()) {
+        newDeltaSet.push_back(
+            DeltaSetPoint(DeltaSetPoint::II, it->polyIndex,
+                it->polyIndex)
+        );
+        it = std::adjacent_find(++it, FN.end(),
+                adjacentPolyIndiciesForPolySubset<T,S>);
+    }
+}
+
+template<typename T, typename S>
+void Algorithm<T,S>::addPointsOfTypeIII() {
+    using namespace boost::lambda;
+    for (typename PolySubset::const_iterator jIt = FN.begin(); jIt != FN.end(); ++jIt) {
+        const Point s_j = jIt->polyIt->getDegree();
+        for (typename PolySet<T,S>::reverse_iterator kIt = F.rbegin(); kIt != F.rend(); ++kIt)
+            if ( n[1] >= s_j[1] + kIt->getDegree()[1]) {
+                if (n[0] >= s_j[0] + kIt->getDegree()[0]) {
+                    typename PolySubset::const_iterator iIt
+                        = std::find_if(FN.begin(), FN.end(),
+                            bind(polyItWithPolySubsetEntryComparator<T,S>, --kIt.base(), _1));
+                    if (iIt != FN.end())
+                        newDeltaSet.push_back(DeltaSetPoint(DeltaSetPoint::III,
+                                iIt->polyIndex, jIt->polyIndex));
+                    else
+                        break;
+                }
+                else
+                    break;
+            }
+    }
+}
+
+template<typename T, typename S>
+void Algorithm<T,S>::addPointsOfTypeIV() {
+    using namespace boost::lambda;
+    for (typename PolySubset::const_iterator jIt = FN.begin(); jIt != FN.end(); ++jIt) {
+        const Point s_j = jIt->polyIt->getDegree();
+        for (typename PolySet<T,S>::const_iterator kIt = F.begin(); kIt != F.end(); ++kIt)
+            if ( n[0] >= s_j[0] + kIt->getDegree()[0]) {
+                if (n[1] >= s_j[1] + kIt->getDegree()[1]) {
+                    typename PolySubset::const_iterator iIt
+                        = std::find_if(FN.begin(), FN.end(),
+                            bind(polyItWithPolySubsetEntryComparator<T,S>, kIt, _1));
+                    if (iIt != FN.end())
+                        newDeltaSet.push_back(DeltaSetPoint(DeltaSetPoint::IV,
+                                iIt->polyIndex, jIt->polyIndex));
+                    else
+                        break;
+                }
+                else
+                    break;
+            }
+    }
+}
+
+template<typename T, typename S>
+Polynomial<T,S> Algorithm<T,S>::buildPolyFromDeltaSetPoint(DeltaSetPoint const& pt) {
+    std::cout << "DSPoint: " << pt;
+    Polynomial<T,S> res;
+    size_t k;
+    Point t;
+    switch(pt.pointType) {
+        case DeltaSetPoint::I:
+            res = BP(pt.i, pt.j); break;
+        case DeltaSetPoint::II:
+            t = Point(n[0] - F[pt.i].getDegree()[0] + 1,
+                    n[1] - F[pt.j].getDegree()[1] + 1);
+            k = findPolyWithLessDegIdxInPolySubset<T,S>(FN, t);
+            res = BP(k, pt.i); break;
+        case DeltaSetPoint::III:
+            if (pt.i != F.size() - 1)
+                res = BP(pt.j, pt.i);
+            else
+                res = SP<0>(pt.j);
+            break;
+        case DeltaSetPoint::IV:
+            if (pt.j != 0)
+                res = BP(pt.i, pt.j - 1);
+            else
+                res = SP<1>(pt.i);
+            break;
+        default: std::logic_error("Illegal type of point in delta-set!");
+    }
+    return res;
+}
+
+template<typename T, typename S>
+PolySet<T,S> Algorithm<T,S>::buildNewF() {
+    using namespace boost::lambda;
+    PolySet<T,S> res;
+    add(res, FV); // as points from FV weren't add to newDeltaSet
+    for(DeltaSet::const_iterator it = newDeltaSet.begin();
+            it != newDeltaSet.end(); ++it) {
+        Polynomial<T,S> p = buildPolyFromDeltaSetPoint(*it);
+        res.insert(p);
+    }
+    return res;
+}
+
+template<typename T, typename S>
+bool gBetweenFs(Polynomial<T,S> const & f, Polynomial<T,S> const & fNext,
+        PolyWithAuxInfo<T,S> const & g) {
+    return f.getDegree()[0] == g.p[0] - g.poly.getDegree()[0] + 1
+        && fNext.getDegree()[1] == g.p[1] - g.poly.getDegree()[1] + 1;
+}
+
+template<typename T, typename S>
+bool Algorithm<T,S>::fnBetweenFs(
+        Polynomial<T,S> const & f,
+        Polynomial<T,S> const & fNext,
+        Polynomial<T,S> const & fn) const {
+    return f.getDegree()[0] == n[0] - fn.getDegree()[0] + 1
+        && fNext.getDegree()[1] == n[1] - fn.getDegree()[1] + 1;
+}
+
+template<typename T, typename S>
+void Algorithm<T,S>::buildNewG(PolySet<T,S> const & F_new) {
+    PolyWithAuxInfoSet<T,S> GNew;
+    for (typename PolySet<T,S>::const_iterator fit = F_new.begin(),
+            fitNext = ++F_new.begin();
+            fit != --F_new.end(); ++fit, ++fitNext) {
+        bool gfound = false;
+        for (typename PolyWithAuxInfoSet<T,S>::iterator git = G.begin();
+                git != G.end() && !gfound;
+                ++git) {
+            if (gBetweenFs(*fit, *fitNext, *git)) {
+                GNew.insert(*git);
+                G.erase(git); // git will not be used any more
+                gfound = true;
+            }
+        }
+        if (gfound)
+            continue;
+        for(typename PolySubset::iterator fnit = FN.begin();
+                fnit != FN.end() && !gfound;
+                ++fnit) {
+            Polynomial<T,S> const & fnPoly = *(fnit->polyIt);
+            if (fnBetweenFs(*fit, *fitNext, fnPoly)) {
+                GNew.insert( PolyWithAuxInfo<T,S>(fnPoly, n, fnPoly[u](n)) );
+                FN.erase(fnit);
+                gfound = true;
+            }
+        }
+        G = GNew;
+    }
+}
+
+// Berlekamp procedure
+template<typename T, typename S>
+Polynomial<T,S> Algorithm<T,S>::BP(size_t i, size_t j) {
+    assert( 0 <= i && i < F.size());
+    assert( 0 <= j && j < G.size());
+
+    std::cout << "BP<" << i << ", " << j << ">" << endl;
+    Polynomial<T,S> const & f = F[i];
+    Polynomial<T,S> const & g = G[j].poly;
+    Point r = Point(
+        std::max(f.getDegree()[0], g.getDegree()[0] + n[0] - G[j].p[0]),
+        std::max(f.getDegree()[1], g.getDegree()[1] + n[1] - G[j].p[1])
+    );
+    Polynomial<T,S> f1 = f.onMonomialMultiply(r - f.getDegree());
+    Polynomial<T,S> f2 = g.onMonomialMultiply(r - n + G[j].p - g.getDegree());
+    typename Polynomial<T,S>::Coef c = (-discr[i] / G[j].d);
+    Polynomial<T,S> res = f1 + c * f2;
+    return res;
+}
+
+template<typename T, typename S>
+template<size_t K>
+inline
+Polynomial<T,S> Algorithm<T,S>::SP(size_t m) {
+    Point deg;
+    deg[K] = n[K] - F[m].getDegree()[K] + 1;
+    return F[m].onMonomialMultiply(deg);
+}
+
+} // namespace bmsa
+\end{lstlisting}
+
+\subsection*{PolySet.h}
+\begin{lstlisting}
+#ifndef _POLYSET_H
+#define	_POLYSET_H
+
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <limits>
+#include <list>
+#include <set>
+#include <stdexcept>
+#include <utility>
+
+#include <boost/lambda/bind.hpp>
+
+#include "Polynomial.h"
+
+namespace bmsa {
+
+template<typename T, typename S = T>
+class PolySet {
+    typedef Polynomial<T,S> PolynomialT;
+    typedef std::set<PolynomialT> Container;
+
+    Container data;
+
+public:
+    typedef typename Container::iterator iterator;
+    typedef typename Container::const_iterator const_iterator;
+    typedef typename Container::reverse_iterator reverse_iterator;
+    typedef typename Container::const_reference const_reference;
+    typedef typename Container::reference reference;
+
+    static size_t NOT_IN_SHIFTED_DELTA_SET;
+
+    PolySet() {}
+
+    PolySet(PolynomialT const & p) {
+        data.insert(p);
+    }
+
+    const_iterator begin() const        {return data.begin();}
+
+    const_iterator end() const          {return data.end();}
+
+    reverse_iterator rbegin()           {return data.rbegin();}
+
+    reverse_iterator rend()             {return data.rend();}
+
+    std::pair<iterator, bool>
+    insert(PolynomialT const & poly)
+        {return data.insert(poly);}
+
+    iterator insert(iterator pos, PolynomialT const & poly)
+        {return data.insert(pos, poly);}
+
+    typename Container::size_type size() const   
+        {return data.size();}
+
+    size_t isInShiftedDeltaSet(Point const & pt, Point const & shift);
+
+    void replace(const_iterator const & oldEntry,
+            PolynomialT const & newEntry);
+
+    // 0-based poly index in PolySet
+    PolynomialT const & operator[](int n) const;
+
+};
+
+template<typename T, typename S>
+inline
+typename PolySet<T,S>::PolynomialT const &
+PolySet<T,S>::operator[](int n) const {
+    const_iterator it = data.begin();
+    std::advance(it, n);
+    return *it;
+}
+
+template<typename T, typename S>
+inline
+void PolySet<T, S>::replace(const_iterator const & oldEntry,
+        Polynomial<T, S> const & newEntry) {
+    std::cout << "Replacing a poly in the PolySet:" << std::endl
+        << "\told entry: " << *oldEntry << std::endl;
+    data.erase(oldEntry);
+    std::cout << "\tnew entry: " << newEntry << std::endl;
+    data.insert(newEntry);
+}
+
+template<typename T, typename S>
+inline
+std::ostream& operator<<(std::ostream& os, PolySet<T, S> const & ps) {
+    os << "{ ";
+    std::copy(ps.begin(), ps.end(),
+            std::ostream_iterator<Polynomial<T, S> >(os, "; "));
+    os << "}";
+    return os;
+}
+/***************************************************************/
+
+template<typename T, typename S>
+struct PolySubsetEntry {
+    size_t polyIndex;
+    typename PolySet<T,S>::const_iterator polyIt;
+    //Polynomial::Coef discrepancy;
+
+    // constructor from fields
+    PolySubsetEntry(
+            size_t polyIndex_,
+            typename PolySet<T,S>::const_iterator const & polyIt_) :
+                polyIndex(polyIndex_), polyIt(polyIt_) {}
+};
+
+template<typename T, typename S>
+inline
+bool adjacentPolyIndiciesForPolySubset(
+        PolySubsetEntry<T,S> const & pse1,
+        PolySubsetEntry<T,S> const & pse2) {
+    return pse1.polyIndex + 1 == pse2.polyIndex;
+}
+
+template<typename T, typename S>
+inline
+bool polyItWithPolySubsetEntryComparator(
+        typename PolySet<T,S>::iterator it,
+        PolySubsetEntry<T,S> const & pse) {
+    return it == pse.polyIt;
+}
+
+template<typename T, typename S>
+inline
+bool greaterDegreeThenInPolySubsetEntry(Point const & deg,
+        PolySubsetEntry<T,S> const & pse) {
+    return pse.polyIt->getDegree() < deg;
+}
+
+template<typename T, typename S, typename PolySubset>
+inline
+size_t findPolyWithLessDegIdxInPolySubset(PolySubset const & ss, Point t) {
+    using namespace boost::lambda;
+    typename PolySubset::const_iterator it = std::find_if(
+            ss.begin(), 
+            ss.end(),
+            bind(greaterDegreeThenInPolySubsetEntry<T,S>, t, _1));
+    if (it == ss.end())
+        throw std::logic_error("No poly in given subset which"
+                " degree is less then given");
+    return it->polyIndex;
+}
+
+template<typename T, typename S>
+inline
+std::ostream& operator<<(std::ostream& os, PolySubsetEntry<T,S> const & pse) {
+    os << *pse.polyIt << " idx: " << pse.polyIndex;
+    return os;
+}
+/***************************************************************/
+
+template<typename T, typename S>
+struct PolyWithAuxInfo {
+    Polynomial<T,S> poly;
+
+    Point p; // 'potential' -- last step at which corresponding
+                // polynomial had been valid for given sequence;
+    typename Polynomial<T,S>::Coef d; //discrepancy
+
+    PolyWithAuxInfo(Polynomial<T,S> const & poly_, Point const & p_,
+            typename Polynomial<T,S>::Coef const & d_)
+            : poly(poly_), p(p_), d(d_) {}
+
+    Polynomial<T,S>     const * getPoly()    const   {return &poly;}
+    Point               const * getP()       const   {return &p;}
+};
+
+template<typename T, typename S>
+inline
+std::ostream& operator<<(std::ostream& os, PolyWithAuxInfo<T,S> const & pwai) {
+    os << pwai.poly << " pot: " << pwai.p << " discr: " << pwai.d;
+    return os;
+}
+
+template<typename T, typename S>
+inline
+bool operator<(PolyWithAuxInfo<T,S> const & pwai1,
+                PolyWithAuxInfo<T,S> const & pwai2) {
+    return pwai1.p[0] - pwai1.poly.getDegree()[0]
+            > pwai2.p[0] - pwai2.poly.getDegree()[0]
+            && pwai1.p[1] - pwai1.poly.getDegree()[1]
+                < pwai2.p[1] - pwai2.poly.getDegree()[1];
+}
+
+template<typename T, typename S>
+class PolyWithAuxInfoSet {
+    typedef std::set<PolyWithAuxInfo<T,S> > Container;
+
+    Container data;
+
+public:
+    typedef typename Container::iterator iterator;
+    typedef typename Container::const_iterator const_iterator;
+
+    const_iterator begin() const        {return data.begin();}
+
+    iterator begin()                    {return data.begin();}
+
+    const_iterator end() const          {return data.end();}
+
+    iterator end()                      {return data.end();}
+
+    std::pair<iterator, bool> 
+    insert(PolyWithAuxInfo<T,S> const & pwai) 
+        {return data.insert(pwai);}
+
+    void erase(iterator pos)            {return data.erase(pos);}
+
+    typename Container::size_type size() const   
+        {return data.size();}
+
+    PolyWithAuxInfo<T,S> const & operator[](size_t n) const;
+};
+
+template<typename T, typename S>
+inline
+PolyWithAuxInfo<T,S> const & PolyWithAuxInfoSet<T,S>::operator[](size_t n) const {
+    const_iterator it = data.begin();
+    std::advance(it, n);
+    return *it;
+}
+
+template<typename T, typename S>
+inline
+std::ostream& operator<<(std::ostream& os,
+        PolyWithAuxInfoSet<T,S> const & pwaiset) {
+    std::copy(pwaiset.begin(), pwaiset.end(),
+            std::ostream_iterator<PolyWithAuxInfo<T,S> >(os, "; "));
+    return os;
+}
+
+
+template<typename T, typename S>
+size_t PolySet<T,S>::NOT_IN_SHIFTED_DELTA_SET
+                            = std::numeric_limits<size_t>::max();
+
+// returns the 0-based index of F-element for which 
+// pt is in shifted delta-set;
+// NOT_IN_SHIFTED_DELTA_SET if n is not in shifted delta-set 
+// for any f from F
+template<typename T, typename S>
+size_t PolySet<T,S>::isInShiftedDeltaSet(Point const & pt, Point const & shift) {
+    if (data.size() < 2)
+        return NOT_IN_SHIFTED_DELTA_SET; // delta-set is empty
+    size_t fIdx = 0;
+    for(const_iterator fIt = data.begin(); fIt != --data.end();
+            ++fIt, ++fIdx) {
+        const_iterator fNextIt(fIt);
+        ++fNextIt;
+        if (pt[0] < shift[0] + fIt->getDegree()[0]
+            && pt[1] < shift[1] + fNextIt->getDegree()[1])
+            return fIdx;
+    }
+    return NOT_IN_SHIFTED_DELTA_SET;
+}
+
+template<typename T, typename S>
+Polynomial<T,S> polyFromPolySubsetEntry(PolySubsetEntry<T,S> const & pse) {
+    return *pse.polyIt;
+}
+
+template<typename T, typename S, typename PolySubset>
+void add(PolySet<T,S> & ps, PolySubset const & pss) {
+    std::transform(pss.begin(), pss.end(), std::inserter(ps, ps.begin()),
+            polyFromPolySubsetEntry<T,S>);
+}
+    
+} // namespace bmsa
+\end{lstlisting}
+
+\subsection*{Poly.h}
+\begin{lstlisting}
+#ifndef _POLY_H
+#define _POLY_H
+#include <algorithm>
+#include <deque>
+#include <iostream>
+#include <vector>
+
+#include "ElementType.h"
+#include "Sequence.h"
+#include "Point.h"
+
+namespace bmsa {
+
+template <typename CoefT, typename SeqElemT = CoefT>
+class Polynomial {
+public:
+    typedef CoefT Coef;
+    typedef std::deque<Coef> OneDimStorage;
+    typedef std::deque< OneDimStorage > StorageT;
+
+    typedef Point DegreeT;
+
+private:
+    class ProxyPolySeqProduct {
+        Polynomial const & poly;
+        Sequence<SeqElemT> const & seq;
+    public:
+        ProxyPolySeqProduct(Polynomial const & poly_,
+                Sequence<SeqElemT> const & seq_) : poly(poly_), seq(seq_) {}
+
+        typename Polynomial::Coef operator()(Point const & pr) const;
+    };
+
+    friend class ProxyPolySeqProduct;
+
+public:
+    Polynomial() {}
+
+    Polynomial(Coef const & c) : coefs(1) {
+        coefs[0].push_back(c);
+    }
+
+    StorageT const & getCoefs() const { return coefs; }
+
+    void setCoefs(StorageT const & data);
+
+    DegreeT getDegree() const { return degree; }
+
+    Polynomial& operator*=(Coef const &);
+
+    Polynomial onMonomialMultiply(DegreeT const & monomialDegree) const;
+
+    Polynomial& operator+=(Polynomial const & rhs);
+
+    ProxyPolySeqProduct operator[](Sequence<SeqElemT> const & seq) const;
+
+private:
+    StorageT coefs;
+
+    DegreeT degree;
+
+    void countDegree();
+
+};
+/**************** End of Polynomial *********************/
+
+template<typename T, typename S>
+inline
+Polynomial<T, S> operator*(typename Polynomial<T,S>::Coef const & coef,
+        Polynomial<T, S> poly) {
+    return poly *= coef;
+}
+
+template<typename T, typename S>
+inline
+Polynomial<T, S> operator*(Polynomial<T, S> poly,
+        typename Polynomial<T, S>::Coef const & coef) {
+    return coef*poly;
+}
+
+template<typename T, typename S>
+inline
+Polynomial<T, S> operator+(Polynomial<T, S> lhs,
+        Polynomial<T, S> const & rhs) {
+    return lhs += rhs;
+}
+
+template<typename T, typename S>
+inline
+// for establishing delta-set
+bool operator<(Polynomial<T, S> const & lhs, Polynomial<T, S> const & rhs) {
+    return lhs.getDegree()[0] > rhs.getDegree()[0]
+            && lhs.getDegree()[1] < rhs.getDegree()[1];
+}
+
+// format: [[a b c][e f]] - witout spaces in "]["
+template<typename T, typename S>
+std::istream& operator>>(std::istream& is, Polynomial<T, S> & poly);
+
+template<typename T, typename S>
+std::ostream& operator<<(std::ostream& os, Polynomial<T, S> const & poly);
+
+} // namespace bmsa
+
+#endif  /* _POLY_H */
+\end{lstlisting}
+
+\subsection*{Poly.cc}
+\begin{lstlisting}
+#include <algorithm>
+#include <cstddef>
+#include <functional>
+#include <iostream>
+#include <ios>
+#include <iterator>
+#include <numeric>
+#include <sstream>
+#include <string>
+#include <vector>
+
+#include <boost/lambda/lambda.hpp>
+#include <boost/lambda/bind.hpp>
+#include <boost/lambda/algorithm.hpp>
+
+#include "GenericTwoDimIO.h"
+#include "Poly.h"
+
+namespace bmsa {
+
+/****************** Arithmetic operations ***********************/
+template<typename T, typename S>
+class OneDimAddition {
+    typedef int IntType;
+    typedef typename Polynomial<T,S>::OneDimStorage OneDimStorage;
+public:
+    OneDimStorage operator()(
+            OneDimStorage const & lhs,
+            OneDimStorage const & rhs) {
+        if (lhs.size() < rhs.size() )
+            return operator()(rhs, lhs);
+        OneDimStorage res(lhs);
+        std::transform(rhs.begin(), rhs.end(), lhs.begin(),
+                res.begin(),
+                std::plus<typename Polynomial<T,S>::Coef>());
+        return res;
+    }
+};
+
+template <typename T, typename S>
+Polynomial<T,S>& Polynomial<T,S>::operator+=(Polynomial<T,S> const & rhs) {
+    int lengthInFirstDimDif = coefs.size() - rhs.coefs.size();
+    if (lengthInFirstDimDif < 0) {
+        typename Polynomial<T,S>::StorageT::const_iterator it(rhs.coefs.begin());
+        std::advance(it, coefs.size());
+        std::copy(it, rhs.coefs.end(), std::back_inserter(coefs));
+        std::transform(
+                rhs.coefs.begin(), it,
+                coefs.begin(),
+                coefs.begin(),
+                OneDimAddition<T,S>()
+        );
+    } else {
+        std::transform(
+                rhs.coefs.begin(), rhs.coefs.end(),
+                coefs.begin(),
+                coefs.begin(),
+                OneDimAddition<T,S>()
+        );
+    }
+    this->countDegree();
+    return *this;
+}
+
+template <typename T, typename S>
+void oneDimOnScalarMultiply(typename Polynomial<T,S>::OneDimStorage & data,
+        typename Polynomial<T,S>::Coef const & coef) {
+    using namespace boost::lambda;
+    std::for_each(data.begin(), data.end(), _1 *= coef);
+}
+
+template <typename T, typename S>
+Polynomial<T,S>& Polynomial<T,S>::operator*=(
+        typename Polynomial<T,S>::Coef const & coef) {
+    using namespace boost::lambda;
+    if (coef == typename Polynomial::Coef() ) {
+        coefs.clear();
+        countDegree();
+    } else
+        std::for_each(coefs.begin(), coefs.end(),
+                 bind(oneDimOnScalarMultiply<T,S>, _1, coef));
+    return *this;
+}
+
+template <typename T, typename S>
+void oneDimOnMonomialMultiply(typename Polynomial<T,S>::OneDimStorage & data,
+        int monomialDegree) {
+    data.insert(data.begin(), monomialDegree,
+                typename Polynomial<T,S>::Coef());
+}
+
+template <typename T, typename S>
+Polynomial<T,S> Polynomial<T,S>::onMonomialMultiply(
+        typename Polynomial::DegreeT const & monomialDegree) const {
+    using namespace boost::lambda;
+    Polynomial res(*this);
+    std::for_each(res.coefs.begin(), res.coefs.end(),
+            bind(oneDimOnMonomialMultiply<T,S>, _1,monomialDegree[1]));
+    res.coefs.insert(res.coefs.begin(), monomialDegree[0], OneDimStorage());
+    res.degree += monomialDegree;
+    return res;
+}
+
+template <typename T, typename S>
+typename Polynomial<T,S>::Coef
+Polynomial<T,S>::ProxyPolySeqProduct::operator()(
+        Point const & pt) const {
+    typename Polynomial::Coef res = typename Polynomial<T,S>::Coef();
+    for(size_t i = 0; i < poly.coefs.size(); ++i)
+        for(size_t j = 0; j < poly.coefs[i].size(); ++j)
+            res += poly.coefs[i][j]
+                    * seq( Point(i, j) + pt - poly.getDegree() );
+    return res;
+}
+/**************** End of Arithmetic operations *****************/
+
+template <typename T, typename S>
+typename Polynomial<T,S>::DegreeT
+countDegree(typename Polynomial<T,S>::StorageT const & coefs);
+
+template <typename T, typename S>
+void Polynomial<T,S>::setCoefs(StorageT const & data) {
+    coefs = data;
+    countDegree();
+}
+
+template <typename T, typename S>
+typename Polynomial<T,S>::ProxyPolySeqProduct Polynomial<T,S>::operator[](
+        Sequence<S> const & seq) const {
+    return typename Polynomial<T,S>::ProxyPolySeqProduct(*this, seq);
+}
+
+/*********** Degree-computing related routines **************/
+template <typename T, typename S>
+void Polynomial<T,S>::countDegree() {
+    degree = findLastInSeq(coefs);
+}
+/******* End of Degree-coumting related routines **********/
+
+/****************** Streaming operations ******************/
+// format: [[a b c][e f]]
+template <typename T, typename S>
+std::istream& operator>>(std::istream& is, Polynomial<T,S> & poly) {
+    typename Polynomial<T,S>::StorageT data;
+    if (fillStorage(is, data))
+        poly.setCoefs(data);
+    return is;
+}
+
+template <typename T, typename S>
+std::ostream& operator<<(std::ostream& os, Polynomial<T,S> const & poly) {
+    print(os, poly.getCoefs());
+    os << " degree: " << poly.getDegree();
+    return os;
+}
+/*************** End of Streaming operations ****************/
+
+} // namespace bmsa
+
+\end{lstlisting}
+
+\subsection*{GenericTwoDimIO.h}
+\begin{lstlisting}
+#ifndef _GENERICTWODIMIO_H
+#define	_GENERICTWODIMIO_H
+
+#include <iostream>
+#include <ios>
+
+namespace bmsa {
+
+template <typename TwoDimStorage>
+std::istream& fillStorage(std::istream& is, TwoDimStorage& st) {
+    if (is.peek() == '[')
+        is.get();
+    else
+        is.setstate(std::ios::failbit);
+    while(is) {
+        char nextCh = is.peek();
+        if (nextCh == '[')
+            is.get();
+        else if (nextCh == ']') {
+            break;
+        }
+        else {
+            is.setstate(std::ios::failbit);
+            break;
+        }
+        typename TwoDimStorage::value_type v;
+        while(is.peek() != ']') {
+            typename TwoDimStorage::value_type::value_type c;
+            is >> c;
+            v.push_back(c);
+        }
+        is.ignore(2, ']');
+        st.push_back(v);
+    }
+    return is;
+}
+
+template <typename TwoDimStorage>
+std::ostream& print(std::ostream& os, TwoDimStorage const & data) {
+    os << '[';
+    for(
+            typename TwoDimStorage::const_iterator vit = data.begin();
+            vit != data.end();
+            ++vit
+        ) {
+        os << '[';
+        for(
+                typename TwoDimStorage::value_type::const_iterator
+                    it = vit->begin();
+                it != vit->end();
+                ++it
+            ) {
+            os << *it;
+            if ((it + 1) != vit->end())
+                os << ' ';
+        }
+        os << ']';
+    }
+    os << ']';
+    return os;
+}
+} // namespace bmsa
+#endif	/* _GENERICTWODIMIO_H */
+\end{lstlisting}
+
+\subsection*{DeltaSet.h}
+\begin{lstlisting}
+#ifndef _DELTASET_H
+#define	_DELTASET_H
+
+#include <iostream>
+#include <iterator>
+#include <list>
+
+#include <cstddef>
+
+namespace bmsa {
+
+// delta set of excluded points -- based on some delta set 
+// which points and the current sequence segment 
+// define the excluded points of four types;
+// '(un)changed' below -- comparatively with the points of
+// delta set on which this DS of excluded points is based on;
+// type I  : both coordinates remain unchanged
+// type II : both coordinates changed
+// type III: first coordinate changed
+// type IV : second coordinate changed
+struct DeltaSetPoint {
+    enum {I = 1, II, III, IV}; // possible point types
+
+    size_t pointType;
+
+    size_t i;
+
+    size_t j;
+
+    DeltaSetPoint(size_t pointType_, size_t i_, size_t j_) :
+            pointType(pointType_), i(i_), j(j_) {}
+};
+
+inline
+bool
+operator<(DeltaSetPoint const & p1, DeltaSetPoint const & p2) {
+     return p1.pointType < p2.pointType;
+}
+
+inline
+std::ostream& operator<<(std::ostream& os, DeltaSetPoint const & pt) {
+    os << "type: " << pt.pointType
+        << " i=" << pt.i
+        << " j=" << pt.j;
+    return os;
+}
+
+typedef std::list<DeltaSetPoint> DeltaSet;
+
+inline
+std::ostream& operator<<(std::ostream& os, DeltaSet const & ds) {
+    std::copy(ds.begin(), ds.end(),
+            std::ostream_iterator<DeltaSetPoint>(os, "\n\t"));
+    os << std::endl;
+    return os;
+}
+} // namespace bmsa
+#endif	/* _DELTASET_H */
+\end{lstlisting}
+
+\subsection*{Sequence.h}
+\begin{lstlisting}
+#ifndef _SEQUENCE_H
+#define	_SEQUENCE_H
+
+#include <iostream>
+#include <vector>
+
+#include "ElementType.h"
+#include "GenericTwoDimIO.h"
+#include "Point.h"
+
+namespace bmsa {
+
+template<typename ElemType = NTL::GF2>
+class Sequence {
+public:
+    typedef ElemType ElemT;
+    typedef std::vector< std::vector<ElemT> > StorageT;
+
+    Sequence(std::istream& is) :
+            DEFAULT_VAL(ElemTypeTraits<ElemT>::Null()) 
+        {is >> *this;}
+
+    Point size() const {return size_;}
+
+    ElemT const & operator()(Point const &) const;
+private:
+    StorageT rep;
+
+    Point size_;
+
+    const ElemT DEFAULT_VAL;
+
+    template <typename T>
+    friend
+    std::istream& operator>>(std::istream& is, Sequence<T>& seq);
+
+    template <typename T>
+    friend
+    std::ostream&
+    operator<<(std::ostream& os, Sequence<T> const & seq);
+}; // class Sequence
+
+template <typename T>
+typename Sequence<T>::ElemT
+const & Sequence<T>::operator()(Point const & pt) const {
+    if (pt[0] > static_cast<int>(rep.size())
+            || pt[1] > static_cast<int>(rep[pt[0]].size()))
+        return DEFAULT_VAL;
+    return rep[pt[0]][pt[1]];
+}
+
+template<typename T>
+inline
+std::istream& operator>>(std::istream& is, Sequence<T>& seq) {
+    typename Sequence<T>::StorageT st;
+    if (fillStorage(is, st))
+        seq.rep = st;
+    seq.size_ = ++findLastInSeq(seq.rep);
+    return is;
+}
+
+template<typename T>
+inline
+std::ostream& operator<<(std::ostream& os, 
+                         Sequence<T> const & seq) {
+    print(os, seq.rep);
+    return os;
+}
+
+} // namespace bmsa
+
+#endif	/* _SEQUENCE_H */
+\end{lstlisting}
+
+\subsection*{Point.h}
+\begin{lstlisting}
+#ifndef _POINT_H
+#define	_POINT_H
+
+#include <algorithm>
+#include <cassert>
+#include <cstddef>
+#include <iostream>
+#include <numeric>
+#include <vector>
+#include <tr1/array>
+
+#include <boost/lambda/lambda.hpp>
+
+namespace bmsa {
+
+class Point {
+    static const size_t DIMENSION = 2;
+
+    typedef std::tr1::array<int, DIMENSION> ComponetsStorageT;
+    ComponetsStorageT data;
+
+public:
+    static Point nil;
+
+    Point() {
+        data[0] = 0;
+        data[1] = 0;
+    }
+
+    Point(int x, int y) {
+        data[0] = x;
+        data[1] = y;
+    }
+
+    int weight() const {
+        return std::accumulate(data.begin(), data.end(), 0);
+    }
+
+    //subscript operators
+    ComponetsStorageT::reference 
+    operator[](ComponetsStorageT::size_type n) {
+        assert( 0 <= n && n < DIMENSION);
+        return data[n];
+    }
+
+    ComponetsStorageT::const_reference operator[](
+            ComponetsStorageT::size_type n) const {
+        assert( 0 <= n && n < DIMENSION);
+        return data[n];
+    }
+
+    inline
+    bool operator==(Point const & rhs) const {
+        return (data == rhs.data);
+    }
+
+    Point& operator+=(Point const & rhs) {
+        data[0] += rhs.data[0];
+        data[1] += rhs.data[1];
+        return *this;
+    }
+
+    Point& operator-=(Point const & rhs) {
+        data[0] -= rhs.data[0];
+        data[1] -= rhs.data[1];
+        return *this;
+    }
+
+    Point& operator++();
+
+    Point operator++(int);
+
+    friend      //partial ordering
+    bool byComponentLessOrEqual(Point const &, Point const &);
+
+    friend
+    std::ostream& operator<<(std::ostream& os, Point const &);
+};
+
+inline
+bool operator!=(Point const & lhs, Point const & rhs) {
+    return !(lhs == rhs);
+}
+
+// by component less
+inline
+bool operator<=(Point const & lhs, Point const & rhs) {
+    return lhs[0] <= rhs[0] && lhs[1] <= rhs[1];
+}
+
+inline
+bool operator<(Point const & lhs, Point const & rhs) {
+    return (lhs <= rhs) && (lhs != rhs);
+}
+
+inline
+bool totalLess(Point const & lhs, Point const & rhs) {
+    int lhsPow = lhs.weight();
+    int rhsPow = rhs.weight();
+    if (lhsPow == rhsPow)
+        return lhs[0] > rhs[0];
+    else
+        return lhsPow < rhsPow;
+}
+
+inline
+bool totalLessOrEqual(Point const & lhs, Point const & rhs) {
+    return lhs == rhs || totalLess(lhs, rhs);
+}
+
+inline
+Point operator+(Point lhs, Point const & rhs) {
+    // lhs: pass-by-copy optimization
+    return lhs += rhs;
+}
+
+inline
+Point operator-(Point lhs, Point const & rhs) {
+    return lhs -= rhs;
+}
+
+template< typename OneDimStorage >
+int lastInOneDim(OneDimStorage const & data) {
+    using namespace boost::lambda;
+    int deg = data.rend()
+                - std::find_if(data.rbegin(), data.rend(),
+                    _1 != typename OneDimStorage::value_type())
+                - 1;
+    return deg > -1 ? deg : 0;
+}
+
+template< typename TwoDimStorge >
+Point findLastInSeq(TwoDimStorge storage) {
+    if (storage.empty())
+        return Point();
+    typedef std::vector<Point> PtStorage;
+    PtStorage points;
+    int i = 0;
+    for(
+            typename TwoDimStorge::const_iterator vit = storage.begin();
+            vit != storage.end();
+            ++vit, ++i ) {
+        int lessDimDegree = lastInOneDim(*vit);
+        points.push_back(Point(i, lessDimDegree));
+    }
+
+    return
+        //using total ordering on Point type:
+        *(std::max_element(points.begin(), points.end(), totalLess));
+}
+
+} // namespace bmsa
+#endif	/* _POINT_H */
+\end{lstlisting}
+
+\subsection*{Point.cc}
+\begin{lstlisting}
+#include <functional>
+#include <numeric>
+#include <sstream>
+
+#include <boost/lambda/lambda.hpp>
+
+#include "Point.h"
+
+namespace bmsa {
+
+Point Point::nil = Point();
+
+inline
+bool
+byComponentLessOrEqual(Point const & lhs, Point const & rhs) {
+    using namespace boost::lambda;
+    return
+        std::inner_product(lhs.data.begin(), lhs.data.end(), 
+                rhs.data.begin(),
+                true, // init value
+                std::logical_and<bool>(),
+                _1 <= _2);
+}
+
+std::ostream& operator<<(std::ostream& os, Point const & pt) {
+        os << '(';
+        std::ostringstream oss;
+        copy(pt.data.begin(), pt.data.end(),
+                std::ostream_iterator<int>(oss, ","));
+        std::string s = oss.str();
+        std::string ss(s.begin(), --(s.end()));
+        os << ss << ')';
+        return os;
+}
+
+Point& Point::operator++() {
+    if (data[0] == 0) {
+        data[0] = data[1] + 1;
+        data[1] = 0;
+    } else {
+        --data[0];
+        ++data[1];
+    }
+    return *this;
+}
+
+Point Point::operator++(int) {
+    Point old(*this);
+    ++*this;
+    return old;
+}
+
+} // namespace bmsa
+\end{lstlisting}
+
+\subsection*{ElementType.h}
+\begin{lstlisting}
+#ifndef _ELEMENTTYPE_H
+#define	_ELEMENTTYPE_H
+
+namespace bmsa {
+
+template <typename T>
+struct ElemTypeTraits {
+    static T id() {
+        T res = T();
+        return ++res;
+    }
+
+    static T Null() {
+        return T();
+    }
+};
+} // namespace bmsa
+#endif	/* _ELEMENTTYPE_H */
+\end{lstlisting}
+

@@ -1,0 +1,105 @@
+Ambler, Sadalage. Refactoring Databases_ Evolutionary Database Design, 2006 (AW).chm
+Bales. Beginning PLSQL From Novice to Professional.Apress, 2007.pdf
+Databases and Information Systems IV, 2007 (IOS Press).pdf
+Date. Database in Depth (OReilly).chm
+Haan, Koppelaars. Applied Mathematics for Database Professionals, 2007 (Apress).pdf
+Lightstone et al. Physical Database Design, 2007 (Elsevier).pdf
+MS SQL Server
+MySQL
+Oppel. Databases Demystified, 2004 (McGraw).pdf
+Oracle
+out.txt
+PostgreSQL
+Siau. Research Issues in Systems Analysis and Design Databases and Software Development, 2007 (IGI Global).pdf
+Siau. Research Issues in Systems Analysis and Design Databases and Software Development, 2007 (IG.pdf
+SQL
+Дейт Дж. Введение в системы баз данных.djvu
+Коннолли, Бегг.  Базы данных. Проектирование, реализация и сопровождение.pdf
+Кренке. Теория и практика построения баз данных.djvu
+Кузнецов. Основы современных баз данных
+Райордан. Основы реляционных баз данных.pdf
+Харрингтон. Проектирование РБД.djvu
+
+./MS SQL Server:
+Delaney. Inside MS SQL Server 2000 (MS Press).CHM
+Knight. SQL Server 2000 for Experienced DBA's (McGraw-Hill).chm
+Machanic et al. Expert SQL Server 2005 Development, 2007 (Apress).pdf
+Rankins. Microsoft SQL Server 2000 Unleashed, 2ed (Sams).chm
+SQL Server 2000 DB design and implementation. MCAD-MCSE.MCDBA.pdf
+Артемов. MS SQL Server 2000.pdf
+
+./MySQL:
+Balling, Zawodny. High Performance MySQL, 2004 (O'Reilly).chm
+Bell. Expert MySQL, 2007 (Apress).pdf
+Davies, Fisk. MySQL Clustering, 2006 (MySQL Press).chm
+Delisle. Creating your MySQL Database_ Practical Design Tips and Techniques, 2006 (Packt).pdf
+docs
+DuBois. MySQL The definitive guide to using, programming, and administering MySQL 4.1 and 5.0, 3ed, 2005, (Sams).chm
+Dyer. MySQL in a Nutshell, 2005 (O'Reilly).chm
+Feuerstein, Harrison. MySQL Stored Procedure Programming 2006 (O'Reilly).chm
+Gilfillan. Mastering MySQL 4.chm
+Jarger et al. Managing and Using MySQL, 2ed, 2002 (O'Reilly).chm
+Kofler. The Definitive Guide to MySQL 5, 3ed, 2005 (Apress).pdf
+Kruckenberg, Pipes. Pro MySQL, 2005 (Apress).pdf
+Lane, Williams. Web Database Application with PHP and MySQL, 2ed, 2004 (O'Reilly).chm
+MySQL AB. MySQL Administrator's Guide, 2004 (Sams).chm
+MySQL AB. MySQL Administrator's Guide and Language Reference, 2006 (MySQL Press).chm
+Pachev. MySQL Enterprise Solutions.pdf
+Pachev. Understanding MySQL Internals, 2007 (OReily).pdf
+Reese. MySQL Pocket Reference, 2ed, 2007 (O'Reilly).pdf
+Schneider. MySQL Database Design and Tuning, 2005 (Sams).chm
+Аткинсон. Библиотека проффессионала MySQL.pdf
+Веллинг, Томсон. MySQL учебное пособие.djvu
+Дюбуа. MySQL 2ed.djvu
+Дюбуа. MySQL.djvu
+Ульман. Руководство по изучению языка MySQL.djvu
+
+./MySQL/docs:
+mysql.doc
+MySQL Reference Manual.htm
+mysql_ru.chm
+MySQL Справочник по языку.pdf
+Документация1 на MySQL
+Документация2 на MySQL
+
+./Oracle:
+Greenwald et al. Professional Oracle Programming (P2P).pdf
+Litchfield. The Oracle Hackers Handbook 2007.chm
+Фейерштейн, Прибыл. Oracle PLSQL для профессионалов.pdf
+
+./PostgreSQL:
+Blum. PostgreSQL 8 for Windows, 2007 (McGraw-Hill).pdf
+K. Douglas, S. Douglas. PostgreSQL, 2ed, 2005 (Sams).chm
+Manuals
+Matthew, Stones. Beginning Databases with PostgreSQL, 2005 (Apress).pdf
+Momjian. PostgreSQL_ Introduction and Concepts.pdf
+Worsley, Drake. Practical PostgreSQL, 2001 (O'Reilly).chm
+
+./PostgreSQL/Manuals:
+admin
+html
+postgres
+programmer
+tutorial
+user
+
+./SQL:
+Beaulieu. Learning SQL (OReilly).chm
+Celkos. SQL Puzzles and Answers, 2ed 2006.pdf
+Jones et al. SQL Functions Programmers Reference.pdf
+Kline. SQL In A Nutshell (OReilly).chm
+Kriegel, Trukhnov. SQL Bible (Wiley).chm
+rusql
+Viescas, Hernandez. SQL Queries for Mere Mortals, 2ed, 2007 (AW, Pearson).pdf
+Астахова и др. SQL в примерах и задачах
+Боуман et. at. Практическое руководство по SQL.pdf
+Введение в SQL
+Грофф, Вайнберг. SQL - Полное руководство.djvu
+Грубер. Понимание SQL.doc
+Грубер. Понимание SQL.pdf
+Тоу. Настройка SQL.djvu
+
+
+./SQL/Астахова и др. SQL в примерах и задачах:
+sql в примерах и задачах_2.pdf
+sql в примерах и задачах.pdf

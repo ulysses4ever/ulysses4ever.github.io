@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Проекты &middot; Пеленицын Артём Михайлович
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="http://mmcs.sfedu.ru/~ulysses/public/css/poole.css">
+  <link rel="stylesheet" href="http://mmcs.sfedu.ru/~ulysses/public/css/syntax.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://mmcs.sfedu.ru/~ulysses/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="http://mmcs.sfedu.ru/~ulysses/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://mmcs.sfedu.ru/~ulysses/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="http://mmcs.sfedu.ru/~ulysses/" title="Home">Пеленицын Артём Михайлович</a>
+          <small>Домашняя страница</small>
+        </h3>
+        <div align="right"> 
+	<small>
+		<a href="http://mmcs.sfedu.ru/~ulysses/index.en.html">
+			In English <img src="http://mmcs.sfedu.ru/~ulysses/Pics/en.png" />
+		</a>
+	</small>
+</div>
+
+      </div>
+
+      <p><a href="https://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0_%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8F%D0%BC%D0%B8">Система контроля версий</a>
+(Version Control System, VCS), 
+следуя Википедии, это программное обеспечение для облегчения работы с 
+изменяющейся информацией. В данной работе вам предлагается использовать
+VCS 
+<a href="https://ru.wikipedia.org/wiki/Git">Git</a> для записи основных исправлений и 
+изменений, вносимых в исходный код. Данная VCS установлена в дисплейных 
+классах на Ubuntu Linux, большим фанатам Windows можно 
+<a href="http://git-scm.com/download/win">скачать и установить</a>
+Гит прямо на занятии — выбор одного из двух этих вариантов остаётся за вами.</p>
+
+<p>Гит ориентирован на использование командной строки, потому вам следует
+освоить несколько команд, которые даются из консоли:</p>
+
+<ul>
+  <li><code>git clone &lt;адрес&gt; &lt;опционально: место для сохранения&gt;</code> — получение
+  локальной копии существующего хранилища данных («репозитория»);</li>
+  <li><code>git add &lt;файл&gt;</code> — добавление в «индекс» (список изменений) нового файла;</li>
+  <li><code>git commit -a</code> — добавление всех внесённых изменений старых файлов 
+  репозитория в индекс и запись индексированных изменений в репозиторий;</li>
+  <li><code>git status</code> — просмотр информации о файлах (наличие незафиксированных 
+  изменений, новых файлов и т. п.).</li>
+  <li><code>git log</code> — просмотр истории изменений.</li>
+</ul>
+
+<p>Следует отметить важный элемент работы с VCS: при записи каждого этапа
+изменений (<code>commit</code>) следует вводить по возможности <strong>подробное описание</strong>
+этого изменения. Описание оформляется простым текстом в таком формате: 
+первая строка даёт краткое описание изменений, потом идёт пустая строка, 
+потом один или несколько абзацев с подробным описанием. Абзацы разделяются
+пустой строкой.</p>
+
+<p>В Линуксе удобно из консоли же компилировать файлы. Для этого используется
+компилятор (и одноимённая команда) <code>gcc</code>: если нужно обойтись без линковки,
+то с ключом <code>-c</code>, и перечислением всех компилируемых исходных файлов 
+(без заголовочных). Линковку нужно запрещать, если в компилируемых
+файлах нет функции <code>main</code>. Редактировать файлы можно любым текстовым редактором
+(настройте в нём автоматические отступы, если этого ещё не сделано).</p>
+
+<h2 id="section">Задачи</h2>
+
+<ol>
+  <li>
+    <p>[1 балл]
+Сделайте клон рабочего репозитория по адресу</p>
+
+    <p><code>{.text}
+    https://github.com/ulysses4ever/cs211-arrays.git
+</code></p>
+
+    <p>Начните работу с 
+файлом <code>arrays.cpp</code>: исправьте поочерёдно все ошибки в нём. От вас требуется совершать коммит после выполнения 
+каждого существенного действия, коммит должен сопровождаться
+подробным описанием действия на русском языке.</p>
+
+    <p>Обратите внимание, что в файле нет функции <code>main</code>, вам следует 
+добавить её в отдельный файл и создать заголовочный, чтобы проверить 
+работу функций.</p>
+  </li>
+  <li>
+    <p>[2 балла]
+Изучите файл <code>count.cpp</code> из полученного в прошлом задании репозитория:
+(1) исправьте представленную там программу, (2) дополните её кодом
+изображения столбиковой диаграммы с частотами символов, встреченных
+в исходной строке. Описание проделанной работы должно содержаться
+в коммит-сообщениях, каждая исправленная ошибка сопровождается коммитом.</p>
+  </li>
+</ol>
+
+<h2 id="section-1">Дополнительные задачи</h2>
+
+<ol>
+  <li>
+    <p>В исходном файле <code>quick_sort.cpp</code> приведена реализация быстрой 
+сортировки, которая время от времени работает странно. Найдите в ней
+ошибки и устраните их. Добавьте тесты. Описание проделанной работы 
+должно содержаться в коммит-сообщениях.</p>
+  </li>
+  <li>
+    <p>Создайте свой аккаунт на <a href="https://github.com/">GitHub.com</a> (если ещё
+не). Создайте новый репозиторий cs211-arrays. Выполните указанные 
+сразу после создания команды для варианта “push an existing repository 
+from the command line”. Последнее доставит вашу работу на сервер GitHub.</p>
+  </li>
+</ol>
+
+
+      <div class="footer">
+        <table style="font-size:12px;text-align:center"><tr>
+
+          <td>(&#8580;) 2015 А.М. Пеленицын</td>
+          
+          <td><a href="https://github.com/ulysses4ever/ulysses.mmcs.sfedu.ru">GitHub Sources</a></td>
+
+		  <td>
+<!- START COUNTER CODE -->
+<a href="http://www.xtrastats.com/"><script language="JavaScript">
+<!-- 
+var data = '&r=' + escape(document.referrer)
++ '&n=' + escape(navigator.userAgent)
++ '&p=' + escape(navigator.userAgent)
++ '&g=' + escape(document.location.href);
+if (navigator.userAgent.substring(0,1)>'3')
+data = data + '&sd=' + screen.colorDepth 
++ '&sw=' + escape(screen.width+'x'+screen.height);
+document.write('<img border=0 hspace=0 '+'vspace=0 src="http://www.xtrastats.com/counter.php?i=16009' + data + '">');
+// --></script></a>
+<!-- END COUNTER CODE -->
+</td>
+        </tr></table>
+      </div>
+    </div>
+
+  </body>
+</html>

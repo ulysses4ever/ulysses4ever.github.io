@@ -1,0 +1,1825 @@
+<html><head>
+
+	
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="generator" content="Adobe GoLive 4">
+		<title>Art of Assembly Language Programming and HLA by Randall Hyde</title>
+	</head><body bgcolor="#2800b6">
+		<p><img src="WhichAsm_files/WebsterLogo.gif" alt="" border="0" width="802" height="166"></p>
+		
+		<table cool="cool" gridx="16" showgridx="showgridx" usegridx="usegridx" gridy="16" showgridy="showgridy" usegridy="usegridy" bgcolor="white" border="0" cellpadding="0" cellspacing="0" width="768" height="18000">
+			<tbody><tr height="16">
+				<td colspan="5" width="767" height="16"><spacer type="block" width="767" height="16"></td>
+				<td width="1" height="16"><spacer type="block" width="1" height="16"></td>
+			</tr>
+			<tr height="48">
+				<td width="16" height="48"><spacer type="block" width="16" height="48"></td>
+				<td content="content" csheight="48" colspan="3" xpos="16" valign="top" width="747" height="48">
+					<div align="center">
+						<h2><i><font color="#007f7f">Which Assembler is the Best?</font></i></h2>
+					</div>
+				</td>
+				<td width="4" height="48"><spacer type="block" width="4" height="48"></td>
+				<td width="1" height="48"><spacer type="block" width="1" height="48"></td>
+			</tr>
+			<tr height="17935">
+				<td colspan="2" width="32" height="17935"><spacer type="block" width="32" height="17935"></td>
+				<td content="content" csheight="17904" xpos="32" valign="top" width="648" height="17935"><font color="#3f0000">There
+are well over a dozen different assemblers available for the x86
+processor running on PCs. They have widely varying feature sets and
+syntax. Some are suitable for beginners, some are suitable only for
+advanced programmers. Some are very well documented, others have little
+or no documentation. Some are supported by lots of programming
+examples, some have very little in the way of example code. Certain
+assemblers have tutorials and books available that use their particular
+syntax, others have nothing. Some are very basic, others are very
+complex. Which assembler is best, then?</font>
+					<p><font color="#3f0000">Like
+many of life's questions, there is no simple answer to the question
+"which assembler is best?" This is because different people have
+different criteria for judging what is "best". Without a universal
+metric for judging between various assemblers, there is no way to pick
+a single assembler and call it <i>the best</i>. In this essay, I will
+attempt to describe the various features certain assemblers possess
+along with some of their drawbacks. You should be aware that, as an
+author of one of the assemblers I am discussing here (HLA), there is no
+way that this discussion is going to be unbiased. Nevertheless, any
+discussion of this type is going to reflect the prejuidices of its
+author, I'm just being upfront about this fact.</font></p>
+					<p><font color="#3f0000">As
+I mentioned, there are literally dozens of x86 assemblers available for
+the PC. I have neither the time nor the knowledge to discuss every
+possible assembler out there, so I will limit my discussion to those
+products that I know about and, in some cases, have used. I would
+caution you that I am not an expert with the intricate details of every
+little feature many of these assemblers possess. In many cases I've
+done nothing more than assemble a few short demonstration programs with
+a given product and read through whatever documentation is available.
+Normally, such effort is not sufficient to put one in a position to
+write reviews of this nature. However, because no one else has taken
+the time to do this (for every assembler out there) and this question
+pops up all the time, I've decided to try and do as good a job as
+possible answering this question with the limited knowledge I have of
+all these products. I certainly welcome corrections and additional
+discussion by those who are expert users of a product with which I'm
+less familiar.</font></p>
+					<p><font color="#3f0000">Given the
+plethora of x86 assemblers out there and a limited amount of time to
+review them all, I must limit my initial choices to the following
+assemblers: MASM(32), TASM, NASM, FASM, A86/A386, GoASM, Gas, RosAsm,
+Terse, and (of course) HLA. There are additional assemblers out there,
+but this set probably represents the more popular assemblers that
+people use (and the list even includes some assemblers that few people
+use).</font></p>
+					<p><font color="#3f0000">If anyone is familiar
+with NBASM, I would request a set of "matrix" items for this assembler
+in order to add it to this list. Ditto on SHASM (OSMIPLAY) and any
+other assemblers that find common use on the x86.</font></p>
+					<p></p>
+					<h3><font color="#3f0000">What Operating System?</font></h3>
+					<p><font color="#3f0000">The
+first question you've got to answer is "what operating system do you
+want to use?" The most feature-laden assembler in the world won't do
+you any good if it doesn't run under the OS you're using. So the answer
+to this question often provides a "first cut" to the list of available
+assemblers.</font></p>
+					<table border="1" cellpadding="0" cellspacing="2" width="609">
+						<tbody><tr>
+							<td>Assembler/OS</td>
+							<td>
+								<div align="center">
+									Windows</div>
+							</td>
+							<td>
+								<div align="center">
+									DOS</div>
+							</td>
+							<td>
+								<div align="center">
+									Linux</div>
+							</td>
+							<td>
+								<div align="center">
+									BSD</div>
+							</td>
+							<td>
+								<div align="center">
+									QNX</div>
+							</td>
+							<td>
+								<div align="center">
+									MacOS</div>
+							</td>
+						</tr>
+						<tr>
+							<td>A386</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>A86</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>FASM</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>Gas</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+						</tr>
+						<tr>
+							<td>GoAsm</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>HLA</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>MASM</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>NASM</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+						</tr>
+						<tr>
+							<td>RosAsm</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>TASM</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>Terse</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center">
+									x</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+					</tbody></table>
+					<p><font color="#3f0000">This
+list, of course, is subject to change as assembler authors update their
+programs to work under additional OSes. There are a few additional OSes
+(like BeOS) this list doesn't include just because they're obsolete;
+there are experimental OSes that this list doesn't include because (1)
+there are so many of them, and (2) none of them are very popular. I've
+dropped support for OS/2 in this matrix as IBM has discontinued it and
+usage is fading fast. I've added MacOS support; for the purposes of
+discussion I'm only discussing MacOS running on an Intel Processor.</font></p>
+					<h3><font color="#3f0000">16-Bit Support?</font></h3>
+					<p><font color="#3f0000">This
+question is actually answered by the choice of operating system. If an
+assembler supports DOS it supports 16-bit operation, if it doesn't
+support DOS, it probably doesn't support 16-bit coding. Note that all
+assemblers provide the ability to write code that uses 16-bit operands.
+16-bit support, in this context, means the ability to produce code
+running in a 16-bit segmented memory model (versus the 32-bit flat
+memory model used by most modern operating systems). Outside of DOS,
+about the only place 16-bit code will be useful is in certain embedded
+systems (though even this is fading as embedded designers choose
+powerful 32-bit embedded OSes for their products).</font></p>
+					<p><font color="#3f0000">Unless
+you already know assembly programming under DOS (in which case you've
+probably already got a favorite assembler), you probably shouldn't rate
+16-bit capability very high on your list or priorities. At this time,
+DOS is completely obsolete and there are very few reasons to waste time
+learning how to program under DOS.</font></p>
+					<h3><font color="#3f0000">Portability?</font></h3>
+					<p><font color="#3f0000">Portability
+may seem like an oxymoronic term when applied to assembly language.
+Obviously you're not going to write code with an x86 assembler that
+runs (natively) on some other processor. However, even on the same
+processor you can run into portablity problems. For example, if you
+write a generic x86 assembly subroutine (that is OS independent), can
+you assemble and use that same code across multiple OSes? For a large
+part, the question is answered by whether or not the assembler runs
+under different OSes. For example, a generic NASM subroutine will
+assemble and be usable under every operating system that NASM supports.</font></p>
+					<p><font color="#3f0000">There
+is one more dimension to portability - can you write a complete
+application with an assembler and port that code from one OS to another
+with only a "recompile" of the source code? Currently, only one
+assembler supports this feature (HLA) through the use of the HLA
+Standard Library. This is an important consideration, for example, if
+you want to be able to create Windows and Linux applications in
+assembly with minimal effort. On the other hand, if you're working with
+a single operating system and absolutely have no plans to work with any
+other OS (now or in the future), then this issue may not be important
+to you.</font></p>
+					<h3><font color="#3f0000">Traditional Versus High Level Assembler?</font></h3>
+					<p><font color="#3f0000">Several
+assemblers provide an extended syntax that provides
+high-level-language-like control structures (IF, WHILE, FOR, etc.).
+Such features can help make assembly language much easier to learn and
+can help you write more readable code. Some assemblers provide some
+very limited high level capabilities. Others provide a limited about of
+high level capabilities via macros. The following table enumerates
+these capabilities:</font></p>
+					<table border="1" cellpadding="0" cellspacing="2" width="502">
+						<tbody><tr>
+							<td>Assembler/OS</td>
+							<td>
+								<div align="center">
+									High Level<br>
+									Control Structures</div>
+							</td>
+							<td>
+								<div align="center">
+									High Level<br>
+									Data Types</div>
+							</td>
+							<td>
+								<div align="center">
+									High Level<br>
+									Procedure Calls</div>
+							</td>
+						</tr>
+						<tr>
+							<td>A386</td>
+							<td>
+								<div align="center">
+									very limited</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>A86</td>
+							<td>
+								<div align="center">
+									very limited</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>FASM</td>
+							<td>
+								<div align="center">
+									limited to macros</div>
+							</td>
+							<td>
+								<div align="center">
+									limited to macros</div>
+							</td>
+							<td>
+								<div align="center">
+									limited to macros</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Gas</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>GoAsm</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>HLA*</td>
+							<td>
+								<div align="center">
+									Extensive</div>
+							</td>
+							<td>
+								<div align="center">
+									Extensive</div>
+							</td>
+							<td>
+								<div align="center">
+									Extensive</div>
+							</td>
+						</tr>
+						<tr>
+							<td>MASM*</td>
+							<td>
+								<div align="center">
+									Yes</div>
+							</td>
+							<td>
+								<div align="center">
+									Some</div>
+							</td>
+							<td>
+								<div align="center">
+									Yes</div>
+							</td>
+						</tr>
+						<tr>
+							<td>NASM</td>
+							<td>
+								<div align="center">
+									very limited via macros</div>
+							</td>
+							<td>
+								<div align="center">
+									very limited via macros</div>
+							</td>
+							<td>
+								<div align="center">
+									very limited via macros</div>
+							</td>
+						</tr>
+						<tr>
+							<td>RosAsm</td>
+							<td>
+								<div align="center">
+									limited via macros</div>
+							</td>
+							<td>
+								<div align="center">
+									very limited via macros</div>
+							</td>
+							<td>
+								<div align="center">
+									limited via macros</div>
+							</td>
+						</tr>
+						<tr>
+							<td>TASM*</td>
+							<td>
+								<div align="center">
+									Yes</div>
+							</td>
+							<td>
+								<div align="center">
+									Yes</div>
+							</td>
+							<td>
+								<div align="center">
+									Yes</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Terse**</td>
+							<td>
+								<div align="center">
+									non-traditional</div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+							<td>
+								<div align="center"></div>
+							</td>
+						</tr>
+					</tbody></table>
+					<p>*These assemblers are typically considered "high level assemblers"</p>
+					<p>**Terse
+is a special case. It is definitely a high level assembler, though it
+achieves this via its novel syntax rather than via special statements
+it compiles.</p>
+					<p>Some individuals (particularly authors of
+certain assemblers) would have you believe that an assembler isn't a
+"true assembler" if it support high level assembly features. This is
+nonsense. Every assembler on this list supports all the basic machine
+instructions. No assembler forces you to use any high level control
+structures or data types if you prefer to work at the machine level.
+High level assembly features are an extension to the basic machine
+language that you may choose to use if you find them convenient, or
+ignore if you don't want to use them. Don't believe anyone who tries to
+tell you that a "high level assembler" doesn't provide full access to
+the underlying machine instructions.</p>
+					<h3><font color="#3f0000">Syntactical Similarity</font></h3>
+					<p><font color="#3f0000">With
+so many different assemblers to choose from, one problem crops up: the
+need to translate from one assembler to another (i.e., you've decided
+to use one assembler and you've written all this source code with that
+assembler, now someone wants to assemble your source code with a
+different assembler). There are two facits to the problem: the <i>producer problem</i> and the <i>consumer problem</i>.
+The producer problem deals with the situation where you've written
+source code with one assembler and you need to translate the source
+code to some other form so you (or someone else) can assemble it with a
+different assembler. This is the problem you will face, for example, if
+you settle on one assembler, write a bunch of code with that assembler,
+and then decide to switch to a different assembler later on. This is a
+very major problem for many people because they learn how to use one
+assembler and then find themselves stuck with that assembler because
+they can't afford to convert thousands upon thousands of lines of
+source code to a new assembler when a better assembler comes along.</font></p>
+					<p><font color="#3f0000">The
+consumer problem is also something to consider. You've found some
+source code on the Internet or in a book that you'd like to use, but
+it's written for a different assembler. How easy is it going to be to
+translate that source code to the assembler that you're using? This is
+especially a problem for beginners who want to choose an assembler that
+has lots of examples available to help them learn how to program using
+the assembler of their choice.</font></p>
+					<p><font color="#3f0000">Of
+the two problems, the producer problem is going to be the larger
+problem. Beginners who are just learning assembly language aren't going
+to be capable of converting source code from one assembler to another
+(that implies learning the syntax for two or more separate assemblers
+concurrently, as if learning the syntax for one assembler wasn't enough
+work!); a beginner is going to have to choose an assembler with a
+decent amount of example code written specifically for that assembler
+and forget about translating the code. Advanced programmers generally
+have no problems converting a few routines here and their to the
+assembler of their choice. The producer problem, however, can be
+overwhelming if you've written a lot of code and a new assembler comes
+along that you really want to use. Translating all your code to the new
+assembler can be a real challenge.</font></p>
+					<p><font color="#3f0000">Translation
+between assemblers is a function of how close the assembler's syntax
+track one another. The following list provides a good idea of how
+syntaxes between the assembler vary (this is actually a
+multi-dimensional problem, not a one-dimensional problem, but the
+following list does give you an inkling of the compatibility between
+assemblers):</font></p>
+					<ol>
+						<li type="1"><font color="#3f0000">MASM</font>
+						</li><li type="1"><font color="#3f0000">TASM</font>
+						</li><li type="1">
+						</li><li type="1"><font color="#3f0000">FASM</font>
+						</li><li type="1"><font color="#3f0000">NASM</font>
+						</li><li type="1"><font color="#3f0000">A86/A386</font>
+						</li><li type="1"><font color="#3f0000">GoASM</font>
+						</li><li type="1"><font color="#3f0000">Gas/.intel_syntax mode</font>
+						</li><li type="1">
+						</li><li type="1"><font color="#3f0000">RosAsm</font>
+						</li><li type="1">
+						</li><li type="1"><font color="#3f0000">HLA</font>
+						</li><li type="1">
+						</li><li type="1"><font color="#3f0000">Gas/.att syntax mode</font>
+						</li><li type="1">
+						</li><li type="1">
+						</li><li type="1">Terse
+					</li></ol>
+					<p><font color="#3f0000">Of
+these assemblers, only MASM and TASM provide any source code
+compatibilty whatsoever at all. Specifically, TASM is capable of
+assembling most MASM source files without modification (the reverse
+isn't always true, as TASM has a few more features and a specialized
+"ideal syntax" mode that exists primarily to let TASM users write
+source code that is incompatible with MASM).</font></p>
+					<p><font color="#3f0000">The
+FASM, NASM, A86/A386, GoASM, and Gas (with .intel_syntax option active)
+assemblers are not at all compatible, but translation between these
+assemblers is mostly a mechanical task (that is, substituting one
+string directly for another throughout the source file with only
+minimal interpretation on the part of the translator). The assemblers
+sitting in gaps by themselves (RosAsm, HLA, and Gas with the .att
+syntax option) generally require quite a bit of work to translate
+source code from some other assembler to these assemblers.</font></p>
+					<p><font color="#3f0000">HLA
+and Terse are special cases. HLA and Terse suffer from the consumer
+problem insofar as their syntax is sufficiently different from the
+other assemblers that it will take a bit of effort to convert that
+other source code to HLA or (especially) the Terse format. However,
+these assemblers solve the producer problem in a novel fashion - HLA
+provides an option to translate HLA source code to that used by several
+other assemblers (as this is being written, HLA provides the ability to
+translate HLA source code into MASM, TASM, Gas, or FASM format (NASM is
+planned and being worked on while this is being written). Similarly,
+Terse translates it source code into MASM or Gas form. Therefore,
+should you need to translate HLA or Terse source code to one of these
+other formats, the assembler does much of the basic work for you. No
+other assemblers provide this novel feature.</font></p>
+					<p><font color="#3f0000">There
+have been several attempts to write external programs that translate
+between various assemblers, but most of these projects have failed to
+produce a workable program. If someone tells you that such a program is
+available, be sure to actually try out that program before making a
+decision to use a certain assembler on the basis of the availability of
+such a conversion program.</font></p>
+					<h3><font color="#3f0000">Documentation Quality</font></h3>
+					<p><font color="#3f0000">The
+usability of an assembler is directly related to the quality of its
+documentation. Given the amount of work that goes into the creation of
+a decent assembler, it is surprising how poor the documentation for
+many of the products is; for the most part, the authors of assemblers
+seem to be so busy extending their language to document those
+extensions. Unfortunately, those really great features won't do anyone
+any good if they don't know about the features; hence, having good
+documentation is equally important to having a good feature set.</font></p>
+					<p><font color="#3f0000">The following table describes the quality of the assembler's reference manual that accompanies the product.</font></p>
+					<table border="1" cellpadding="0" cellspacing="2" width="619">
+						<tbody><tr>
+							<td>Assembler/OS</td>
+							<td>
+								<div align="center">
+									Documentation Comments</div>
+							</td>
+						</tr>
+						<tr>
+							<td>A386</td>
+							<td>
+								<div align="left">
+Okay. Describes the basic product features, not much more. Usable by
+someone who already knows assembly language and wants to pick up this
+particular assembler.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>A86</td>
+							<td>
+								<div align="left">
+Okay. Describes the basic product features, not much more. Usable by
+someone who already knows assembly language and wants to pick up this
+particular assembler.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>FASM</td>
+							<td>
+								<div align="left">
+Weak. Most of the development is currently going into the assembler
+itself. The assembler author provides support on the FASM support
+board, which is where he describes new features he adds to the
+assembler. Note that FASM's author is not a native English speaker,
+which explains why the documentation is weak for this product. However,
+given FASM's popularity, it's only a matter of time before some
+interested individual takes it upon themselves to fill this whole in an
+otherwise decent product.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Gas</td>
+							<td>
+								<div align="left">
+Okay to good. The product documentaiton is very weak and very generic.
+Gas is an assembler that was designed to easily write code for
+different processors. The documentation that does exist mainly
+describes the pseudo-opcodes and assembler directives. There is almost
+no documentation at all on the .intel_syntax mode of operation. The
+good news is that two new books have appeared that use the Gas/.att
+syntax: Jonathon Bartlett's "Programming From the Ground Up" and
+Richard Blum's "Professional Assembly Language." Those wishing to use
+Gas will definitely want to get these two books as they are the reason
+I've upgraded this rating from very weak to "okay to good".</div>
+							</td>
+						</tr>
+						<tr>
+							<td>GoAsm</td>
+							<td>
+								<div align="left">
+Weak to okay. The documentation spends considerable time discussing the
+author's design philosophy rather than how to use the assembler.
+However, most of the syntax is described in the manual and a GoAsm user
+who is an experienced assembly programmer will probably find what
+they're looking for if they look carefully. Since this essay was
+originally written, Jeremy Gordon has written a slew of tutorials and
+posted them on his web site (<a href="http://www.jorgon.freeseve.co.uk/">http://www.jorgon.freeseve.co.uk</a>).
+This definitely improves the quality of the GoAsm documentation. There
+are also a couple of third-party web sites with several GoAsm tutorials
+on them. You'll find links to these pages from the above URL.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>HLA*</td>
+							<td>
+								<div align="left">
+Extensive. HLA has a 500 page reference manual and a like sized manual
+for the HLA Standard Library. In addition, the Webster website (<a href="http://webster.cs.ucr.edu/">http://webster.cs.ucr.edu</a>) contains dozens of articles and other documentation for HLA.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>MASM*</td>
+							<td>
+								<div align="left">
+Very, very good. MASM was a commercial product for a very long time.
+Microsoft has written considerable documentation for this assembler and
+many third parties have written assembly language reference manuals for
+MASM.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>NASM</td>
+							<td>
+								<div align="left">
+Good. Like many "home-grown" assemblers, NASM's original authors spent
+all their time writing software rather than manuals. NASM has been
+around long enough, however, that some individuals have written a
+manual for NASM. Note that there are a couple of commercial assembly
+language books available that use NASM, including the very popular
+"Assembly Step-By-Step".</div>
+							</td>
+						</tr>
+						<tr>
+							<td>RosAsm</td>
+							<td>
+								<div align="left">
+Weak. RosAsm was written by another person who is not a native English
+speaker. RosAsm's author claims that a "good" assembly programmer will
+be able to figure this product out on their own. Quite frankly, I find
+some of the assembler's syntax difficult to digest and the
+documentation doesn't help much (if Rene Tournais, RosAsm's author,
+spent as much time writing documentation as he does posting to the
+alt.lang.asm newsgroup, he'd actually have *excellent* documentation,
+but that's another issue). One bright point, RosAsm as adapted some of
+the NASM documentation, so the explanation of the x86 instructions has
+been improved. But the "on-line tutorials" are definitely third-rate
+and not very interesting. The main RosAsm documentation reads like
+political manefesto; few people find it to their liking — just a
+warning.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>TASM*</td>
+							<td>
+								<div align="left">
+TASM is another commercial product (or, at least, it was). Borland
+provided an excellent reference manual and there are third-party
+reference manuals available for TASM. However, as Borland no longer
+supports TASM directly (it is part of the Borland C++ Builder package,
+not a separate product), most of the documentation available for TASM
+is out of print and is getting hard to find.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Terse**</td>
+							<td>
+								<div align="left">
+Okay. Terse is actually a fairly small language (it's a domain-specific
+embedded language inside another assembly language like MASM or Gas).
+As such, it doesn't actually require much documentation. It could use
+more, though the experienced assembly language programmer should be
+able to pick up Terse from its reference manual with only a little bit
+of difficulty.</div>
+							</td>
+						</tr>
+					</tbody></table>
+					<p></p>
+					<h3><font color="#3f0000">Tutorials and Educational Material</font></h3>
+					<p><font color="#3f0000">Documentation
+on the assembler itself is, of course, very important. Of even more
+interest to beginners and others who are learning assembly language (or
+the advanced features of a given assembler) is the availability of
+documentation beyond a "reference" manual for the language. Most people
+want a tutorial that explains how to program in assembly language, not
+simply provides the syntax for the machine instructions and expects the
+reader to figure out how to put those instructions together to solve a
+real-world problem.</font></p>
+					<p><font color="#3f0000">Without
+question, MASM is the king of the hill when it comes to the sheer
+volume of books describing how to program in assembly language. There
+are literally dozens and dozens of books available that use MASM as
+their assembler of choice for teaching assembly language. So it would
+seem that MASM is the best choice for a beginner, right? Well, not
+exactly.</font></p>
+					<p><font color="#3f0000">One problem with most
+of the books out there is that they teach assembly language programming
+under MS-DOS. 10 or 15 years ago, learning assembly language under
+MS-DOS was a good idea. Today, however, MS-DOS is totally obsolete. Any
+time you spend learning MS-DOS programming is a complete waste of time.
+Once you subtract away all the MS-DOS-based books for MASM, there are
+only a couple of tutorial books available, and most of those teach
+advanced Win32 programming, not beginning assembly language
+programming. Therefore, as is the case with most other endeavors in
+life, it's not the quantity of tutorials available out there, but the
+quality. The following table lists each assembler and describes the
+tutorial material available:</font></p>
+					<table border="1" cellpadding="0" cellspacing="2" width="619">
+						<tbody><tr>
+							<td>Assembler/OS</td>
+							<td>
+								<div align="center">
+									Documentation Comments</div>
+							</td>
+						</tr>
+						<tr>
+							<td>A386</td>
+							<td>
+								<div align="left">
+									To my knowledge, no tutorial is available for this product that teaches assembly language programming.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>A86</td>
+							<td>
+								<div align="left">
+									To my knowledge, no tutorial is available for this product that teaches assembly language programming.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>FASM</td>
+							<td>
+								<div align="left">
+									To my knowledge, no tutorial is available for this product that teaches assembly language programming.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Gas</td>
+							<td>
+								<div align="left">
+									There is a tutorial in the works for Gas using AT&amp;T syntax. It can be found at
+									<p><a href="http://webster.cs.ucr.edu/AsmTools/%28EmptyReference%21%29http://savannah.nongnu.org/projects/pgubook">http://savannah.nongnu.org/projects/pgubook</a></p>
+									<p>It still has a ways to go, but it is shaping up to be an excellent introduction to assembly using Gas.</p>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>GoAsm</td>
+							<td>
+								<div align="left">
+									To my knowledge, no tutorial is available for this product that teaches assembly language programming.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>HLA*</td>
+							<td>
+								<div align="left">
+HLA is blessed with the 32-bit edition of "The Art of Assembly Language
+Programming" (both in electronic and published form) that teaches
+beginning assembly language programming under Windows or Linux. As HLA
+does not run under DOS, no DOS tutorial is available.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>MASM*</td>
+							<td>
+								<div align="left">
+MASM has a very large number of introductory (and advanced!) books
+available. But almost all of them teach assembly language programming
+under DOS. There are one or two books that teach Win32 assembly
+language programming with MASM, but these books teach Win32 programming
+using assembly rather than teaching assembly language programming
+(i.e., to beginners).</div>
+							</td>
+						</tr>
+						<tr>
+							<td>NASM</td>
+							<td>
+								<div align="left">
+NASM, surprisingly enough, has the widest set of books that teaching
+assembly language programming to beginners in a non-DOS environment.
+Jeff Duntemann's excellent "Assembly Step-By-Step" book uses NASM for
+Linux (and DOS). Paul Carter's tutorial also uses NASM (though it's
+DOS-based, if I recall correctly; it may also include a Linux version
+these days).</div>
+							</td>
+						</tr>
+						<tr>
+							<td>RosAsm</td>
+							<td>
+								<div align="left">
+The RosAsm team has added a set of "visual tutorials" to their product.
+But the quality is very spotty. Effectively, they take a demo program
+and then tell you step by step to enter the code and run it. Maybe you
+might find this process educational. Based on my experience as an
+assembly language teacher, I doubt too many people will find these
+tutorials useful. They seem to be written for people who already know
+how to use the assembler.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>TASM*</td>
+							<td>
+								<div align="left">
+Like MASM, there were a large number of DOS-based books written for
+TASM. However, as Borland no longer supports this product, no one has
+written a book using TASM for quite some time. Tom Swan wrote a TASM
+reference that had a chapter or two on Windows programming, but it was
+still a DOS-based book. Most TASM-related books are out of print these
+days.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Terse**</td>
+							<td>
+								<div align="left">
+									To my knowledge, there is nothing available that teaches assembly language programming using Terse.</div>
+							</td>
+						</tr>
+					</tbody></table>
+					<p></p>
+					<h3><font color="#3f0000">Technical Articles and Advanced Programming Documentation</font></h3>
+					<p><font color="#3f0000">Another
+metric by which you can gauge the quality of an assembler is the
+availability of technical articles describing some programming feature
+using that assembler. Writing a book from scratch that is suitable for
+beginners is such a tremendous undertaking, and there is such a limited
+market for such books (especially with the availability of free books
+like "The Art of Assembly Language Programming" and Paul Carter's
+assembly tutorial) that it's not surprising to find so few books
+available for the different assemblers. Technical articles and
+mini-tutorials, however, are another matter. Anyone can crank out a few
+pages of text that describes some programming procedure or other
+concept. As such, you'll find the playing field a little bit more level
+(i.e., not totally skewed towards HLA, MASM, and NASM) in this area.</font></p>
+					<p>The
+number of technical papers using a given assembler is directly related
+to the popularity of the assembler or the tenacity of its author. For
+example, MASM is, without question, the most popular assembler so it is
+not surprising that the largest number of different articles and web
+pages describing some little feature are written around MASM. NASM,
+probably being the second most popular assembler comes in second. HLA
+has a tremendous number of articles and related information here on
+Webster, though the number of HLA-related technical articles at other
+websites is no better than other assemblers. There are several sites
+dedicated to Gas, especially with respect to programming under Linux in
+assembly language. So Gas probably comes in third (it's a real shame
+that these sites don't provide good Gas documentation as well,
+something that's sorely needed by Gas users and wannabe Gas users).</p>
+					<p>Most
+of the technical articles out there describe how to use a given
+assembler to make system calls to a specific operating system. For
+example, the excellent tutorials by Iczelion are a set of over 30
+technical articles with MASM32 source code describing how to write
+Windows GUI applications. These tutorials are so popular that many of
+them have been translated from MASM32 to other assemblers (e.g., NASM,
+SpAsm/RosAsm, and HLA). There are similar papers available describing
+Linux system calls with assemblers such as NASM, Gas, and HLA.</p>
+					<p>By
+far, the largest set of papers on assembly language programming center
+around the use of DOS. This is unfortunate, as DOS is quite obsolete at
+this point and spending one's time learning DOS programming techniques
+is probably a waste of your time. One thing that is good about such
+articles, however, is that many of them describe how to program the
+underlying hardware on (older) PCs. Unfortunately, as newer PCs drift
+away from the original PC design (e.g., relying on Plug and Play and
+features like USB and Firewire), the applicability of these articles is
+diminishing.</p>
+					<p>Another source of assembly related information
+can be found in many of the "I'm writing my own Operating System" web
+pages out there. Such articles tend to favor MASM and NASM (these seem
+to be the most common choices for those who do OS development in
+assembly).</p>
+					<h3><font color="#3f0000">Popularity</font></h3>
+					<p><font color="#3f0000">Some
+people are only comfortable going with a product that has been well
+accepted by the marketplace. A few years ago it was very easy to state
+which assemblers were the most popular: they were MASM and TASM (in
+that order) and then all the other assemblers made up a small fraction
+of the remaining assembler users. TASM, however, died off in the late
+1990's (and Borland stopped supporting it) so it rapidly fell out of
+favor. Though Microsoft still supports MASM, they stopped selling it as
+a commercial product in the late 1990's, and its popularity began
+waning (once people have to <i>look</i> for an assembler, rather than
+just grabbing one off the shelf at their local software store, they
+tend to discover all the other tools that are available and often
+choose a product better suited to their tastes).</font></p>
+					<p><font color="#3f0000">MASM
+probably has 80% of the market share today in x86 assemblers (at least,
+as this was being written). Part of this is momentum (MASM was the best
+choice in assemblers back in the days of DOS). However, Hutch's MASM32
+package and the Iczelion tutorials have rekindled interest in MASM
+programming under Windows. Though Microsoft's support for MASM is very
+low key and interest in MASM is waning (for political as well as
+technical reasons), it will be many years before any other assembler
+comes close to MASM's popularity.</font></p>
+					<p><font color="#3f0000">In
+second place, undoubtedly, is the NASM assembler. NASM began as a
+"software community" programming project in the middle 1990's. The goal
+of NASM was to provide a free "Intel syntax" assembler as an
+alternative to MASM (Gas was available and free at the time, but it
+uses the AT&amp;T syntax which most x86 assembly programmers dislike).
+Though NASM didn't truly achieve "Intel syntax" (basically, NASM uses
+the same mnemonics as Intel and it places the instructions in the same
+order as Intel, but everything else is different), the politics of the
+open source movement and the rising tide of Anti-Microsoft
+sentimentality virtually guaranteed success for the NASM project.
+Though there are many other free assemblers today, the fact that NASM
+was an early pioneer in the "free assembler/open source" arena has
+produced considerable momentum for this product. Though NASM is not the
+most feature-laden assembler around, it does have a couple of very big
+advantages over other products: it produces a wide array of different
+output object code formats and it has been ported to more operating
+systems than any assembler other than Gas. Given the fact that there
+are several books and e-books available that use the NASM assembler, it
+is fairly certain that NASM's popularity will continue to rise.</font></p>
+					<p><font color="#3f0000">Third
+place is a little more difficult to call. Most of the remaining
+assemblers have been around for around two to four years and it
+generally takes about five to ten years for a product like this to
+develop a solid following. The following paragraphs describe several of
+the contenders for this position.</font></p>
+					<p><font color="#3f0000">The
+A86/A386 product has been around a very long time and has a devoted
+following. Unfortunately, A86/A386 [A(3)86]is mainly a DOS development
+tool (the A386 product provides some Windows programming support, but
+the product is still geared specifically to DOS users). for this
+reason, interest in A(3)86 has been waning for several years. A86/A386
+is marketed on the premise that it is better than MASM because it has
+fewer features. This seems great to the new programmer who isn't
+interested in learning a whole bunch of different features before they
+can start writing realistic assembly language programs, but even the
+most die-hard "Keep It Simple, Stupid" types out there quickly realize
+that you lose power when you strip features (as was done in A(3)86).
+The legacy of A(3)86 is evident in many modern assemblers, however. The
+term "red tape directives" was invented as a marketing tool for A(3)86
+and this is a mantra repeated by many advocates of assemblers like
+NASM, FASM, and SpAsm whose feature sets are anywhere near as large as
+their competition.</font></p>
+					<p><font color="#3f0000">The FASM
+assembler has generated a lot of interest recently as the
+"heir-apparent" to NASM (though another product, YASM, is now making
+that claim, too). FASM is much faster than NASM (FASM is written in
+assembly, NASM in C) and FASM generates much better object code than
+NASM because it automatically optimizes displacements (e.g., jumps).
+FASM also provides the ability to produce executable files in a single
+step, without using a linker, that further speeds up the development
+process. As this is being written, there is considerable activity
+centered around FASM in various newsgroups and on the Win32Asm
+community board. FASM is syntactically similar to NASM, so conversion
+from NASM to FASM is very simple. As such, FASM is siphoning off a lot
+of NASM users who are dissatisfied with the progress being made on the
+NASM assembler (new releases of NASM are few and far inbetween). Though
+FASM has fewer features than NASM, FASM's development is continuing and
+many programmers see FASM as NASM's ultimate successor.</font></p>
+					<p><font color="#3f0000">HLA
+(the High Level Assembler) has recently seen a huge spike in use and
+interest. HLA's rise in popularity is happening for two reasons: the
+32-bit edition of "The Art of Assembly Language Programming" (one of
+the more popular books available that teaches assembly language
+programming) uses HLA, and HLA was specifically designed to make
+learning assembly language easier by beginning assembly programmers.
+HLA is an interesting situation. Ask any long-time assembly programmer
+about HLA and they'll probably tell you that it's a terrible assembler.
+The problem with HLA, quite frankly, is that its syntax is considerably
+different than most other assemblers (on Terse beats HLA on the
+difference level, though it's easy to argue that Gas with AT&amp;T
+syntax is just about as different as HLA). If someone already knows x86
+assembly language, they view HLA as a language that requires a
+considerable amount of reeducation, something they're probably not
+interested in experiencing. As a result, you'll only find a few hearty
+pioneers who've taken the time to learn HLA after already knowing some
+other assembly language; after all, if you already know an assembler
+like MASM, you're most likely to stick with that assembler (or, if
+forced to learn a new assembler, pick one whose syntax is simliar to
+MASM like NASM or FASM) rather than jump at the chance to complete
+relearn assembly language syntax. For this reason, HLA's popularity has
+suffered in the past. However, HLA was designed to make assembly
+language programmer much easier to learn, leveraging the beginner's
+existing knowledge of high level languages like C and Pascal. HLA is
+turning out to be very popular with beginning assembly language
+programmers who aren't carrying the excess baggage of the knowledge of
+an existing assembler's syntax around with them. As the time this essay
+was first written, HLA was just beginning to achieve "critical mass" -
+there were a sufficient number of people who had "grown up" with HLA
+combined with a large number of people who were first learning HLA to
+cause a huge surge in the interest in this product. Several schools are
+discovering HLA and using it in their assembly language programming
+courses. The release of "The Art of Assembly Language" as a published
+edition (due out any day as this was being written) will further
+increase the interest in this assembler. The bottom line is that HLA is
+not a popular assembler with yesterday's generation of assembly
+language programmers, but it is poised to become a very popular
+assembler with the next generation of assembly language programmers
+coming down the pike.</font></p>
+					<h3><font color="#3f0000">Support</font></h3>
+					<p><font color="#3f0000">Continued
+support of an assembler is crucial for the continued acceptance of that
+product. The implosion of TASM's popularity is a good example of what
+can happen when support is dropped on a product (Borland dropped the
+product and sold it off, other than the inclusion with Borland's C++
+product, they no longer sold or supported it). Lack of support by
+Microsoft for MASM has also had a tremendous impact on its popularity -
+after Microsoft stopped selling MASM as a commercial product, other
+assemblers saw a big rise in popularity as new assembly programmers
+sought alternatives to MASM (Microsoft still provides upgrades to MASM,
+and in fact, it's possible to download MASM free from Microsoft's web
+site; however, the fact that Microsoft doesn't actively sell and
+support MASM has opened up the market to other products). MASM's
+popularity would have fallen way off if it weren't for third party
+support. Specifically, Steve Hutchesson's MASM32 package (which is
+supported and is wildly popular) has breathed new life into the MASM
+product. NASM is another example of a popular product whose fortunes
+have faded a bit because of lack of recent support. As noted earlier,
+many people have defected from NASM to FASM because of the perception
+that NASM is no longer being supported.</font></p>
+					<p><font color="#3f0000">Based
+on announcements in various assembly language language newsgroups and
+web pages, the FASM, RosAsm, and HLA assemblers are the ones that get
+updated most frequently (probably averaging about one update per
+month). Users of these assemblers can usually expect to have problems
+dealt with in a timely fashion (unlike some of the other products that
+rarely get updated).</font></p>
+					<p><font color="#3f0000">One way
+to gauge support for a particular assembler is by checking out the
+internet. How many web sites provide (unique) information for a given
+assembler? How many posts specific to a given assembler will you find
+in the assembly language newsgroups (e.g., alt.lang.asm and
+comp.lang.asm.x86)? What kind of support is there for the assembler on
+bulletin boards like the Win32Asm Community board? What sort of Yahoo
+groups and mailing lists exist for the assembler? Does the assembler's
+author respond to questions and comments in these different forums? Is
+the author actively promoting the product? What kinds of questions are
+people asking in public forums about the product? What kind of answers
+are they getting and how quickly is the response? How many people
+besides the original author are responding to the posts? These are all
+good things to check out when you're considering an assembler.
+Personally, I don't follow all of these forums for every assembler out
+there (I spend my time supporting HLA), but I do know that of the
+forums I regularly visit, MASM32 is very active, FASM is active, and
+HLA is active. I don't want to give the impression that forums for
+other assemblers are not active -- I simply don't know because I don't
+frequent those forums.</font></p>
+					<h3><font color="#3f0000">Source Code Availability</font></h3>
+					<p><font color="#3f0000">Though
+the usefulness of "Open Source" is highly overrated (99% of the users
+of a given assembler are not going to make any modifications to that
+assembler), the whole concept of "Open Source" has considerable
+political weight and many people argue that they would not use an
+assembler unless the source code is available for that assembler (even
+if they would <i>never</i> even look at the source code). Of the
+assemblers this essay discusses, the MASM, TASM, GoASM, and A(3)86
+assemblers do not have the source code available. The licenses attached
+to the diffferent assemblers range from commercial (copyrighted, do not
+distribute), to shareware (copyrighted, okay to copy but must pay
+shareware fee), "freeware" (copyrighted, but rights are granted for
+non-commercial copies of the product), to GPL, to Public Domain.</font></p>
+					<p><font color="#3f0000">Currently, here are the assemblers that have source code available and their source code format and license:</font></p>
+					<ul>
+						<li type="disc"><font color="#3f0000">HLA, C/Flex/Bison, public domain</font>
+						</li><li type="disc"><font color="#3f0000">Gas, C/Flex/Bison, GPL</font>
+						</li><li type="disc"><font color="#3f0000">NASM, C, LGPL</font>
+						</li><li type="disc"><font color="#3f0000">RosAsm, assembly (RosAsm), GPL</font>
+						</li><li type="disc"><font color="#3f0000">FASM, assembly (FASM), freeware</font>
+					</li></ul>
+					<h3><font color="#3f0000">Technical Features</font></h3>
+					<p><font color="#3f0000">Okay,
+here's the section you've probably been waiting for. When people ask
+"What's the best assembler?" they're usually asking which one is the
+most powerful and has the best feature set. Some programmers might be
+asking which assembler is easiest to learn, we'll take a look at that
+question in the next section.</font></p>
+					<p><font color="#3f0000">When
+MASM was first produced by Microsoft, it set the standard for power in
+a modern assembler. MASM was quite sophisticated and provided tons of
+really useful features. When Borland introduced the Turbo Assembler
+(TASM), they made sure that TASM support most (if not all) of MASM's
+features, plus they threw in a bunch of extra features for good
+measure. Until HLA came along, MASM/TASM were, by far, the most
+powerful assemblers available for the x86.</font></p>
+					<p><font color="#3f0000">Unfortunately,
+MASM's (and TASM's) power comes at a price: complexity. Indeed, many
+assemblers' authors (like A(3)86) made a point of promoting the fact
+that their assemblers had fewer features than MASM and, therefore, were
+easier to learn and use. You'll often hear (or read) the term "red tape
+directives" associated with MASM (and TASM) as a rallying cry by
+authors of less-capable assemblers. Though MASM and TASM provide
+sophisticated features, the drawback is that you often have to learn
+and use these sophisticated features in order to write simple assembly
+language programs. Assemblers like A(3)86, NASM, FASM, and SpAsm/RosAsm
+make a big point about the fact that you don't have to learn (and use)
+a considerable amount of syntax in order to write assembly code when
+using these products.</font></p>
+					<p><font color="#3f0000">In some
+respects, the complaints about MASM and TASM are unfair. These
+assemblers dutifully provided the features that were necessary to fully
+exploit the 16-bit segmentation features of the 8086 CPU. Early
+solutions to this "red tape" problem generally involved creating an
+assembler that was incapable of developing sophisticated applications
+in assembly language. While these "red-tape-less" assemblers were
+easier to learn and faster to develop small assembly applications,
+their users quickly discovered that they were also limited by such
+products. Microsoft answered some of these complaints around the
+release of MASM v5.0 with the introduction of their "simplified segment
+directives." but the damage was done, MASM (and TASM) had already
+developed a reputation as a hard assembler to learn that require a lot
+of extra work to write simple programs.</font></p>
+					<p><font color="#3f0000">In
+one respect, having additional features in an assembler isn't a bad
+idea. After all, a programmer can always choose to ignore those
+language features if s/he doesn't want to use them. Unfortunately, MASM
+(and TASM) don't support the concept of language <i>restrictability</i>
+very well. Restrictability means that a user can restrict themselves to
+a subset of the language and still write meaningful applications while
+being blissfully ignorant of the more advanced features. Unfortunately
+to write practical programs, MASM users have to learn quite a bit of
+syntax.</font></p>
+					<p><font color="#3f0000">The solution many
+assembler authors go with, reducing the number of features that an
+assembler provides, may eliminate the issue of having to learn (and do)
+so much just to write simple programs, but the flipside to this problem
+is that the assemblers aren't as capable of doing a good job when the
+programmer grows a little bit and needs additional sophistication from
+the product.</font></p>
+					<p><font color="#3f0000">The HLA assembler is a good case in point. It is <i>far</i>
+more sophisticated than MASM (and other assemblers), yet it's touted as
+an assembler for beginners. HLA achieves this through the use of
+language restrictability. HLA lets you write simple assembly language
+programs by learning a minimal amount of the language, yet HLA provides
+a huge set of features that the programmer can "grow into" as their
+skills become more sophisticated.</font></p>
+					<p><font color="#3f0000">Almost
+every assembler out there supports all of the basic machine
+instructions (A86 only supports the 80286 and earlier processors;
+presumably the A386 version supports the latest Pentium processors).
+Support for non-standard instruction set additions (e.g., certain AMD
+or other "off-brand" CPUs) varies from product to product. Fortunately,
+the lack of such support is rarely a problem because it's easy enough
+to simulate a missing instruction by writing a macro (assuming the
+assembler supports macros).</font></p>
+					<p><font color="#3f0000">The
+place where assemblers vary greatly is with respect to the selection of
+pseudo-opcodes, assembler directives, macros and compile-time language
+facilities, and design philosophy. Many of the newer assemblers, for
+example, provide far weaker support for advanced features like macros
+than do more mature assemblers like MASM and TASM.</font></p>
+					<p><font color="#3f0000">Although
+you may not be interested in a particular feature today, and might not
+have a problem with the lack of a given feature in a particular
+assembler, keep in mind that as you write new assembly code and gain
+more experience, you may find that you need a certain feature that is
+found in the more sophisticated products. It's tempting to choose an
+assembler that has fewer features so you don't have to learn as much up
+front to use that assembler; however, you may pay the price for such a
+decision down the road when you discover that you need certain features
+that the assembler you've chosen doesn't provide.</font></p>
+					<p><font color="#3f0000">One important philosophical difference between assemblers is whether or not they support <i>type checking</i>
+of their operands. Traditional assemblers (i.e., 1960's era assemblers)
+treated all memory operands identically. An address was an address and
+it was up to the programmer to decide how to access memory. During this
+time frame (1960's) high level languages weren't a whole lot better.
+However, during the 1970's language designers discovered that strongly
+typed system helped software engineers produce better code by doing
+static type checks during compilation. Intel (and Microsoft) reasoned
+that these same principles apply to assembly programs just as they
+applied to high level languages (which they do). Therefore, assemblers
+like MASM do some limited type checking on their operands as a
+minimalistic "sanity check". Most MASM programmers have discovered lots
+of errors in their programs because MASM reports an error if an
+instruction's operands have an incorrect type associated with them.</font></p>
+					<p><font color="#3f0000">Assembly
+programmers who've grown up using traditional assemblers often rebel
+against the "loss of freedom" that a type checking assembler provides
+(actually, there is no "loss of freedom" because you can still access
+memory any way you like with MASM; it's just that you have to coerce
+the data to the appropriate type or MASM will complain). Such
+programmers tend to prefer products like NASM or FASM that do very
+little checking of the operands. The problem with this approach is that
+many errors that could be caught statically by an assembler or compiler
+go unnoticed in such a system. Such programming style is one of the
+main reasons assembly code has a reputation for being hard to write and
+is often full of bugs. An assembler like MASM, TASM, or HLA that does a
+reasonable job of type checking on its operands helps eliminate
+surprising problems the other assemblers won't catch.</font></p>
+					<p><font color="#3f0000">MASM
+sets the standard for a full-featured assembler. We can easily divide
+the other assemblers into two camps - those that are less powerful than
+MASM and those that are more powerful than MASM. Overall, we can state
+that TASM and HLA are more powerful than MASM, while all the other
+assemblers are less powerful. However, it's difficult to make such a
+sweeping generalization because if you fixate on one particular
+feature, a given assembler may do a better job with that feature than
+MASM (or some other assembler). Therefore, we'll take a look at some of
+the important features that assemblers support.</font></p>
+					<ul>
+						<li type="square"><font color="#3f0000">Speed</font>
+					</li></ul>
+					<p><font color="#3f0000">MASM
+is somewhere in the middle of the pack. For various reasons, MASM has a
+reputation as a very slow assembler. In fact, for large projects (where
+speed is most important), MASM actually does <i>better</i> than most
+other assemblers. Largely, the performance of the MASM assember tends
+to be related to the advanced features you use in your source code. If
+you limit the feature set you use to those features found in other
+assemblers, MASM generally translates the source code at a comparable
+speed to those other assemblers.</font></p>
+					<p><font color="#3f0000">TASM
+generally seems to run about two to three times faster than MASM,
+though on really large files using certain features, MASM can edge out
+TASM. </font></p>
+					<p><font color="#3f0000">A(3)86 is purportedly
+a lot faster than MASM (and possibly TASM, too). But I've never run it
+personally, so I cannot comment on its performance.</font></p>
+					<p>FASM
+has recently undergone some performance boosts to improve performance
+(particularly for large projects). So it generally is quite a bit
+faster than MASM.</p>
+					<p>NASM is usually slower than MASM for most reasonable sized projects.</p>
+					<p><font color="#3f0000">RosAsm
+seems to be all over the map with respect to speed. For certain source
+files it assembles quite quickly; for others, it runs rather slowly.
+This is partly due to the fact that it was written in assembly
+language, however, a large reason it sometimes much faster is because
+it doesn't incorporate the sophisticated features found in MASM and
+other assemblers. In general, I've found the speed of this assembler to
+typically be a little faster than MASM, and less than one-half the
+speed of FASM.</font></p>
+					<p><font color="#3f0000">On modern
+machines, the speed of the assembler is almost a non-issue. Assemblers
+like A(3)86, TASM, and FASM may be very fast indeed. However, on a 2.6
+GHz Pentium 4 machine, HLA chugs along at a rate of 50,000 lines per <i>second</i>.
+This means that you can assemble a 100,000 line Win32 application in
+just a few seconds. True, an assembler like FASM would process such a
+file almost instantaneously, but in real-world situations, the
+difference between the two is not going to make a difference.
+Nevertheless, assembly programmers in particular are sensitive to the
+speed of the applications they use and some will pick a faster, though
+less powerful, assembler over a slower one. All other things being
+equal, this is a good metric; however, when it comes to choosing an
+assembler, the products are rarely equal except for speed.</font></p>
+					<ul>
+						<li type="square"><font color="#3f0000">Data Types</font>
+					</li></ul>
+					<p><font color="#3f0000">Most assemblers out there provide <i>byte, word, dword, qword, tbyte,</i> and <i>floating point</i>
+data types (32, 64, and 80 bit floats). Most assemblers let you
+allocate an array of memory objects of one of these types. And that's
+all that many assemblers let you do; some assemblers' authors take
+pride in the fact that their products force the programmer to work at
+the level of these primitive data types.</font></p>
+					<p><font color="#3f0000">Although
+the ability to work with primitive data types is an absolute
+requirement for any product that calls itself an assembler, there is no
+sane reason whatsoever at all that an assembler shouldn't also provide
+the ability to create user-defined data types and abstract data types,
+just like sophisticated high level languages. MASM took the early lead
+in this area, providing STRUCTs, UNIONs, and a TYPEDEF statement that
+lets programmers create their own data types. TASM took this one step
+farther by adding support for CLASSes in assembly language. HLA took
+the concept of user-defined types to a new level with its TYPE
+declaration section plus support for sets, thunks, and other advanced
+data types. Note that none of these assemblers force you to use these
+advanced types. You may continue to stick with bytes, words, dwords,
+qwords, tbytes, and lwords (128-bit objects) in HLA if you prefer.
+However, it's very inconvenient to do modern assembly language
+programming making OS API calls (e.g., Windows and Linux) without
+support for structures, unions, and other advanced data types.</font></p>
+					<p><font color="#3f0000">Users
+of other assemblers have discovered the problems with the lack of
+sophisticated data typing facilities in their assemblers. For example,
+NASM has added a pseudo-structure to the language because of the
+problems of not having structures in Win32 assembly programming. Other
+assemblers offer half-hearted measures (e.g., using macros to attempt
+to simulate structures) with varying degrees of success.</font></p>
+					<p><font color="#3f0000">Some
+assembly programmers turn their noses up at concepts like classes and
+object-oriented programming in assembly language; but largely this is
+more of a "sour grapes" response because their favorite assembler
+doesn't readily support such programmig paradigms rather than being a
+reasonable stance to take. The fact that TASM and HLA directly support
+object-oriented programming is of considerable interest to those
+individuals coming from a C++ or Java background.</font></p>
+					<p><font color="#3f0000">One
+big advantage of the HLA language, when it comes to data types, is that
+it uses a syntax that is quite similar to high level languages like
+C/C++ and Pascal/Delphi when defining data types. Though HLA's syntax
+seems strange to people who only know assembly language, those who work
+in high level languages as well as assembly language generally find
+HLA's syntax far more readable in the data declaration sections.</font></p>
+					<ul>
+						<li type="square"><font color="#3f0000">Macro, Conditional Assembly, and Compile-time Language Facilities</font>
+					</li></ul>
+					<p><font color="#3f0000">MASM
+also set the standard for macro, conditional assembly, and compile-time
+language facilities. Only HLA, which was created specifically because
+MASM's macros were insufficient to support the 32-bit edition of "The
+Art of Assembly Language Programming" exceeds MASM's capabilities in
+this area. </font></p>
+					<p><font color="#3f0000">So what is a
+"compile-time language?" Well, as the name implies, this is a
+programming language whose programs execute while a compiler (or
+assembler) is processing your source file. Consider a trivial case
+where you want to initialize an array of bytes at compile time with the
+values 0, 1, 2, ..., 255. You could manually type a sequence of
+statements like the following into any assembler:</font></p>
+					<pre><font color="#3f0000">
+byteArray byte 0, 1, 2, 3, 4, 5, 6, 7
+          byte 8, 9, 10, 11, 12, 13, 14, 15
+			.
+			.
+			.
+          byte 248, 249, 250, 251, 252, 253, 254, 255
+
+</font></pre>
+					<p><font color="#3f0000">Of course, entering a table
+like this is laborious and error-prone (were there any typos?).
+Fortunately, many assemblers provide an alternative: an assembly-time
+loop that does the job for you. For example, here is how you could do
+this in HLA:</font></p>
+					<pre><font color="#3f0000">
+byteArray :byte := 0;
+        #for( i := 1 to 255 )
+          byte i;
+        #endfor
+
+</font></pre>
+					<p><font color="#3f0000">The important thing to
+realize here is that HLA does not execute this "for" loop when the
+program runs. Instead, it executes this loop while it is compiling your
+program, making 255 copies of the "byte" statement (which with a
+different operand value) and injecting those statements into your
+source file for further processing by HLA.</font></p>
+					<p><font color="#3f0000">Another
+important facet of a compile-time language is support for compile-time
+functions and operators. MASM (and TASM), for example, provide
+operators that will determine the size of an array you've declared
+(useful for writing maintainable software). MASM also provides a small
+set of assembly-time string functions and operators that let you build
+up text (for further processing) via string manipulation of macro
+parameters and other sources of string data in your source file.
+Without question, HLA is the king of the hill when it comes to
+providing built-in compile-time functions; HLA provides well over 100
+compile-time functions and variations including some very sophisticated
+string and pattern matching functions. HLA's compile-time language is
+so sophisticated that it's actually possible to write a compiler for
+some other language within HLA (indeed, this was the intent behind many
+of the built-in compile-time functions in HLA).</font></p>
+					<p><font color="#3f0000">In terms of macro and compile-time language facilities, we can divide the world of assemblers up like this:</font></p>
+					<p>H<font color="#3f0000">LA (without question the most powerful macro and compile-time language facilities)</font></p>
+					<p><font color="#3f0000">&lt;&lt;big gap&gt;&gt;</font></p>
+					<p><font color="#3f0000">MASM/TASM</font></p>
+					<p>&lt;&lt;fair-sized gap&gt;&gt;</p>
+					<p>FASM</p>
+					<p>&lt;&lt; gap&gt;&gt;</p>
+					<p>NASM</p>
+					<p><font color="#3f0000">&lt;&lt;big gap&gt;&gt;</font></p>
+					<p>Gas, RosAsm, others</p>
+					<p>&lt;&lt;gap&gt;&gt;</p>
+					<p>GoAsm<font color="#3f0000">.</font></p>
+					<p><font color="#3f0000">NASM
+and FASM also have an interesting feature in its macro facility - the
+ability to save and restore macro "contexts". This provides the ability
+(with a bit of work) to simulate a facility in HLA known as <i>context-free macros</i>.
+Without getting into the technical details, context-free macros give
+you the ability to create nestable control structures like if..endif or
+while..endwhile. NASM's users, for example, use this facility to create
+macros to simulate IF..ENDIF statements that are nestable (unlike, say,
+the kludge that RosAsm uses to attempt to simulate the same thing).</font></p>
+					<p><font color="#3f0000">The
+presence of a powerful compile-time language makes an assembler
+extensible. That is, if the assembler is missing some feature, you can
+create a macro or other compile-time "program" to provide that missing
+feature. For example, many of the assemblers that aren't classified as
+"high level assemblers" attempt to use macros to simulate the
+high-level control structures found in languages like MASM, TASM, and
+HLA. More often than not such attempts do not completely succeed
+because these assemblers don't have the basic facilities to support
+such statements, but the fact that you can extend the language in such
+a fashion is impressive. Once again, the HLA language is second to none
+with respect to extensibility. MASM and TASM do a pretty good job and
+NASM and FASM have a several interesting features, but by and large
+HLA, MASM, and TASM are the assemblers that have powerful compile-time
+languages and are the most extensible.</font></p>
+					<p><font color="#3f0000">The
+GoAsm assembler has an interesting feature. It's macro facilities are
+identical to those provided by the C preprocessor. So C/C++ programmers
+will be immediately familiar with the macro facilities in GoAsm.
+Unfortunately, the C/C++ macro preprocessor is extremely weak (much
+weaker than the macro processor that every other assembler in this
+review provides), so GoAsm suffers as a result of this choice for a
+macro preprocessor.</font></p>
+					<ul>
+						<li type="square"><font color="#3f0000">High Level Control Structures</font>
+					</li></ul>
+					<p><font color="#3f0000">MASM,
+TASM, and HLA provide several high-level-like control structures (e.g.,
+IF, WHILE, REPEAT..UNTIL, and FOR) that assembly language programmers
+can use to more easily write code and write assembly programs that are
+more readable. You should not confuse these statements with the
+statements in the compile-time language; these assemblers compile these
+statements to a sequence of machine instructions that execute at run
+time (rather than interpreting these statements at compile-time). When
+these statements first appeared in MASM, assembly programmers
+immediately rejected them as "not true assembly" and refused to use
+them. However, Hutch's MASM32 package and Iczelion's Win32 tutorials
+make extensive use of these types of run-time control structures, so
+their use has increased dramatically over the past couple of years.</font></p>
+					<p><font color="#3f0000">No
+where is the acceptance of these statements more obvious than in the
+assemblers that don't support them. For example, none of NASM, FASM, or
+RosAsm support these compile-time control statements (the authors of
+these assemblers consider these features "bloatware"). Nevertheless,
+each of these assemblers provide macros to simulate these control
+statements (with varying degrees of success). Unfortunately, such
+macros rarely do as good a job as the real statements in languages like
+HLA or MASM. If you're interested in taking advantage of these types of
+statements (which find common use in Win32 example code), you'll
+definitely want to use one of the high level assemblers (HLA, MASM, or
+TASM) rather than trying to use a macro package with one of these other
+assemblers.</font></p>
+					<ul>
+						<li type="square"><font color="#3f0000">Integrated Development Environments</font>
+					</li></ul>
+					<p><font color="#3f0000">At
+one time, if you wanted to use an integrated development environment
+(IDE) with an assembler, you had one choice: SpAsm (RosAsm). Although
+RosAsm still an integrated environment available, the lead that it once
+had over the competition has narrowed considerably with the release of
+add-on IDEs like RadASM, Visual Assembler, HIDE, and other such
+efforts. Today, the the IDEs that are available for other assemblers
+have a much more consistent (with respect to other Windows
+applications) user interface and tend to be more stable. </font></p>
+					<p><font color="#3f0000">Because
+MASM is, unquestionably, the most popular assembler out there, most of
+the add-on IDEs that people develop are being specifically written for
+MASM. Indeed, there are even instructions available that describe how
+to set up Microsoft's Visual Studio to use MASM (though the result is
+not entirely satisfactory). Recently, however, the trend among IDE
+designers is to create a generic system that works with a wide range of
+assemblers. RadAsm, for example, supports MASM, TASM, FASM, NASM, and
+HLA. UeMake supports MASM, TASM, HLA, and others.</font></p>
+					<p><font color="#3f0000">With
+the inclusion of a full-featured debugger, like OllyDbg, these generic
+IDEs provide a "90% solution" that provides the features most people
+want. Again, SpAsm/Rosasm probably does a better job of integrating the
+editor, assembler, debugger, and other utilities into a single program;
+but for most users, this extra functionality doesn't make up for the
+other features missing in SpAsm/RosAsm (e.g., good documentation and a
+recognizable user interface).</font></p>
+					<p><font color="#3f0000"></font></p>
+					<ul>
+						<li type="square"><font color="#3f0000">Library Support</font>
+					</li></ul>
+					<p><font color="#3f0000">Some
+assembly language programmers feel that every program has to be written
+from scratch without reusing any code previously written by themselves
+or anyone else. Yes, strange as this might seem, some assembly
+programmers fail to see the benefit of reusable code libraries. If you
+fall into this category, fear not, every assembler out there will
+cheerfully let you write all your own code from scratch.</font></p>
+					<p><font color="#3f0000">However,
+if you've got a more reasonable software engineering background and you
+can appreciate the use of reusable code libraries, then you should
+choose your assembler very carefully. Some assemblers (like RosAsm)
+were designed specifically to force you to not use library code (SpAsm,
+the older name for RosAsm, stands for "Specific Assembler" and the term
+specific, here, means that SpAsm's author expects you to write all code
+specifically for a given application - using libraries is absolutely
+verboten in the design philosophy of SpAsm). While SpAsm/RosAsm is an
+extreme case, other assembler authors don't particularly believe in the
+philosophy of library use and their prejuidices may have an impact on
+how well their products interface with library code. A(3)86's author,
+for example, simply states that if you want to use a library, you
+simply "include" the source code of the library routine you want to use
+with an assembly application during the assembly process. </font></p>
+					<p><font color="#3f0000">MASM,
+TASM, NASM, FASM, GoAsm, and HLA all provide excellent support for
+creating your own libraries and linking your code with library modules.
+These assemblers make the most sense to use if you want to be able to
+create library routines and link them with future applications you
+write.</font></p>
+					<p><font color="#3f0000">Being able to create
+libraries is one thing. Another important question is "what libraries
+are available for a given assembler?" HLA is at the top of the heap
+here; the "HLA Standard Library" provides over 50,000 lines of
+pre-written source code that you can link with your HLA applications,
+saving you considerable effort when writing Linux and Win32
+applications. Even more impressive is the fact that the HLA Standard
+Library is (for the most port) portable between Windows and Linux. So
+if you write code that makes calls to the HLA Standard Library under
+Windows, usually all it takes is a recompile and your program runs
+under Linux, as well (or vice versa). This is an incredibly powerful
+feature that is almost unheard-of in assembly language development
+systems.</font></p>
+					<p><font color="#3f0000">Although HLA has an
+incredibly powerful set of standard library routines, it is not the
+only library package out there. MASM32 users have their own library
+(maintained by Hutch). And you can find dozens of "libraries" for MASM
+and TASM users out there. Though the libraries available for MASM/TASM
+aren't quite as complete or consistent as the HLA Standard Library,
+there is a wide variety of code out there for MASM and TASM. Recently,
+there has been some work on a "FASMLIB" library for FASM users.</font></p>
+					<p><font color="#3f0000">Because
+most libraries are available in object code form (as well as source
+code form), you might wonder if it would be possible to call these
+libraries from a different assembler than the one their source code is
+written in. The answer to this question is "yes, but..." For example,
+you can call almost any routine in the HLA Standard Library from FASM,
+you can call almost any of the MASM32 library routines from NASM. The
+linker will gladly merge those preassembled library modules with your
+application. The problem, however, is that most libraries come with
+"header files" that you include in your applications to provide the
+necessary external declarations, constant definitions, data types, and
+so on, that you need to use the library routines. Unfortunately, MASM
+will not accept an HLA header file, nor will NASM accept a MASM header
+file. Fortunately, it is much easier to translate a header file from
+one assembler's syntax to another; but it's still a lot of work
+(actually, translating header files from an advanced assembler like HLA
+to an assembler with lesser features, like GoAsm, is going to be a
+challenge; still, this is much easier than rewriting the library code
+itself).</font></p>
+					<ul>
+						<li type="square"><font color="#3f0000">Ease of Learning</font>
+					</li></ul>
+					<p><font color="#3f0000">If
+you're a newcomer to assembly language programming, one feature that is
+important to you is "how easy is it to learn how to use the assembler?"
+Different assembler authors claim that their assemblers are easy to
+learn for different reasons, but if you don't already know x86 assembly
+language then you've only got five reasonable alternatives: MASM, TASM,
+NASM, Gas, and HLA. These are the only reasonable choices because
+they're the only assemblers that have books geared to the beginner
+written for them. Attempting to learn assembly language programming
+using any other assembler is going to be a very difficult task given
+the lack of educational material. So I'll limit my discussion to these
+four assemblers in this section.</font></p>
+					<p><font color="#3f0000">TASM
+and MASM both have the same problem with respect to the books that are
+available for them. All the available books that teach beginning
+assembly language programming using MASM and/or TASM teach assembly
+programming under DOS. If you're just learning assembly language
+programming today, you don't want to waste your time studying assembly
+under an obsolete operating system like DOS. While there are one or two
+Windows programming books that use MASM, these books do not teach
+beginning assembly programming; rather they teach advanced assembly
+language programming and how to create Windows GUI apps in assembly.</font></p>
+					<p><font color="#3f0000">NASM
+enjoys a fair amount of support from the book publishing industry. Jeff
+Duntemann's excellent "Assembly Step-By-Step" book teaches assembly
+language programming as a first programming language under Linux (and
+DOS) using NASM. Paul Carter's on-line assembly language tutorial (see
+the link here on Webster) teaches Linux, BSD, and Windows assembly
+language programming using NASM. There is even another Linux assembly
+book (sorry, I've lost track of the title and author) that teaches
+assembly language programming under Linux using NASM. This plethoria of
+books is, undoubtedly, the reason NASM has dramatically increased in
+popularity over the past several years.</font></p>
+					<p><font color="#3f0000">NASM
+isn't the greatest assembler in the world for beginners to learn
+programming with. Though it is a relatively simple assembler that takes
+somewhat of a minimalist approach, the code generation in NASM expects
+the programmer to understand and select displacement sizes and other
+issues that some assemblers (e.g., MASM, FASM, Gas, and HLA) handle
+automatically for you (note:newer versions of NASM eliminate part of
+this problem, but the books still teach the syntax for this).</font></p>
+					<p>Gas
+has recently been blessed with a couple of books from Jonathon Bartlett
+and Richard Blum. Both books ("Programming from the Ground Up" and
+"Professional Assembly Language", respectively) teach Gas' AT&amp;T
+syntax under Linux.</p>
+					<p><font color="#3f0000">HLA has three
+very good things going for it as a tool for learning assembly language.
+First of all, HLA was designed and written specifically as a tool for
+teaching assembly language programming. It assumes that an HLA user is
+reasonable proficient in at least one high level language like Basic,
+C, or Pascal/Delphi and it attempts to leverage that knowledge (rather
+than making the programmer start over from scratch when learning
+assembly as most other assemblers do). The second advantage that HLA
+has is that the 32-bit edition of "The Art of Assembly Language" uses
+HLA (actually, HLA was created to support the Art of Assembly, not the
+other way around, but to the average assembly user this distiction is
+irrelevant because both products are available today and work together
+in a synergistic fashion). The third benefit HLA offers is the <i>HLA Standard Library</i>.
+The HLA Standard Library provides hundreds of commonly used routines
+and functions that users of other assemblers would have to figure out
+how to write themselves. For example, something as simple as printing
+the value of an integer variable to the console display is a complex
+problem with most assemblers. The HLA Standard Library provides a whole
+set of routines that do this task for you. An HLA programmer can write
+the value of a numeric variable to the display on the first day they
+starting learning HLA. This generally isn't possible with other
+assemblers.</font></p>
+					<ul>
+						<li type="square"><font color="#3f0000">A Quick Wrap-Up</font>
+					</li></ul>
+					<p><font color="#3f0000">This
+essay could go on and on. But it's already long enough. Though I am
+obviously prejuidiced in favor of HLA, I believe I've given sufficient
+information in this essay that you can make an intelligent decision
+with respect to which assembler you should learn and use for your own
+purposes.</font></p>
+					<p><font color="#3f0000">I welcome any
+comments on, and corrections to, information appearing in this essay
+and will be more than happy to publish any positive "mini-essays" by
+other contributors (i.e., I'll probably not publish an essay here where
+someone goes in and simply trashes some other product other than their
+favorite product).</font></p>
+					<p></p>
+				</td>
+				<td colspan="2" width="87" height="17935"><spacer type="block" width="87" height="17935"></td>
+				<td width="1" height="17935"><spacer type="block" width="1" height="17935"></td>
+			</tr>
+			<tr cntrlrow="cntrlrow" height="1">
+				<td width="16" height="1"><spacer type="block" width="16" height="1"></td>
+				<td width="16" height="1"><spacer type="block" width="16" height="1"></td>
+				<td width="648" height="1"><spacer type="block" width="648" height="1"></td>
+				<td width="83" height="1"><spacer type="block" width="83" height="1"></td>
+				<td width="4" height="1"><spacer type="block" width="4" height="1"></td>
+				<td width="1" height="1"><spacer type="block" width="1" height="1"></td>
+			</tr>
+		</tbody></table>
+	
+</body></html>

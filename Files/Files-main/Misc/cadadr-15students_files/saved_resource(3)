@@ -1,0 +1,60 @@
+function show_menu(itm, total, has_remote) {
+	var top = itm;
+	var last = total + 1
+	var nxt = top + 1;
+	if (has_remote == 1) {
+	for (i=0; i<last; i+=1) {
+		//document.getElementById('s'+i).style.display = 'none';
+		document.getElementById('m'+total).className = 'last';
+		document.getElementById('m_last').className = 'ex last';
+	}
+	var submenu = document.getElementById('s'+itm);
+	if (submenu) submenu.style.display = 'block';
+	if (nxt != last) {
+		document.getElementById('m'+nxt).className = 'next';
+		document.getElementById('m'+top).className = 'cur';
+		document.getElementById('m_last').className='ex last';
+		if (nxt == total) document.getElementById('m'+total).className = 'pr next';
+	}
+	else
+	 {
+		document.getElementById('m'+top).className = 'cur';
+		document.getElementById('m_last').className = 'ex next';
+	}
+	}
+	else {
+	//	for (i=0; i<last; i+=1) {
+	//		document.getElementById('s'+i).style.display = 'none';
+	//	}
+		if (nxt != last) {
+			document.getElementById('m'+nxt).className = '';
+			document.getElementById('m'+top).className = 'cur';
+			document.getElementById('m_last').className='ex last';
+			if (nxt == total) document.getElementById('m'+total).className = 'pr last';
+		}
+		else
+	 	{
+			document.getElementById('m'+top).className = 'cur';
+			document.getElementById('m_last').className = 'ex last';
+		}
+	}
+}
+
+function hide_menu(itm, total) {
+	var nxt = itm + 1;
+	var prev = total + 1;
+	var t = itm;
+	var submenu = document.getElementById('s'+t);
+	if (submenu) submenu.style.display = 'none';
+	if (nxt != prev) {
+		document.getElementById('m'+nxt).className='';
+		document.getElementById('m'+itm).className='';
+		document.getElementById('m'+total).className='last';
+		document.getElementById('m_last').className='ex last';
+	}
+	else { 
+		document.getElementById('m'+itm).className='last';
+		document.getElementById('m_last').className='ex last';
+		}
+}		
+

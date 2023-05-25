@@ -1,0 +1,596 @@
+\documentclass[handout,envcountsect,ignorenonframetext,hyperref={pdftex,unicode,urlcolor=blue},
+xcolor=dvipsnames]{beamer}
+
+\usetheme{Madrid} %Warsaw 
+\setbeamertemplate{items}[ball] 
+\setbeamertemplate{blocks}[rounded][shadow=true] 
+\setbeamertemplate{footline}[frame number]
+%\setbeamercovered{transparent}
+\setbeamertemplate{navigation symbols}{} %no nav symbols
+\setbeamertemplate{bibliography item}[text]
+\setbeamercolor{bibliography item}{fg=black}
+\setbeamertemplate{qed symbol}{\vrule width1.5ex height1.5ex depth0pt}
+%\setbeamertemplate{theorems}[numbered]
+
+% font definitions, try \usepackage{ae} instead of the following
+% three lines if you don't like this look
+\usepackage{mathptmx}
+%\usepackage[scaled=.90]{helvet}
+%\usepackage{courier}
+\parskip=2mm
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian,english]{babel}
+\usepackage{cmap}    % searchable pdf
+\usepackage{url}
+
+\abovedisplayskip=.5\abovedisplayskip
+\belowdisplayskip=.5\belowdisplayskip
+\abovedisplayshortskip=.5\abovedisplayshortskip
+\belowdisplayshortskip=.5\belowdisplayshortskip
+
+\newcommand{\bstructure}[1]{{\bfseries \structure{#1}}}
+\newcommand{\F}{\ensuremath{\mathbb{F}_{\tilde{q}}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}_0}}
+\newcommand{\eqdef}{\ensuremath{\stackrel{\text{\upshape\tiny def}}{=}}}
+\newcommand{\pt}[1]{\ensuremath{\boldsymbol{#1}}}
+\newcommand{\leqp}{\mathrel{\leqslant_{\text{P}}}}
+\newcommand{\nspace}{\hspace{0pt}}
+\newcommand{\nbdash}{\nobreakdash-\nspace}
+\newcommand{\FM}[2]{\ensuremath{\mathcal F(#1^{\pt #2})}}
+\newcommand{\Ffail}{F_{\mathrm{fail}}}
+\newcommand{\Ffall}{F_{\mathrm{fall}}}
+\DeclareMathOperator{\Mon}{Mon}
+\DeclareMathOperator{\LM}{LM}
+
+\newtheorem{rutheorem}{Теорема}
+\newtheorem{rulemma}{Лемма}
+\newtheorem{ruremark}{Замечание}
+\newtheorem{rucorollary}{Следствие}
+\newtheorem{rudef}{Определение}
+\newtheorem*{ruproof}{Доказательство}
+
+\title{О многомерной версии алгоритма Берлекэмпа—Месси}
+
+\author{Пеленицын~А.~М.\\ulysses4ever@gmail.com} 
+\institute[ЮФУ]{
+Кафедра алгебры и дискретной математики\\ 
+Факультет математики, механики и компьютерных наук\\
+Южный федеральный университет
+}
+\date{30 октября 2009~г.}
+
+% This is only inserted into the PDF information catalog. Can be left
+% out.
+\subject{О многомерной версии алгоритма Берлекэмпа—Месси}
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows: 
+%\pgfdeclareimage[height=1.5cm]{university-logo}{sfedu_logo2} %
+%\logo{\pgfuseimage{university-logo}}
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+\AtBeginSubsection[]
+{
+\begin{frame}<beamer>
+\frametitle{Содержание}
+\tableofcontents[currentsection,currentsubsection]
+\end{frame}
+}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command:
+%\beamerdefaultoverlayspecification{<+->}
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Содержание}
+\tableofcontents[pausesubsections]
+\end{frame} 
+
+\section{Одномерный случай}
+\subsection{Линейные рекуррентные последовательности} 
+\begin{frame}{Определение линейной рекуррентной последовательности}
+\onslide<+->{(Одномерная) \structure{Последовательность}: $u\colon \N\to\F$ ($\N
+= \{0, 1, \ldots\}$).
+}
+
+\onslide<+->{$u$ — \structure{линейная рекуррентная последовательность} (ЛРП),
+если существуют $\{a_i\}_{i=0}^{k-1}$, такие что:$$u_{n+k} = \sum_{i=0}^{k-1} a_i
+u_{i+n},\quad n\in\N.$$}
+\onslide<+->{Тогда
+\begin{itemize}
+    \item $k$ — \structure{порядок} ЛРП $u$,
+    \item<+-> $\{a_i\}_{i=0}^{k-1}$ — \structure{закон рекурсии} ЛРП $u$. 
+\end{itemize}
+}
+
+\onslide<+->{
+Всем известный пример:
+$$f_{n+2} = f_{n} + f_{n+1}$$}
+\onslide<+->{Закон рекурсии: $a_0=1$, $a_1=1$, порядок — $2$. 
+}
+\end{frame}
+
+\begin{frame}{Описание класса ЛРП}
+\onslide<2->{\begin{rutheorem}
+Класс ЛРП совпадает с классом периодических последовательностей.
+\end{rutheorem}}
+\onslide<3->{\begin{ruproof}
+\begin{enumerate}
+\item<4-> Пусть $u$ — периодическая. Существуют $p$ и $r$, т.~ч. $u_{n+p}=u_n$,
+$n\geqslant r$. Значит $u$ — ЛРП с законом рекурсии $a_{r}=1$ и $a_i=0$, где
+$i\in [0, p-1]_{\N}\setminus \{r\}$, порядка $p+r$.
+\item<5-> Пусть $u$ — ЛРП порядка $k$ с законом рекурсии $\{a_i\}$.
+\begin{itemize}
+    \item<6-> $\bar{u}_n=(u_n, u_{n+1},\ldots,u_{n+k-1})$ — \structure{вектор
+    $n$-го состояния}, он вполне определяет всю   
+    последовательность; в частности, если 
+    $\bar{u}_i=\bar{u}_j$, то $\bar{u}_{i+1}=\bar{u}_{j+1}$.
+    \item<7-> В последовательности $\bar{u}_0, \bar{u}_1, \ldots$ лишь конечное
+    число различных элементов, потому она периодическая.
+\end{itemize}
+\onslide<8->{Значит, и $u$ периодическая.\qed}
+\end{enumerate}
+\end{ruproof}}
+\end{frame}
+
+\subsection{Задача}
+\begin{frame}{Минимальный многочлен I}
+Для ЛРП $u$ существует более одного закона
+рекурсии. Есть ли между ними связь?\onslide<2->{ — \alert{Да}, её можно описать
+в алгебраических терминах.}
+
+\onslide<3->{Пусть $\{a_i\}_{i=0}^{k-1}$ — закон рекурсии $u$. Назовём
+\structure{характеристическим многочленом} $u$ нормированный
+многочлен:$$f(x)=x^k - \sum_{i=0}^{k-1}a_ix^i.$$}
+
+\onslide<4->{\begin{rutheorem}
+Пусть $u$ — ЛРП, тогда существует единственный нормированный многочлен $m(x)$,
+такой что любой характеристический многочлен $f(x)$ ЛРП $u$ делится на $m(x)$.
+\end{rutheorem}}
+
+\onslide<5->{
+\begin{rucorollary}
+    Множество характеристических многочленов ЛРП $u$ составляет все
+    нормированные многочлены \alert{идеала} $(m(x))$.
+\end{rucorollary}
+}
+\end{frame}
+
+\begin{frame}{Минимальный многочлен II}
+\onslide<1->{
+Степень $m(x)$ называется \structure{линейной сложностью} ЛРП $u$.
+}
+
+\onslide<2->{
+\bstructure{Как найти $m(x)$?}
+}
+\end{frame}
+
+\begin{frame}{От теории к практике}
+\onslide<1->{На практике нет возможности работать с бесконечными
+последовательностями.}
+
+\onslide<2->{На практике \structure{задача такова}: для данных
+$\{u_i\}_{i=0}^m$\\найти $f(x)$ минимальной степени (обозначим её $k$), такой
+что
+\begin{equation}\sum_{i=0}^k f_i u_{i+n-k} = 0,\quad n\in[k,
+m]_{\N}.\end{equation} ($f(x)=\sum_{i=0}^k f_i x^i$.)}
+
+\onslide<3->{Похоже на СЛАУ?}
+
+\onslide<4->{\structure{Решение} этой задачи — $f(x)$ — это
+минимальный полином ЛРП $u$, первые $m$ членов которой совпадают с
+заданными $\{u_i\}_{i=0}^m$. Закон~рекурсии~$u$:
+$\{-\frac{f_i}{f_k}\}_{i=0}^{k-1}$.}
+\end{frame}
+
+\begin{frame}{Удобные обозначения}
+\onslide<1->{Для $f(x)$ степени $k$, последовательности $u$ и $n\geqslant k$
+\structure{введём обозначение}:
+$$f[u]_{n}\eqdef\sum_{i=0}^k f_iu_{i+n-k}\quad(\in\F).$$}
+
+\onslide<2->{На практике \structure{задача такова}: для данных
+$\{u_i\}_{i=0}^m$\\найти $f(x)$ минимальной степени (обозначим её $k$), такой
+что $$f[u]_n = 0,\quad n\in[k, m]_{\N}.$$}
+
+\end{frame}
+
+\subsection{Алгоритм}
+
+\begin{frame}{Индукция}
+\onslide<1->{Будем рассуждать \structure{индуктивно}.}\\
+\onslide<2->{Пусть $f(x)$ — полином минимальной степени (обозначим её $k$),
+такой что $$f[u]_n = 0,\quad k \leqslant n\leqslant p.$$
+Как получить полином минимальной степени $f'(x)$  (обозначим её $k'$), такой что
+$$f'[u]_n = 0,\quad k' \leqslant n\leqslant p+1?$$}
+
+\onslide<3->{\begin{enumerate}
+    \item<3-> $f[u]_{p+1}=0$ — нам повезло: $f'(x)\eqdef f(x)$.
+    \item<4-> $f[u]_{p+1}\not=0$ — придётся потрудиться.
+\end{enumerate}}
+\end{frame}
+
+\begin{frame}{Степень $f'(x)$}
+\begin{rulemma}<2->[о нижней границе для степени $f'(x)$]
+Для степени $k'$ полинома $f'(x)$ выполнено:
+$$k'\geqslant p-k+1.$$
+\end{rulemma}
+
+\begin{rucorollary}<3->
+Для степени $k'$ полинома $f'(x)$ выполнено
+$$k'\geqslant \max {(p-k+1, k)}.$$
+\end{rucorollary}
+%Если $p-k\geqslant k$, то $k'>k$.
+\begin{rucorollary}<4->
+Если будет найден $h(x)$, такой что
+\begin{enumerate}
+    \item $h[u]_n=0,\quad n\leqslant p+1$,
+    \item $\deg h = \max {(p-k+1, k)}$,
+\end{enumerate}
+то $f'(x)\eqdef h(x)$.
+\end{rucorollary}
+
+\end{frame}
+
+\begin{frame}{«Формула Берлекэмпа»}
+позволяет построить $h(x)$, такой что
+\begin{enumerate}
+    \item $h[u]_n=0,\quad n\leqslant p+1$,
+    \item $\deg h = \max {(p-k+1, k)}$,
+\end{enumerate}
+на основе имеющегося $f(x)$ и некоторого полинома $g(x)$.
+
+То есть
+\begin{align*}
+h(x)&=h(f,g),\\
+f'(x)&\eqdef h(x).
+\end{align*}
+\end{frame}
+
+\begin{frame}{Индукция}
+\onslide<1->{Уточним и завершим шаг индукции.}
+
+\onslide<2->{Пусть $f(x)$ — полином минимальной степени, такой что
+$$f[u]_n = 0,\quad n\leqslant p,$$
+и $g(x)$ подходящий для формулы Берлекэмпа полином.
+
+Как получить $f'(x)$, $g'(x)$, такие что\ldots?
+}
+
+\onslide<3->{
+Возможные варианты:
+\begin{enumerate}
+    \item<3-> $f[u]_{p+1}=0$ — тогда $f'(x)\eqdef f(x)$, $g'(x)\eqdef g(x)$.
+    \item<4-> $f[u]_{p+1}\not=0$ — тогда $f'(x)=h(f,g)$, и\\
+    если $k'=k$, то
+    $g'(x)\eqdef g(x)$, иначе $g'(x)\eqdef f(x)$.
+\end{enumerate}}
+\end{frame}
+
+\begin{frame}{«Формула Берлекэмпа»}
+$$h(f,g)=x^{r-s}f(x) - \frac{d_p}{d_q}x^{r-p+q-t}g(x).$$
+\onslide<2->{Обозначения. $s,t,p,q,r\in\N$, $d_p, d_q\in\F$.
+\begin{itemize}
+    \item<3-> $s=\deg f$, $t=\deg g$; 
+    \item<4-> $p$ — текущий шаг, $q$ — таков, что $\forall m < q\colon g[u]_m =
+    0$ и $g[u]_q\not=0$;
+    \item<5-> $d_p=f[u]_p$, $d_q=g[u]_q$;   
+    \item<6-> $r=\max {(s, p - q + t)}$. 
+\end{itemize}}
+\end{frame}
+
+\begin{frame}{База индукции}
+Инициализация: $f=1$.
+
+$h_0=x^{p+1} - \frac{u_{p+1}}{u_p}$, если $p<m$,\\
+$h_0=x^{m+1}$ иначе.
+\end{frame}
+
+\begin{frame}{Степень $h(f,g)$ (связь $f$ и $g$)}
+$$h(f,g)=x^{r-s}f(x) - \frac{d_p}{d_q}x^{r-p+q-t}g(x),$$
+где $r=\max {(s, p - q + t)}$.
+
+\bstructure{Вопрос}: $\deg(h)\stackrel{?}{=}\max(s,p-s+1)$.
+\begin{enumerate}
+    \item<2-> $r=s$:
+    $$\deg (h) = \deg (f - x^{s-p+q-t}g) = \max(s, s - p + q) \stackrel{p>q}{=}
+    s.$$
+    \item<3-> $r=p - q + t$:
+    \begin{multline*}
+    \deg(h)=\deg(x^{p-q+t-s}f - g) = \max(p-q+t,t) =\\
+        \stackrel{p>q}{=}p-q+t
+        \only<3|handout:0>{=?}
+        \only<4|handout:0>{\stackrel{*}{=}?}
+        \only<5-|handout:1>{\stackrel{*}{=}p-s+1,}
+    \end{multline*}
+    \onslide<4->(*) — по предположению индукции $s=q-t+1$.
+\end{enumerate}
+
+\end{frame}
+
+\section{Многомерный случай}
+
+\subsection{Последовательности и полиномы}
+\begin{frame}{Основные определения}
+\begin{itemize}
+    \item<+-> $n$-мерная последовательность $u$: $u\colon\N^n\to\F$.
+    \item<+-> Если $\pt m\in \N^n $, то $x^{\pt m} = x_1^{m_1}
+    x_2^{m_2}\cdots x_n^{m_n}$.
+    \item<+-> Полином $f(x)$ от $n$ переменных: $f(x) = \sum_{\pt i\in
+    \Gamma_f}f_{\pt i}x^{\pt i}$.\\Конечное множество $\Gamma_f (\subset \N^n)$
+    — «носитель» $f$.\\$f_{\pt i}\in \F$.
+    \item<+-> \alert{Степень $f(x)$?}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Мономиальный порядок}
+%$(\{ x^{\pt m} \mid \pt m \in \N^n \}, \cdot) \cong 
+%(\{ \pt m \in \N^n \}, {+})$
+\structure{Мономиальный порядок} ${<}$ на множестве мономов 
+$\Mon_n = \{ x^{\pt m} \mid \pt m \in \N^n\}$ это бинарное отношение, обладающее
+свойствами:
+\onslide<2->{\begin{enumerate}
+    \item<2-> ${<}$ — полный порядок (линейный порядок, при котором любое
+    $M\subset\Mon_n$ имеет наименьший элемент),
+    \item<3-> для $u,v,w\in \Mon_n$ если $u<v$, то $uw<vw$.}
+\end{enumerate}
+
+\onslide<4->{
+    \structure{Пример.}
+    \begin{align*}
+    x^{\pt m} < x^{\pt k} &&&\Longleftrightarrow &\onslide<5->{\Bigl(
+         &(\sum_i m_i < \sum_i k_i) \onslide<6->{\, \vee\\ 
+            &&&&&\, \bigl(\sum_i m_i = \sum_i k_i\bigr) \wedge \bigl(  \exists
+            j\, \forall i>j\colon (m_i=k_i) \wedge (m_j < k_j)\bigr)
+             }\Bigr)}
+    \end{align*}
+    }
+    
+\onslide<7->{
+\structure{Зафиксируем ${<}$.} Тогда определена функция $\deg\colon \F[x] \to
+\N^n$, $$\deg{(f)}=\max\nolimits_{<}\Gamma_f.$$
+%Кроме того, можно определить функцию: 
+}
+\end{frame}
+
+\begin{frame}{Порядки на $\N^n$}
+\onslide<1->{Мономиальный порядок на $(\Mon_n, {\cdot})$
+индуцирует \structure{полный порядок} на $(\N^n, {+})$, согласованный с
+полугрупповой структурой.} Если $\pt n\in\N^n$, обозначим через $\pt n'\in\N^n$
+точку, непосредственно следующую за $\pt n$ относительно этого порядка.
+
+\onslide<2->{Определим ещё \structure{частичный порядок} ${\leqp}$ на $\N^n$:
+$$\pt m \leqp \pt k \Leftrightarrow \forall i\colon m_i \leqslant k_i.$$}
+\onslide<3->{В терминах мономов ${\leqp}$ означает делимость: если $\pt m
+\leqp \pt k$, то корректно определён моном $x^{\pt k} / x^{\pt m} = x^{\pt k
+- \pt m}$ ($\pt k - \pt m\in \N^n$)}.
+
+\onslide<4->{
+    Для $\pt p, \pt q\in\N^n$ введём \structure{обозначения для множеств точек}:
+    \begin{align*}
+    \Sigma_{\pt q} &= \{\pt m \in \N^n \mid \pt q \leqp \pt m \},\\
+    \Sigma_{\pt q}^{\pt p} &= 
+        \{\pt m \in \N^n \mid \pt q \leqp \pt m < \pt p\},\\
+    \Gamma_{\pt p} &= \{\pt m \in \N^n \mid \pt m \leqp \pt p\}.
+    \end{align*}
+}
+\end{frame}
+
+\begin{frame}{Линейные рекуррентные последовательности}
+\onslide<1->{$u$ называется \structure{линейной рекуррентной
+последовательностью}, если существуют $\{f_{\pt i}\}_{\pt i \in \Gamma}$ ($\Gamma\subset\N^n$,
+$|\Gamma|<\infty$, $\pt s=\max_<\Gamma$), такие что: 
+$$\sum_{\pt i \in \Gamma} f_{\pt i} u_{\pt m + \pt i - \pt s} = 0\quad \forall
+\pt m \in \Sigma_{\pt s}.$$}
+
+\onslide<2->{Как и прежде, определяется \structure{характеристический полином}
+$f(x)=\sum_{\pt i \in \Gamma}f_{\pt i}x^{\pt i}$ для ЛРП $u$ и вводится
+обозначение:
+$$f[u]_{\pt m}\eqdef\sum_{\pt i} f_{\pt i} u_{\pt i + \pt m - \pt
+s} \quad \forall\pt m \in \Sigma_{\pt s},$$
+где $\pt s = \deg f$.}
+\onslide<3->{\begin{rutheorem}
+Множество $I(u)$ характеристических полиномов ЛРП $u$ является \alert{идеалом} в
+$\F[x]$.
+\end{rutheorem}}
+\end{frame}
+
+\subsection{Задача}
+\begin{frame}{Базовые сведения о $\F[x]$\nbdash идеалах I~\cite{CLO'S00}}
+\begin{itemize}
+    \item<+-> идеалы в $\F[x]$ \alert{не} являются главными;
+    \item<+-> однако справедлива 
+    \begin{rutheorem}[«Гильберта о базисе»]
+    Любой идеал $I\subset\F[x]$ конечнопорождён, т.~е. существуют
+    $\{f_i(x)\}_{i=1}^{k}$, такие что $$I = \{f_1g_1 + \ldots + f_kg_k \mid
+    g_1(x),\ldots,g_k(x) \in \F[x]\} \eqdef \langle f_1,\ldots,f_k\rangle.$$
+    \end{rutheorem}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Базовые сведения о $\F[x]$\nbdash идеалах II~\cite{CLO'S00}}
+\begin{itemize}
+    \item<+-> базис \alert{существенно неединственен} (в частности, разные
+    базисы могут содержать разное количество элементов);
+    \item<+-> однако существуют «хорошие» базисы: базисы Грёбнера
+    \begin{rudef}<+->
+    Набор полиномов $\{f_i(x)\}_{i=1}^k\subset I$ называется \structure{базисом
+    Грёбнера} идеала $I$, если:
+    $$\forall g \in I \; \exists i\colon {\deg f_i} \leqp {\deg g}.$$
+    В этом случае $I = \langle f_1,\ldots,f_k \rangle$.
+    \end{rudef}
+    \begin{rudef}<+->
+    Нормированный базис Грёбнера $\{f_i(x)\}_{i=1}^k$ идеала $I$ называется
+    \structure{минимальным базисом Грёбнера}, если: 
+    $$\forall i \, \forall j\neq i\colon {\deg f_i} \not\leqp {\deg f_j}.$$
+    \end{rudef}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Задача}
+\onslide<1->{Рассмотрим \structure{отрезок последовательности} $u^{\pt r}\colon
+\Sigma_{\pt 0}^{\pt r} \to \F$. Для любого $f\in\F[x]$ условие
+$$\forall \pt m \in \Sigma_{\deg f}^{\pt r}\colon f[u]_{\pt m}=0$$
+будем записывать просто $f[u^{\pt r}]=0$ или кратко: $f[u]=0$.}
+
+\begin{rudef}<2->
+Множество нормированных полиномов $F=\{f_i(x)\}_{i=1}^{k}$
+называется \structure{минимальным множеством} для отрезка последовательности 
+$u^{\pt r}\colon \Sigma_{\pt 0}^{\pt r} \to \F$, если выполнены условия:
+\begin{enumerate}
+    \item<3-> $\forall i\colon f_i[u]=0$;
+    \item<4-> $\forall g(x)\colon (g[u]=0) \to 
+        (\exists i\colon \deg f_i \leqp \deg g)$;
+    \item<5-> $\forall i \; \forall j\neq i\colon 
+        {\deg f_i} \not\leqp {\deg f_j}.$
+\end{enumerate}
+\end{rudef}
+\onslide<6->{\bstructure{Как найти минимальное множество для отрезка
+$u^{\pt r}$?}}
+\end{frame}
+
+\begin{frame}{Класс минимальных множеств}
+Множество минимальных множеств отрезка последовательности
+$u^{\pt r}\colon \Sigma_{\pt 0}^{\pt r} \to \F$ обозначим $\FM u r$.
+\end{frame}
+
+\begin{frame}{Как выглядит $\deg(\{f(x)\mid f[u]=0\})$?}
+Пусть $F\in \FM u r$. Обозначим:
+    \begin{align*}
+    \Sigma(u^{\pt r}) &\eqdef \bigcup_{f\in F}\Sigma_{\deg f},\\
+    \Delta(u^{\pt r}) &\eqdef \Sigma_{\pt 0} \setminus \Sigma.
+    \end{align*}
+Для краткости можно писать $\Sigma(\pt r)$, $\Delta(\pt r)$.
+\end{frame}
+
+\subsection{Алгоритм}
+\begin{frame}{Индукция}
+\onslide<1->{Будем рассуждать \structure{индуктивно}.}
+
+\onslide<2->{Пусть $\pt p < \pt r$, $F\in \FM u p$, $G\subset \F[x]$ ($|G|<
+\infty$).}
+
+\onslide<3->{Необходимо найти $F'\in \FM u {p'}$, $G'\subset \F[x]$ ($|G'|<
+\infty$).}
+
+\onslide<4->{Для каждого $f\in F$ есть две возможности:
+\begin{enumerate}
+    \item $f[u]_{\pt p} = 0$ — тогда $f\in F'$.
+    \item $f[u]_{\pt p} \neq 0$ — \ldots
+\end{enumerate}
+}
+\end{frame}
+
+\begin{frame}{Связь $F$ и $G$}
+\onslide<1->{$\forall g \in G \; \exists \pt q\colon g\in F(u^{\pt q}) \wedge
+g[u]_{\pt q}\neq 0$.} 
+
+\onslide<2->{\bstructure{Требование}: $\{\pt q - \deg g | g\in G\} =
+\max_{{\leqp}}\Delta(u^{r})$}.
+\end{frame}
+
+\begin{frame}{Лемма о границе для степени $f'(x)\in F'$}
+Обозначим $\Ffail = \{ f \in F \mid f[u]_{\pt p}\neq 0 \}$. 
+\begin{rulemma}<+->
+Пусть $f(x)\in \Ffail$, тогда \alert{не существует}
+$f'(x) \in F'$, такого что:
+$$\deg f' \leqp (\pt p - \deg f).$$ То есть $\deg f' \in \Sigma_{\pt 0}
+\setminus \Gamma_{\pt p - \deg f}$.
+% Пусть $f(x)$ таков, что 
+% $$\forall \pt m \in \Sigma_{\deg f}^{\pt p}\colon f[u]_{\pt m}=0
+% \quad \text{и} \quad f[u]_{\pt p} \neq 0$$
+% Тогда не существует $f'(x)$, такого что
+% $$\forall \pt m \in \Sigma_{\deg f'}^{\pt p}\colon f'[u]_{\pt m}=0
+% \quad \text{и} \quad f'[u]_{\pt p} = 0$$
+% со степенью $\deg f' \leqp \pt p - \deg f$.
+\end{rulemma}
+\begin{rucorollary}<+->
+Пусть $\Gamma=\bigcup_{f\in \Ffail}\Gamma_{\pt p - \deg f}$, тогда
+$$\deg(F') \subset (\Sigma(u^{\pt p}) \setminus \Gamma).$$
+\end{rucorollary}
+%\begin{ruremark}
+%%Если $\pt p - \deg f \in \Delta(u^{\pt r})$, то 
+%\end{ruremark}
+\end{frame}
+
+\begin{frame}{Степень $f\in\Ffail$ и формула Берлекэмпа}
+\begin{enumerate}
+    \item<1-> 
+        \onslide<1->{Если $\pt p - \deg f\in\Delta(u^{\pt p})$, то 
+        на степень $f'$ нет дополнительных ограничений и формула Берлекэмпа $h(f,g)$
+        позволяет построить $f'\colon \deg f' = \deg f$.} 
+        
+        \onslide<2->{В качестве $g$ нужно взять такой элемент $G$, что $\pt p-\deg
+        f \leqp \pt q - \deg g$.}
+        
+        \onslide<3->{
+        $$h(f, g) = f - \frac {d_{\pt p}} {d_{\pt q}} 
+        x^{\pt q - \deg g - (\pt p - \deg f)}g.$$}
+    \item<4-> Если $\pt p - \deg f\not\in\Delta(u^{\pt p})$, \ldots
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{$\Ffall$}
+\onslide<1->{Остались нерассмотренными $f\in\Ffail$, такие что $\pt p -
+\deg f\not\in\Delta(u^{\pt p})$, обозначим их $\Ffall$.}
+
+\onslide<2->{Для каждой пары $(f,g)$, где $f\in\Ffall$, $g\in G$,
+\begin{itemize}
+    \item<3-> если $\pt s' = \max (\deg f, \pt p - \pt q + \deg g)$ 
+    минимальна по ${\leqp}$ в 
+    $S' = \{\max (\deg f, \pt p - \pt q + \deg g) \mid 
+    f \in \Ffall , \, g \in G\}$,
+    \item<4-> то полином:
+        $$ h(f, g) = x^{\pt s' - \deg f}f - \frac {d_{\pt p}} {d_{\pt q}}g $$
+    добавляется в $F'$. 
+\end{itemize}}
+\end{frame}
+
+\begin{frame}{Вырожденный случай}
+Пусть $\hat{S} $ множество минимальных по ${\leqp}$ элементов в 
+$\Sigma(u^{\pt p}) \setminus \Gamma_{\pt p}$.
+
+Для каждого $\pt{\hat{s}} \in \hat{S}$, если не найдётся такого 
+$\pt s' \in S'$, что $\pt s' \leqp \pt{\hat{s}}$, тогда для каждого 
+$f\in \Ffall$, такого что $\deg f \leqp \pt{\hat{s}}$, полином
+$$ h(f) = x^{\pt s' - \deg f}f $$
+добавляется в $F'$. 
+\end{frame}
+
+%\section{Приложения}
+
+\begin{frame}{Библиография} %[allowframebreaks]
+    \begin{thebibliography}{Sakata90}
+    \footnotesize
+    \bibitem[Blahut86]{Blahut86} \emph{Блейхут Р.} Теория и практика кодов,
+    контролирующих ошибки: Пер. с англ. / М.: Мир, 1986.
+    \bibitem[CLO'S00]{CLO'S00}\emph{Кокс Д., Литтл Дж., О’Ши Д.} Идеалы,
+    многообразия и алгоритмы. Введение в вычислительные аспекты алгебраической геометрии и 
+    коммутативной алгебры. / М.: Мир, 2000. 
+    \bibitem[KKMN94]{KKMN94}\emph{Kurakin~V. L., Kuzmin~A. S.,
+    Mikhalev~A. V., Nechaev~A. A.} Linear recurring sequences over rings and
+    modules. // I. of Math. Science. Contemporary Math. and it's Appl. Thematic surveys, vol. 10, 1994.
+    \bibitem[LN88]{LidlNider}\emph{Лидл Р., Нидеррайтер Г.} Конечные поля: В
+    2-х т. / М.:~Мир, 1988. 822 стр.
+    \bibitem[Sakata88]{Sakata88}\emph{Sakata S.} Finding a minimal set of linear
+    recurring relations capable of generating a given finite two–dimensional array // J. Symb. Comp. 1988.
+Vol. 5. 1988. Pp. 321–337.
+    \bibitem[Sakata90]{Sakata90}\emph{Sakata S.} Extension of the
+    Berlekamp–Massey algorithm to N dimensions. // Inform. and Comput. 84,
+     no. 2. 1990. Pp. 207–239.
+    \bibitem[Sakata09]{Sakata09}\emph{Sakata S.} The BMS Algorithm // Chapter
+    in Gröbner Bases, Coding, and Cryptography, Springer, 2009.
+    %\bibitem[]{}    
+    \end{thebibliography}
+\end{frame}
+
+\end{document}

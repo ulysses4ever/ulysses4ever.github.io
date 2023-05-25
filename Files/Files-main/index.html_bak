@@ -1,0 +1,195 @@
+
+ 
+
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  
+ 
+
+
+
+<head>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Artem Pelenitsyn, homepage &middot; Artem Pelenitsyn
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./public/css/poole.css">
+  <link rel="stylesheet" href="./public/css/syntax.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+    crossorigin="anonymous">
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="./public/favicon.ico">
+
+  <!-- RSS -->
+  <!--link rel="alternate" type="application/rss+xml" title="RSS" href="./atom.xml"-->
+</head>
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="./index.html" title="Home">Artem Pelenitsyn</a>
+          <small>Homepage</small>
+        </h3>
+        
+ 
+
+
+
+<div align="right"> 
+	<small>
+		<a href="./index.rus.html">
+			По-русски <img src="./Pics/ru.gif" />
+		</a>
+	</small>
+</div>
+
+      </div>
+
+      <table cellspacing="6px">
+	<tr>
+	<td style="vertical-align:top">
+		<img src="Pics/Brazil-2014.jpg" height="250" border="0" />
+		<p style="text-align: right">
+      <a id="twitter-link" class="icon" title="Twitter Account" aria-label="Twitter Account"
+        href="https://twitter.com/ulysses4ever">
+        <i class="fab fa-twitter"></i></a>
+      <a id="facebook-link" class="icon" title="Facebook Profile" aria-label="Facebook Profile"
+        href="https://www.facebook.com/ulysses4ever">
+        <i class="fab fa-facebook"></i></a>
+      <a id="github-link" class="icon" title="Github Account" aria-label="Github Account"
+        href="https://github.com/ulysses4ever">
+        <i class="fab fa-github"></i></a>
+  	</p>
+	</td>
+	<td valign="top">
+		<p><b>Born:</b> 1986, Rostov-na-Donu, Russia.
+
+		<p><b>Education:</b> Master of Science in Applied Mathematics and Computer Science — 2009.
+
+		<p><b>Alma mater:</b> <a href="http://sfedu.ru/index_eng.php">Southern Federal University</a>, Faculty of Mathematics, Mechanics and Computer Sciences (<a href="http://mmcs.sfedu.ru">MMCS, Мехмат</a>).
+
+		<p><b>Current Activities:</b> PhD student at <a href="https://prl.ccs.neu.edu">Programming Research Laboratory</a>, Northeastern University.
+
+		<p><b>e-mail:</b> a.pelenitsyn&#8203;@&#8203;gmail.com
+	</td>
+</table>
+
+<b>As a Russian national, I strongly condemn the war started by Russian government in 
+Ukraine on Feb 24th 2022.</b>
+
+
+<h3 id="contact-me">Contact Me!</h3>
+
+<p>Feel free to use my email (above) or any social network to reach out if you want to talk
+about anything mentioned on this page. Especially welcome are students deciding on their
+possible academic career.</p>
+
+
+
+
+<h3 id="academic-info">Academic Info</h3>
+
+<p>I am interested in typed functional programming and corresponding languages (mostly, Haskell),
+type and effect systems, <a href="https://patternsinfp.wordpress.com/2010/09/18/story-so-far/">mathematics of program construction</a>. In the past, I worked
+towards better software engineering principles of building computer algebra software in C++,
+especially using what C++ world knows as <em>generic programming</em>.</p>
+
+<p>Recently, I was working
+on a assessment of the design and implementation of Julia programming language
+(<a href="https://www.di.ens.fr/~zappa/projects/lambdajulia/">OOPSLA’18</a>, <a href="Projects/stability">OOPSLA ‘21</a>). Currently, I’m studying Julia’s
+notion of type stability.</p>
+
+<p>Here are some links to find out more about my professional interests:</p>
+
+<ul>
+  <li><a href="cv.pdf">Curriculum Vitæ [PDF]</a></li>
+  <li><a href="papers.html">Papers, talks, etc.</a> (russian only)</li>
+  <li><a href="teaching.en.html">Teaching</a></li>
+  <li><a href="projects.en.html">Projects</a></li>
+</ul>
+
+
+
+
+<h4 id="main-publications">Main Publications</h4>
+
+<ul>
+  <li>
+    <p><a href="Projects/stability">Type Stability in Julia: Avoiding Performance Pathologies in JIT Compilation</a> (OOPSLA ‘21)</p>
+  </li>
+  <li>
+    <p><a href="Papers/2018-TMPA-effects-vs-transformers-in-parsing.pdf">Functional Parser of Markdown Language Based on Monad Combining and Monoidal Source Stream Representation</a> (with <a href="http://geo2a.github.io/" title="Georgy Lukyanov web site">G.Lukyanov</a>), TMPA-2017, <a href="https://doi.org/10.1007/978-3-319-71734-0_8">doi: 10.1007/978-3-319-71734-0_8</a></p>
+  </li>
+  <li>
+    <p><a href="Papers/2015-PCS-Scala-generics.pdf">Associated Types and Constraint Propagation for Generic Programming in Scala</a>, Programmirovanie, 2015, <a href="https://doi.org/10.1134/S0361768815040064">doi: 10.1134/S0361768815040064</a></p>
+  </li>
+  <li>
+    <p><a href="Papers/2012-metaprogramming-to-decoding-en.pdf">Generic Programming Approach in the Implementation of Error-Correcting Codes From Algebraic Geometry</a>, Prikladnaya Informatika, 2012 (published in Russian)</p>
+  </li>
+</ul>
+
+
+
+
+<h3 id="programming-languages-and-it">Programming Languages and IT</h3>
+
+<p>I’m interested in programming languages and related technologies as they pertain to
+software and systems development, e.g. Haskell ecosystem, Nix and NixOS, (Doom) Emacs and
+modal editing (in the spirit of <code class="language-plaintext highlighter-rouge">vi</code>), Linux and Open Source Software, verified software
+and interactive theorem provers (especially, <code class="language-plaintext highlighter-rouge">Coq</code> and <code class="language-plaintext highlighter-rouge">Agda</code>). Check out:</p>
+
+<ul>
+  <li><a href="https://github.com/ghc/ghc/search?o=desc&amp;q=author%3Aulysses4ever&amp;s=committer-date&amp;type=Commits">My contributions to the GHC Haskell compiler</a></li>
+  <li><a href="https://www.tweag.io/blog/2019-09-25-bazel-ghc-persistent-worker-internship/">Blog post about my internship at Tweag I/O in 2019</a></li>
+</ul>
+
+
+
+
+
+      <div class="footer">
+        <table style="font-size:12px;text-align:center"><tr>
+
+          <td>(&#8580;) 2022 A. Pelenitsyn</td>
+          
+          <td><a href="https://github.com/ulysses4ever/ulysses.mmcs.sfedu.ru">GitHub Sources</a></td>
+
+		  <td>
+<!- START COUNTER CODE -->
+<a href="http://www.xtrastats.com/"><script language="JavaScript">
+<!-- 
+var data = '&r=' + escape(document.referrer)
++ '&n=' + escape(navigator.userAgent)
++ '&p=' + escape(navigator.userAgent)
++ '&g=' + escape(document.location.href);
+if (navigator.userAgent.substring(0,1)>'3')
+data = data + '&sd=' + screen.colorDepth 
++ '&sw=' + escape(screen.width+'x'+screen.height);
+document.write('<img border=0 hspace=0 '+'vspace=0 src="http://www.xtrastats.com/counter.php?i=16009' + data + '">');
+// --></script></a>
+<!-- END COUNTER CODE -->
+</td>
+        </tr></table>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,46 @@
+\documentclass[a4paper]{article} %12pt,
+\usepackage[utf8x]{inputenc}
+\usepackage{ucs}
+\usepackage[T2A]{fontenc}
+\usepackage{cyrtimes}
+\usepackage[russian,english]{babel}
+%\usepackage{eufrak}
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+\author{Ulysses}
+\begin{document}
+Зададимся алфавитом $\Sigma$. Множество регулярных выражений над $\Sigma$ обозначим~$RE(\Sigma)$. Зафиксируем алфавит переменных: \[\Delta = \{X_i \mid i \in \overline{1,n}\}, \quad \Sigma \cap \Delta = \emptyset. \]
+Далее потребуется обозначение: \[\Delta_j = \{X_i \mid i \in \overline{j,n}\},\; j\in \overline{1,n+1}.\] В частности, $\Delta_1 = \Delta$ и $\Delta_{n+1} = \emptyset$.
+\par Пусть дана афинная система уравнений с регулярными коэффициентами:
+\[\mathcal{E}: \left\{
+X_i = \sum_{j=1}^n \alpha_{i,j} X_j + \alpha_{i,0} \qquad i \in \overline{1,n}
+\right., \]
+где $\alpha_{i,j} \in RE(\Sigma),\; i,j \in \overline{1,n}$. $i$-ое уравнение системы будем обозначать $\mathcal{E}[i]$. 
+
+Обозначим операцию подстановки регулярного выражения $\gamma \in RE(\Omega)$ в $i$-ое уравнение системы $\mathcal{E}$ вместо всех вхождений переменной $X_j$ следующим образом:
+\[\mathcal E[i] \gets \gamma / X_j.\]
+
+Решением системы уравнений $\mathcal E$ называется набор $(\hat{x}_1,\ldots,\hat{x}_n)\in {RE(\Sigma)}^n$, такой что при подстановке: \[
+\forall{i,j\in\overline{(1,n)}} \quad \mathcal E[i] \gets \hat{x}_j \ / X_j.
+\] каждое $\mathcal E[i]$ прератится в верное регулярное тождество. 
+
+\par Напомним, что решением афинного уравнения с регулярными коэффициентами: \[(1):X = \alpha X + \beta\] является регулярное выражение $\hat{x} = \alpha^*\beta$. Обозначим этот факт так: \[
+(1):X = \alpha X + \beta \mapsto \hat{x} = \alpha^*\beta.
+\]Теперь мы готовы изложить алгоритм, реализующий метод Гаусса для системы~$\mathcal E$.
+
+\newtheorem{algos}{Алгоритм}
+\begin{algos} Вход: система $\mathcal E$;\\
+Выход: решение $(\hat{x}_1,\ldots,\hat{x}_n)$ системы $\mathcal E$;\\
+алгоритм представлен последовательностью шагов:\\
+St.1: $i=1$.\\
+St.2:\\if $i=n$ then goto St.4;\\
+else $\mathcal E[i]: X_i = \alpha X_i + \beta \mapsto \hat{x}_i = \alpha^*\beta, \quad \alpha, \beta \in RE(\Sigma \cup \Delta_{i+1})$;\\
+for $j$ from $i+1$ to $n$ do $\mathcal E[j] \gets \hat{x}_i / X_i$.\\
+St.3: $++i$, goto St.2;\\
+St.4: $\mathcal E[i]: X_i = \alpha X_i + \beta \mapsto \hat{x}_i = \alpha^*\beta, \quad \alpha, \beta \in RE(\Sigma)$;\\
+for $j$ from $i-1$ downto $1$ do: $\mathcal E[j] \gets \hat{x}_i / X_i$;\\
+St.5: if $i > 1$ $--i$; goto St.4; else exit;
+\end{algos}
+По завершении работы алгоритма значения $\hat{x}_i$ составляют искомый набор.
+\end{document}

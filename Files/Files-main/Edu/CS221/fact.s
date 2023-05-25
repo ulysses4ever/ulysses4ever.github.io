@@ -1,0 +1,40 @@
+.SECT .TEXT
+	PUSH	5
+	CALL	Fact
+	ADD	SP, 2
+	
+	PUSH	AX
+	PUSH	fmt
+	PUSH	127 	! = printf
+	SYS
+	ADD	SP, 6
+	
+	PUSH	0
+	PUSH	1	! = exit
+	SYS
+
+Fact:
+	PUSH	BP
+	MOV	BP, SP
+	PUSH	BX
+	
+	MOV	BX, 4(BP)
+	CMP	BX, 1
+	JG	REC
+	MOV	AX, 1
+	JMP	END_R
+REC:	MOV	AX, BX
+	DEC	AX
+	PUSH	AX
+	CALL	Fact
+	ADD	SP, 2
+	MUL	BX
+	
+END_R:	POP	BX
+	POP	BP
+	RET
+
+.SECT .DATA
+fmt:	.ASCIZ "%d\n"
+.SECT .BSS
+

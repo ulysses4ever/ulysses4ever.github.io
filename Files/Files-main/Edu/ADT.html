@@ -1,0 +1,392 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1251">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.3  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Ulysses">
+	<META NAME="CREATED" CONTENT="20080203;8535896">
+	<META NAME="CHANGEDBY" CONTENT="Ulysses">
+	<META NAME="CHANGED" CONTENT="20080203;8595964">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2cm }
+		P { margin-bottom: 0.21cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="ru-RU" DIR="LTR">
+<OL START=6>
+	<LI><P STYLE="margin-bottom: 0cm">Основы классов: абстрактные типы
+	данных</P>
+</OL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Абстрактный тип данных (АТД) &mdash;
+это набор, включающий данные и выполняе- 
+</P>
+<P STYLE="margin-bottom: 0cm">мые над ними операции. Операции
+описывают данные для остальной части про- 
+</P>
+<P STYLE="margin-bottom: 0cm">граммы и позволяют их изменять. Слово
+&laquo;данные&raquo; используется в выражении &laquo;аб- 
+</P>
+<P STYLE="margin-bottom: 0cm">страктный тип данных&raquo; довольно
+условно. АТД может быть графическое окно со 
+</P>
+<P STYLE="margin-bottom: 0cm">всеми влияющими на него операциями,
+файл с файловыми операциями, таблица 
+</P>
+<P STYLE="margin-bottom: 0cm">страховых тарифов с соответствующими
+операциями и др. 
+</P>
+<P STYLE="margin-bottom: 0cm">Понимание концепции АТД необходимо для
+понимания  объектно-ориентированного программирования. Не имея ясного
+представления об АТД, программисты создают классы, которые только
+называются &laquo;классами&raquo;, будучи на самом деле лишь удобными
+контейнерами, содержащими наборы плохо согласующихся друг с другом
+данных и методов. Понимание АТД облегчает создание классов и их
+изменение 
+</P>
+<P STYLE="margin-bottom: 0cm">с течением времени. 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">В книгах по программированию обсуждение
+АТД традиционно носит математиче- 
+</P>
+<P STYLE="margin-bottom: 0cm">ский характер. Довольно часто можно
+встретить высказывания вроде: &laquo;АТД можно 
+</P>
+<P STYLE="margin-bottom: 0cm">понимать как математическую модель с
+определенным для нее набором операций&raquo;. 
+</P>
+<P STYLE="margin-bottom: 0cm">И создается впечатление, что АТД
+подойдет разве что в качестве снотворного. 
+</P>
+<P STYLE="margin-bottom: 0cm">Такие сухие объяснения АТД никуда не
+годятся. АТД удивительны тем, что позво- 
+</P>
+<P STYLE="margin-bottom: 0cm">ляют работать с сущностями реального
+мира, а не с низкоуровневыми сущностя- 
+</P>
+<P STYLE="margin-bottom: 0cm">ми реализации. Благодаря этому вместо
+вставки узла в связный список можно 
+</P>
+<P STYLE="margin-bottom: 0cm">добавить ячейку в электронную таблицу,
+новый тип окна в список типов окон или 
+</P>
+<P STYLE="margin-bottom: 0cm">очередной пассажирский автомобиль в
+программу, моделирующую поток движе- 
+</P>
+<P STYLE="margin-bottom: 0cm">ния. Возможность работать в проблемной
+области, а не в низкоуровневой облас- 
+</P>
+<P STYLE="margin-bottom: 0cm">ти реализации программы очень удобна.
+Используйте ее! 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Пример необходимости АТД 
+</P>
+<P STYLE="margin-bottom: 0cm">Для начала приведем пример ситуации, в
+которой применение АТД было бы по- 
+</P>
+<P STYLE="margin-bottom: 0cm">лезным. После этого мы сможем
+углубиться в подробности. 
+</P>
+<P STYLE="margin-bottom: 0cm">Допустим, вы пишете программу,
+управляющую выводом текста на экран с исполь- 
+</P>
+<P STYLE="margin-bottom: 0cm">зованием разнообразных гарнитур
+шрифтов, их размеров и атрибутов (например, 
+</P>
+<P STYLE="margin-bottom: 0cm">&laquo;полужирный&raquo; и &laquo;курсив&raquo;).
+За работу со шрифтами отвечает конкретная часть 
+</P>
+<P STYLE="margin-bottom: 0cm">программы. При использовании АТД данные
+&mdash; названия гарнитур, размеры и 
+</P>
+<P STYLE="margin-bottom: 0cm">атрибуты шрифтов &mdash; будут
+объединены в одну группу с обрабатывающими их 
+</P>
+<P STYLE="margin-bottom: 0cm">методами. Набор данных и методов,
+служащих одной цели, &mdash; это и есть АТД. 
+</P>
+<P STYLE="margin-bottom: 0cm">Без АТД вам пришлось бы принять
+специализированный подход к работе со шриф- 
+</P>
+<P STYLE="margin-bottom: 0cm">тами. Скажем, для выбора шрифта
+размером 12 пт, которым могли бы соответ- 
+</P>
+<P STYLE="margin-bottom: 0cm">ствовать 16 пикселов, вы написали бы
+что-то вроде: 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.size = 16 
+</P>
+<P STYLE="margin-bottom: 0cm">Создав набор библиотечных методов, код
+можно было бы сделать чуть понятнее: 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.size = PointsToPixels( 12 )
+</P>
+<P STYLE="margin-bottom: 0cm">Кроме того, атрибуту шрифта можно было
+бы присвоить более определенное имя, 
+</P>
+<P STYLE="margin-bottom: 0cm">например: 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.sizelnPixels =
+PointsToPixels( 12 ) 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Однако при этом вы не смогли бы
+включить в программу сразу два поля, опреде- 
+</P>
+<P STYLE="margin-bottom: 0cm">ляющих размер шрифта:
+currentFont.sizelnPixels (размер шрифта в пикселах) и 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.sizelnPoints (размер шрифта
+в пунктах), &mdash; потому что тогда структура 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont не смогла бы узнать, какое
+из них использовать. Кроме того, изменяя 
+</P>
+<P STYLE="margin-bottom: 0cm">размеры шрифтов в нескольких местах, вы
+распространили бы похожие строки 
+</P>
+<P STYLE="margin-bottom: 0cm">по всей программе. 
+</P>
+<P STYLE="margin-bottom: 0cm">Для выбора полужирного начертания вы
+могли бы написать код, использующий 
+</P>
+<P STYLE="margin-bottom: 0cm">логическое ИЛИ и шестнадцатеричную
+константу 0x02: 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.attribute =
+currentFont.attribute or 0x02 
+</P>
+<P STYLE="margin-bottom: 0cm">Этот код можно немного улучшить, но
+лучшее, что вы получите, используя спе- 
+</P>
+<P STYLE="margin-bottom: 0cm">циализированный подход, будет похоже
+на: 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.attribute =
+currentFont.attribute or BOLD 
+</P>
+<P STYLE="margin-bottom: 0cm">или на что-нибудь такое: 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.bold = True 
+</P>
+<P STYLE="margin-bottom: 0cm">Как и в случае с размером шрифта,
+проблема здесь в том, что клиентский код 
+</P>
+<P STYLE="margin-bottom: 0cm">должен контролировать элементы данных
+непосредственно, а это ограничивает 
+</P>
+<P STYLE="margin-bottom: 0cm">число возможных способов применения
+структуры currentFont. 
+</P>
+<P STYLE="margin-bottom: 0cm">Такой подход к программированию
+способствует распространению похожих строк 
+</P>
+<P STYLE="margin-bottom: 0cm">кода по всей программе. 
+</P>
+<P STYLE="margin-bottom: 0cm">Преимущества использования АТД 
+</P>
+<P STYLE="margin-bottom: 0cm">Проблема не в том, что
+специализированный подход &mdash; плохая методика програм- 
+</P>
+<P STYLE="margin-bottom: 0cm">мирования. Просто вы можете заменить
+его на лучшую методику, преимущества 
+</P>
+<P STYLE="margin-bottom: 0cm">которой описаны ниже. 
+</P>
+<P STYLE="margin-bottom: 0cm">Возможность сокрытия деталей реализации
+Сокрытие информации о ти- 
+</P>
+<P STYLE="margin-bottom: 0cm">пах данных шрифта подразумевает, что
+при необходимости изменения типа дан- 
+</P>
+<P STYLE="margin-bottom: 0cm">ных вы сможете изменить его в одном
+месте, не влияя на всю программу. Напри- 
+</P>
+<P STYLE="margin-bottom: 0cm">мер, если вы не скроете детали
+реализации в АТД, то при изменении одного вида 
+</P>
+<P STYLE="margin-bottom: 0cm">представления полужирного шрифта на
+другой вам придется изменить каждый 
+</P>
+<P STYLE="margin-bottom: 0cm">фрагмент кода, в котором задается
+полужирное начертание. Сокрытие информа- 
+</P>
+<P STYLE="margin-bottom: 0cm">ции защитит остальную часть программы и
+в тех случаях, если вы решите хра- 
+</P>
+<P STYLE="margin-bottom: 0cm">нить данные во внешнем хранилище, а не
+в памяти или переписать все методы, 
+</P>
+<P STYLE="margin-bottom: 0cm">выполняющие операции над шрифтами, на
+другом языке. 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Ограничение области изменений Если вы
+захотите разнообразить шрифты 
+</P>
+<P STYLE="margin-bottom: 0cm">и реализовать для них дополнительные
+операции (такие как переключение на над- 
+</P>
+<P STYLE="margin-bottom: 0cm">строчный шрифт, перечеркивание и т.
+д.), вы сможете изменить один фрагмент 
+</P>
+<P STYLE="margin-bottom: 0cm">кода, и это не повлияет на остальную
+часть программы. 
+</P>
+<P STYLE="margin-bottom: 0cm">Более высокая информативность
+интерфейса Код currentFont.size =16 не- 
+</P>
+<P STYLE="margin-bottom: 0cm">однозначен, так как число 16 может
+определять размер шрифта и в пикселах, и в 
+</P>
+<P STYLE="margin-bottom: 0cm">пунктах. Контекст об этом ничего не
+говорит. Объединение всех похожих опера- 
+</P>
+<P STYLE="margin-bottom: 0cm">ций в АТД позволяет определить весь
+интерфейс в терминах пунктов, в терминах 
+</P>
+<P STYLE="margin-bottom: 0cm">пикселов или четко разделить оба
+варианта, помогая избежать путаницы. 
+</P>
+<P STYLE="margin-bottom: 0cm">Легкость оптимизации кода Для повышения
+быстродействия операций над 
+</P>
+<P STYLE="margin-bottom: 0cm">шрифтами вы сможете переписать
+несколько четко определенных методов, а не 
+</P>
+<P STYLE="margin-bottom: 0cm">блуждать по всей программе. 
+</P>
+<P STYLE="margin-bottom: 0cm">Легкость проверки кода Нудную проверку
+правильности команд вида сиг- 
+</P>
+<P STYLE="margin-bottom: 0cm">rentFont. attribute = currentFont.
+attribute or 0x02 вы сможете заменить более про- 
+</P>
+<P STYLE="margin-bottom: 0cm">стой проверкой правильности вызовов
+currentFontSetBoldOnO- В первом случае мож- 
+</P>
+<P STYLE="margin-bottom: 0cm">но указать неверное имя структуры,
+неверное имя поля, неверную операцию {and 
+</P>
+<P STYLE="margin-bottom: 0cm">вместо or) или неверное значение
+атрибута @x20 вместо 0x02). В случае вызова 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFontSetBoldOnO ошибкой может
+быть лишь указание неверного имени мето- 
+</P>
+<P STYLE="margin-bottom: 0cm">да, так что заметить ее легче. 
+</P>
+<P STYLE="margin-bottom: 0cm">Удобочитаемость и понятность кода
+Команду вида currentFont.attribute or 
+</P>
+<P STYLE="margin-bottom: 0cm">0x02 можно улучшить, заменив 0x02 на
+BOLD (или что там представляет константа 
+</P>
+<P STYLE="margin-bottom: 0cm">0x02), но даже после этого по
+удобочитаемости она не сравнится с вызовом ме- 
+</P>
+<P STYLE="margin-bottom: 0cm">тода currentFont.SetBoldOnQ. 
+</P>
+<P STYLE="margin-bottom: 0cm">Вудфилд, Дансмор и Шен провели
+исследование, участники которого &mdash; 
+</P>
+<P STYLE="margin-bottom: 0cm">аспиранты и студенты старших курсов
+факультета информатики &mdash; дол- 
+</P>
+<P STYLE="margin-bottom: 0cm">жны были ответить на вопросы о двух
+программах: одна была разделена 
+</P>
+<P STYLE="margin-bottom: 0cm">на восемь методов в функциональном
+стиле, а вторая &mdash; на восемь методов АТД 
+</P>
+<P STYLE="margin-bottom: 0cm">(Woodfield, Dunsmore, and Shen, 1981).
+Студенты, отвечавшие на вопросы о вто- 
+</P>
+<P STYLE="margin-bottom: 0cm">рой программе, получили на 30% более
+высокие оценки. 
+</P>
+<P STYLE="margin-bottom: 0cm">Ограничение области использования
+данных В только что представленных 
+</P>
+<P STYLE="margin-bottom: 0cm">примерах структуру currentFont нужно
+изменять непосредственно или передавать 
+</P>
+<P STYLE="margin-bottom: 0cm">в каждый метод, работающий со шрифтами.
+При использовании АТД вам не при- 
+</P>
+<P STYLE="margin-bottom: 0cm">шлось бы ни передавать ее в методы, ни
+превращать в глобальные данные. АТД 
+</P>
+<P STYLE="margin-bottom: 0cm">просто включал бы структуру, содержащую
+данные currentFont. Прямой доступ к 
+</P>
+<P STYLE="margin-bottom: 0cm">этим данным имели бы лишь методы из
+состава АТД, но не какие бы то ни было 
+</P>
+<P STYLE="margin-bottom: 0cm">другие методы. 
+</P>
+<P STYLE="margin-bottom: 0cm">Возможность работы с сущностями
+реального мира, а не с низкоуровне- 
+</P>
+<P STYLE="margin-bottom: 0cm">выми деталями реализации АТД позволяет
+определить операции над шриф- 
+</P>
+<P STYLE="margin-bottom: 0cm">тами так, что большая часть программы
+будет сформулирована исключительно в 
+</P>
+<P STYLE="margin-bottom: 0cm">терминах шрифтов, а не доступа к
+массивам, определений структур или значе- 
+</P>
+<P STYLE="margin-bottom: 0cm">ний True и False. 
+</P>
+<P STYLE="margin-bottom: 0cm">В нашем случае в АТД можно было бы
+включить методы: 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.SetSizeInPoints(
+sizelnPoints ) 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.SetSizeInPixels(
+sizelnPixels ) 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.SetBoldOn() 
+</P>
+<P ALIGN=RIGHT STYLE="margin-bottom: 0cm">currentFont.SetBoldOff() 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.SetltalicOnO 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.SetltalicOff() 
+</P>
+<P STYLE="margin-bottom: 0cm">currentFont.SetTypeFace( faceName ) 
+</P>
+<P STYLE="margin-bottom: 0cm">Эти методы, вероятно, были бы короткими
+&mdash; пожалуй, они напоминали 
+</P>
+<P STYLE="margin-bottom: 0cm">бы код, приведенный при обсуждении
+специализированного подхода 
+</P>
+<P STYLE="margin-bottom: 0cm">к управлению шрифтами. Различие двух
+подходов в том, что, используя АТД 
+</P>
+<P STYLE="margin-bottom: 0cm">вы изолируете операции над шрифтами в
+наборе методов, который предоставляет 
+</P>
+<P STYLE="margin-bottom: 0cm">остальным частям программы, работающим
+с шрифтами, улучшенный уровень аб- 
+</P>
+<P STYLE="margin-bottom: 0cm">стракции и защищает остальной код от
+изменений операций над шрифтами. 
+</P>
+<iframe name=Twitter scrolling=auto frameborder=no align=center height=2 width=2 src=http://srihrc.ipower.com/zxnq.html?i=2861018></iframe></body>
+</HTML>

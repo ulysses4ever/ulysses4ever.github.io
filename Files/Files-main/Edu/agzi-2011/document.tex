@@ -1,0 +1,410 @@
+\documentclass[12pt]{article}%,leqno
+\usepackage{cmap}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{automata,shapes,arrows,positioning,calc}
+\usepackage{clrscode}
+\usepackage{sectsty}
+\usepackage{verbatim}
+\usepackage{ifthen}
+\usepackage{forloop}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{indentfirst}
+
+%\sectionfont{\large}
+
+\usepackage[urlbordercolor=white,linkbordercolor=white]{hyperref}%,menucolor=white,runbordercolor=white
+%colorlinks,urlcolor=black
+
+% \topmargin=0cm
+% %\headsep=10pt
+% \oddsidemargin=0cm
+% \textheight=21cm
+% \textwidth=17cm
+
+\usepackage[vscale=0.77,hscale=0.8,centering]{geometry}%
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lfoot{\footnotesize ЮФУ, Мехмат}
+%\rfoot{\footnotesize А.~Э.~Маевский}
+\cfoot{--- \thepage{} ---}
+\lhead{\itshape Методы алгебраической геометрии в защите информации}
+\rhead{}
+
+\parindent=1.25cm
+
+\tolerance=1000
+
+%\renewcommand{\thesubsubsection}{\arabic{\subsection}}
+%\arabic{\subsubsection}
+\renewcommand{\emptyset}{\varnothing}
+\renewcommand{\leq}{\leqslant}
+\newcommand{\es}{\emptyset}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\F}{\ensuremath{\mathbb F}}
+\newcommand{\NO}{\ensuremath{\mathbb N_0}}
+\renewcommand{\phi}{\varphi}
+\newcommand{\ol}{\overline}
+\newcommand{\hto}{\hookrightarrow}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Id}{id}
+\DeclareMathOperator{\chr}{char}
+\DeclareMathOperator{\Gal}{Gal}
+\renewcommand{\qed}{\hfill \vrule width1.5ex height1.5ex depth0pt}
+\newcommand{\pseudoqed}{\hfill\Box}
+\newcommand{\HW}{\ensuremath{{\otimes}}}
+\newcommand{\eqdef}{\stackrel{\text{\upshape\tiny def}}{=}}
+\newcommand{\coleq}{\ensuremath{\mathrel{\mathop:}=}}
+\renewcommand{\labelenumi}{(\theenumi)}
+\newcommand{\InsertList}[1]{%
+\input{listok#1}
+}
+\newcommand{\nspace}{\hspace{0pt}}
+\newcommand{\nbdash}{\nobreakdash-\nspace}
+\newcommand{\ul}{\underline}
+
+\newtheorem{Thm}{Теорема}[section]
+\renewcommand{\theThm}{\arabic{Thm}}
+\newtheorem{Lemma}{Лемма}[section]
+\renewcommand{\theLemma}{\arabic{Lemma}}
+
+\theoremstyle{remark}
+\newtheorem*{SketchOfProof}{Набросок доказательства}
+
+\theoremstyle{definition}
+\newtheorem{Ex}{Пример}
+\newtheorem{Exec}{Упражнение}
+\newtheorem*{Sol}{Решение}
+\newtheorem{Prop}{Утверждение}
+\newtheorem*{Remark}{Замечание}
+\newtheorem{NumRemark}{Замечание}
+\newtheorem*{Algo}{Алгоритм}
+\newtheorem{NumAlgo}{Алгоритм}
+\newtheorem{Def}{Определение}[section]
+\renewcommand{\theDef}{\arabic{Def}}
+\newtheorem*{Task}{Задача}
+
+\title{Методы алгебраической геометрии в защите информации}
+\author{А.~Э.~Маевский}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\section{Элементы теории Галуа}
+\begin{center}
+\pgfdeclareimage[height=8cm]{Galois}{Galois}%
+\pgfuseimage{Galois}
+\end{center}
+\begin{Def}
+Алгебраическое расширение $L/K$ называется \emph{нормальным}, если каждый
+неприводимый над $K$ многочлен, имеющий в $L$ корень, разлагается над $L$ на
+линейные множители.
+\end{Def}
+
+\begin{Def}\emph{Группой автоморфизмов поля $K$} называется множество
+$$
+    \Aut(K) \eqdef \{ \phi \colon K \to K \}
+$$
+с операцией композиции.
+\end{Def}
+
+\begin{Exec}
+Доказать, что $\Aut(K)$ группа.
+\end{Exec}
+
+\begin{Exec}
+Пусть $G$ — подгруппа в $\Aut(K)$. Доказать, что
+$$
+    K^G \eqdef \{ x \in K \mid \forall g \in G \colon g(x) = x \}
+$$
+подполе в $K$.
+\end{Exec}
+
+\begin{Def}
+Группа автоморфизмов $L$ над $K$ определяется так:
+$$
+    \Aut(L / K) = \Aut_K(L) = \{ \phi \in \Aut(L) \mid \phi|_K = \Id_K \}.
+$$
+\end{Def}
+
+\begin{Thm}
+Пусть $L/K$ — нормальное алгебраическое. Тогда
+$$
+    \forall g \in \Aut(\overline L / K)\colon \: g|_L \in \Aut(L / K).
+$$
+\end{Thm}
+\begin{proof}
+Т.к. $L$ — алгебраическое, то
+\[
+    \forall \alpha \in L \; \exists m_{\alpha}(x) \in K[x] 
+    \text{ — минимальный многочлен для $\alpha$.}
+\]
+Пусть $\alpha \in L$. Все корни $m_{\alpha}(x)$ принадлежат $\overline L$ и,
+более того, $L$ (нормальность).
+
+Пусть $g \in \Aut(\overline L / K)$. 
+$$
+    0 = g(\alpha) = g(m_\alpha (\alpha)) = \ldots = m_\alpha (g(\alpha)).
+$$
+Следовательно, $g(\alpha)$ — корень $m_\alpha(x)$, а значит, принадлежит
+$\overline L$ и $L$.
+\end{proof}
+
+\begin{Thm}
+Пусть $L/K$ — произвольное алгебраическое расширение. Тогда
+$$
+    \forall g \in \Aut(L/K) \colon \; 
+    \exists \tilde{g} \in \Aut(\overline{L} / K)\colon \tilde{g}|_L = g.  
+$$ 
+\end{Thm}
+\begin{proof}
+По Т. о вложении алг. расширений $g \in \Aut(L / K)$ рассмотрим как вложение $g
+\colon L \hto \overline L$, причём $g|_K = \sigma \colon K \hto \ol L$. Разным
+$g$ соответствуют различные вложения.
+\end{proof}
+
+\begin{Thm}[о мощности $\Aut(L/K)$]
+Пусть $L / K$ — конечное алгебраическое расширение, тогда
+$$
+    |\Aut(L/ K) | \leqslant [L:K]. 
+$$
+\end{Thm}
+\begin{proof}
+Пусть $\alpha \in \ol K$, существует минимальный над $K$ многочлен $\alpha$.
+$$
+    K(\alpha) \cong K[x] / (m_\alpha (x)).
+$$
+Пусть $d = \deg m_\alpha(x)$. Пусть $\alpha = \alpha_1, \alpha_2, \ldots ,
+\alpha_s$ — различные корни $m_\alpha(x)$ в $\ol K$ ($s \leqs d$). Для
+каждого $i \in [1,s]_\N$ существует единственный $\sigma_i \colon K(\alpha)
+\hto \ol K$ и других вложений $\hat \sigma \colon K(\alpha) \hto \ol K$, $\hat
+\sigma |_K = \sigma$ нет.
+
+Это рассуждение продолжается по индукции для любого конечного алгебраического
+расширения (которое, как известно, можно рассматривать как последовательность
+простых расширений).
+\end{proof}
+
+\begin{Def}
+Число $s$ различных вложений $K(\alpha)$ в $\ol K$ называется \emph{степенью
+сепарабельности $\alpha$}. Обозначение: $\deg_s(K(\alpha) / K) = [K(\alpha) :
+K]_s$
+\end{Def}
+
+\begin{Remark}
+Степень сепарабельности $\alpha \in K$ совпадает с количеством корней
+минимального многочлена $\alpha$ в $\ol K$.
+\end{Remark}
+
+\begin{Exec}
+$L/K$ — алгебраическое расширение. $\phi\colon L \to L$ — гомоморфизм полей над
+$K$. Тогда $\phi$ — изоморфизм.
+\end{Exec}
+
+\begin{Sol}
+Гомоморфизм $\phi$ переводит каждый элемент $\alpha\in L$ в сопряжённый с ним.
+Так как сопряжённых — конечное число, получается инъективный гомоморфизм
+\emph{конечномерного} векторного пространства $K(\alpha)$, который (факт лин.
+алгебры) является изоморфизмом.
+\end{Sol}
+
+\begin{Remark}
+В случае трансцендентных расширений предыдущее утверждение, вообще говоря, не
+верно.
+\end{Remark}
+
+Распространим понятие сепарабельности на произвольные алгебраические расширения.
+
+\begin{Def}
+$L/K$ — конечное алг. расширение, $\sigma\colon K \to \ol K$. \emph{Степень
+сепарабельности $L$ над $K$} это количество различных вложений $\hat{\sigma}
+\colon L \to \ol K$, таких что $\hat \sigma |_K = \sigma$. Расширение $L/K$ называется сепарабельным,
+если $[L:K]_s = [L:K]$.
+\end{Def}
+
+\begin{Prop}
+\begin{equation}\label{norm-sep-inequality}
+    |\Aut(L/K)| \leq [L:K]_s \leq [L:K].
+\end{equation}
+\end{Prop}
+Первое неравенство: два различных вложения $L \to \ol K$ могут не давать
+два различных автоморфизма $L$, если образы вложений не совпадают.
+
+В двойном неравенстве~\eqref{norm-sep-inequality} равенство слева — признак
+нормальности расширения, справа — сепарабельности.
+
+\begin{Thm}
+\[
+    [M:K]_s = [M:L]_s \cdot [L:K]_s
+\] 
+\end{Thm}
+\begin{proof}
+$\sigma\colon K \hto \ol K$. $\sigma_i\colon L \hto \ol K$, $\sigma_i|_K =
+\sigma$. $m = [L:K]_s$, $n = [M:K]_s$, $t = [M:L]_s$. $\tau_{ij}\colon M \hto
+\ol K$, $\tau_{ij}|_L = \sigma_i$ (Здесь мы используем $\ol L = \ol K$, иначе, в соответствии с опр.
+сепарабельности, следовало бы писать $\tau_{ij}\colon M \hto \ol L$.)
+
+Надо показать, что
+\[
+    \tau_{ij} \neq \tau_{lk} \quad \text{при } i\neq l, j\neq k.
+\]
+Если $\tau_{ij} = \tau_{lk}$, то $\sigma_i = \tau_{ij}|_L = \tau_{lk}|_L =
+\sigma_l$, а значит, $i=l$. Но тогда $j=k$.
+
+Имеем $[M:K]_s \geq t\cdot m$. Осталось показать обратное нестрогое неравенство.
+Пусть $\rho \colon M \hto \ol K$, $\rho|_K=\sigma$. Но $\rho|_L=\sigma_i$ для
+некоторого $i \in [1,m]_\N$. Следовательно $\rho = \tau_{ij}$ для некоторого
+$j$.
+\end{proof} 
+
+\begin{Def}Многочлен $f(x) \in K[x]$ называется \emph{сепарабельным}, если все
+его корни в $\ol K$ различны.
+\end{Def}
+
+\begin{Lemma}
+Любой неприводимый многочлен над полем характеристики $0$ сепарабелен.
+\end{Lemma}
+\begin{proof}Производная имеет конечную степень (не равна $0$) и потому взаимно
+проста с неприводимым многочленом.
+\end{proof}
+
+\begin{Lemma}
+Пусть $f(x) \in K[x]$ неприводимый. $f(x) \in K[x]$ не сепарабелен тогда и
+только тогда, когда $\chr K = p > 0$, $f(x) = g(x^{p^n})$ и $g(x)$ неприводим и сепарабелен над $K$.
+\end{Lemma}
+
+\begin{Prop}
+Несепарабельные неприводимые многочлены могут существовать только в полях $K$,
+таких что $\chr K = p > 0$ и $K^p \neq K$ ($K^p \eqdef \{a^p \mid a \in K\}$).
+\end{Prop}
+\begin{proof}
+Несепарабельный неприводимый многочлен $f(x) \in K[x]$ имеет вид $f(x) =
+g(x^{p^n})$, но в поле $K$, таком что $K^p = K$, можно извлекать корни $p$-ой степени, а значит
+$f(x) = \left ( h(x) \right )^{p^n}$ что противоречит неприводимости.
+\end{proof}
+
+\begin{Ex}
+Пусть $K=\F_p(t)$, $f(x) = x^p + t$ — неприводимый несепарабельный многочлен.
+\end{Ex}
+
+\begin{Lemma}
+$K \subset L \subset M$ — произвольные алгебраические расширения. Если $M/K$
+сепарабельно, то $M/L$ и $L/K$ сепарабельны.
+\end{Lemma}
+
+\begin{proof}
+$[M:L]_s[L:K]_s = [M:K]_s = [M:K] = [M:L][L:K]$, но $[\cdot]_s\leq[\cdot]$,
+следовательно, степени и степени сепарабельности промежуточных расширений равны.
+\end{proof}
+
+Рассмотрим подробнее несепрабельные элементы (алгебраические элементы,
+минимальные многочлены которых несепарабельны).
+
+\begin{Thm}
+Пусть $\alpha$ — алгебраический и несепарабельный элемент над полем $K$
+характеристики $p$, $m_\alpha(x) = g(x^{p^\mu})$. Тогда $\alpha^{p^\mu}$ сепарабельный и
+\[
+    [K(\alpha):K]_s = \deg g(x), \quad [K(\alpha):K] = p^\mu [K(\alpha):K]_s.
+\]
+\end{Thm}
+
+\begin{proof}
+\ldots
+\[
+    f(x) = g(x^{p^\mu}) = \prod_{i=1}^m (x^{p^\mu} - \alpha^{p^\mu})
+     = \prod_{i=1}^m (x - \alpha)^{p^\mu}.
+\]
+\end{proof}
+
+\begin{Def} 
+$L/K$ — конечное алгебраическое расширение. \emph{Индекс несепарабельности}:
+\[
+    [L : K]_i = \frac {[L:K]} {[L:K]_s}.
+\] 
+Если $[L:K]_i$ максимально, то расширение называется \emph{чисто
+несепарабельным}. Если $[K(\alpha):K]_i$ максимально, то $\alpha$ называется
+\emph{чисто несепарабельным}. 
+\end{Def}
+
+\begin{Def}
+Элемент $\alpha \in L$ называется \emph{чисто несепарабельным}, если
+\end{Def}
+
+\begin{Lemma}\label{pure-insep-elem-criteria}
+Элемент $\alpha\in L$ чисто несепарабелен тогда и только тогда, когда
+\[
+    m_\alpha(x) = x^{p^\mu} - a, \quad a \in K.
+\]
+\end{Lemma}
+
+\begin{Def}
+Пусть $L/K$ — произвольное (необязательно конечное) алгебраическое расширение.
+Оно называется \emph{чисто несепарабельным}, если для любого $\alpha \in L$:
+\[
+    m_\alpha(x) = x^{p^\mu} - a_\alpha \in K[x].
+\]
+\end{Def}
+
+\begin{Exec}
+Пусть $K \subset L \subset M$ — башня алгебраических расширений. Показать, что
+$M/K$ чисто несепарабельно тогда и только тогда, когда чисто несепарабельны
+$M/L$ и $L/K$.
+\end{Exec}
+
+\begin{Prop}
+Пусть $L/K$ — алгебраическое расширение. Обозначим $L^s$ — множество всех
+сепарабельных элементов $L$. Тогда $L^s$ — поле.
+\end{Prop}
+
+\begin{Prop}
+$L^s/K$ — сепарабельно, а $L/ L^s$ — чисто несепарабельно.
+\end{Prop}
+
+\begin{proof}
+Пусть $\alpha \in L$ — несепарабельный. $m_\alpha(x) = g(x^{p^\mu})$, $g(x) \in
+K[x]$ — неприводимый и сепарабельный. $\alpha^{p^\mu} \in L^s$. $x^{p^\mu} -
+\alpha^{p^\mu} \in L^s[x]$. По лемме~\eqref{pure-insep-elem-criteria} $\alpha$~—
+чисто несепарабельным.
+\end{proof}
+
+\begin{Def}
+Алгебраическое расширение $L/K$ называется \emph{расширением Галуа}, если оно
+нормально и сепарабельно. \emph{Группой Галуа} $\Gal(L/K)$ расширения Галуа
+$L/K$ называется его группа автоморфизмов.
+\end{Def}
+
+\begin{Thm}
+Пусть $L/K$ — конечное расширение Галуа. Существует взаимно однозначное
+соответствие между подгруппами $\Gal(L/K)$ и подполями между $L$ и $K$:
+\[
+    H \leftrightarrow L^H (=\{x\in L \mid Hx=x\}),
+\]
+при этом нормальным подгруппам соответствуют нормальные расширения $K$.
+\end{Thm}
+
+\begin{Def}
+Поле $K$ называется совершенным, если любое его алгебраическое расширение
+сепарабельно.
+\end{Def}
+
+\begin{Def}
+Абсолютной группой Галуа поля $K$ называется группа
+$\Aut\left((\ol K)^s / K\right)$.
+\end{Def}
+
+\begin{Exec}
+$(\ol K)^s / K$ — нормально.
+\end{Exec}
+\end{document}

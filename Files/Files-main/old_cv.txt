@@ -1,0 +1,91 @@
+Pelenitsyn Artem
+
+Born: 1986, Rostov-na-Donu, Russia. Native language: Russian. Current place of living: Rostov-na-Donu, Russia.
+
+Education: Master of Science in Applied Mathematics and Computer Science -- 2009.
+
+Alma mater: Southern Federal University (SFedU), Faculty of Mathematics, Mechanics and Computer Sciences (MMCS).
+
+Occupation: Faculty of Mathematics, Mechanics and Computer Sciences at SFedU, teaching assistant 2010-2011.
+
+Homepage: http://mmcs.sfedu.ru/~ulysses/
+
+======= Papers =======
+Deundyak V., Pelenitsyn A. Operator-theoretic approach to Berlekamp--Massey Algorithm, // Izvestia vuzov (Universities' Bulletin), Sev.-Kav. Region (Caucasus Region), Estestvennie Nauki (Sciences), 2011, No. 3, pp. 11–13.
+Preprint in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/2011-Izv-vuzov-BMSA-through-operator-theory.pdf
+
+Mayevskiy A., Pelenitsyn A. Software Implementation of Algebraic-Geometry Codec using Sakata algorithm, // Izvestia Yufu (Southern Federal University Bulletin), Technology Sciences, 2008, No. 8, pp. 196–198.
+In Russian: http://mmcs.sfedu.ru/~ulysses/Papers/2008-2-Izvestia-AGCodec-Sakata.pdf
+
+----- Papers In Conference Transactions -----
+Pelenitsyn A. On Implementation of n-Dimensional BMS-algorithm Using Generic Programming // Transactions of Scientific School of I.B. Simonenko, 2010, pp. 197–203.
+Preprint in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/2010-2-Sbor-Simonenko-BMSA-impl.pdf
+
+Mayevskiy A., Pelenitsyn A. Methodic Supply and IT-infrastructure for Teaching Low-Level Programming // Transactions of Scientific-Methodic Conference "Modern Information Technologies in Education", 2010, pp. 210–212.
+Preprint in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/2010-1-SITO-abstract-preprint.pdf
+
+Mayevskiy A., Pelenitsyn A. On Software Implementation of Algebraic-Geometry Codec using Sakata algorithm, // Transactions of X International Conference on Information Security and Safety, 2008, pp. 55–57.
+
+Pelenitsyn A. On Implementation of Decoder for a Class of Algebraic-Geometry Codes on Projectve Curves using Sakata algorithm, // Transactions of the Conference "Week of Science" in Southern Federal University, 2008, vol. 1, pp. 55–57.
+Preprint in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/2008-1-SciWeek-Decoder-Sakata-preprint.pdf
+
+Bragilevsky V., Mihalkovich S., Pelenitsyn A. Building Web-portal for Information and Education purposes on Computing Department // Transactions of Scientific-Methodic Conference "Modern Information Technologies in Education", 2008, pp. 48–49.
+Preprint in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/2008-3-SITO-IT-portal-preprint.pdf
+
+======= Conference Talks =======
+Scientific-Methodic Conference "Modern Information Technologies in Education", 2010 -- talk "Methodic Supply and IT-infrastructure for Teaching Low-Level Programming"
+http://conf.sfedu.ru/inftech2010/ in Russian
+Slides in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/Talks/2010-SITO-Assembly-programming.pdf
+
+Scientific-Methodic Conference "Modern Information Technologies in Education", 2008 -- talk "Building Web-portal for Information and Education purposes on Computing Department"
+http://conf.sfedu.ru/inftech2008/ in Russian
+Slides in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/Talks/2008-SITO-IT-portal-slides.pdf
+
+International Conference on Information Security and Safety, 2008, Taganrog, Russia
+http://bit.tti.sfedu.ru/?q=en/node/15 or expanded version in Russian: http://bit.tti.sfedu.ru/?q=ru/node/6
+
+Conference "Week of Science" in Southern Federal University, talk "On Implementation of Decoder for a Class of Algebraic-Geometry Codes on Projectve Curves using Sakata algorithm" (Diploma for best talk).
+Slides in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/Talks/2008-SFedU-SciWeek-slides.pdf
+
+======= Seminar Talks =======
+Minicourse on Galois Theory, spring 2011, Algebra seminar, Faculty for Mathematics, Mechanics and Computer Science (MMCS Faculty), Southern Federal University.
+
+Talks "Foundations for programming Languages", "Automata and Formal Languages", spring 2011, on seminar "Introduction to Theoretical Computer Science", MMCS Faculty, Southern Federal University.
+FPL talk slides in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/Talks/2011-ITCS-FPL.pdf
+
+Talk "Higher-Order Computations and Model Checking", 2009, Interchair seminar on Computer Science, MMCS Faculty, Southern Federal University.
+Slides in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/Talks/2009-10-19-hoc-model-checking.pdf
+
+Talk "On multi-dimensional version of Berlekamp-Massey algorithm", 2009, Seminar on Mathematical Methods in Information Safety and Security, MMCS Faculty, Southern Federal University.
+Slides in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/Talks/2009-10-16,30-bmsa.pdf
+
+Talk "Inductive Data Types in Programming", 2009, Seminar on Category Theory, MMCS Faculty, Southern Federal University.
+Slides in Russian: http://mmcs.sfedu.ru/~ulysses/Papers/Talks/2009-03-19-CT-inducttypes.pdf
+
+Talk "Spring Framework", 2008, Rostov Java User Group, Computer Center of Southern Federal University.
+Slides in Russian (xul format -- to be run in Mozilla Firefox browser): http://mmcs.sfedu.ru/~ulysses/Papers/Talks/2008-RostovJUG-SpringFramework.zip
+
+======= Summer/Winter schools =======
+Summer School "Algebra and Geometry", 2011, Yaroslavl', Russia
+http://bogomolov-lab.ru/SHKOLA/ in Russian
+
+Microsoft Algorithms and Data Structures Summer School, 2010, Saint-Petersburg, Russia
+http://logic.pdmi.ras.ru/midas/en/about
+
+Higher School of Economics Winter School Winter School on Applied Mathematics and Computer Science, 2010, Moscow region, Russia
+
+Marktoberdorf Summer School "Logics and Languages for Reliability and Security", 2009, Marktoberdorf, Germany
+http://asimod.in.tum.de/2009/index.shtml
+
+======= Teaching =======
+Functional programming labs -- MMCS/SFedU -- spring 2010/11.
+
+Programming basics labs -- MMCS/SFedU -- 2008/9, 2010/11.
+
+Programming languages labs -- MMCS/SFedU -- fall 2008/9, fall 2010/11.
+
+Automata and Languages, teaching assistantship -- MMCS/SFedU -- spring 2009/10.
+
+Microprogramming/Assembler programming labs -- MMCS/SFedU -- fall 2009/10.
+
+Geometry and algebra, teaching assistantship -- MMCS/SFedU -- fall 2009/10.

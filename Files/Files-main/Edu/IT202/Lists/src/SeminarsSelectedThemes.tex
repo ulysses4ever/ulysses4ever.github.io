@@ -1,0 +1,269 @@
+% файл должен быть включён в index.tex:
+% \input{SeminarsSelectedThemes}
+
+\lfoot{\scriptsize ЮФУ, Мехмат, ИТ}
+\rfoot{}
+\lhead{\footnotesize Теория автоматов и формальных языков}
+\rhead{\footnotesize\emph{весна 2009/2010}}
+
+
+\begin{center}
+{\bfseries\Large Некоторые вопросы, рассмотренные на практических занятиях}
+\end{center}
+%\begin{center}
+%{\large Подробное описание}
+%\end{center}
+\section{Лемма о накачке}
+\begin{Thm}[«Лемма о накачке» / «Лемма о разрастании»] Пусть $L$ — регулярный язык.
+Тогда существует такая константа $n\in \mathbb N$, что для любого слова $w \in L$,
+такого что $|w|\geqslant n$, существует такое разбиение $w=xyz$ слова $w$, что:
+\begin{enumerate}
+  \item\label{ynotempty} $y \neq \varepsilon$;
+  \item\label{shortprefix} $|xy| \leqslant n$;
+  \item\label{pumping} $\{ xy^kz \mid k \geqslant 0\} \subset L$.
+\end{enumerate} 
+\end{Thm}
+\begin{proof}
+Так как $L$ регулярный язык, то существует детерминированный конечный автомат
+$\mathcal A=(Q, \Sigma, \delta, q_0, F)$ с $|Q|=N$ состояниями, распознающий
+язык $L$. Пусть $w \in L$ и $|w|=N+1$. Подадим на вход автомату $\mathcal A$
+слово $w$. Очевидно, существует состояние $q \in Q$, в котором автомат окажется 
+дважды, читая это слово (принцип Дирихле / принцип голубятни). Разобьём слово
+$w$ на три части $w=xyz$, так что: $$
+    (q_0, xyz) \vdash^*  (q, yz) \stackrel{\bigtriangleup}{\vdash^*} (q, z)
+    \vdash^* (q_F, \varepsilon), 
+$$
+где $q_F \in F$. Покажем, что для любого целого $k \geqslant 0$ автомат
+распознает слово $xy^kz$. Действительно, последовательность переходов при чтении
+цепочек $x$ и $z$ остаётся такой же, как для слова $w$. Часть $y^k$ читается
+$k$\nbdash{}кратным повтором последовательности переходов $\bigtriangleup$. Таким
+образом, $\{ xy^kz \mid k \geqslant 0\} \subset L$ и выполнено
+условие~\eqref{pumping}.
+
+Части $x, y$ слова $w$ удовлетворяют
+условиям~\eqref{ynotempty}–\eqref{shortprefix} по построению. Полагая
+$n=N+1$, получаем выполненными все условия теоремы.
+\end{proof}
+
+\section{Удаление бесполезных символов}
+\begin{Def}Пусть дана КС-грамматика $G=(\Sigma, N, \mathcal P, S \in N)$.
+Говорят, что символ $X \in \Sigma \cup N$ 
+\begin{enumerate}
+    \item \emph{полезный в $G$}, если
+    $$
+        \exists \alpha, \beta \in (\Sigma \cup N)^{\ast} \:
+        \exists w \in \Sigma^* \colon \quad
+        S \Rightarrow^{\ast}_G \alpha X \beta \Rightarrow^{\ast}_G w. 
+    $$
+    \item \emph{порождающий в $G$}, если
+    $$
+        \exists w \in \Sigma^* \colon \quad X \Rightarrow^{\ast}_G w 
+    $$
+    \item  \emph{достижимый в $G$}, если
+    $$
+        \exists \alpha, \beta \in (\Sigma \cup N)^{\ast} \colon \quad 
+        S \Rightarrow^{\ast}_G \alpha X \beta
+    $$
+\end{enumerate}
+\emph{Бесполезным} называется любой символ, не являющийся полезным.
+\end{Def}
+
+\begin{Thm} 
+Если к КС\nbdash{}грамматике $G$, такой что $L(G) \neq \es$,
+\emph{последовательно} применить два преобразования:
+\begin{enumerate}
+  \item удалить символы, не являющиеся порождающими,
+  \item удалить символы, не являющиеся достижимыми,
+\end{enumerate}
+то будет получена грамматика, не содержащая бесполезных символов.
+\end{Thm}
+\begin{proof}
+Обозначим грамматику, получившуюся после первого шага, $G_1 = (N_1, \Sigma_1,
+\mathcal P_1, S)$ и грамматику, получившуюся после второго шага, $G_2 = (N_2,
+\Sigma_2, \mathcal P_2, S)$ (символ $S$ не будет удaлён из грамматики после
+первого шага благодаря требованию $L(G) \neq \es$ и после второго шага~— по
+определению достижимого символа). Пусть $X \in N_2 \cup \Sigma_2$. Покажем, что
+$X$~— полезный в $G_2$ символ. Для этого необходимо найти $\alpha, \beta \in
+(N_2 \cup \Sigma_2)^*$ и $w' \in \Sigma_2^*$, такие что
+\begin{equation}\label{isxusefull}
+    S \Rightarrow^{*}_{G_2} \alpha X \beta \Rightarrow^{*}_{G_2} w'.
+\end{equation}
+Так как $X$ не был удалён после первого шага, то он является порождающим в
+исходной грамматике $G$, то есть существует вывод $X \Rightarrow^*_G w$ для
+некоторого $w \in \Sigma^*$. Очевидно, что каждый символ этого вывода рано или
+поздно переходит в один из символов $w$ или в $\varepsilon$, то есть также
+является порождающим в $G$, а значит, попадает в $G_1$. Потому этот вывод можно
+целиком перенести в $G_1$:
+\begin{equation}\label{xgen}
+    X \Rightarrow^*_{G_1} w,
+\end{equation}
+где $w \in  \Sigma_1^*$.
+
+Так как $X$ не был удалён после второго шага, то он достижим в грамматике
+$G_1$, то есть существует вывод $S \Rightarrow^{*}_{G_1} \alpha X \beta$
+для некоторых $\alpha, \beta \in (N_1 \cup \Sigma_1)^*$. Очевидно, что каждый
+символ в этом выводе получен из $S$ применением правил грамматики $G_1$, то
+есть является достижимым в $G_1$, а значит, попадает в $G_2$. Потому этот вывод
+можно целиком перенести в $G_2$:
+\begin{equation}\label{xreach}
+    S \Rightarrow^{*}_{G_2} \alpha X \beta,
+\end{equation}
+где $\alpha, \beta \in (N_2 \cup \Sigma_2)^*$.
+
+Так как $X$ достижим в $G_1$, то и каждый символ вывода~\eqref{xgen} достижим в
+$G_1$, а значит, этот вывод целиком переносится в $G_2$:
+\begin{equation}\label{xreachgsec}
+    X \Rightarrow^*_{G_2}w, 
+\end{equation}
+где $w \in  \Sigma_2^*$.
+
+Так как $\alpha, \beta \in (N_2 \cup \Sigma_2)^*$, то к цепочкам $\alpha$ и
+$\beta$ применимы те же рассуждения, что к символу $X$, то есть можно получить
+результат, аналогичный~\eqref{xreachgsec}:
+\begin{align}
+\exists u \in \Sigma_2^*\colon \alpha \Rightarrow^{*}_{G_2} u,\\
+\exists v \in \Sigma_2^*\colon \beta \Rightarrow^{*}_{G_2} v.
+\label{alphabetagen}
+\end{align}
+Объединяя результаты~\eqref{xreach}–\eqref{alphabetagen}, получаем:
+$$
+    S \Rightarrow^{*}_{G_2} \alpha X \beta \Rightarrow^{*}_{G_2} uwv,
+$$
+то есть выполнено~\eqref{isxusefull}.
+\end{proof}
+
+\section{Нахождение языка конечного автомата методом исключения состояний}
+Метод исключения состояний подразумевает последовательное удаление вершин графа
+переходов автомата, которое протоколируется с помощью записи на оставшихся дугах
+регулярных выражений (можно считать, что в изначальном графе на дугах
+простейшие регулярные выражения — однобуквенные или пустые множества для
+отсутствующих дуг).
+
+\textbf{Процедура исключения состояния $s$:} для каждых двух (необязательно
+различных, но несовпадающих с $s$) состояний $p$ и $q$, таких что существует
+фрагмент графа переходов автомата $p \xrightarrow{R_1} s \xrightarrow{R_2} q$,
+где $R_1$, $R_2$ — некоторые регулярные выражения (метки дуг переходов),
+прибавить к метке дуги $p \xrightarrow{R_3} q$ выражение $R_1R^{\ast}R_2$, где
+$R$ это метка петли на вершине $s$ (если петля на $s$ и/или дуга $p \to q$
+отсутствовали в исходном графе, то можно считать, что их метки равны
+$\varnothing$) — таким образом получена дуга с меткой: $p \xrightarrow{R_3 +
+R_1R^{\ast}R_2} q$. Удалить все просмотренные дуги $p \to s$ и $s \to q$,
+инцидентные вершине $s$. После этого $s$ стала изолированной или
+(неориентированно) висячей и её можно удалить (с входящими или выходящими из неё
+дугами, если таковые имеются).
+
+\begin{Algo}[нахождение языка автомата методом исключения состояний]
+\nspace\\
+\textsc{Вход}: Конечный автомат $\mathcal A = (Q, \Sigma, \delta, q_0, F)$,
+заданный графом переходов.\\
+\textsc{Выход}: Регулярное выражение, описывающее язык  автомата.
+\begin{enumerate}
+\renewcommand{\labelenumi}{Шаг \theenumi{}.}
+  \item\label{Final} Для каждого финального состояния $q\in F$, отличного от
+  начального $q_0$, применять процедуру исключения состояний до тех пор, пока не останутся
+  две вершины: $q_0$ и $q$. В результате получится подобный автомат: 
+  \begin{center}
+  \begin{tikzpicture}[node distance=3cm,auto,%
+                        every state/.style={thick},>=stealth']
+    \node[state,initial,initial text=] (q_0) {$q_0$};
+    \node[state,accepting] (q) [right of=q_0] {$q$};
+
+    \path[->] 
+        (q_0) edge [loop above] node 
+            {$R$} ()
+        (q_0) edge[bend left=40] node 
+            {$S$} (q)
+        (q) edge [loop above] node 
+            {$U$} 
+            ()
+        (q) edge[bend left=40] node 
+            {$T$} (q_0);
+    \end{tikzpicture}
+    \end{center}
+    Допускаемый им язык описывается так:
+    $$(R+SU^{\ast}T)^{\ast}SU^{\ast}.$$
+    
+    \item\label{InitIsFinal} Если начальное состояние $q_0$ является финальным
+    ($q_0\in F$), применять процедуру исключения состояний, пока не останется
+    единственная вершина $q_0$. В результате получится подобный автомат:
+    \begin{center}
+    \begin{tikzpicture}[node distance=3cm,auto,%
+                        every state/.style={thick},>=stealth'] 
+        \node[state,initial,initial text=,accepting] (q_0) {$q_0$};
+        
+        \path[->] 
+            (q_0) edge [loop above] node 
+                {$R$} ();
+    \end{tikzpicture}
+    \end{center}
+    Допускаемый им язык описывается так: $R^{\ast}$.
+
+    \item Язык исходного автомата определяется как сумма всех регулярных выражений,
+    полученных на шагах \eqref{Final}–\eqref{InitIsFinal}.
+    \end{enumerate}
+\end{Algo}
+
+\section{Свойства замкнутости класса регулярных языков}
+\begin{Thm}Класс регулярных языков замкнут относительно операций: объединения,
+конкатенации, итерации, дополнения, пересечения, разности.
+\end{Thm}
+\begin{proof}Для регулярных языков $L_1$, $L_2$ рассмотрим описывающие
+их регулярные выражения $\RE(L_1)$, $\RE(L_2)$. Язык объединения
+(соответственно, конкатенации, итерации) описывается выражением $\RE(L_1) +
+\RE(L_2)$ (соответственно, $\RE(L_1)\RE(L_2)$, $\RE(L_1)^\ast$), а значит,
+регулярен.
+
+Для регулярного языка $L$ построим распознающий его детерминированный конечный
+автомат $\mathcal A = (Q, \Sigma, \delta, q_0, F)$ ($L=L(\mathcal A)$). Легко
+видеть, что автомат $\widetilde{\mathcal A} = (Q, \Sigma, \delta, q_0, Q
+\setminus F)$ допускает дополнение $\overline L = \Sigma^\ast \setminus L$ языка
+$L$, которое является, таким образом, регулярным языком.
+
+Поскольку справедливо $L_1 \cap L_2 = \overline{\overline L_1 \cup \overline
+L_2}$, язык $L_1 \cap L_2$ регулярен по доказанному выше. Аналогичное можно 
+заключить из равенства $L_1 \setminus L_2 = L_1 \cap \overline{L_2}$.
+\end{proof}
+
+% \section{Алгоритм Кока—Янгера—Касами решения проблемы принадлежности для
+% КС-языков}%\nbdash{}
+% \begin{Algo}[Кок—Янгер—Касами, «CYK\nbdash{}алгоритм»]
+% \nspace\\
+% \textsc{Вход}: грамматика $G=(\Sigma, N, \mathcal P, S \in N)$ в НФХ,
+% слово $w \in \Sigma^*$.\\
+% \textsc{Выход}: да, $w \in L(G)$ / нет, $w \not \in L(G)$.\\
+% \textsc{Метод}: последовательное определение нетерминалов, выводящих
+% всевозможные подстроки $w$ всё большей длины.
+% 
+% Пусть $w = w_1 \ldots w_n$. Для всех $1 \leqslant i \leqslant j \leqslant n$
+% определим множество 
+% $$
+%     N_{ij} = \{ A \in N \mid A \Rightarrow^*_G w_i \ldots w_j \}.
+% $$
+% Очевидно, что $w \in L(G) \Leftrightarrow S \in N_{1n}$. Приведём алгоритм
+% построения множеств $N_{ij}$.
+% \begin{codebox}
+% \zi\For $i \gets 1$ \To $n$
+% \zi     \Do
+%         $N_{ii} \gets \{ A \in N \mid A \to w_i \in \mathcal P  \}$ 
+%         \Comment Подстроки $w$ длины $1$
+%         \End
+% \zi\For $s \gets 2$ \To $n$ \Comment Цикл по длине подстроки
+% \zi     \Do
+%         \For $i \gets 1$ \To $n - s + 1$ \Comment Цикл по месту начала подстроки
+% \zi         $j \gets i + s - 1$ 
+%             \Comment Позиция конца подстроки с началом в $w_i$ длины $s$
+% \zi         $N_{ij} \gets \{ A \in N \mid A \to BC \in \mathcal P; \;
+%                 \exists k \in [i, j-1]_{\mathbb Z} \colon B \in N_{ik}, \; 
+%                 C \in N_{k+1 j} \} $
+% \end{codebox}
+% \end{Algo}
+% \begin{NumRemark}
+% Алгоритм удобно выполнять, заполняя таблицу с $N_{ij}$ в ячейках. Ячейки таблицы
+% расположены в системе координат $(i,s)$, в позиции $(i,s)$ находится множество
+% $N_{i, i+s-1}$.
+% \end{NumRemark}
+% 
+% \begin{NumRemark}[о сложности CYK-алгоритма]
+% Нетрудно видеть, что сложность CYK\nbdash{}алгоритма может быть оценена как
+% $O(n^3 \cdot |\mathcal P|)$.
+% \end{NumRemark} 

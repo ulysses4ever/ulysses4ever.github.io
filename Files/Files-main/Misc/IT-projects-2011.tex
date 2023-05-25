@@ -1,0 +1,40 @@
+\documentclass[a4paper,12pt]{article}
+
+\lccode`\-=`\-
+\defaulthyphenchar=127
+
+\usepackage[utf8]{inputenc}
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{amssymb, amsmath}
+\usepackage{amsthm} % for {proof}
+\usepackage{indentfirst}
+\usepackage{cmap} % copy text from pdf
+%\usepackage[T2A]{fontenc}
+\usepackage{geometry}
+\geometry{a4paper}
+
+\usepackage[usenames]{color}
+\usepackage{colortbl}
+
+\usepackage[russian]{babel}
+
+\usepackage[colorlinks,urlcolor=cyan]{hyperref}
+\usepackage{url}
+\usepackage{fancyhdr}
+
+
+\pagestyle{fancy}
+
+\newcommand{\nspace}{\hspace{0pt}}
+\newcommand{\nbdash}{\nobreakdash-\nspace}
+
+\renewcommand{\thesubsection}{\arabic{subsection}.}
+
+\frenchspacing
+
+\begin{document}
+\subsection{Комбинаторика на словах}
+Относительно молодой раздел дискретной математики, изучающий свойства формальных языков и отдельных слов средствами комбинаторики. Основополагающим трудом в этой области является серия из трёх книг M.~Lothaire. Здесь встречается значительное число интересных алгоритмов. Например, алгоритмы для взвешенных автоматов (аналогичные алгоритмам для обычных конечных автоматов) и их использование для статистической обработки естественных языков (M.~Lothaire, Applied Combinatorics On Words, chap.~4). Кроме реализации отдельных алгоритмов важной частью работы стало бы написание обзора развития дисциплины по первой книге M.~Lothaire, так как эта область, насколько мне известно, плохо представлена в русскоязычной литературе. 
+
+\end{document}

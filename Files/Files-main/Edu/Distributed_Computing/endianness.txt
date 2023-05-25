@@ -1,0 +1,8 @@
+#ifdef WIN32
+#include <winsock.h>
+#else
+#include <netinet/in.h>
+#endif
+
+const int i = 1;
+#define is_bigendian() ( (*(char*)&i) == 0 )

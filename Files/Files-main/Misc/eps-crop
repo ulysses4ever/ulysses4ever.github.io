@@ -1,0 +1,1 @@
+gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=epswrite -dEPSCrop -sOutputFile=fp.eps foldr-pic.ps

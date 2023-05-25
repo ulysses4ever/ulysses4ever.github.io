@@ -1,0 +1,4 @@
+DirectoryIndex index.html
+
+ErrorDocument 404 http://staff.mmcs.sfedu.ru/~ulysses/404.html
+

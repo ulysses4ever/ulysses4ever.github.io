@@ -1,0 +1,265 @@
+\documentclass[12pt]{scrartcl}%,leqno scrartcl
+\usepackage{cmap}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{automata,shapes,arrows,positioning,calc}
+\usepackage{clrscode}
+\usepackage{sectsty}
+\usepackage{verbatim}
+\usepackage{ifthen}
+\usepackage{forloop}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{indentfirst}
+\usepackage{paralist}
+
+
+%\sectionfont{\large}
+
+\usepackage[linkbordercolor=white]{hyperref}%,menucolor=white,runbordercolor=white,urlbordercolor=white,
+%colorlinks,urlcolor=black
+
+% \topmargin=0cm
+% %\headsep=10pt
+% \oddsidemargin=0cm
+% \textheight=21cm
+% \textwidth=17cm
+
+%\usepackage[vscale=0.77,hscale=0.8,centering]{geometry}%
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lfoot{\footnotesize ЮФУ, Мехмат}
+%\rfoot{\footnotesize А.~Э.~Маевский}
+\cfoot{--- \thepage{} ---}
+\lhead{\itshape Семинар по алгебре}
+\rhead{}
+
+\parindent=1.25cm
+
+\tolerance=1000
+
+%\renewcommand{\thesubsubsection}{\arabic{\subsection}}
+%\arabic{\subsubsection}
+\renewcommand{\emptyset}{\varnothing}
+\renewcommand{\leq}{\leqslant}
+\newcommand{\es}{\emptyset}
+\newcommand{\h}{\ensuremath{\hbar}}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\OO}{\ensuremath{\mathcal O}}
+\newcommand{\PP}{\ensuremath{\mathfrak P}}
+\newcommand{\Z}{\ensuremath{\mathbb Z}}
+\newcommand{\Q}{\ensuremath{\mathbb Q}}
+\newcommand{\F}{\ensuremath{\mathbb F}}
+\newcommand{\A}{\ensuremath{\mathbb A}}
+\newcommand{\R}{\ensuremath{\mathbb R}}
+\renewcommand{\P}{\ensuremath{\mathbb P}}
+\renewcommand{\C}{\ensuremath{\mathbb C}}
+\newcommand{\NO}{\ensuremath{\mathbb N_0}}
+\renewcommand{\phi}{\varphi}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\projlim}{\varprojlim}
+\newcommand{\ol}{\overline}
+\newcommand{\iso}{\cong}
+\newcommand{\normsub}{\subset}
+\newcommand{\normsup}{\supset}
+\newcommand{\hto}{\hookrightarrow}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+ 
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Endo}{End}
+\DeclareMathOperator{\Id}{id}
+\DeclareMathOperator{\chr}{char}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\PGL}{PGL}
+
+\renewcommand{\qed}{\hfill \vrule width1.5ex height1.5ex depth0pt}
+\newcommand{\pseudoqed}{\hfill\Box}
+\newcommand{\HW}{\ensuremath{{\otimes}}}
+\newcommand{\eqdef}{\stackrel{\text{\upshape\tiny def}}{=}}
+\newcommand{\coleq}{\ensuremath{\mathrel{\mathop:}=}}
+\renewcommand{\labelenumi}{(\theenumi)}
+\newcommand{\InsertList}[1]{%
+\input{listok#1}
+}
+\newcommand{\nspace}{\hspace{0pt}}
+\newcommand{\nbdash}{\nobreakdash-\nspace}
+\newcommand{\ul}{\underline}
+\newcommand{\rep}[1]{#1^*}
+
+\newtheorem{Thm}{Теорема}[section]
+\renewcommand{\theThm}{\arabic{Thm}}
+\newtheorem{Lemma}{Лемма}[section]
+\renewcommand{\theLemma}{\arabic{Lemma}}
+\newtheorem{Cor}{Следствие}[section]
+\renewcommand{\theCor}{\arabic{Cor}}
+
+\theoremstyle{remark}
+\newtheorem*{SketchOfProof}{Набросок доказательства}
+
+\theoremstyle{definition}
+\newtheorem{Ex}{Пример}
+\newtheorem{Exec}{Упражнение}
+\newtheorem*{Sol}{Решение}
+\newtheorem{Prop}{Утверждение}
+\newtheorem*{Remark}{Замечание}
+\newtheorem{NumRemark}{Замечание}
+\newtheorem*{Algo}{Алгоритм}
+\newtheorem{NumAlgo}{Алгоритм}
+\newtheorem{Def}{Определение}[section]
+\renewcommand{\theDef}{\arabic{Def}}
+\newtheorem*{Task}{Задача}
+
+\title{Семинар по алгебре}
+\author{рук. В.~А.~Стукопин}
+\date{}
+
+\begin{document}
+\section{$p$-адические числа}
+\subsection{Нормированные поля}
+Определение абсолютного значения (нормы) на поле. Примеры: евклидова норма на \C{}
+(\R, \Q), тривиальная норма. Единственная норма в конечном поле~— тривиальная.
+$p$-адическая норма на $\Q$.
+
+Неархимедовы нормы. Эквивалентное определение. Эквивалентность норм и теорема
+Островского. Формула произведения:
+\[
+    \prod_{2 \leq p \leq \infty} |a|_p = 1.
+\]
+
+Последовательности Коши, полные поля, пополнение: определение и существование.
+
+\subsection{Представление $p$-адических чисел в виде степенных рядов}
+Свяжем с каждым «неархимедовым нормированным полем» несколько важных
+алгебраических объектов.
+
+\begin{Def}[+утверждение]
+Пусть $(K, |\cdot|)$ — нормированное поле с неархимедовой нормой.
+\begin{compactenum}
+  \item Множество $\OO = \{ a \in K \mid |a| \leq 1 \}$ называется
+  \emph{кольцом нормирования $(K, |\cdot|)$} и является подкольцом $K$.
+  \item Множество $\PP = \{a \in K \mid |a| < 1\}$ называется \emph{идеалом
+  нормирования $(K, |\cdot|)$} и является единственным максимальным идеалом
+  $\OO$.
+  \item Поле $k = \OO / \PP$ называется \emph{полем вычетов нормирования
+  $(K, |\cdot|)$}.
+\end{compactenum}
+\end{Def}
+
+\begin{Remark}
+Кольцо с единственным максимальным идеалом называется \emph{локальным}.
+\end{Remark}
+
+\begin{Prop}
+Для нормированного поля $(\Q, |\cdot|_p)$
+\[
+    \OO = \Z_{(p)} = \left \{ \frac{a}{s} \mid s \not \equiv 0 \bmod p \right
+    \}, \qquad \PP = p\Z_{(p)}, \qquad
+    k \cong \Z/p\Z.
+\]
+\end{Prop}
+\begin{proof}
+Первые два равенства очевидны. Для доказательства третьего рассмотрим
+гомоморфизм $\Z \to \OO/\PP$, являющийся композицией вложения и канонического
+гомоморфизма в факторкольцо. Его ядро равно $p\Z$ и значит, гомоморфизм $\Z/p\Z
+\to \OO/\PP$ является вложением, остаётся показать его сюръективность.
+
+Пусть $a/s \in \OO$, тогда $s$ обратимо в кольце $\Z/p\Z$, а значит существует
+такое $b$, что $bs \equiv a \bmod {p\Z}$. Эта сравнимость продолжается до $bs
+\equiv a \bmod {p\OO}$. Для $s$ существует обратный элемент $1/s$ в $R$, который
+также принадлежит $R$, домножая последнее сравнение на него находим $b \equiv
+a/s \bmod {p\OO}$.
+\end{proof}
+
+Оказывается, что в случае неархимедового нормирования поле вычетов нормирования
+данного нормированного поля не меняется при пополнении этого поля. Для
+доказательства этого сформулируем сначала одно важное свойство неархимедовых
+норм.
+
+\begin{Lemma}
+Пусть $(K, |\cdot|)$ — нормированное поле с неархимедовой нормой, $a,b\in K$.
+Тогда
+\[
+    |a| \neq |b| \Longrightarrow |a+b| = \max(|a|, |b|).
+\]
+\end{Lemma}
+\begin{proof}
+Пусть $|b| < |a|$ и предположим противное: $|a+b| < |a|$. Тогда
+\[
+    |a| = |a + b - b| \leq \max(|a+b|, |b|) < |a|.
+\]
+Противоречие.
+\end{proof}
+
+
+\begin{Thm}
+Пусть $(K, |\cdot|)$ — нормированное поле с неархимедовой нормой, а $(\hat K,
+{|\cdot|})$~— его пополнение, $\OO$, $\hat \OO$, $\PP$, $\hat \PP$, $k$, $\hat
+k$ — соответствующие поля вычетов. Тогда $k \cong \hat k$.
+\end{Thm}
+\begin{proof}
+Пусть $\alpha \in \hat K$ и последовательность $\{a_n\} \subset K$ сходится к
+$\alpha$. Тогда начиная с некоторого номера $N\in\N$ для всех $n>N$ имеем
+$|a_n - \alpha| < |\alpha|$, а значит $|a_n| = |a_n - \alpha + \alpha| =
+|\alpha|$ (по предыдущей лемме). 
+
+Пусть $\OO$, $\hat \OO$, $\PP$, $\hat \PP$~— соответствующие кольца и идеалы
+нормирований. Для $\alpha \in \hat \hat \OO$ существует $a \in K$, такое что
+$|a| = |\alpha|$, возьмём такое $a$. Очевидно, $a \in \OO$ и $|a-\alpha|\leq 1$,
+а значит $a\equiv\alpha \bmod{\hat \PP}$ и $a$, таким образом, является
+прообразом $\alpha$ про очевидном гомоморфизме $\OO/\PP \to \hat\OO / \hat\PP$.
+\end{proof}
+
+Прежде чем сформулировать основную теорему о представлении $p$-адических чисел
+степенными рядами, докажем одно важное свойство рядов в полных неархимедовых
+полях.
+
+\begin{Lemma}
+Пусть $(\hat K, |\cdot|)$~— полное нормированное поле с неархимедовой нормой и
+$\{a_n\}\subset\hat K$. Тогда
+\[
+    \sum_n a_n \text{ сходится} \Longleftrightarrow a_n \to 0.
+\]
+\begin{proof}
+Импликация ${\Rightarrow}$ известна из классического анализа. Пусть $a_n \to 0$.
+Обозначим через $\{ b_n = \sum_0^n a_n \}$ последовательность частичных сумм
+данного ряда, она является последовательностью Коши ввиду неравенства
+\[
+    |b_n - b_{n+k}| \leq \max\{ |a_n|, \ldots , |a_{n+k}| \},
+\]
+а значит, имеет предел в $\hat K$~— ввиду его полноты.
+\end{proof}
+\end{Lemma}
+\begin{Cor}
+Если $\{a_n\} \subset \hat\OO$ и $x\in \hat K$, то для сходимости ряда
+$\sum a_n x^n$ достаточно, чтобы $x \in \hat \PP$.
+\end{Cor}
+
+\begin{Def}
+Кольцо нормирования поля $\Q_p$ обозначается $\Z_p$ и имеет специальное
+название — \emph{кольцо $p$-адических целых}. (Иногда, чтобы избежать путаницы,
+кольцо $\Z$ называют \emph{кольцом рациональных целых}.)
+\end{Def} 
+
+\begin{Thm}
+Каждое $a \in \Z_p$ имеет единственное представление в виде суммы ряда
+\[
+    a = \sum_{n=0}^{\infty} a_i p^i, \quad a_i\in\{0, \ldots , p-1\}.
+\]
+Каждое $a \in \Q_p$ имеет единственное представление в виде суммы ряда
+\[
+    a = \sum_{n=-k}^{\infty} a_i p^i, \quad k\in \N_0, a_i \in \{0, \ldots ,
+        p-1\}.
+\]
+\end{Thm}
+
+\end{document}

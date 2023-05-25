@@ -1,0 +1,350 @@
+\documentclass[12pt]{article}%,leqno
+\usepackage{cmap}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{automata,shapes,arrows,positioning,calc}
+\usepackage{clrscode}
+\usepackage{sectsty}
+\usepackage{verbatim}
+\usepackage{ifthen}
+\usepackage{forloop}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{indentfirst}
+
+%\sectionfont{\large}
+
+\usepackage[urlbordercolor={1 1 1}]{hyperref}
+%colorlinks,urlcolor=black
+
+% \topmargin=0cm
+% %\headsep=10pt
+% \oddsidemargin=0cm
+% \textheight=21cm
+% \textwidth=17cm
+
+\usepackage[vscale=0.75,hscale=0.75,centering]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lfoot{\footnotesize ЮФУ, Мехмат}
+%\rfoot{\footnotesize А.~Э.~Маевский}
+\cfoot{--- \thepage{} ---}
+\lhead{\itshape Методы защиты информации}
+\rhead{}
+
+\parindent=1.25cm
+
+\tolerance=1000
+
+%\renewcommand{\thesubsubsection}{\arabic{\subsection}}
+%\arabic{\subsubsection}
+\renewcommand{\emptyset}{\varnothing}
+\renewcommand{\leq}{\leqslant}
+\newcommand{\es}{\emptyset}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\NO}{\ensuremath{\mathbb N_0}}
+\DeclareMathOperator{\RE}{RE}
+\DeclareMathOperator{\Gen}{Gen}
+\DeclareMathOperator{\Reach}{Reach}
+\renewcommand{\qed}{\hfill \vrule width1.5ex height1.5ex depth0pt}
+\newcommand{\pseudoqed}{\hfill\Box}
+\newcommand{\HW}{\ensuremath{{\otimes}}}
+\newcommand{\coleq}{\ensuremath{\mathrel{\mathop:}=}}
+\renewcommand{\labelenumi}{(\theenumi)}
+\newcommand{\InsertList}[1]{%
+\input{listok#1}
+}
+\newcommand{\nspace}{\hspace{0pt}}
+\newcommand{\nbdash}{\nobreakdash-\nspace}
+\newcommand{\ul}{\underline}
+
+\newtheorem{Thm}{Теорема}[section]
+\renewcommand{\theThm}{\arabic{Thm}}
+
+\theoremstyle{remark}
+\newtheorem*{SketchOfProof}{Набросок доказательства}
+
+\theoremstyle{definition}
+\newtheorem{Ex}{Пример}
+\newtheorem{Exec}{Упражнение}
+\newtheorem*{Proposition}{Утверждение}
+\newtheorem*{Remark}{Замечание}
+\newtheorem{NumRemark}{Замечание}
+\newtheorem*{Algo}{Алгоритм}
+\newtheorem{NumAlgo}{Алгоритм}
+\newtheorem{Def}{Определение}[section]
+\renewcommand{\theDef}{\arabic{Def}}
+\newtheorem*{Task}{Задача}
+
+\title{Методы защиты информации}
+\author{А.~Э.~Маевский}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\section{Методы экспоненцирования}
+
+\subsection{Экспоненцирование с фиксированной экспонентой}
+
+\begin{Def}
+\emph{Аддитивной цепочкой, вычисляющей число $n$}, называются две
+последовательности, $v=(v_0,\ldots,v_s)$ — натуральных чисел и $w=(w_1, \ldots, w_s)$ — пар
+натуральных чисел , таких что:
+\begin{gather*}
+v_0 = 1, \: v_s = n\\
+\forall i \in [1, s]\colon v_i = v_j + v_k, \quad
+0 \leqslant j, k \leqslant i-1;\\
+ w_i = (j, k).
+\end{gather*}
+\end{Def}
+
+\begin{Def}
+А.Ц. называется \emph{звёздной}, если $j = i - 1$ для всех $i$.
+\end{Def}
+
+\begin{Ex}
+$$v = (1, 2, 3, 6, 7, 14, 15)$$
+$$w = ((0,0), (0,1), (22), (0,3), (4,4), (0,5)).$$
+\end{Ex}
+
+\begin{NumAlgo}\nspace\\Вход: $x \in G$, $n$, $v, w$ — А.Ц. для $n$.
+
+Выход: $x^n$. 
+\begin{enumerate}
+  \item $x_1 \coleq x$;
+  \item Для $i$ от $1$ до $s$ вычислить:
+  $$x_i \coleq x_j \cdot x_k, \quad (j,k)=w_i.$$
+  \item Вернуть $x$.    
+\end{enumerate}
+\end{NumAlgo}
+
+\begin{Def}
+\emph{Аддитивной-разностной цепочкой, вычисляющей число $n$} называется пара
+последовательностей, удовлетворяющая аналогичным А.Ц. требованиям, за исключением того, что для $v_i$
+требуется выполнение равенства $v_i = v_j + v_k$ либо $v_i = v_j - v_k$ для
+некоторых $j, k$.
+\end{Def}
+
+\begin{Def}
+Пусть $k, s \in \N$. \emph{Векторной аддитивной цепочкой, вычисляющей
+последовательность $(n_0, \ldots, n_{k-1})$}, называются последовательности $v$
+— $k$-мерных векторов неотр. целых чисел и $w$ — последовательность пар
+неотрицательных целых, таких что:
+\begin{multicols}{2}
+\begin{gather*}
+v_{-k+1} = (1, 0, \ldots ,0),\\
+v_{-k+2} = (0, 1, \ldots ,0),\\
+%\columnbreak
+\ldots \\
+v_{0} = (0, 0, \ldots ,1),
+\end{gather*}
+\columnbreak
+\begin{gather*}
+v_{i} = v_j + v_k, \quad (j, k) = w_i,\\
+v_{s} = (n_0 \ldots ,n_{k-1}).
+\end{gather*}
+\end{multicols}
+\end{Def}
+
+\begin{Def}\emph{Словарём $D=\{d_i\}$ для числа $n$} называется набор целых
+чисел, такой что:
+$$n = \sum_{i=0}^k b_{i, d_i} d_i 2^i, \quad b_{i, d_i}\in\{0,1\},\; d_i \in
+D.$$
+\end{Def}
+
+\begin{Exec}Убедиться, что словарём для $2^k$-ичного метода явл $D = 1, 3, 5,
+\ldots, 2^k - 1$, а для знаковой модификации:
+$D = \{ \pm 1,\pm 3, \ldots, \pm(2^k - 1) \}$.
+\end{Exec}
+
+\subsubsection{Метод Кунихиро—Ямамото}
+Идея похожа на кодирование по Хаффману.
+\begin{gather*}
+n = (n_{l-1}, \ldots , n_0)_2,\\
+p = \frac {\text{кол-во «0»}} {l},\\
+q = 1 - p, \quad \hat{q} = \frac{1 - p}{2}.
+\end{gather*}
+Выбираем $k$ — количество листов будущего дерева минус $1$. Генерируем корень
+дерева. Затем потомки генерируются рекурсивно: от узла с весом $w$ порождаются
+два потомка с весами в вершинах $wp$, $wq$ и метками на дугах $0$ и $1$, соотв, для
+беззнакового представления и три потомка с весами $wp$, $w\hat{q}$, $w\hat{q}$ и
+метками на дугах $0$, $\bar{1}0$, $10$. Процедура повторяется для потомка с
+наибольшим весом.
+
+\ldots
+
+Проходим по всем маршрутам от корня к листьям, собирая метки на дугах.
+Удаляем trailing zeroes. Получаем словарь.
+
+\begin{Ex}$n=587257$, $k = 4$.
+\begin{gather*}
+n = (10010000\bar{1}0\bar{1}00000\bar{1}001).\\
+p = \frac{14}{20}. \quad \hat{q}=\frac 3 {20}.
+\end{gather*}
+\begin{center}
+\pgfdeclareimage[height=8cm]{fig1}{fig1}%
+\pgfuseimage{fig1}
+\end{center}
+\end{Ex}
+\begin{gather*}
+1000 \Rightarrow 1 \Rightarrow 1,\\
+100\bar{1}0 \Rightarrow 100\bar{1} \Rightarrow 7,\\
+10010 \Rightarrow 1001 \Rightarrow 9,\\
+10\bar{1}0 \Rightarrow 10\bar{1} \Rightarrow 3,\\
+1010 \Rightarrow 101 \Rightarrow 5. 
+\end{gather*}
+$$D = \{1,3,5,7,9\}.$$
+$$n = 9 \cdot 2^16 - 5 \cdot 2^9 - 7.$$
+
+\subsubsection{Метод Якоби}
+Кроме Хаффмана есть другие хорошие методы сжатия, например, метод Лемпела—Зива.
+
+$n = (n_{l-1}, \ldots , n_0)$. 
+
+\begin{Ex}
+Просматривая двоичное представление справа-налево, выделяем новые куски и
+добавляем их в словарь.
+\begin{gather*}
+n=587257 = (\overline{10}\; \overline{00}\;
+\overline{1111}\; \overline{010}\; \overline{111}\; \overline{11}\; 
+\overline{10}\; \overline {0}\; \overline{1})_2, \\
+\{1, 0, 10, 11, 111, 010, 1111, 00\},\\
+\{1, 0, 2, 3, 7, 2, 15, 0\}, \quad \text{($0$ и двойки можно отбросить)}\\
+D = \{ 1, 3, 7, 15 \}.
+\end{gather*}
+Теперь можно получить разложение $n$ по этому словарю:
+$$
+    n = 1+ 2^3 + 3\cdot 2^4 + 7 \cdot 2^6 + 1\cdot2^11
+    + 15 \cdot 2^13 + 1\cdot 20.
+$$
+\end{Ex}
+
+\subsection{Экспоненцирование с фиксированным показателем}
+Первая идея: хранить «все» степени $x$.
+
+\subsubsection{Метод Яо}
+$$
+    n = \sum_{i=0}^{l-1}n_i b_i, \quad n_i < h, 
+$$
+где $h$ — некоторое фиксированное число.
+$$
+    x^n = \prod_{i=0}^{l-1}x_i^{n_i}
+        = \prod_{j = 1}^{h-1} \left ( \prod_{i, n_i = j} x_i \right )^j
+$$
+\begin{Ex}
+$x_i = x^{b_i}$, $i \in [0, l-1]$. $x^{2989}$ — ? $h=4$, $b_i = 4^i$.
+$$ 2989 =(232231)_4. $$
+$$
+    x^{2989} = x_0^1 x_2^3 x_3^2 x_3^2 x_4^3 x_5^2 = 
+    (x_0)^1(x_2x_3x_5)^2 (x_1x_4)^3 =
+    (x_1x_4)(x_1x_4x_2x_3x_5)(x_1x_4x_2x_3x_5x_0).
+$$
+\end{Ex}
+
+\begin{NumAlgo}\nspace\\
+
+Вход:
+
+Выход:
+
+\begin{enumerate}
+  \item $y \coleq 1$, $u \coleq 1$, $j \coleq h - 1$.
+  \item Пока $j \leqslant 1$ выполнять…
+\end{enumerate}
+\end{NumAlgo}
+\subsubsection{Метод, основанный на алгоритме Евклида}
+\begin{NumAlgo}\nspace\\
+
+Вход: $x \in G$, $n = \sum n_i b_i$, $x_0 = x^{b_0}, \ldots , x_{l-1} =
+x^{b_{l-1}}$.
+
+Выход:
+
+\begin{enumerate}
+  \item Повторять:
+    \begin{enumerate}
+        \item Найти $M$: $n_M \leq n_i$, $i \in [0, l-1]$.
+        \item Найти $N$ ($N \neq M$):
+            $n_M \leqslant n_i$, $i \in [0, l-1] \setminus \{ M \}$.
+        \item Если $n_N \neq 0$, то
+        $$ 
+            q \coleq \lfloor n_M / n_N \rfloor, \quad x_N \coleq x_M^q x_N, \quad 
+            n_M \coleq n_M \mod n_N, 
+        $$
+        иначе прервать цикл.
+    \end{enumerate}
+    \item Вернуть $x_M$.
+\end{enumerate}
+\end{NumAlgo}
+
+\begin{Ex}
+$x_i = x^{b_i}$, $i \in [0, l-1]$. $x^{2989}$ — ? $h=4$, $b_i = 4^i$,
+$ 2989 =(232231)_4$.
+\begin{center}
+\pgfdeclareimage[height=7cm]{fig2}{fig2}%
+\pgfuseimage{fig2}
+\end{center}
+\end{Ex}
+
+\subsubsection{Метод Пайпенджера (Лима—Ли)}
+$n = (n_{l-1} \ldots n_0)_2$, $h \in [1, l]_{\N}$, $\lceil l / h \rceil$.
+$$
+\begin{matrix}
+    a - 1 & \ldots & 1 & 0 \\
+    \_ & \_ & \_ & \_ \\
+    %\hdotsfor[0.01]{4}\\
+    n_{a-1} & \ldots & n_1 & n_0 \\
+    \hdotsfor{4}\\
+    n_{ah-1} & \ldots & n_{ah - a +1} & n_{ah - a} \\ 
+\end{matrix}
+$$
+
+$$
+    G[j, i] = \left (\prod x^{i_s 2^{as}} \right )^{2^{jr}} \quad
+    j \in [0, v-1], \; i = (i_{h-1}\ldots i_0) \in [0, 2^n - 1]. 
+$$
+
+
+$$
+    x^n = \prod_{k=0}^{r-1} \left ( 
+        \prod_{j=0}^{v-1} G[j, I(jr+k)] 
+    \right )^{2^k} 
+$$
+
+$$
+    I(s) = (n_{a(h - 1) + s} \ldots n_{a + s} n_s), \quad n = \ldots 
+$$
+
+\begin{NumAlgo}\nspace\\
+
+Вход: $x \in G$, $n \in \N$, $h,a,v,r,G[j,i]$. 
+
+Выход: $x^n \in G$.
+
+\begin{enumerate}
+  \item $y \coleq 1$.
+  \item Для $k \coleq r - 1$ по $0$ выполнить:
+    \begin{enumerate}
+        \item $y \coleq y^2$
+        \item Для $j \coleq v - 1$ по $0$ выполнить:
+        $$ I \coleq \sum_{s=0}^{h-1} n_{as + jr + k} 2^s$$
+        \item $y \coleq y \cdot G[j, I]$ 
+    \end{enumerate}
+    \item Вернуть $y$.
+\end{enumerate}
+\end{NumAlgo}
+\begin{Remark}[о сложности алгоритма]
+$a + r - 2$ умножений и $v(2^h - 1)$ сохранённых значений. Если возведение в
+квадрат быстрое, $v = 1$.
+\end{Remark}
+
+\end{document}

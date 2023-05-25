@@ -1,0 +1,19 @@
+MIDlet-Version: 5.1
+MIDlet-1: Opera Mini, /i.png, Browser
+MIDlet-Description: Opera Mini
+MIDlet-Icon: /i.png
+MIDlet-Info-URL: http://mini.opera.com/
+MIDlet-Install-Notify: http://mini.opera.com/n/21214Afloralspeech_ru
+MIDlet-Jar-Size: 272698
+MIDlet-Jar-URL: opera-mini-5.1.21214-advanced-ru.jar
+MIDlet-Name: Opera Mini
+MIDlet-Permissions: javax.microedition.io.Connector.http
+MIDlet-Permissions-Opt: javax.microedition.io.Connector.sms, javax.wireless.messaging.sms.send, javax.microedition.io.Connector.socket, javax.microedition.io.Connector.file.write, javax.microedition.io.Connector.file.read
+MIDlet-Vendor: Opera Software ASA
+Content-Folder: Applications
+MicroEdition-Configuration: CLDC-1.0
+MicroEdition-Profile: MIDP-2.0
+Nokia-MIDlet-No-Exit: true
+Nokia-MIDlet-On-Screen-Keypad: no
+MIDlet-Touch-Support: true
+

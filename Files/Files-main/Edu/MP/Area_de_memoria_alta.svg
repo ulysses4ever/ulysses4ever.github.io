@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="180"
+   height="260"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.44"
+   version="1.0"
+   sodipodi:docbase="C:\Documents and Settings\Administrator\My Documents\My Pictures\Wikipedia\Arquitectura de memoria"
+   sodipodi:docname="Area de memoria alta 3.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="138.46852"
+     inkscape:cy="145.03634"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     width="180px"
+     height="260px"
+     inkscape:window-width="971"
+     inkscape:window-height="934"
+     inkscape:window-x="87"
+     inkscape:window-y="17" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g2077"
+       transform="matrix(9.387031,0,0,9.387031,-181.4962,26.7921)">
+      <rect
+         id="rect2012"
+         height="10.2"
+         width="10"
+         y="14"
+         x="20"
+         style="fill:white" />
+      <rect
+         id="rect2014"
+         height="10.2"
+         width="10"
+         y="14"
+         x="20"
+         style="fill:none;fill-opacity:0;stroke:white;stroke-width:0.001" />
+      <rect
+         id="rect2016"
+         height="10.2"
+         width="10"
+         y="14"
+         x="20"
+         style="fill:none;fill-opacity:0;stroke:white;stroke-width:0.001" />
+      <rect
+         id="rect2018"
+         height="10.2"
+         width="10"
+         y="14"
+         x="20"
+         style="fill:none;fill-opacity:0;stroke:black;stroke-width:0.1" />
+      <rect
+         id="rect2020"
+         height="6.1999998"
+         width="10"
+         y="8"
+         x="20"
+         style="fill:white" />
+      <rect
+         id="rect2022"
+         height="6.1999998"
+         width="10"
+         y="8"
+         x="20"
+         style="fill:none;fill-opacity:0;stroke:white;stroke-width:0.001" />
+      <rect
+         id="rect2024"
+         height="6.1999998"
+         width="10"
+         y="8"
+         x="20"
+         style="fill:none;fill-opacity:0;stroke:white;stroke-width:0.001" />
+      <rect
+         id="rect2026"
+         height="6.1999998"
+         width="10"
+         y="8"
+         x="20"
+         style="fill:none;fill-opacity:0;stroke:black;stroke-width:0.1" />
+      <polygon
+         id="polygon2028"
+         points="20,8 20,-2 21,-1 22,-2 23,-1 24,-2 25,-1 26,-2 27,-1 28,-2 29,-1 30,-2 30,8 20,8 "
+         style="fill:white" />
+      <polygon
+         id="polygon2030"
+         points="20,8 20,-2 21,-1 22,-2 23,-1 24,-2 25,-1 26,-2 27,-1 28,-2 29,-1 30,-2 30,8 20,8 "
+         style="fill:none;fill-opacity:0;stroke:white;stroke-width:0.001" />
+      <polygon
+         id="polygon2032"
+         points="20,8 20,-2 21,-1 22,-2 23,-1 24,-2 25,-1 26,-2 27,-1 28,-2 29,-1 30,-2 30,8 20,8 "
+         style="fill:none;fill-opacity:0;stroke:yellow;stroke-width:0.001" />
+      <polygon
+         id="polygon2034"
+         points="20,8 20,-2 21,-1 22,-2 23,-1 24,-2 25,-1 26,-2 27,-1 28,-2 29,-1 30,-2 30,8 20,8 "
+         style="fill:none;fill-opacity:0;stroke:black;stroke-width:0.1" />
+      <text
+         id="text2036"
+         y="24"
+         x="31"
+         style="font-size:0.80000001px;font-style:normal;font-weight:700;text-anchor:start;fill:black;font-family:sans">0 KB</text>
+      <text
+         id="text2038"
+         y="14"
+         x="31"
+         style="font-size:0.80000001px;font-style:normal;font-weight:700;text-anchor:start;fill:black;font-family:sans">640 KB</text>
+      <text
+         id="text2040"
+         y="8.85818"
+         x="30.948099"
+         style="font-size:0.80000001px;font-style:normal;font-weight:700;text-anchor:start;fill:black;font-family:sans">1 MB</text>
+      <text
+         id="text2042"
+         y="-1"
+         x="31"
+         style="font-size:0.80000001px;font-style:normal;font-weight:700;text-anchor:start;fill:black;font-family:sans">16 MB - 4 GB</text>
+      <text
+         id="text2044"
+         y="20"
+         x="25"
+         style="font-size:1px;font-style:normal;font-weight:700;text-anchor:middle;fill:black;font-family:sans">Memoria</text>
+      <text
+         id="text2046"
+         y="21"
+         x="25"
+         style="font-size:1px;font-style:normal;font-weight:700;text-anchor:middle;fill:black;font-family:sans">convencional</text>
+      <text
+         id="text2048"
+         y="11.1"
+         x="25"
+         style="font-size:1px;font-style:normal;font-weight:700;text-anchor:middle;fill:black;font-family:sans">UMA</text>
+      <text
+         id="text2050"
+         y="0.69388199"
+         x="25.0429"
+         style="font-size:1px;font-style:normal;font-weight:700;text-anchor:middle;fill:black;font-family:sans">Memoria</text>
+      <text
+         id="text2052"
+         y="1.69388"
+         x="25.0429"
+         style="font-size:1px;font-style:normal;font-weight:700;text-anchor:middle;fill:black;font-family:sans">extendida</text>
+      <rect
+         id="rect2054"
+         height="0.60000002"
+         width="9.9334803"
+         y="7.3810701"
+         x="20.014601"
+         style="fill:yellow" />
+      <rect
+         id="rect2056"
+         height="0.60000002"
+         width="9.9334803"
+         y="7.3810701"
+         x="20.014601"
+         style="fill:none;fill-opacity:0;stroke:yellow;stroke-width:0.001" />
+      <rect
+         id="rect2058"
+         height="0.60000002"
+         width="9.99259"
+         y="7.3998199"
+         x="20.0012"
+         style="fill:none;fill-opacity:0;stroke:black;stroke-width:0.1" />
+      <text
+         id="text2060"
+         y="5.7540302"
+         x="25.127701"
+         style="font-size:1px;font-style:normal;font-weight:700;text-anchor:middle;fill:black;font-family:sans">HMA</text>
+      <polygon
+         id="polygon2062"
+         points="24.7957,6.44742 24.7957,7.04854 24.4951,7.04854 25.0962,7.64965 25.6973,7.04854 25.3968,7.04854 25.3968,6.44742 24.7957,6.44742 "
+         style="fill:white" />
+      <polygon
+         id="polygon2064"
+         points="24.7957,6.44742 24.7957,7.04854 24.4951,7.04854 25.0962,7.64965 25.6973,7.04854 25.3968,7.04854 25.3968,6.44742 24.7957,6.44742 "
+         style="fill:none;fill-opacity:0;stroke:white;stroke-width:0.001" />
+      <polygon
+         id="polygon2066"
+         points="24.7957,6.44742 24.7957,7.04854 24.4951,7.04854 25.0962,7.64965 25.6973,7.04854 25.3968,7.04854 25.3968,6.44742 24.7957,6.44742 "
+         style="fill:none;fill-opacity:0;stroke:black;stroke-width:0.1" />
+      <polygon
+         id="polygon2068"
+         points="24.7957,6.44742 24.7957,7.04854 24.4951,7.04854 25.0962,7.64965 25.6973,7.04854 25.3968,7.04854 25.3968,6.44742 24.7957,6.44742 "
+         style="fill:none;fill-opacity:0;stroke:black;stroke-width:0.01" />
+      <line
+         id="line2070"
+         y2="7.97929"
+         x2="33.293701"
+         y1="8"
+         x1="30"
+         style="fill:none;fill-opacity:0;stroke:black;stroke-width:0.1" />
+    </g>
+  </g>
+</svg>

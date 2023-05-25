@@ -1,0 +1,66 @@
+$ xelatex xetex-test2.tex 
+This is XeTeX, Version 3.1415926-2.2-0.9995.2 (TeX Live 2009/Debian)
+ restricted \write18 enabled.
+entering extended mode
+(./xetex-test2.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, bulgarian, ukrainian, russian, loaded.
+(/usr/share/texmf-texlive/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texmf-texlive/tex/latex/base/size10.clo))
+(/usr/share/texmf-texlive/tex/xelatex/xltxtra/xltxtra.sty
+(/usr/share/texmf-texlive/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texmf-texlive/tex/xelatex/fontspec/fontspec.sty
+(/usr/share/texmf-texlive/tex/latex/tools/calc.sty)
+(/usr/share/texmf-texlive/tex/latex/xkeyval/xkeyval.sty
+(/usr/share/texmf-texlive/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texmf-texlive/tex/generic/xkeyval/keyval.tex)))
+(/usr/share/texmf-texlive/tex/latex/base/fontenc.sty
+(/usr/share/texmf-texlive/tex/xelatex/euenc/eu1enc.def)
+(/usr/share/texmf-texlive/tex/xelatex/euenc/eu1lmr.fd))
+fontspec.cfg loaded.
+(/usr/share/texmf-texlive/tex/xelatex/fontspec/fontspec.cfg))
+(/usr/share/texmf-texlive/tex/xelatex/xunicode/xunicode.sty)
+(/usr/share/texmf-texlive/tex/latex/metalogo/metalogo.sty
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty)
+(/etc/texmf/tex/latex/config/graphics.cfg)
+(/usr/share/texmf-texlive/tex/xelatex/xetex-def/xetex.def))))
+(/usr/share/texmf-texlive/tex/latex/etex-pkg/etex.sty)
+(/usr/share/texmf-texlive/tex/latex/base/fixltx2e.sty))
+(/usr/share/texmf-texlive/tex/xelatex/polyglossia/polyglossia.sty
+(/usr/share/texmf-texlive/tex/latex/etoolbox/etoolbox.sty))
+(/usr/share/texmf-texlive/tex/xelatex/polyglossia/gloss-russian.ldf)
+(./xetex-test2.aux
+kpathsea: Running mktextfm 
+/usr/share/texmf/web2c/mktexnam: Could not map source abbreviation 6 for 600.
+/usr/share/texmf/web2c/mktexnam: Need to update /usr/share/texmf-texlive/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; nonstopmode; input 
+This is METAFONT, Version 2.718281 (TeX Live 2009/Debian)
+
+
+kpathsea: Running mktexmf 
+! I can't find file `'.
+<*> \mode:=ljfour; mag:=1; nonstopmode; input
+                                             
+Please type another input file name
+! Emergency stop.
+<*> \mode:=ljfour; mag:=1; nonstopmode; input
+                                             
+Transcript written on mfput.log.
+grep: .log: Нет такого файла или каталога
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; nonstopmode; input ' failed to make .tfm.
+kpathsea: Appending font creation commands to missfont.log.
+
+! Font \zf@basefont="" not loadable: Metric (TFM) file or installed font not fo
+und.
+<to be read again> 
+                   \zf@family@fontdeflmr 
+l.3 \select@language{russian}
+                             
+? X
+No pages of output.
+Transcript written on xetex-test2.log.
+

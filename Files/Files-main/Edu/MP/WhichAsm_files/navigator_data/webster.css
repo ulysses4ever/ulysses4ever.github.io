@@ -1,0 +1,24 @@
+
+.bkgnd text { font-weight: bold; font-size: 48pt; line-height: 48pt; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular; background-color: white }
+.htmllink { font-size: 12pt; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular; background-color: #71ff00; margin: 1pt; padding: 4pt; border: solid 1pt black }
+.link { font-size: 12pt; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular; background-color: #f6a200; padding: 4pt; border: none black }
+.pdflink { font-size: 12pt; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular; background-color: #0081ff; margin: 1pt; padding: 4pt; border: solid 1pt black }
+.sectionheader { color: white; font-weight: bold; font-size: 16pt; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular; background-color: red; text-indent: 10pt }
+.textlink { font-size: 12pt; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular; background-color: #ff0; margin: 1pt; padding: 4pt; border: solid 1pt black }
+.bluelink {
+	color: #9ac6ff;
+	font-size:        12pt;
+	font-family:      Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
+	background-color: #2800b6;
+	margin:           1pt;
+	padding:          4pt;
+	border:           solid 1pt black; }
+
+.webstertitle { font-style: italic; font-weight: bold; font-size: 60pt; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+h1  { font-weight: bolder; font-size: 36px; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+h2  { font-weight: bolder; font-size: 28px; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+h3  { font-weight: bolder; font-size: 20px; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+h4  { font-weight: bolder; font-size: 16px; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+h5  { font-weight: bolder; font-size: 14px; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+h6   { font-weight: bolder; font-size: 12px; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+.WhiteTxt { color: white; font-weight: 500; font-size: 14px; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }

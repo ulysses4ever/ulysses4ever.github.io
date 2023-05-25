@@ -1,0 +1,15 @@
+// unul.jas
+//
+//  Author
+//    MMCS SFEDU
+//
+//  Description
+//    Program to multiply 2 unsigned (that is, non-negative) numbers.
+//
+
+.main
+start:	
+	BIPUSH 0x2
+	BIPUSH 0x3
+	UMUL
+.end-main

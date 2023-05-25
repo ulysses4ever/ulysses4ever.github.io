@@ -1,0 +1,16 @@
+// add3.jas
+//
+//  Author
+//    MMCS SFEDU
+//
+//  Description
+//    Program to add 3 numbers with single instruction.
+//
+
+.main				// start of program
+start:	
+	BIPUSH 0x1
+	BIPUSH 0x3
+	BIPUSH 0x4
+	IADD3
+.end-main

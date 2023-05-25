@@ -1,0 +1,111 @@
+\documentclass[a4paper,12pt]{article}
+\lccode`\-=`\-
+\defaulthyphenchar=127
+
+\usepackage{cmap}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{indentfirst}
+\usepackage[usenames]{color}
+\usepackage{ifthen}
+\usepackage{forloop}
+\usepackage{calc}
+ 
+\usepackage{cards}
+
+\newcommand{\MaxCardsOnPage}{3}
+\newcommand{\VariantCount}{1}
+\newcommand{\CardsCount}{9}
+\voffset=-2cm
+\hoffset=-0.5cm
+\oddsidemargin=-1cm
+\topmargin=0.3cm
+\headheight=0pt
+\headsep=0pt
+\parindent=0pt
+\footskip=0pt
+\textheight=27cm
+\textwidth=18cm
+\pagestyle{empty}
+
+\newcommand{\myitemsep}{0cm}
+
+%\abovedisplayskip=-1cm
+%\abovedisplayshortskip=-1cm
+%\belowdisplayskip=-1cm
+%\belowdisplayshortskip=-1cm
+
+\renewcommand{\emptyset}{\varnothing}
+\newcommand{\lbrac}{$[$}
+\newcommand{\rbrac}{$]$}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\NO}{\ensuremath{\mathbb N_0}}
+\DeclareMathOperator{\Pow}{Pow}
+\DeclareMathOperator{\NRE}{NReg}
+\newcommand{\nspace}{\hspace{0pt}}
+\newcommand{\nbdash}{\nobreakdash-\nspace}
+
+\renewcommand{\L}{\ensuremath{\lambda}}
+\newcommand{\Lvar}[1]{\ensuremath{\L #1\,.\,}}
+\newcommand{\Lx}{\Lvar{x}}
+\newcommand{\Ly}{\Lvar{y}}
+\newcommand{\Lz}{\Lvar{z}}
+\newcommand{\Lt}{\Lvar{t}}
+\newcommand{\Ln}{\Lvar{n}}
+
+\newcommand{\betared}{\rightarrow_\beta}
+\newcommand{\betareds}{\rightarrow_\beta^*}
+
+\newcommand{\Lif}[3]{\text{if } #1 \text{ then } #2 \text{ else } #3}
+%\newcommand{\Lif}[3]{\mathrm{if}\ #1\ \mathrm{then}\ #2\ \mathrm{else}\ #3}
+\newcommand{\letin}[3]{\mathrm{let}\ #1 = #2\ \mathrm{in}\ #3}
+
+\newcommand{\isZero}[1]{\text{\ttfamily is\_zero? } #1}
+\newcommand{\Lexp}{\text{\ttfamily{} exp }}
+\newcommand{\Lplus}{\text{\ttfamily plus }}
+\newcommand{\Lsucc}{\text{\ttfamily succ }}
+
+\newcommand{\false}{\text{\ttfamily false}}
+\newcommand{\true}{\text{\ttfamily true}}
+\newcommand{\Land}{\text{\ttfamily{} and }}
+\newcommand{\Lor}{\text{\ttfamily{} or }}
+\newcommand{\Lnot}{\text{\ttfamily not }}
+
+\newcommand{\fst}{\text{\ttfamily fst }}
+\newcommand{\snd}{\text{\ttfamily snd }}
+
+\DeclareMathOperator{\FV}{FV}
+
+\newcommand{\Ycr}{\mathbf Y_{\text{CR}}}
+\newcommand{\Yt}{\mathbf Y_{\text{Turing}}}
+
+\newcommand{\clS}{\mathbf S}
+\newcommand{\clK}{\mathbf K}
+\newcommand{\clB}{\mathbf B}
+\newcommand{\clI}{\mathbf I}
+\newcommand{\clW}{\mathbf W}
+\newcommand{\clC}{\mathbf C}
+\newcommand{\clY}{\mathbf Y}
+\newcommand{\CLvar}[1]{\ensuremath{[#1] \, . \,}}
+
+%\setcounter{section}{8}
+
+\newcommand{\Card}[1]{\section{}
+\input{CardBody#1}
+}
+
+\newcommand{\modulo}[2]{#1 - #2 * (#1 / #2)}
+
+\begin{document}
+\newcounter{variant}
+\newcounter{CardsOnPage}
+\newcounter{i}
+\forloop{i}{0}{\value{i} < \CardsCount}{%
+    \setcounter{variant}{\modulo{\value{i}}{\VariantCount} + 1}%
+    \Card{\thevariant}%
+    \setcounter{CardsOnPage}{\modulo{\value{i}}{\MaxCardsOnPage} + 1}%
+    \ifthenelse{\value{CardsOnPage} = \MaxCardsOnPage}{\pagebreak}{}%
+}
+\end{document}

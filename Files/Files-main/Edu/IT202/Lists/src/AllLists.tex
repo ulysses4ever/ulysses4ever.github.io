@@ -1,0 +1,120 @@
+\documentclass[12pt]{article}%,leqno
+\usepackage{cmap}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{automata,shapes,arrows,positioning,calc}
+\usepackage{clrscode}
+\usepackage{sectsty}
+\usepackage{verbatim}
+\usepackage{ifthen}
+\usepackage{forloop}
+\usepackage{calc}
+
+\sectionfont{\large\nohang\centering}
+%\renewcommand{\chaptername}{Занятие}
+
+\newcommand{\Llabel}{Занятие}
+
+%\usepackage[urlbordercolor={1 1 1}]{hyperref}
+%colorlinks,urlcolor=black
+
+\topmargin=0cm
+%\headsep=10pt
+\oddsidemargin=0cm
+\textheight=21cm
+\textwidth=17cm
+
+\newcommand{\ListCount}{8}
+\renewcommand{\Llabel}{Занятие}
+\newcommand{\Lnum}{0}
+
+\usepackage{fancyheadings}
+\pagestyle{fancy}
+\lfoot{\scriptsize ЮФУ, Мехмат, ИТ}
+\cfoot{--- \thepage{} ---}
+\rfoot{\scriptsize \Llabel{} \Lnum}
+\lhead{\footnotesize Теория автоматов и формальных языков}
+\rhead{\footnotesize 25/05/2010}
+
+\parindent=0cm
+
+\tolerance=1000
+
+%\renewcommand{\thesubsubsection}{\arabic{\subsection}}
+%\arabic{\subsubsection}
+\renewcommand{\emptyset}{\varnothing}
+\newcommand{\es}{\emptyset}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\NO}{\ensuremath{\mathbb N_0}}
+\DeclareMathOperator{\RE}{RE}
+\DeclareMathOperator{\Gen}{Gen}
+\renewcommand{\qed}{\hfill \vrule width1.5ex height1.5ex depth0pt}
+\newcommand{\pseudoqed}{\hfill\Box}
+\newcommand{\HW}{\ensuremath{{\otimes}}}
+\renewcommand{\labelenumi}{(\theenumi)}
+\newcommand{\InsertList}[1]{%
+\input{listok#1}
+}
+\newcommand{\nspace}{\hspace{0pt}}
+\newcommand{\nbdash}{\nobreakdash-\nspace}
+
+\newtheorem{Thm}{Теорема}[section]
+\renewcommand{\theThm}{\arabic{Thm}}
+
+\theoremstyle{remark}
+\newtheorem*{SketchOfProof}{Набросок доказательства}
+
+\theoremstyle{definition}
+\newtheorem*{Proposition}{Утверждение}
+\newtheorem*{Remark}{Замечание}
+\newtheorem{NumRemark}{Замечание}
+\newtheorem*{Algo}{Алгоритм}
+\newtheorem*{Def}{Определение}
+\newtheorem*{Task}{Задача}
+
+%\newcommand{\modulo}[2]{#1 - #2 * (#1 / #2)}
+
+\begin{document}
+{\Large\sffamily
+\thispagestyle{empty}
+\begin{center}
+Федеральное агенство по образованию\\
+\vspace*{0.4cm}
+Федеральное государственное образовательное учреждение \\
+высшего профессионального образования\\
+«Южный федеральный университет»\\
+\vspace*{0.4cm}
+Факультет математики, механики и компьютерных наук\\
+\vspace*{150pt}
+Практические занятия по курсу\\
+«Теория автоматов и формальных языков»\\
+\end{center}
+\vspace{3cm}
+
+\vfill
+\begin{center} 
+Ростов-на-Дону\\
+2010
+\end{center}
+}
+\pagebreak
+
+\setcounter{page}{2}
+
+\newcounter{listok}
+\newcounter{i}
+\forloop{i}{1}{\value{i} < \ListCount}{%
+%    \setcounter{listok}{\i + 1}%
+    \renewcommand{\Lnum}{\thei}
+    \InsertList{\thei}
+    \pagebreak
+%    \setcounter{CardsOnPage}{\modulo{\value{i}}{\MaxCardsOnPage} + 1}%
+%    \ifthenelse{\value{CardsOnPage} = \MaxCardsOnPage}{\pagebreak}{}%
+}
+\end{document}

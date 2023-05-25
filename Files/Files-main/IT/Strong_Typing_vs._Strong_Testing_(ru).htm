@@ -1,0 +1,1415 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1251">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List
+href="Strong_Typing_vs._Strong_Testing_(ru).files/filelist.xml">
+<title>Брюс Эккель</title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="metricconverter"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="time"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="date"/>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Ulysses</o:Author>
+  <o:LastAuthor>Ulysses</o:LastAuthor>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>235</o:TotalTime>
+  <o:Created>2007-02-08T05:46:00Z</o:Created>
+  <o:LastSaved>2007-02-08T12:39:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>3204</o:Words>
+  <o:Characters>18265</o:Characters>
+  <o:Company>RSU</o:Company>
+  <o:Lines>152</o:Lines>
+  <o:Paragraphs>42</o:Paragraphs>
+  <o:CharactersWithSpaces>21427</o:CharactersWithSpaces>
+  <o:Version>11.5703</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Print</w:View>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:DoNotHyphenateCaps/>
+  <w:PunctuationKerning/>
+  <w:DrawingGridHorizontalSpacing>6 пт</w:DrawingGridHorizontalSpacing>
+  <w:DrawingGridVerticalSpacing>6 пт</w:DrawingGridVerticalSpacing>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>3</w:DisplayVerticalDrawingGridEvery>
+  <w:UseMarginsForDrawingGridOrigin/>
+  <w:ValidateAgainstSchemas>false</w:ValidateAgainstSchemas>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotUnderlineInvalidXML/>
+  <w:DoNotShadeFormData/>
+  <w:Compatibility>
+   <w:FootnoteLayoutLikeWW8/>
+   <w:ShapeLayoutLikeWW8/>
+   <w:AlignTablesRowByRow/>
+   <w:ForgetLastTabAlignment/>
+   <w:LayoutRawTableWidth/>
+   <w:LayoutTableRowsApart/>
+   <w:UseWord97LineBreakingRules/>
+   <w:SelectEntireFieldWithStartOrEnd/>
+   <w:UseWord2002TableStyleRules/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:595.45pt 841.7pt;
+	margin:72.0pt 80.0pt 36.0pt 45.15pt;
+	mso-header-margin:36.0pt;
+	mso-footer-margin:36.0pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Обычная таблица";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="3074"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=RU link=blue vlink=purple style='tab-interval:36.0pt;text-justify-trim:
+punctuation'>
+
+<div class=Section1>
+
+<p class=MsoNormal align=center style='text-align:center;line-height:150%;
+background:white'><span style='font-size:20.0pt;line-height:150%;font-family:
+Arial;mso-bidi-font-family:"Times New Roman";letter-spacing:-1.15pt'>Брюс</span><span
+style='font-size:20.0pt;line-height:150%;font-family:Arial;letter-spacing:-1.15pt'>
+</span><span style='font-size:20.0pt;line-height:150%;font-family:Arial;
+mso-bidi-font-family:"Times New Roman";letter-spacing:-1.15pt'>Эккель</span><span
+style='font-size:20.0pt;line-height:150%'><o:p></o:p></span></p>
+
+<p class=MsoNormal align=center style='text-align:center;line-height:150%;
+background:white'><span style='font-size:20.0pt;line-height:150%;font-family:
+Arial;mso-bidi-font-family:"Times New Roman";letter-spacing:-1.6pt'>Сильная</span><span
+style='font-size:20.0pt;line-height:150%;font-family:Arial;letter-spacing:-1.6pt'>
+</span><span style='font-size:20.0pt;line-height:150%;font-family:Arial;
+mso-bidi-font-family:"Times New Roman";letter-spacing:-1.6pt'>типизация</span><span
+style='font-size:20.0pt;line-height:150%;font-family:Arial;letter-spacing:-1.6pt'>
+</span><span style='font-size:20.0pt;line-height:150%;font-family:Arial;
+mso-bidi-font-family:"Times New Roman";letter-spacing:-1.6pt'>против</span><span
+style='font-size:20.0pt;line-height:150%;font-family:Arial;letter-spacing:-1.6pt'>
+</span><span style='font-size:20.0pt;line-height:150%;font-family:Arial;
+mso-bidi-font-family:"Times New Roman";letter-spacing:-1.6pt'>сильного
+тестирования</span><sub><span style='font-size:20.0pt;line-height:150%;
+font-family:Arial;mso-bidi-font-family:"Times New Roman";letter-spacing:-1.45pt'><o:p></o:p></span></sub></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;letter-spacing:-.4pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;letter-spacing:-.4pt'>Предисловие (</span><span
+class=SpellE><span style='font-size:12.0pt;mso-bidi-font-size:10.0pt'>Джоэл</span></span><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'> <span class=SpellE>Спольски</span></span><span
+style='font-size:12.0pt;letter-spacing:-.4pt'>). <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;letter-spacing:-.4pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;letter-spacing:-.4pt'>Помню, когда я
+работал над </span><span lang=EN-US style='font-size:12.0pt;letter-spacing:
+-.4pt;mso-ansi-language:EN-US'>VBA</span><span style='font-size:12.0pt;
+letter-spacing:-.4pt'> в </span><span lang=EN-US style='font-size:12.0pt;
+letter-spacing:-.4pt;mso-ansi-language:EN-US'>Microsoft</span><span
+style='font-size:12.0pt;letter-spacing:-.4pt'>, мы подолгу спорили по поводу
+ста</span><span style='font-size:12.0pt'>тической и динамической проверки
+типов.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;letter-spacing:-.3pt'>Термин «статическая проверка
+типов» означает, что компилятор на стадии ком­</span><span style='font-size:
+12.0pt;letter-spacing:-.2pt'>пиляции убеждается в том, что все переменные
+относятся к правильному типу. </span><span style='font-size:12.0pt;letter-spacing:
+-.4pt'>Например, если в программе имеется функция </span><span lang=EN-US
+style='font-size:12.0pt;letter-spacing:-.4pt;mso-ansi-language:EN-US'>log</span><span
+style='font-size:12.0pt;letter-spacing:-.4pt'>(), которой должно передавать­</span><span
+style='font-size:12.0pt;letter-spacing:-.35pt'>ся число, и в программе
+встречается вызов </span><span lang=EN-US style='font-size:12.0pt;letter-spacing:
+-.35pt;mso-ansi-language:EN-US'>log</span><span style='font-size:12.0pt;
+letter-spacing:-.35pt'>(«</span><span class=SpellE><span lang=EN-US
+style='font-size:12.0pt;letter-spacing:-.35pt;mso-ansi-language:EN-US'>foo</span></span><span
+style='font-size:12.0pt;letter-spacing:-.35pt'>») с передачей строки, при ста­</span><span
+style='font-size:12.0pt;letter-spacing:-.3pt'>тической проверке типов
+компилятор скажет: «Постой-ка! Этой функции нельзя </span><span
+style='font-size:12.0pt;letter-spacing:-.4pt'>передавать строку, потому что она
+ожидает число», и программа не будет компи­</span><span style='font-size:12.0pt'>лироваться.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;letter-spacing:-.25pt'>С другой стороны,
+динамическая проверка типов осуществляется на стадии вы­</span><span
+style='font-size:12.0pt;letter-spacing:-.3pt'>полнения. При динамической
+проверке типов вызов </span><span lang=EN-US style='font-size:12.0pt;
+letter-spacing:-.3pt;mso-ansi-language:EN-US'>log</span><span style='font-size:
+12.0pt;letter-spacing:-.3pt'>(&quot;</span><span class=SpellE><span lang=EN-US
+style='font-size:12.0pt;letter-spacing:-.3pt;mso-ansi-language:EN-US'>foo</span></span><span
+style='font-size:12.0pt;letter-spacing:-.3pt'>&quot;) откомпилируется </span><span
+style='font-size:12.0pt;letter-spacing:-.35pt'>нормально, но во время
+выполнения программы произойдет ошибка. Недостаток </span><span
+style='font-size:12.0pt;letter-spacing:-.25pt'>этого способа состоит в том, что
+ошибка может остаться незамеченной до того </span><span style='font-size:12.0pt;
+letter-spacing:-.4pt'>момента, когда <span class=GramE>через</span> несколько <span
+class=GramE>месяцев</span> кто-то не выполнит эту строку кода (осо­</span><span
+style='font-size:12.0pt;letter-spacing:-.2pt'>бенно если она находится в редко
+используемой функции).<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:.4pt;margin-bottom:0cm;
+margin-left:40.95pt;margin-bottom:.0001pt;text-align:justify;background:white'><span
+style='font-size:12.0pt;letter-spacing:-.25pt'>При проектировании </span><span
+lang=EN-US style='font-size:12.0pt;letter-spacing:-.25pt;mso-ansi-language:
+EN-US'>VBA</span><span style='font-size:12.0pt;letter-spacing:-.25pt'> исходной
+целью проекта было создание сценарного </span><span style='font-size:12.0pt;
+letter-spacing:-.3pt'>языка для пользователей </span><span lang=EN-US
+style='font-size:12.0pt;letter-spacing:-.3pt;mso-ansi-language:EN-US'>Excel</span><span
+style='font-size:12.0pt;letter-spacing:-.3pt'>, поэтому я был убежденным сторонником
+лагеря </span><span style='font-size:12.0pt;letter-spacing:-.2pt'>«слабой
+типизации». Очевидно, что такой подход проще понять непрофессио­</span><span
+style='font-size:12.0pt;letter-spacing:-.25pt'>нальному программисту, который
+плохо себе представляет, что такое перемен­</span><span style='font-size:12.0pt'>ная
+(не говоря уже о типе).<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:.4pt;margin-bottom:0cm;
+margin-left:40.95pt;margin-bottom:.0001pt;text-align:justify;background:white'><span
+style='font-size:12.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:.4pt;margin-bottom:0cm;
+margin-left:40.95pt;margin-bottom:.0001pt;text-align:justify;background:white'><span
+style='font-size:12.0pt;letter-spacing:-.3pt'>На моей стороне было сообщество </span><span
+lang=EN-US style='font-size:12.0pt;letter-spacing:-.3pt;mso-ansi-language:EN-US'>Smalltalk</span><span
+style='font-size:12.0pt;letter-spacing:-.3pt'>, которое в те дни выдвигало
+доволь­</span><span style='font-size:12.0pt;letter-spacing:-.35pt'>но туманные
+аргументы: «Вы все равно узнаете о проблеме, просто это произой­</span><span
+style='font-size:12.0pt;letter-spacing:-.25pt'>дет <span class=GramE>на</span>
+несколько <span class=GramE>секунд</span> позже…» И это часто является правдой,
+но не всегда. </span><span style='font-size:12.0pt;letter-spacing:-.75pt'>В
+конечном счете я одержал победу во внутренних дебатах в </span><span
+lang=EN-US style='font-size:12.0pt;letter-spacing:-.75pt;mso-ansi-language:
+EN-US'>Microsoft</span><span style='font-size:12.0pt;letter-spacing:-.75pt'>; в
+</span><span lang=EN-US style='font-size:12.0pt;letter-spacing:-.75pt;
+mso-ansi-language:EN-US'>VB</span><span class=GramE><span style='font-size:
+12.0pt;letter-spacing:-.75pt'>А</span></span><span style='font-size:12.0pt;
+letter-spacing:-.75pt'> и СОМ </span><span style='font-size:12.0pt;letter-spacing:
+-.25pt'>был добавлен универсальный тип данных «</span><span lang=EN-US
+style='font-size:12.0pt;letter-spacing:-.25pt;mso-ansi-language:EN-US'>Variant</span><span
+style='font-size:12.0pt;letter-spacing:-.25pt'>» - структура, способная со­</span><span
+style='font-size:12.0pt;letter-spacing:-.3pt'>держать значение любого типа.
+Более того, позднее вышел </span><span lang=EN-US style='font-size:12.0pt;
+letter-spacing:-.3pt;mso-ansi-language:EN-US'>VBScript</span><span
+style='font-size:12.0pt;letter-spacing:-.3pt'>, в котором </span><span
+style='font-size:12.0pt;letter-spacing:-.25pt'>поддерживался только
+универсальный тип, так что идея оказалась популярной. </span><span
+style='font-size:12.0pt;letter-spacing:-.2pt'>И все же подсознательно я всегда
+знал, что сильная типизация - полезный ме­</span><span style='font-size:12.0pt;
+letter-spacing:-.15pt'>ханизм, который помогает компилятору выявлять множество
+разных ошибок. <span class=GramE>В С++ я всегда широко использовал систему
+типов.</span> <span class=GramE>Например, если вы хотите быть твердо уверенны в
+том, что рядовым работникам никогда, решительно никогда не должны выплачиваться
+премии, следует создать систему типов с классами начальников и работников, в
+которой метод <span class=SpellE><span lang=EN-US style='mso-ansi-language:
+EN-US'>PayBonus</span></span>() определен только для начальников.</span> Если
+программа откомпилируется, можно не сомневаться: премии достанутся только
+достойным начальникам, а не жадным работникам.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;mso-bidi-font-size:10.0pt;letter-spacing:
+-.15pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>Проблема в том,
+что создавать типы только для проведения дополнительных проверок на стадии
+компиляции немного неудо6но. Типы позволяют выполнять только один <span
+class=SpellE>видпроверок</span>, а именно: «Можно ли применить эту операцию к
+этому объекту?» Нельзя проверить условие вида: «Действительно ли эта функция
+возвращает <st1:time Hour="2" Minute="12" w:st="on">2.12</st1:time> для входных
+значений 1,32 и ‘</span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+15.0pt;mso-ansi-language:EN-US'>aardvark</span><span style='font-size:12.0pt;
+mso-bidi-font-size:15.0pt'>’?».<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>Фактически
+задача превращается в головоломку для программиста, который должен придумать
+хитроумную схему типов, которая бы позволяла проверить неко­торый мелкий аспект
+правильности программы. Оказывается, для проверки правильности программ имеется
+другой, более мощ­ный и прямолинейный инструмент: модульное тестирование.
+Поэтому идея Брюса Эккеля о сильном тестировании как замене для сильной
+типизации меня очень заинтриговала.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>Прежде чем
+передавать слово Брюсу, я должен предупредить, что динамическая типизация
+заметно снижает быстродействие. Поскольку типы приходится анализировать и
+проверять во время выполнения, языки с динамической типизаци­ей всегда работают
+медленнее языков со статической типизацией. Иногда это приемлемо, иногда — нет;
+все зависит от приложения. Обязательная динамическая типизация делает </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:
+EN-US'>Python</span><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>
+очень медленным языком. Я использую спам-фильтр, написанный на </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:
+EN-US'>Python</span><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>;
+и чтобы одно сообщение было помечено как спам, мне часто приходится ждать
+несколько секунд. А если помечается 10 или 20 со­общений, прямые потери от
+удобной «динамической типизации» составляют минуту или две. Если вы управляете
+работой комплекса <span class=SpellE>веб-серверов</span>, примене­ние языка с
+динамической типизацией может означать, что для обслуживания того же числа
+клиентов потребуется в <st1:time Hour="5" Minute="10" w:st="on">5-10</st1:time>
+раз больше серверов. Это может обойтись очень дорого.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>Так что
+руководствуйтесь собственным здравым смыслом относительно того, какое
+быстродействие необходимо для вашего приложения. Но если модульные тесты
+обеспечивают хорошее покрытие кода, не нужно слишком комплексовать по поводу
+отказа от проверки типов на стадии компиляции.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:42.55pt;text-align:justify;background:
+white'><span style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>За последние годы наибольший
+интерес для меня представляла проблема производительности труда программиста.
+Ресурсы процессора стоят дешево, </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:15.0pt;mso-ansi-language:EN-US'>a</span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'> </span><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>ресурсы программиста –
+дорого, и я полагаю, что за первое не стоит расплачиваться вторым. Как добиться
+максимального эффекта в отношении решаемой задачи? Каждый появляющийся новый
+инструмент (особенно язык программирования) обеспечивает некий новый уровень
+абстракции, который может скрывать или не скрывать лишние детали. Тем не <span
+class=GramE>менее</span> я всегда остерегаюсь заманчивых предложений, особенно
+когда меня призывают не<span style='mso-spacerun:yes'>  </span>обращать
+внимания на выкрутасы, необходимые для достижения этой абстракции. Превосходным
+примером служит </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+15.0pt;mso-ansi-language:EN-US'>Perl</span><span style='font-size:12.0pt;
+mso-bidi-font-size:15.0pt'> - прямота этого языка скрывает бессмысленные
+подробности построения программы, но нечитаемый синтаксис (я знаю,
+обеспечивающий совместимость с такими инструментами </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:EN-US'>UNIX</span><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'> как </span><span
+class=SpellE><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:15.0pt;
+mso-ansi-language:EN-US'>awk</span></span><span style='font-size:12.0pt;
+mso-bidi-font-size:15.0pt'>, </span><span class=SpellE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:EN-US'>sed</span></span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:15.0pt'> </span><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>и </span><span class=SpellE><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:
+EN-US'>grep</span></span><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>)
+оказывается слишком высокой ценой. Последние несколько лет прояснили смысл этой
+«<span class=SpellE>Фаустовой</span> сделки» в контексте более традиционных
+языков программирования и их ориентации к статической проверке типов. Все
+началось с двухмесячного романа с </span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:EN-US'>Perl</span><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>; </span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>я получил желанную
+производительность (история закончилась из-за отвратительной работы со ссылками
+и классами в </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>Perl</span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'>; только поздн<span class=GramE>ее я у</span>видел, что
+истинные проблемы кроются в синтаксисе). Проблемы выбора между статической<span
+style='mso-spacerun:yes'>  </span>и динамической типизацией не видны в </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Perl</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>,
+потому что вам все равно не удастся построить достаточно большой проект, чтобы
+эти проблемы проявились, а в не­больших программах все скрывает синтаксис.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+class=GramE><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>После
+перехода на </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>Python</span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'> (распространяется бесплатно по адресу </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'><a href="http://www.Python"><span style='color:windowtext;text-decoration:
+none;text-underline:none'>www</span><span lang=RU style='color:windowtext;
+mso-ansi-language:RU;text-decoration:none;text-underline:none'>.</span><span
+style='color:windowtext;text-decoration:none;text-underline:none'>Python</span></a></span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>.</span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>org</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>) - язык, который может
+использоваться для построения больших, сложных систем - я начал замечать, что
+при явно беспечном отношении к про­верке типов программы </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Python</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>
+обычно неплохо работают, не требуют особых уси­лий и лишены недостатков,
+которые можно было бы ожидать от языка без стати­ческой проверки типов
+(которая, как мы «знаем», является единственно</span></span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> верным способом решения
+проблем в программировании).<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Я столкнулся с загадкой:
+если статическая проверка типов настолько важна, то почему людям удается
+создавать большие, сложные программы </span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> (с го­раздо меньшими
+затратами времени и усилий по сравнению со статическими ре­шениями) без
+катастрофических последствий, которые казались неизбежными?<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Это обстоятельство
+поколебало мою абсолютную веру в статическую проверку типов (обретенную при
+переходе с языка<span class=GramE> С</span> до выхода стандарта </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>ANSI</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> на
+C++, сопровождавшемся радикальными улучшениями) до такой степени, что когда я в
+следующий раз изучал проблемы проверяемых исключений в </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Java</span><sup><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>1</span></sup><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>, я спросил «почему?».
+Последовала большая дискуссия<span class=GramE><sup>2</sup></span>; мне
+объяснили, что если я буду вы­ступать за непроверяемые исключения, падут
+города, а цивилизация в том виде, в котором мы ее знаем, перестанет
+существовать. В книге «Философия </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Java</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>»<sup>3</sup> я по­шел еще
+дальше и продемонстрировал использование </span><span class=SpellE><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>RuntimeException</span></span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'> </span><span style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt'>как клас­са-обертки для «отключения» проверяемых исключений. <span
+class=GramE>Сейчас это уже воспри­нимается вполне нормально (помню, что Мартин <span
+class=SpellE>Фаулер</span> выдвинул ту же идею примерно в то же время), но
+время от времени я получаю по электронной почте сообщения о том, что я попираю
+все Правильное и Истинное, а заодно и нарушаю Патриотический Акт США (парни из
+ФБР, привет!</span> <span class=GramE>Добро пожаловать в мой <span
+class=SpellE>блог</span>!).</span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Но даже если решить, что от
+проверяемых исключений больше хлопот, неже­ли реальной пользы (от проверки, а
+не исключений — на мой взгляд, единый и по­следовательный механизм сообщения об
+ошибках абсолютно необходим), это не даст ответа на вопрос: «Почему </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Python</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>
+так хорошо работает, когда по всем прави­лам он должен приводить к массовым
+сбоям?». </span><span class=GramE><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> и другие языки с динами­ческой
+типизацией весьма лениво относятся к проверке типов.</span></span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> Вместо того<span
+class=GramE>,</span> что­бы устанавливать максимально жесткие ограничения на
+тип объектов на самой ранней стадии (как в </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Java</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>), языки вроде </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Ruby</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>, </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Smalltalk</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>
+и </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;
+mso-ansi-language:EN-US'>Python</span><span style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt'> накладывают минимальные ограничения на типы и проверяют их только при
+необходимости.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:16.4pt;mso-line-height-rule:
+exactly;background:white'><span style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt'>------------------------------------------------------------------------------------<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:16.4pt;mso-line-height-rule:
+exactly;background:white'><sup><span style='font-size:12.0pt'>1 </span></sup><span
+style='font-size:12.0pt'>Проверяемые исключения - возможность языка. Компилятор
+на стадии компиляции убеждается в том, что каждая функция содержит код, который
+либо обрабатывает любое возможное исключение, либо отказывается от его
+обработки, чтобы ответственность можно было передать другой стороне. - Примеч.
+ред. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:16.4pt;mso-line-height-rule:
+exactly;background:white'><st1:metricconverter ProductID="2 См" w:st="on"><sup><span
+ style='font-size:12.0pt'>2 </span></sup><span style='font-size:12.0pt'>См</span></st1:metricconverter><span
+style='font-size:12.0pt'>. </span><span lang=EN-US style='font-size:12.0pt;
+mso-ansi-language:EN-US'><a
+href="http://www.mindview.net/Etc/Discussions/CheckedExceptions">http<span
+lang=RU style='mso-ansi-language:RU'>://</span>www<span lang=RU
+style='mso-ansi-language:RU'>.</span><span class=SpellE>mindview</span><span
+lang=RU style='mso-ansi-language:RU'>.</span>net<span lang=RU style='mso-ansi-language:
+RU'>/</span>Etc<span lang=RU style='mso-ansi-language:RU'>/</span>Discussions<span
+lang=RU style='mso-ansi-language:RU'>/C</span><span class=SpellE>heckedExceptions</span></a></span><span
+style='font-size:12.0pt'>.</span><span style='font-size:12.0pt;mso-bidi-font-size:
+10.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><sup><span style='font-size:12.0pt'>3
+</span></sup><span style='font-size:12.0pt'>Эккель Б. Философия </span><span
+lang=EN-US style='font-size:12.0pt;mso-ansi-language:EN-US'>Java</span><span
+style='font-size:12.0pt'>. 3-изд. - СПб.: Питер, 2003.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:16.4pt;mso-line-height-rule:
+exactly;background:white'><span style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt'>------------------------------------------------------------------------------------<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-right:2.0pt;text-align:justify;tab-stops:lined 56.4pt 316.8pt;
+background:white'><span class=GramE><span style='font-size:12.0pt;mso-bidi-font-size:
+15.0pt'>Так возникает идея латентной, или структурной типизации, часто
+называемой «утиной типизацией» (от поговорки:</span></span><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'> «Если оно ходит как утка и
+крякает, как утка, будем <span class=GramE>относится</span> к нему как к
+утке»). Это означает, что любому объекту можно отправить любое сообщение, а
+язык интересует лишь то, сможет ли объект принять это сообщение. В отличие от </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:
+EN-US'>Java</span><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>,
+язык не требует, чтобы объект относился к определенному типу. Например,
+программа с говорящими животными на </span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:EN-US'>Java</span><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'><span
+style='mso-spacerun:yes'>  </span>выглядит так:</span><span style='font-size:
+12.0pt;mso-bidi-font-size:10.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'>//
+</span><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>Говорящие</span><span
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'> </span><span
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>животные</span><span
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'> </span><span
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>на</span><span
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'> </span><span
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>языке</span><span
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'> </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:
+Arial;mso-ansi-language:EN-US'>Java</span><span style='font-size:12.0pt;
+mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'>:</span><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:12.8pt;mso-line-height-rule:exactly;
+background:white'><span class=GramE><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:EN-US'>interface</span></span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:
+Arial;mso-ansi-language:EN-US'> Pet {<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:12.8pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:EN-US'><span
+style='mso-spacerun:yes'>  </span><span class=GramE>void</span> speak();<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:12.8pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+10.0pt;mso-ansi-language:EN-US'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span class=GramE><span lang=EN-US style='font-size:12.0pt;
+mso-ansi-language:EN-US'>class</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-ansi-language:EN-US'> Cat implements Pet {<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>  </span><span class=GramE>public</span>
+void speak() { <span class=SpellE>System.out.println</span>(“meow!”); }<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:
+EN-US'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span class=GramE><span lang=EN-US style='font-size:12.0pt;
+mso-ansi-language:EN-US'>class</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-ansi-language:EN-US'> Dog implements Pet {<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>  </span><span class=GramE>public</span>
+void speak() { <span class=SpellE>System.out.println</span>(“woof!”); }<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:
+EN-US'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span class=GramE><span lang=EN-US style='font-size:12.0pt;
+mso-ansi-language:EN-US'>public</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-ansi-language:EN-US'> class <span class=SpellE>PetSpeak</span> {<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>  </span><span class=GramE>static</span>
+void command( Pet p ) { <span class=SpellE>p.speak</span>(); }<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>  </span><span class=GramE>public</span>
+static void main( String[] <span class=SpellE>args</span> ) {<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>Pets[</span>]
+pets = { new Cat(), new Dog() };<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>for(</span> <span
+class=SpellE>int</span> <span class=SpellE>i</span>=0; <span class=SpellE>i</span>
+&lt; <span class=SpellE>pets.length</span>; <span class=SpellE>i</span>++ )<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>      </span><span class=GramE>command<span
+lang=RU style='mso-ansi-language:RU'>(</span></span></span><span
+style='font-size:12.0pt'> </span><span lang=EN-US style='font-size:12.0pt;
+mso-ansi-language:EN-US'>pets</span><span style='font-size:12.0pt'>[</span><span
+class=SpellE><span lang=EN-US style='font-size:12.0pt;mso-ansi-language:EN-US'>i</span></span><span
+style='font-size:12.0pt'>] );<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span style='font-size:12.0pt'><span
+style='mso-spacerun:yes'>  </span>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span style='font-size:12.0pt'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:14.0pt;mso-line-height-rule:exactly;
+background:white'><span style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>Обратите внимание: метод </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:
+EN-US'>command</span><span style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>()
+должен знать точный тип получаемого аргумента (</span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:EN-US'>Pet</span><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>), и ничего другого не
+примет. Таким образом, я должен создать иерархию </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:EN-US'>Pet</span><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'> и объявить производные
+классы </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:15.0pt;
+mso-ansi-language:EN-US'>Dog</span><span style='font-size:12.0pt;mso-bidi-font-size:
+15.0pt'> и </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+15.0pt;mso-ansi-language:EN-US'>Cat</span><span style='font-size:12.0pt;
+mso-bidi-font-size:15.0pt'>, которые затем подвергаются повышающему преобразованию
+при вызове обобщенного метода </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:15.0pt;mso-ansi-language:EN-US'>command</span><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>().<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>В течение долгого времени я
+считал, что повышающее преобразование являет­ся неотъемлемой частью
+объектно-ориентированного программирования, и меня раздражали вопросы от
+невежественных сторонников </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:15.0pt;mso-ansi-language:EN-US'>Smalltalk</span><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'> и иже с ними. Но когда я
+начал работать с </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+15.0pt;mso-ansi-language:EN-US'>Python</span><span style='font-size:12.0pt;
+mso-bidi-font-size:15.0pt'>, обнаружилась одна любопытная подробность.
+Приведенный ранее код можно напрямую перевести на </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-right:1.2pt;text-align:justify;text-indent:
+18.0pt;line-height:16.0pt;mso-line-height-rule:exactly;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span style='font-size:12.0pt;
+mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New"'># </span><span
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt'>Говорящие</span><span
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New"'>
+</span><span style='font-size:12.0pt;mso-bidi-font-size:13.0pt'>животные</span><span
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New"'>
+</span><span style='font-size:12.0pt;mso-bidi-font-size:13.0pt'>на</span><span
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New"'>
+</span><span style='font-size:12.0pt;mso-bidi-font-size:13.0pt'>языке</span><span
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New"'>
+</span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:13.0pt;
+mso-bidi-font-family:"Courier New";mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New"'>:</span><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";
+mso-ansi-language:EN-US'>class</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'> Pet:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>def</span>
+speak(self): pass<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";
+mso-ansi-language:EN-US'>class</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'> Cat(Pet):<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>def</span> speak(self):<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>        </span><span class=GramE>print</span>
+&quot;meow!&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";
+mso-ansi-language:EN-US'>class</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'> Dog(Pet):<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>def</span>
+speak(self):<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>        </span><span class=GramE>print</span>
+&quot;woof!&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";
+mso-ansi-language:EN-US'>def</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'> command(pet):<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=SpellE><span
+class=GramE>pet.speak</span></span><span class=GramE>()</span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";
+mso-ansi-language:EN-US'>pets</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'> = [ Cat(), Dog() ]<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";
+mso-ansi-language:EN-US'>for</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'> pet in pets:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New";mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>command<span
+lang=RU style='mso-ansi-language:RU'>(</span></span>pet</span><span
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt;mso-bidi-font-family:"Courier New"'>)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span style='font-size:12.0pt;
+mso-bidi-font-size:15.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:15.0pt'>Если вы никогда не видели
+кода </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:15.0pt;
+mso-ansi-language:EN-US'>Python</span><span style='font-size:12.0pt;mso-bidi-font-size:
+15.0pt'>, вы заметите, что он наделяет новым смыслом понятие компактности кода,
+но в очень хорошем смысле. Вы думаете, что код C/C++ компактен? Выбросьте
+фигурные скобки - отступы уже имеют </span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'>интуитивный смысл для человеческого ума, поэтому их
+можно использовать для обозначения области видимости. Типы аргументов и
+возвращаемых значений? Пускай язык сам разберется! При создании класса базовые
+классы заключаются в круглые скобки. Ключевое слово </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>def</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> означает, что мы создаем
+определение функ­ции или метода. С другой стороны, </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> требует явно указывать
+аргумент </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>this</span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'> (здесь он называется </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>self</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>) при определении методов.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Ключевое слово </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>pass</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>
+означает: «А это мы определим позднее», так что его мож­но считать
+разновидностью ключевого слова </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>abstract</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Объявление </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>command</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>(</span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>pet</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>) всего
+лишь означает, что передается некоторый объект с именем </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>pet</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>, но
+не несет никакой информации о типе этого объекта. Дело в том, что тип объекта
+неважен, при условии, что для объекта можно вызвать </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>speak</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>() или другую функцию или
+метод, которые требуется вызвать. Это пример латентной типизации, которая
+вскоре будет рассмотрена более подробно.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Кроме того, </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>command</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>(</span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>pet</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>)
+представляет собой обычную функцию, что вполне допустимо в </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Python</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>.
+Другими словами, </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>Python</span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'> не настаивает на том, чтобы все функции принадлежали
+объектам, поскольку иногда нужна именно функция, а не метод.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>В </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> списки и ассоциативные
+массивы (они же отображения или слова­ри) играют настолько важную роль, что они
+включены в основной синтаксис язы­ка, поэтому для работы с ними не нужны никакие
+специальные библиотеки. При­мер нам уже встречался:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+class=GramE><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-family:Arial;
+mso-ansi-language:EN-US'>pets</span></span><span style='font-size:12.0pt;
+mso-bidi-font-family:Arial'> = [ </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-family:Arial;mso-ansi-language:EN-US'>Cat</span><span
+style='font-size:12.0pt;mso-bidi-font-family:Arial'>(), </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'>Dog</span><span style='font-size:12.0pt;mso-bidi-font-family:Arial'>() ]<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Команда создает два новых
+объекта типов </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>Cat</span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'> и </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Dog</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>. При создании объектов
+вызываются конструкторы, но ключевое слово </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>new</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> не нужно (если вернуться к </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Java</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>, вы
+поймете, что и здесь без </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>new</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> можно обойтись — это всего
+лишь пережи­ток, унаследованный от C++).<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Перебор последовательности
+тоже играет настолько важную роль, что в </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> для него предусмотрена
+специальная операция; команда<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+class=SpellE><span style='font-size:12.0pt;mso-bidi-font-size:13.0pt'>for</span></span><span
+style='font-size:12.0pt;mso-bidi-font-size:13.0pt'> <span class=SpellE>pet</span>
+<span class=SpellE>in</span> <span class=SpellE>pets</span>:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span style='font-size:12.0pt;
+mso-bidi-font-size:13.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>последовательно заносит
+каждый элемент списка в переменную </span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>pet</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>. На мой взгляд, такое
+решение гораздо четче и прямолинейнее решения, используемого в </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Java</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>,
+даже по сравнению с синтаксисом </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>J</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>2</span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>SE</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>5 «</span><span
+class=SpellE><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;
+mso-ansi-language:EN-US'>foreach</span></span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'>».<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;tab-stops:202.4pt;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Программа выводит тот же
+результат, что и </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>Java</span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'>-версия. Становится понятно, почему </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Python</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>
+часто называют «исполняемым псевдокодом». Он не только дос­таточно прост для
+псевдокода, но и обладает тем замечательным свойством, что он действительно
+исполняется. А это означает, что вы можете быстро опробовать новую идею в </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Python</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>,
+а когда она заработает - переписать ее на </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Java</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>/</span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>C</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>++/</span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>C</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'># или другом языке по вашему
+выбору. Хотя если вы понимаете, что проблема уже решена на </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Python</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>,
+зачем ее переписывать? (По крайней мере, я обычно думаю именно так). Я привык
+на своих семинарах давать подсказки к упражнениям на </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>, потому что при этом я не
+выдаю всю картину, но слушатель видит форму поиска решения и может двигаться
+вперед. Кроме того, я могу проверить пра­вильность псевдокода, запустив его на
+выполнение. Но самое интересное <span class=GramE>в</span> <span class=GramE>другом</span>:
+поскольку метод </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>command</span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'>(</span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>pet</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>) не обращает внимания на
+тип полученного объекта, повышающее<span style='mso-spacerun:yes'> 
+</span>преобразование не нужно. Следовательно, программу на </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Python</span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt'> </span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>можно
+переписать без использования базовых классов:</span><span style='font-size:
+12.0pt;mso-bidi-font-size:10.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span style='font-size:12.0pt;
+mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span style='font-size:12.0pt;
+mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'># Говорящие животные на
+языке </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:11.0pt;
+mso-bidi-font-family:Arial;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'>,
+но без базовых классов:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span style='font-size:12.0pt;
+mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;
+mso-ansi-language:EN-US'>class</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'> Cat:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>def</span>
+speak(self):<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>        </span><span class=GramE>print</span>
+&quot;meow!&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;
+mso-ansi-language:EN-US'>class</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'> Dog:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>def</span>
+speak(self):<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>        </span><span class=GramE>print</span>
+&quot;woof!&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;
+mso-ansi-language:EN-US'>class</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'> Bob:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>def</span>
+bow(self):<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>        </span><span class=GramE>print</span>
+&quot;thank you, thank you!&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>def</span>
+speak(self):<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>        </span><span class=GramE>print</span>
+&quot;hello, welcome to the neighborhood!&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>def</span>
+drive(self):<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>        </span><span class=GramE>print</span>
+&quot;beep, beep!&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;
+mso-ansi-language:EN-US'>def</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'> command(pet):<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=SpellE><span
+class=GramE>pet.speak</span></span><span class=GramE>()</span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;
+mso-ansi-language:EN-US'>pets</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'> = [ Cat(), Dog(), Bob() ]<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span class=GramE><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;
+mso-ansi-language:EN-US'>for</span></span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'> pet in pets:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='background:white'><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial;mso-ansi-language:
+EN-US'><span style='mso-spacerun:yes'>    </span><span class=GramE>command<span
+lang=RU style='mso-ansi-language:RU'>(</span></span>pet</span><span
+style='font-size:12.0pt;mso-bidi-font-size:11.0pt;mso-bidi-font-family:Arial'>)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:17.2pt;line-height:
+16.8pt;mso-line-height-rule:exactly;background:white'><span style='font-size:
+12.0pt;mso-bidi-font-size:16.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Поскольку </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>command</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>(</span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>pet</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>)
+интересует лишь возможность отправки сообщения </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>speak</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>() своему аргументу, я убрал
+базовый класс </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>Pet</span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'> и даже добавил <span class=GramE>совершенно
+посторонний</span> класс </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Bob</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>. Так как этот класс
+содержит метод </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>speak</span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'>(), он тоже рабо­тает с функцией </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>command</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>(</span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>pet</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>).<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;tab-stops:190.8pt;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>В этот момент язык с сильной
+типизацией уже бушевал бы от ярости, настаивая, что подобная неразборчивость
+совершенно недопустима. Само собой, в ка­кой-то момент «неправильный» тип может
+быть использован при вызове </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>command</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>() или иным способом
+просочится в систему. Преимущества более простого и четкого выражения этих концепций
+попросту перевешивают риск — даже только это преимущество обеспечивает
+производительность, в <st1:time Hour="5" Minute="10" w:st="on">5-10</st1:time>
+раз превышающую производительность программирования на </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Java</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> или C++. Что произойдет,
+если та­кая проблема возникнет в программе </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Python</span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> </span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>– объект каким-то образом
+окажется там, где его быть не должно? В </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Python</span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> </span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>вся информация об ошибках
+выдается в виде исключений, как в </span><span lang=EN-US style='font-size:
+12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Java</span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> </span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>и в </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>C</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>#, и как это должно быть в
+C++. Таким образом, проблема будет обнаружена, но практически всегда это
+происходит во время выполнения. «Ага! – скажете вы. – В этом все дело:
+отсутствие необходимой проверки на стадии компиляции позволяет гарантировать
+правильность программы».<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Во время работы над книгой
+«Философия C++» (</span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>Thinking</span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>in</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> C++) я реализовал очень примитивную
+форму тестирования: я написал программу, которая автоматически извлекала весь
+программный код из книги (начало и конец каждого листинга определялись по
+специальным маркерам, включаемым в листинг) а затем построил </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>make</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>-файлы,
+которые компилировали весь код. Это позволило мне гарантировать, что весь код в
+книге успешно компилируется, и я мог с полным правом сказать «Если этот
+фрагмент взят из книги, значит, он правилен». Я не обращал внимания на
+назойливый голос, говоривший: «Компилируется – еще не <span class=GramE>значит
+правильно выполняется</span>», потому что сама автоматизация проверки кода была
+достаточно серьезным делом (как известно каждому читателю книг по
+программированию, многие авторы все еще уделяют недостаточно внимания проверке
+правильности кода). Естественно, некоторые примеры работали неверно, и когда за
+прошедшие годы у меня накопилось достаточно сообщений об ошибках, я начал
+понимать, что игнорировать проблему тестирования невозможно. Я начал так
+серьезно к ней относиться, что в третьем издании «Философии </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Java</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>»
+написал:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>«Если программа не
+протестирована, она не работает».<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Я имел в виду, что если
+программа компилируется в языке со статической ти­пизацией, это говорит всего
+лишь о том, что она прошла некоторые тесты. Это означает, что ее синтаксис
+заведомо правилен (</span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>Python</span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'> тоже проверяет синтаксис на стадии компиляции -
+просто в этом языке меньше синтаксических ограниче­ний). Но то обстоятельство,
+что код прошел проверку компилятора, еще не дает гарантий его правильности.
+Если программа запускается, это также не гарантиру­ет ее правильности.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Независимо от того, какая
+типизация используется в вашем языке програм­мирования — статическая или
+динамическая, единственной гарантией правиль­ности является <i
+style='mso-bidi-font-style:normal'>прохождение всех тестов, определяющих
+правильность програм­мы</i>. И некоторые из этих тестов вам придется написать
+самостоятельно. Конечно, это модульные тесты, приемочные тесты и т. д. В
+«Философии </span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+16.0pt;mso-ansi-language:EN-US'>Java</span><span style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt'>» я наполнил книгу своего рода модульными тестами, и
+потраченные усилия многократно оку­пились. Стоит «заразиться тестированием», и
+вы уже не избавитесь от этой при­вычки.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Происходящее очень
+напоминает переход с<span class=GramE> <span class=SpellE>С</span></span> на
+C++. Вдруг компилятор на­чинает выполнять многие проверки за вас, а программа
+быстрее переходит в ра­ботоспособное состояние. Однако возможности проверки
+синтаксиса ограниче­ны. Компилятор не знает, как должна работать программа,
+поэтому его необходимо «расширить» определением модульных тестов (независимо от
+используемого язы­ка). После этого вы сможете достаточно быстро вносить
+радикальные изменения (такие, как переработка кода или изменение архитектуры) —
+ведь при возникно­вении любых проблем тесты перестанут проходить, подобно тому,
+как при про­блемах с синтаксисом не проходит компиляция. Без полного набора
+модульных тестов (по меньшей мере) гарантировать правильность программы
+невозможно. Конечно, утверждения о том, что статическая проверка типов в C++, </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:
+EN-US'>Java</span><span style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> или<span
+class=GramE> С</span># спасает от написания неверных программ, являются
+иллюзией (наверняка вы зна­ете это по личному опыту). Фактически нам нужно</span><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal align=center style='margin-top:12.0pt;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:0cm;text-align:center;background:white'><b
+style='mso-bidi-font-weight:normal'><span style='font-size:14.0pt'>Сильное</span></b><b
+style='mso-bidi-font-weight:normal'><span style='font-size:14.0pt;mso-bidi-font-family:
+Arial'> </span></b><b style='mso-bidi-font-weight:normal'><span
+style='font-size:14.0pt'>тестирование</span></b><b style='mso-bidi-font-weight:
+normal'><span style='font-size:14.0pt;mso-bidi-font-family:Arial'> </span></b><b
+style='mso-bidi-font-weight:normal'><span style='font-size:14.0pt'>вместо</span></b><b
+style='mso-bidi-font-weight:normal'><span style='font-size:14.0pt;mso-bidi-font-family:
+Arial'> </span></b><b style='mso-bidi-font-weight:normal'><span
+style='font-size:14.0pt'>сильной</span></b><b style='mso-bidi-font-weight:normal'><span
+style='font-size:14.0pt;mso-bidi-font-family:Arial'> </span></b><b
+style='mso-bidi-font-weight:normal'><span style='font-size:14.0pt'>типизации<o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>Полагаю, именно благодаря
+этому аспекту работает </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'>. Все тесты<span
+class=GramE> С</span>++ вы­полняются на стадии компиляции (за несколькими
+второстепенными исключе­ниями). Одни тесты </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Java</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> применяются на стадии
+компиляции (проверка синтаксиса), другие - на стадии выполнения (например,
+проверка границ массивов), большинство тестов </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> применяется на стадии
+выполнения вместо стадии компиляции, но важно здесь именно то, что они
+применяются (а не то, когда это происходит). А возможность создать рабочий
+прототип программы на </span><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:16.0pt;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:16.0pt'> гораздо быстрее, чем </span><span
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt'>при написании эквивалентной
+программы<span class=GramE> С</span>++/</span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt;mso-ansi-language:EN-US'>Java</span><span
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt'>/</span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt;mso-ansi-language:EN-US'>C</span><span
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt'>#, позволяет быстрее
+приступить к реальному тестированию: модульным тестам, проверкам гипотез,
+тестированию альтернативных подходов и т. д. А если для программы </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:18.0pt;mso-ansi-language:
+EN-US'>Python</span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:
+18.0pt'> </span><span style='font-size:12.0pt;mso-bidi-font-size:18.0pt'>написаны
+нормальные модульные тесты, она по надежности не уступит программам C++, </span><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:18.0pt;mso-ansi-language:
+EN-US'>Java</span><span style='font-size:12.0pt;mso-bidi-font-size:18.0pt'> и
+С# с нормальными модульными тестами (хотя тесты на </span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt;mso-ansi-language:EN-US'>Python</span><span
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt'> пишутся быстрее).<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt'>Роберт Мартин - один из
+ветеранов сообщества C++. Он является автором многих книг и статей, занимался
+консультациями, преподаванием и т. д. Ак­тивный сторонник статической проверки
+типов. Во всяком случае, я так считал, пока не ознакомился с записью <span
+class=GramE>в</span> <span class=GramE>его</span> <span class=SpellE>блоге</span>
+(</span><span lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:18.0pt;
+mso-ansi-language:EN-US'><a href="http://www.artima.com/weblogs/"><span
+style='color:windowtext;text-decoration:none;text-underline:none'>http</span><span
+lang=RU style='color:windowtext;mso-ansi-language:RU;text-decoration:none;
+text-underline:none'>://</span><span style='color:windowtext;text-decoration:
+none;text-underline:none'>www</span><span lang=RU style='color:windowtext;
+mso-ansi-language:RU;text-decoration:none;text-underline:none'>.</span><span
+class=SpellE><span style='color:windowtext;text-decoration:none;text-underline:
+none'>artima</span></span><span lang=RU style='color:windowtext;mso-ansi-language:
+RU;text-decoration:none;text-underline:none'>.</span><span style='color:windowtext;
+text-decoration:none;text-underline:none'>com</span><span lang=RU
+style='color:windowtext;mso-ansi-language:RU;text-decoration:none;text-underline:
+none'>/</span><span class=SpellE><span style='color:windowtext;text-decoration:
+none;text-underline:none'>weblogs</span></span></a></span><span
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt'>/</span><span class=SpellE><span
+lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:18.0pt;mso-ansi-language:
+EN-US'>viewpost</span></span><span style='font-size:12.0pt;mso-bidi-font-size:
+18.0pt'>.</span><span class=SpellE><span lang=EN-US style='font-size:12.0pt;
+mso-bidi-font-size:18.0pt;mso-ansi-language:EN-US'>jsp</span></span><span
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt'>?</span><span lang=EN-US
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt;mso-ansi-language:EN-US'>thread</span><span
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt'>=4639 - Ред.). Роберт пришел
+более или менее к тем же выво­дам, что и я, но по иному пути: сначала он
+«заразился тестированием», потом понял, что компилятор был всего лишь одной
+(неполной) формой тестирова­ния, потом — что языки с динамической типизацией
+могут быть гораздо более производительными, а при качественном тестировании
+написанные на них про­граммы не уступают по надежности программам, написанным
+на языках со ста­тической типизацией. Конечно, Мартин тоже получил обычные комментарии
+вида «Да как тебе в голову <span class=GramE>такое</span> пришло?» Именно с
+этого вопроса когда-то началась моя борьба с самими концепциями
+статической/динамической типизации. И конечно, оба мы вначале выступали на
+стороне статической проверки типов. Интересно, что для переоценки предыдущих
+убеждений должно произойти что-то глобальное – такое как «болезнь
+тестирования», или изучение новой разновидности языка.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;background:white'><span
+style='font-size:12.0pt;mso-bidi-font-size:18.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal align=right style='text-align:right'>(<st1:date ls="trans"
+Month="2" Day="5" Year="03" w:st="on">5-2-03</st1:date>)</p>
+
+<p class=MsoNormal>Перевод на русский язык ООО «Питер Пресс», 2007</p>
+
+</div>
+
+</body>
+
+</html>

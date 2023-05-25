@@ -1,0 +1,11 @@
+#include <functional>
+using namespace std;
+using namespace std::placeholders;
+
+int add(int a, int b) {return a + b;}
+
+int main() {
+    function<int(int)> addFive = bind(add, _1, 5);
+    int seven = addFive(2);
+}
+

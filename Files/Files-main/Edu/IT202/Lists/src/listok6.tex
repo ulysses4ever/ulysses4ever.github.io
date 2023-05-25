@@ -1,0 +1,127 @@
+\begin{center}
+{\bfseries\Large \textsc{\Llabel{} \Lnum}: нормальная форма Хомского}
+\end{center}
+
+\begin{Def}Пусть дана КС-грамматика $G=(\Sigma, N, \mathcal P, S \in N)$.
+Говорят, что символ $X \in \Sigma \cup N$ 
+\begin{enumerate}
+    \item \emph{полезный в $G$}, если
+    $$
+        \exists \alpha, \beta \in (\Sigma \cup N)^{\ast} \:
+        \exists w \in \Sigma^* \colon \quad
+        S \Rightarrow^{\ast}_G \alpha X \beta \Rightarrow^{\ast}_G w. 
+    $$
+    \item \emph{порождающий в $G$}, если
+    $$
+        \exists w \in \Sigma^* \colon \quad X \Rightarrow^{\ast}_G w 
+    $$
+    \item  \emph{достижимый в $G$}, если
+    $$
+        \exists \alpha, \beta \in (\Sigma \cup N)^{\ast} \colon \quad 
+        S \Rightarrow^{\ast}_G \alpha X \beta
+    $$
+\end{enumerate}
+\emph{Бесполезным} называется любой символ, не являющийся полезным.
+\end{Def}
+
+%\begin{Remark}
+%Каждый полезный символ свялется достижимым и порождающим.
+%\end{Remark}
+
+\begin{Thm} 
+Если к КС грамматике $G$ \emph{последовательно} применить два преобразования:
+\begin{enumerate}
+  \item удалить символы, не являющиеся порождающими,
+  \item удалить символы, не являющиеся достижимыми,
+\end{enumerate}
+то будет получена грамматика, не содержащая бесполезных символов.
+\end{Thm}
+
+\begin{Remark}
+Порядок действий в \textbf{теореме} существенен.
+\end{Remark}
+
+\begin{Task} 
+Удалить бесполезные символы в грамматиках с продукциями:
+
+\begin{tabular}{cc} 
+    (1) $
+        \begin{array}{l}
+            S \to 0 \mid A,\\
+            A \to AB,\\
+            B \to 1;
+        \end{array}
+    $
+        &
+    (2) $
+        %\qquad\qquad
+        \begin{array}{l}
+            S \to AB \mid CA,\\
+            A \to a,\\
+            B \to BC \mid AB,\\
+            C \to aB \mid \varepsilon.
+        \end{array} 
+    $
+\end{tabular}
+\end{Task}
+
+\begin{Def}[Хомский, 1959]
+Говорят, что КС-грамматика $G=(\Sigma, N, \mathcal P, S \in N)$ находится в
+\emph{нормальной форме Хомского (НФХ)}, если она не содержит бесполезных символов
+и каждая продукция грамматики имеет один из двух видов:
+\begin{enumerate}
+\renewcommand{\labelenumi}{\theenumi)}
+  \item $A \to a$,
+  \item $A \to BC$, 
+\end{enumerate}
+где $A,B,C \in N$, $a \in \Sigma$.
+\end{Def}
+\pagebreak
+
+\textbf{Схема приведения грамматики к НФХ:}
+\begin{enumerate}
+  \item удалить $\varepsilon$-продукции;
+  \item удалить цепные продукции (продукции вида $A \to B$);
+  \item удалить бесполезные символы;
+  \item привести грамматику к НФХ, используя метод «разбиения слов на слоги».
+\end{enumerate}
+
+\begin{Remark}
+Порядок действий в \textbf{схеме} существенен.
+\end{Remark}
+
+\begin{Def}
+Нетерминал $A \in N$ КС-грамматики $G=(\Sigma, N, \mathcal P, S \in N)$
+называется \emph{$\varepsilon$-порождающим}, если существует вывод
+$A \Rightarrow^{\ast}_G \varepsilon$. 
+\end{Def}
+
+\begin{Task} 
+Привести к нормальной форме Хомского грамматики с продукциями:
+
+\begin{tabular}{c|c} 
+    (1) $\begin{array}{l}
+    S \to ASB \mid \varepsilon,\\
+    A \to aAS \mid a,\\
+    B \to SbS \mid A \mid bb;
+    \end{array}$&
+    (2) $\begin{array}{l}
+    S \to 0A0 \mid 1B1 \mid BB,\\
+    A \to C,\\
+    B \to S \mid A,\\
+    C \to S \mid \varepsilon;
+    \end{array}$\\[\bigskipamount] \hline
+    (3) $\begin{array}{l}
+    S \to AAA \mid B,\\
+    A \to aA \mid B,\\
+    B \to \varepsilon;
+    \end{array}$ &
+    (4) $\begin{array}{l}
+    S \to aAa \mid bBb \mid \varepsilon,\\
+    A \to C \mid a,\\
+    B \to C \mid b,\\
+    C \to CDE \mid \varepsilon,\\
+    D \to A \mid B \mid ab.\\
+    \end{array}$
+\end{tabular}
+\end{Task}

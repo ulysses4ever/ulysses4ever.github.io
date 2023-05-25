@@ -1,0 +1,130 @@
+
+ 
+
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  
+ 
+
+
+
+<head>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Type Stability in Julia &middot; Artem Pelenitsyn
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../public/css/poole.css">
+  <link rel="stylesheet" href="../../public/css/syntax.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+    crossorigin="anonymous">
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="../../public/favicon.ico">
+
+  <!-- RSS -->
+  <!--link rel="alternate" type="application/rss+xml" title="RSS" href="../../atom.xml"-->
+</head>
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="../../index.html" title="Home">Artem Pelenitsyn</a>
+          <small>Homepage</small>
+        </h3>
+        
+ 
+
+
+
+<div align="right"> 
+	<small>
+		<a href="../../index.rus.html">
+			По-русски <img src="../../Pics/ru.gif" />
+		</a>
+	</small>
+</div>
+
+      </div>
+
+      <h2 id="type-stability-in-julia">Type Stability in Julia</h2>
+<h3 id="avoiding-performance-pathologies-in-jit-compilation">Avoiding Performance Pathologies in JIT Compilation</h3>
+<h4 id="a-pelenitsyn-j-belyakova-b-chung-r-tate-j-vitek-in-oopsla-21">A. Pelenitsyn, <a href="https://julbinb.github.io/">J. Belyakova</a>, <a href="https://benchung.github.io/">B. Chung</a>, <a href="http://www.cs.cornell.edu/~ross/">R. Tate</a>, <a href="http://janvitek.org/">J. Vitek</a> (In <a href="https://2021.splashcon.org/details/splash-2021-oopsla/54/Type-Stability-in-Julia-Avoiding-Performance-Pathologies-in-JIT-Compilation">OOPSLA ‘21</a>)</h4>
+
+<p><br /></p>
+
+<p><em>Abstract</em><br />
+As a scientific programming language, Julia strives for performance but also provides high-level productivity
+features. To avoid performance pathologies, Julia users are expected to adhere to a coding discipline that
+enables so-called type stability. Informally, a function is type stable if the type of the output depends only
+on the types of the inputs, not their values. This paper provides a formal definition of type stability as well
+as a stronger property of type groundedness, shows that groundedness enables compiler optimizations, and
+proves the compiler correct. We also perform a corpus analysis to uncover how these type-related properties
+manifest in practice.</p>
+
+<p><em>Resourses</em></p>
+
+<ul>
+  <li>
+    <p>Type Stability in Julia: Avoiding Performance Pathologies in JIT Compilation
+<a href="https://doi.org/10.1145/3485527">[DOI: 10.1145/3485527]</a> <a href="../../Papers/2021-julia-type-stability.pdf">[preprint]</a></p>
+  </li>
+  <li>
+    <p>Extended version of the paper with detailed proofs and more graphs from corpus
+analysis: <a href="https://arxiv.org/abs/2109.01950">[arXiv:2109.01950]</a></p>
+  </li>
+  <li>
+    <p><a href="https://youtu.be/XnUDdPonKlU">Video</a> and <a href="https://docs.google.com/presentation/d/1MgZLjEIIjFkL49y2bOQ93PCQwKu_B6u00yO_Oz_3gn8/edit?usp=sharing">slides</a> for the OOPSLA presentation</p>
+  </li>
+  <li>
+    <p>Artifact measuring stability in Julia packages:
+<a href="https://github.com/prl-julia/julia-type-stability">[GitHub]</a> <a href="https://zenodo.org/record/5500548">[Zenodo]</a></p>
+  </li>
+</ul>
+
+
+
+      <div class="footer">
+        <table style="font-size:12px;text-align:center"><tr>
+
+          <td>(&#8580;) 2022 A. Pelenitsyn</td>
+          
+          <td><a href="https://github.com/ulysses4ever/ulysses.mmcs.sfedu.ru">GitHub Sources</a></td>
+
+		  <td>
+<!- START COUNTER CODE -->
+<a href="http://www.xtrastats.com/"><script language="JavaScript">
+<!-- 
+var data = '&r=' + escape(document.referrer)
++ '&n=' + escape(navigator.userAgent)
++ '&p=' + escape(navigator.userAgent)
++ '&g=' + escape(document.location.href);
+if (navigator.userAgent.substring(0,1)>'3')
+data = data + '&sd=' + screen.colorDepth 
++ '&sw=' + escape(screen.width+'x'+screen.height);
+document.write('<img border=0 hspace=0 '+'vspace=0 src="http://www.xtrastats.com/counter.php?i=16009' + data + '">');
+// --></script></a>
+<!-- END COUNTER CODE -->
+</td>
+        </tr></table>
+      </div>
+    </div>
+
+  </body>
+</html>

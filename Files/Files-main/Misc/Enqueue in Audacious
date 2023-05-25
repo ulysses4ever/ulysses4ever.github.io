@@ -1,0 +1,4 @@
+FILES=${NAUTILUS_SCRIPT_SELECTED_FILE_PATHS}
+for FILE in "${FILES}" ; do
+    audacious --enqueue "${FILE}"
+done
