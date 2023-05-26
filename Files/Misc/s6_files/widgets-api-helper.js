@@ -1,1 +1,0 @@
-(function(){window.widgetsApiHelper={$visibilityScope:function(a,b){var c=$([]);$.each(a.split("+"),function(){c=c.add(b[""+this])});return c}}})();

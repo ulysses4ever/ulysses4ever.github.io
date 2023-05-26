@@ -1,2 +1,0 @@
-# Normal Functors and Containers
-

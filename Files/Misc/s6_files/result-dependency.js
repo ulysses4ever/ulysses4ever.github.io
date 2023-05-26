@@ -1,1 +1,0 @@
-LookupWidget.dependency["КЛАДР:Населённый-пункт"]=function(a){return a.split(",")[0]};
