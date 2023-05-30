@@ -18,6 +18,8 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
+      - run: ls -l Papers
+      - run: rm -rf Papers/.git
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
