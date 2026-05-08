@@ -1,3 +1,3 @@
 { nixpkgs ? import <nixpkgs> {} }:
-nixpkgs.haskellPackages.developPackage { root = ./.; }
+nixpkgs.pkgsStatic.haskellPackages.developPackage { root = ./.; }
 

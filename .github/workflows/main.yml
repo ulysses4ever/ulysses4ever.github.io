@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
 on:
@@ -12,35 +10,78 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-binary:
+    # Run when site.hs or the Nix/Cabal build inputs change, or on manual dispatch.
+    # head_commit is only populated on push events, so this job is implicitly skipped on PRs.
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.head_commit.modified, 'site.hs') ||
+      contains(github.event.head_commit.added,    'site.hs') ||
+      contains(github.event.head_commit.modified, 'default.nix') ||
+      contains(github.event.head_commit.modified, 'my-site.cabal')
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: github-pages
+      - uses: actions/checkout@v4
 
-      - uses: actions/checkout@v2
-        with:
-          ref: main
-
-      - uses: cachix/install-nix-action@v13
+      - uses: cachix/install-nix-action@v25
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
       - name: Build site executable
-        run: |
-          make build
+        run: make build
 
-      - name: Deploy
+      - name: Publish site binary as prerelease
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: site-binary
+          name: "Site Binary (latest)"
+          body: "Auto-published Hakyll site builder binary."
+          prerelease: true
+          files: result/bin/site
+
+  deploy:
+    needs: build-binary
+    # Run when build-binary succeeded or was skipped (site.hs unchanged); never on PRs.
+    if: >
+      always() &&
+      needs.build-binary.result != 'failure' &&
+      github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download site binary from release
+        uses: robinraju/release-downloader@v1
+        with:
+          tag: site-binary
+          fileName: site
+
+      - name: Install site binary
         run: |
-            git config user.name github-actions
-            git config user.email github-actions@github.com
-            make generate
-            git checkout github-pages
-            git pull --rebase
-            cp -a -v _site/. .
-            git add --all
-            git diff-index --quiet HEAD || git commit -m "[`date '+%F %T %Z'`] Site Update"
-            git push origin github-pages:github-pages
+          mkdir -p result/bin
+          mv site result/bin/site
+          chmod +x result/bin/site
+
+      - name: Generate site
+        run: make generate
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
