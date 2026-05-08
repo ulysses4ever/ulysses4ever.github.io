@@ -38,16 +38,17 @@ title: Home
 </tr>
 </table>
 
+### News
+
+$latestNews$
+
+[See all news updates](/news.html).
+
 <!-- <p><b>Alma mater:</b> <a href="http://sfedu.ru/index_eng.php">Southern Federal University</a>,
 I.I. Vorovitch Institute of Mathematics, Mechanics and Computer Sciences
 (<a href="http://mmcs.sfedu.ru">MMCS, Мехмат</a>). -->
 
 <!-- <img src="/images/haskell-logo.png" style="float: right; margin: 10px;" /> -->
-
-<!-- <h2>Posts</h2>
-     $partial("templates/post-list.html")$
-
-     <p>…or you can find more in the <a href="/archive.html">archives</a>.</p> -->
 
 **🇺🇦 As a Russian national, I strongly condemn the war started by the&nbsp;Russian government in
 Ukraine on February 24th 2022.**
