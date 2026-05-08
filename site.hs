@@ -1,12 +1,17 @@
 --------------------------------------------------------------------------------
+{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
+import           Data.Monoid   (mappend)
+import qualified Data.Yaml     as Yaml
+import           GHC.Generics  (Generic)
 import           Hakyll
 
 
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
+    newsDependency <- makePatternDependency "data/news.yml"
+
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
@@ -42,17 +47,32 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
-    match "pages/index.md" $ do
-        route $ stripPages `composeRoutes` setExtension "html"
-        compile $ do
-            -- posts <- recentFirst =<< loadAll "pages/posts/*"
-            -- let indexCtx =
-            --         listField "posts" postCtx (return posts) `mappend`
-            --         defaultContext
-            pandocCompiler
-                -- >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" defaultContext
-                >>= relativizeUrls
+    rulesExtraDependencies [newsDependency] $ do
+        match "pages/index.md" $ do
+            route $ stripPages `composeRoutes` setExtension "html"
+            compile $ do
+                news <- unsafeCompiler loadNews
+                let indexCtx =
+                        constField "latestNews" (renderNewsMarkdown (Just 5) news) `mappend`
+                        defaultContext
+                getResourceBody
+                    >>= applyAsTemplate indexCtx
+                    >>= renderPandoc
+                    >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                    >>= relativizeUrls
+
+        match "pages/news.md" $ do
+            route $ stripPages `composeRoutes` setExtension "html"
+            compile $ do
+                news <- unsafeCompiler loadNews
+                let newsCtx =
+                        constField "allNews" (renderNewsMarkdown Nothing news) `mappend`
+                        defaultContext
+                getResourceBody
+                    >>= applyAsTemplate newsCtx
+                    >>= renderPandoc
+                    >>= loadAndApplyTemplate "templates/default.html" newsCtx
+                    >>= relativizeUrls
 
 
     match "pages/404.html" $ do
@@ -74,3 +94,34 @@ postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultContext
+
+
+--------------------------------------------------------------------------------
+data NewsEntry = NewsEntry
+    { newsDate :: String
+    , newsText :: String
+    } deriving (Generic, Show)
+
+instance Yaml.FromJSON NewsEntry where
+    parseJSON = Yaml.withObject "NewsEntry" $ \object ->
+        NewsEntry <$> object Yaml..: "date"
+                  <*> object Yaml..: "text"
+
+--------------------------------------------------------------------------------
+loadNews :: IO [NewsEntry]
+loadNews = do
+    result <- Yaml.decodeFileEither "data/news.yml"
+    case result of
+        Left err ->
+            fail $ "Could not parse data/news.yml: " <> Yaml.prettyPrintParseException err
+        Right news ->
+            pure news
+
+--------------------------------------------------------------------------------
+renderNewsMarkdown :: Maybe Int -> [NewsEntry] -> String
+renderNewsMarkdown limit =
+    unlines . render . maybe id take limit
+  where
+    render [] = ["_No news yet._"]
+    render entries =
+        map (\entry -> "- **" <> newsDate entry <> ":** " <> newsText entry) entries
