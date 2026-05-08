@@ -16,7 +16,7 @@ main = hakyll $ do
         compile compressCssCompiler
 
     match (fromList ["pages/about.rst", "pages/contact.md"]) $ do
-        route   $ setExtension "html"
+        route   $ stripPages `composeRoutes` setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
@@ -42,9 +42,8 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
-
     match "pages/index.md" $ do
-        route $ constRoute "index.html"
+        route $ stripPages `composeRoutes` setExtension "html"
         compile $ do
             -- posts <- recentFirst =<< loadAll "pages/posts/*"
             -- let indexCtx =
@@ -55,8 +54,20 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" defaultContext
                 >>= relativizeUrls
 
+
+    match "pages/404.html" $ do
+        route stripPages
+        compile $ do
+            pandocCompiler
+                >>= loadAndApplyTemplate "templates/default.html" defaultContext
+                >>= relativizeUrls
+
     match "templates/*" $ compile templateBodyCompiler
 
+
+--------------------------------------------------------------------------------
+stripPages :: Routes
+stripPages = customRoute $ drop (length ("pages/"::FilePath)) . toFilePath
 
 --------------------------------------------------------------------------------
 postCtx :: Context String
