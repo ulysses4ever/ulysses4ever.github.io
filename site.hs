@@ -47,6 +47,13 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
+    match "pages/Projects/stability/index.md" $ do
+            route $ stripPages `composeRoutes` setExtension "html"
+            compile $ do
+                pandocCompiler
+                    >>= loadAndApplyTemplate "templates/default.html" defaultContext
+                    >>= relativizeUrls
+
     rulesExtraDependencies [newsDependency] $ do
         match "pages/index.md" $ do
             route $ stripPages `composeRoutes` setExtension "html"
