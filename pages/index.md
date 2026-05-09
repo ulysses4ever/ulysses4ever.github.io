@@ -4,37 +4,38 @@ title: Home
 
 <table cellspacing="6px">
 <tr>
-    <td style="vertical-align:top">
-        <img src="images/Brazil-2014.jpg" height="250" border="0" />
-      <p style="text-align: center;">
-        <a href="https://scholar.google.com/citations?user=my1k3PQAAAAJ" title="Google Scholar" rel="external nofollow noopener" target="_blank"><i class="ai ai-google-scholar ai-lg"></i></a>&nbsp;
-        <a href="https://github.com/ulysses4ever/cv/releases/download/head/cv.pdf" title="CV" rel="external nofollow noopener" target="_blank"><i class="ai ai-cv ai-lg"></i></a>&nbsp;
-        <a href="https://orcid.org/0000-0001-8334-8106" title="ORCID" rel="external nofollow noopener" target="_blank"><i class="ai ai-orcid"></i></a>
-        <br>
-        <a id="twitter-link" class="icon" title="Twitter Account" aria-label="Twitter Account"
-            href="https://x.com/ulysses4ever">
-            <img src="https://unpkg.com/@tabler/icons@3.35.0/icons/outline/brand-x.svg" /></a>&nbsp;
-        <a id="facebook-link" class="icon" title="Facebook Profile" aria-label="Facebook Profile"
-            href="https://www.facebook.com/ulysses4ever">
-            <img src="https://unpkg.com/@tabler/icons@3.35.0/icons/outline/brand-facebook.svg" /></a>&nbsp;
-        <a id="telegram-link" class="icon" title="Telegram Channel" aria-label="Telegram Channel"
-            href="https://t.me/arpel">
-            <img src="https://unpkg.com/@tabler/icons@3.35.0/icons/outline/brand-telegram.svg" /></a>&nbsp;
-        <a id="github-link" class="icon" title="Github Account" aria-label="Github Account"
-            href="https://github.com/ulysses4ever">
-            <img src="https://unpkg.com/@tabler/icons@3.35.0/icons/outline/brand-github.svg" /></a>&nbsp;
-        <a rel="me" id="mastodon-link" class="icon" href="https://functional.cafe/@artem">
-            <img src="https://unpkg.com/@tabler/icons@3.35.0/icons/outline/brand-mastodon.svg" /></a>
-      </p>
-    </td>
-    <td valign="top">
-        <p><b>Current Position:</b> Postdoc Researcher with
-        <a href="https://engineering.purdue.edu/~milind/">Prof. Milind Kulkarni</a>
-        at <a href="https://purduepl.github.io/">PurPL</a>, Purdue University.
-        <p><b>Education:</b> PhD in Computer Science from
-        Northeastern University (<a href="https://prl.khoury.northeastern.edu/">NEU PRL</a>, 2023).
-        <p><b>Contacts:</b> a&#8203;@&#8203;pelenitsyn.top, <a href="https://calendly.com/artem-pe/chat">Calendly</a>.
-    </td>
+<td style="vertical-align:top">
+    <img src="images/Brazil-2014.jpg" height="250" border="0" />
+</td>
+<td valign="top">
+<p><b>Current Position:</b> Postdoc Researcher with
+<a href="https://engineering.purdue.edu/~milind/">Prof. Milind Kulkarni</a>
+at <a href="https://purduepl.github.io/">PurPL</a>, Purdue University.
+<p><b>Education:</b> PhD in Computer Science from
+Northeastern University (<a href="https://prl.khoury.northeastern.edu/">NEU PRL</a>, 2023).
+<p><b>Contacts:</b> a&#8203;@&#8203;pelenitsyn.top, <a href="https://calendly.com/artem-pe/chat">Calendly</a>.
+<p><b>Professional links:</b>
+  <a href="https://scholar.google.com/citations?user=my1k3PQAAAAJ" title="Google Scholar" rel="external nofollow noopener" target="_blank"><i class="ai ai-google-scholar ai-lg"></i></a>&nbsp;
+  <a href="https://github.com/ulysses4ever/cv/releases/download/head/cv.pdf" title="CV" rel="external nofollow noopener" target="_blank"><i class="ai ai-cv ai-lg"></i></a>&nbsp;
+  <a href="https://orcid.org/0000-0001-8334-8106" title="ORCID" rel="external nofollow noopener" target="_blank"><i class="ai ai-orcid"></i></a>
+</p>
+<p><b>Social links:</b>
+  <a id="twitter-link" class="icon" title="Twitter Account" aria-label="Twitter Account"
+      href="https://x.com/ulysses4ever">
+      <img src="https://unpkg.com/@tabler/icons@3.35.0/icons/outline/brand-x.svg" /></a>&nbsp;
+  <a id="facebook-link" class="icon" title="Facebook Profile" aria-label="Facebook Profile"
+      href="https://www.facebook.com/ulysses4ever">
+      <img src="https://unpkg.com/@tabler/icons@3.35.0/icons/outline/brand-facebook.svg" /></a>&nbsp;
+  <a id="telegram-link" class="icon" title="Telegram Channel" aria-label="Telegram Channel"
+      href="https://t.me/arpel">
+      <img src="https://unpkg.com/@tabler/icons@3.35.0/icons/outline/brand-telegram.svg" /></a>&nbsp;
+  <a id="github-link" class="icon" title="Github Account" aria-label="Github Account"
+      href="https://github.com/ulysses4ever">
+      <img src="https://unpkg.com/@tabler/icons@3.35.0/icons/outline/brand-github.svg" /></a>&nbsp;
+  <a rel="me" id="mastodon-link" class="icon" href="https://functional.cafe/@artem">
+      <img src="https://unpkg.com/@tabler/icons@3.35.0/icons/outline/brand-mastodon.svg" /></a>
+</p>
+</td>
 </tr>
 </table>
 
@@ -52,10 +53,11 @@ Ukraine on February 24th 2022.**
 $latestNews$
 
 
-### Research Interests
+### Research Interests & Bio
 
 I am broadly interested in programming languages and compilers, and do occasional
 detours into HPC. The central motif of my research has been enabling efficient high-level programming.
+More on my professional experience is in my [Curriculum Vitæ](https://github.com/ulysses4ever/cv/releases/download/head/cv.pdf).
 
 While on postdoc with Milind at Purdue (2023–now), I am looking into making
 irregular computations (tree traversals) more efficient via compilation or
@@ -88,8 +90,6 @@ During my graduate studies at SFedU (2007–2012, MSc in 2009), I worked on
 improving software designs for computer algebra and error-correcting codes in
 C++ using generic and metaprogramming ([Prikl.Inf.'11, in
 Russian][generic-ecc]).
-
-More on my professional history can be found in my [Curriculum Vitæ](https://github.com/ulysses4ever/cv/releases/download/head/cv.pdf).
 
 [2]: https://www.di.ens.fr/~zappa/projects/lambdajulia/
 [rai]: https://www.relational.ai/
