@@ -10,8 +10,6 @@ import           Hakyll
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
-    newsDependency <- makePatternDependency "data/news.yml"
-
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
@@ -20,32 +18,32 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-    match (fromList ["pages/about.rst", "pages/contact.md"]) $ do
-        route   $ stripPages `composeRoutes` setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
+    -- match (fromList ["pages/about.rst", "pages/contact.md"]) $ do
+    --     route   $ stripPages `composeRoutes` setExtension "html"
+    --     compile $ pandocCompiler
+    --         >>= loadAndApplyTemplate "templates/default.html" defaultContext
+    --         >>= relativizeUrls
 
-    match "posts/*" $ do
-        route $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
-            >>= relativizeUrls
+    -- match "posts/*" $ do
+    --     route $ setExtension "html"
+    --     compile $ pandocCompiler
+    --         >>= loadAndApplyTemplate "templates/post.html"    postCtx
+    --         >>= loadAndApplyTemplate "templates/default.html" postCtx
+    --         >>= relativizeUrls
 
-    create ["archive.html"] $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let archiveCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Archives"            `mappend`
-                    defaultContext
+    -- create ["archive.html"] $ do
+    --     route idRoute
+    --     compile $ do
+    --         posts <- recentFirst =<< loadAll "posts/*"
+    --         let archiveCtx =
+    --                 listField "posts" postCtx (return posts) `mappend`
+    --                 constField "title" "Archives"            `mappend`
+    --                 defaultContext
 
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls
+    --         makeItem ""
+    --             >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+    --             >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+    --             >>= relativizeUrls
 
     match "pages/Projects/stability/index.md" $ do
             route $ stripPages `composeRoutes` setExtension "html"
@@ -54,6 +52,7 @@ main = hakyll $ do
                     >>= loadAndApplyTemplate "templates/default.html" defaultContext
                     >>= relativizeUrls
 
+    newsDependency <- makePatternDependency "data/news.yml"
     rulesExtraDependencies [newsDependency] $ do
         match "pages/index.md" $ do
             route $ stripPages `composeRoutes` setExtension "html"
@@ -131,4 +130,4 @@ renderNewsMarkdown limit =
   where
     render [] = ["_No news yet._"]
     render entries =
-        map (\entry -> "- **" <> newsDate entry <> ":** " <> newsText entry) entries
+        map (\entry -> "- *" <> newsDate entry <> ":* " <> newsText entry) entries

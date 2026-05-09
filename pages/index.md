@@ -38,12 +38,6 @@ title: Home
 </tr>
 </table>
 
-### News
-
-$latestNews$
-
-[See all news updates](/news.html).
-
 <!-- <p><b>Alma mater:</b> <a href="http://sfedu.ru/index_eng.php">Southern Federal University</a>,
 I.I. Vorovitch Institute of Mathematics, Mechanics and Computer Sciences
 (<a href="http://mmcs.sfedu.ru">MMCS, Мехмат</a>). -->
@@ -52,6 +46,11 @@ I.I. Vorovitch Institute of Mathematics, Mechanics and Computer Sciences
 
 **🇺🇦 As a Russian national, I strongly condemn the war started by the&nbsp;Russian government in
 Ukraine on February 24th 2022.**
+
+### Latest News ([all news](/news.html))
+
+$latestNews$
+
 
 ### Research Interests
 
